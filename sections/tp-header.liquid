@@ -1,0 +1,411 @@
+{%- liquid
+  assign cart_label = section.settings.cart_label | default: 'Sacola'
+  assign account_label = section.settings.account_label | default: 'Conta'
+  assign search_label = section.settings.search_label | default: 'Buscar'
+  assign menu_label = section.settings.menu_label | default: 'Menu'
+-%}
+
+<header class="tp-header">
+  <div class="tp-header__announce tp-header__announce--desktop">
+    {{ section.settings.announcement_desktop }}
+  </div>
+  <div class="tp-header__announce tp-header__announce--mobile">
+    {{ section.settings.announcement_mobile }}
+  </div>
+
+  <div class="tp-header__row">
+    <button
+      type="button"
+      class="tp-header__hamburger button-unstyled"
+      aria-haspopup="dialog"
+      aria-controls="tp-mobile-menu"
+      data-tp-menu-open
+    >
+      {{ menu_label }}
+    </button>
+
+    <button
+      type="button"
+      class="tp-header__search button-unstyled"
+      on:click="#search-modal/showDialog"
+      aria-haspopup="dialog"
+    >
+      {{ search_label }}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="tp-header__logo">
+      {{- section.settings.logo_text | default: shop.name -}}
+    </a>
+
+    <div class="tp-header__actions">
+      <a href="{{ routes.account_url }}" class="tp-header__account">{{ account_label }}</a>
+      {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
+        <button
+          type="button"
+          class="tp-header__cart button-unstyled"
+          on:click="#cart-drawer/toggle"
+          aria-haspopup="dialog"
+          aria-controls="cart-drawer"
+        >
+          {{ cart_label }} ({{ cart.item_count }})
+        </button>
+      {%- else -%}
+        <a href="{{ routes.cart_url }}" class="tp-header__cart">{{ cart_label }} ({{ cart.item_count }})</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <nav class="tp-header__nav" aria-label="Menu principal">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        {{- block.settings.label -}}
+      </a>
+    {%- endfor -%}
+  </nav>
+</header>
+
+<div id="tp-mobile-menu" class="tp-mobile-menu" data-tp-menu hidden>
+  <div class="tp-mobile-menu__backdrop" data-tp-menu-close></div>
+  <div class="tp-mobile-menu__panel" role="dialog" aria-modal="true">
+    <div class="tp-mobile-menu__head">
+      <span class="tp-header__logo">{{ section.settings.logo_text | default: shop.name }}</span>
+      <button type="button" class="tp-mobile-menu__close button-unstyled" data-tp-menu-close aria-label="Fechar">
+        &times;
+      </button>
+    </div>
+    <nav class="tp-mobile-menu__nav">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.label }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="tp-mobile-menu__foot">
+      <a href="{{ routes.account_url }}">{{ account_label }}</a>
+      <a href="{{ routes.cart_url }}">{{ cart_label }} ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var menu = document.getElementById('tp-mobile-menu');
+    if (!menu) return;
+
+    function open() {
+      menu.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      menu.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-tp-menu-open]').forEach(function (btn) {
+      btn.addEventListener('click', open);
+    });
+
+    menu.querySelectorAll('[data-tp-menu-close]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !menu.hidden) close();
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .tp-header {
+    position: relative;
+    background: var(--tp-cream);
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-header a,
+  .tp-header button {
+    color: inherit;
+    text-decoration: none;
+    font-family: var(--tp-sans);
+  }
+
+  .tp-header * {
+    box-sizing: border-box;
+  }
+
+  .tp-header__announce {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    padding-inline: 12px;
+  }
+
+  .tp-header__announce--mobile {
+    display: none;
+  }
+
+  .tp-header__announce em {
+    font-style: italic;
+  }
+
+  .tp-header__row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 68px;
+    padding-inline: 40px;
+    border-bottom: 1px solid var(--tp-line-soft);
+  }
+
+  .tp-header__hamburger {
+    display: none;
+    justify-self: start;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .tp-header__search {
+    justify-self: start;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .tp-header__logo {
+    grid-column: 2;
+    font-size: 14px;
+    letter-spacing: 0.34em;
+    color: var(--tp-wine);
+    font-family: var(--tp-sans);
+    white-space: nowrap;
+  }
+
+  .tp-header__actions {
+    justify-self: end;
+    display: flex;
+    gap: 24px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tp-header__cart {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .tp-header__nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    height: 52px;
+    align-items: center;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+
+  .tp-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+  }
+
+  .tp-mobile-menu a,
+  .tp-mobile-menu button {
+    color: inherit;
+    text-decoration: none;
+    font-family: var(--tp-sans);
+  }
+
+  .tp-mobile-menu[hidden] {
+    display: none;
+  }
+
+  .tp-mobile-menu__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(36, 33, 31, 0.5);
+  }
+
+  .tp-mobile-menu__panel {
+    position: relative;
+    width: min(340px, 86vw);
+    height: 100%;
+    margin-left: auto;
+    background: var(--tp-cream);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px 28px;
+  }
+
+  .tp-mobile-menu__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--tp-line-soft);
+  }
+
+  .tp-mobile-menu__close {
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--tp-ink);
+  }
+
+  .tp-mobile-menu__nav {
+    display: grid;
+    gap: 2px;
+    padding-top: 18px;
+  }
+
+  .tp-mobile-menu__nav a {
+    padding: 12px 0;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--tp-line-soft);
+    color: var(--tp-ink);
+  }
+
+  .tp-mobile-menu__foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 18px;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+  }
+
+  @media (max-width: 899px) {
+    .tp-header__announce--desktop {
+      display: none;
+    }
+
+    .tp-header__announce--mobile {
+      display: flex;
+      height: 32px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    .tp-header__row {
+      grid-template-columns: 1fr auto 1fr;
+      height: 56px;
+      padding-inline: 20px;
+    }
+
+    .tp-header__hamburger {
+      display: block;
+    }
+
+    .tp-header__logo {
+      font-size: 12px;
+      letter-spacing: 0.3em;
+    }
+
+    .tp-header__search {
+      justify-self: end;
+    }
+
+    .tp-header__actions {
+      display: none;
+    }
+
+    .tp-header__nav {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Cabeçalho",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logotipo (texto)",
+      "default": "THAINÁ PAPERS"
+    },
+    {
+      "type": "richtext",
+      "id": "announcement_desktop",
+      "label": "Aviso (desktop)",
+      "default": "<p>Envio para todo o Brasil · Pagamento em até 12x · Templates liberados na hora</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "announcement_mobile",
+      "label": "Aviso (mobile)",
+      "default": "<p>Envio para todo o Brasil · até 12x</p>"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Rótulo — busca",
+      "default": "Buscar"
+    },
+    {
+      "type": "text",
+      "id": "menu_label",
+      "label": "Rótulo — menu (mobile)",
+      "default": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Rótulo — conta",
+      "default": "Conta"
+    },
+    {
+      "type": "text",
+      "id": "cart_label",
+      "label": "Rótulo — sacola",
+      "default": "Sacola"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Link do menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Início"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
