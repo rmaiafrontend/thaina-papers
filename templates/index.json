@@ -13,7 +13,7 @@
       "type": "tp-hero",
       "settings": {
         "script_text": "feito à mão",
-        "heading": "Não é só papel.",
+        "heading": "Não é só papel",
         "lead": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você.",
         "tagline": "Menos excesso. Mais essência.",
         "description": "Tailor-made stationery for celebrations. Impressos em pequenos lotes e templates editáveis no Canva.",
@@ -56,7 +56,11 @@
           }
         }
       },
-      "block_order": ["casamentos", "formaturas", "consultorios"],
+      "block_order": [
+        "casamentos",
+        "formaturas",
+        "consultorios"
+      ],
       "settings": {}
     },
     "tp_categories": {
@@ -64,30 +68,55 @@
       "blocks": {
         "convites": {
           "type": "category",
-          "settings": { "title": "Convites", "link": "" }
+          "settings": {
+            "title": "Convites",
+            "link": ""
+          }
         },
         "savethedate": {
           "type": "category",
-          "settings": { "title": "Save the date", "link": "" }
+          "settings": {
+            "title": "Save the date",
+            "link": ""
+          }
         },
         "menus": {
           "type": "category",
-          "settings": { "title": "Menus", "link": "" }
+          "settings": {
+            "title": "Menus",
+            "link": ""
+          }
         },
         "adesivos": {
           "type": "category",
-          "settings": { "title": "Adesivos", "link": "" }
+          "settings": {
+            "title": "Adesivos",
+            "link": ""
+          }
         },
         "sinalizacao": {
           "type": "category",
-          "settings": { "title": "Sinalização", "link": "" }
+          "settings": {
+            "title": "Sinalização",
+            "link": ""
+          }
         },
         "templates": {
           "type": "category",
-          "settings": { "title": "Templates Canva", "link": "" }
+          "settings": {
+            "title": "Templates Canva",
+            "link": ""
+          }
         }
       },
-      "block_order": ["convites", "savethedate", "menus", "adesivos", "sinalizacao", "templates"],
+      "block_order": [
+        "convites",
+        "savethedate",
+        "menus",
+        "adesivos",
+        "sinalizacao",
+        "templates"
+      ],
       "settings": {
         "eyebrow": "Comece por aqui"
       }
@@ -120,7 +149,10 @@
           }
         }
       },
-      "block_order": ["tailor", "canva"],
+      "block_order": [
+        "tailor",
+        "canva"
+      ],
       "settings": {}
     },
     "tp_products": {
@@ -160,7 +192,11 @@
           }
         }
       },
-      "block_order": ["step1", "step2", "step3"],
+      "block_order": [
+        "step1",
+        "step2",
+        "step3"
+      ],
       "settings": {
         "eyebrow": "Como funciona",
         "footnote": "O prazo começa após confirmação do pagamento e envio de todas as informações necessárias."
@@ -169,13 +205,44 @@
     "tp_portfolio": {
       "type": "tp-portfolio",
       "blocks": {
-        "w1": { "type": "work", "settings": { "caption": "Mesa posta completa" } },
-        "w2": { "type": "work", "settings": { "caption": "Save the date" } },
-        "w3": { "type": "work", "settings": { "caption": "Menu oval" } },
-        "w4": { "type": "work", "settings": { "caption": "Convite negroni" } },
-        "w5": { "type": "work", "settings": { "caption": "Número de mesa" } }
+        "w1": {
+          "type": "work",
+          "settings": {
+            "caption": "Mesa posta completa"
+          }
+        },
+        "w2": {
+          "type": "work",
+          "settings": {
+            "caption": "Save the date"
+          }
+        },
+        "w3": {
+          "type": "work",
+          "settings": {
+            "caption": "Menu oval"
+          }
+        },
+        "w4": {
+          "type": "work",
+          "settings": {
+            "caption": "Convite negroni"
+          }
+        },
+        "w5": {
+          "type": "work",
+          "settings": {
+            "caption": "Número de mesa"
+          }
+        }
       },
-      "block_order": ["w1", "w2", "w3", "w4", "w5"],
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5"
+      ],
       "settings": {
         "heading": "Trabalhos reais",
         "link_label": "Ver portfólio",
@@ -207,7 +274,11 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
       "settings": {
         "eyebrow": "Quem já celebrou com a gente"
       }
@@ -244,7 +315,12 @@
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
       "settings": {
         "heading": "Perguntas frequentes",
         "description": "Ficou alguma dúvida? Fale com a Thainá pelo WhatsApp."
