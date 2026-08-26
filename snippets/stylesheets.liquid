@@ -1,2 +1,5 @@
 {{ 'overflow-list.css' | asset_url | preload_tag: as: 'style' }}
 {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'tp-bodoni-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
+{{ 'tp-dmsans-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
+{{ 'tp-home.css' | asset_url | stylesheet_tag }}

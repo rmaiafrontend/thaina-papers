@@ -1,0 +1,137 @@
+<section class="tp-section tp-steps">
+  {%- if section.settings.eyebrow != blank -%}
+    <div class="tp-eyebrow tp-steps__eyebrow">{{ section.settings.eyebrow }}</div>
+  {%- endif -%}
+
+  <div class="tp-steps__grid">
+    {%- for block in section.blocks -%}
+      <div class="tp-steps__item" {{ block.shopify_attributes }}>
+        <div class="tp-steps__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+        <div class="tp-steps__title">{{ block.settings.title }}</div>
+        {%- if block.settings.description != blank -%}
+          <p class="tp-steps__text">{{ block.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.footnote != blank -%}
+    <div class="tp-steps__footnote">{{ section.settings.footnote }}</div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .tp-steps {
+    padding-block: 80px 76px;
+  }
+
+  .tp-steps__eyebrow {
+    margin-bottom: 30px;
+  }
+
+  .tp-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  .tp-steps__item {
+    border-top: 1px solid rgba(36, 33, 31, 0.22);
+    padding-top: 20px;
+  }
+
+  .tp-steps__number {
+    font-family: var(--tp-serif);
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--tp-rose);
+    line-height: 1;
+  }
+
+  .tp-steps__title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 12px 0 8px;
+  }
+
+  .tp-steps__text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    margin: 0;
+  }
+
+  .tp-steps__footnote {
+    margin-top: 28px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+  }
+
+  @media (max-width: 899px) {
+    .tp-steps {
+      padding-block: 34px 34px;
+    }
+
+    .tp-steps__grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .tp-steps__footnote {
+      margin-top: 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Como funciona",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Como funciona"
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Observação",
+      "default": "O prazo começa após confirmação do pagamento e envio de todas as informações necessárias."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Etapa",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Escolha e envie os dados"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrição",
+          "default": "Adicione ao pedido e mande nomes, datas e fotos pelo WhatsApp."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Como funciona",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

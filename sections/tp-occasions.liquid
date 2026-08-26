@@ -1,0 +1,177 @@
+<section class="tp-section tp-occasions">
+  <div class="tp-occasions__grid">
+    {%- for block in section.blocks -%}
+      <a
+        href="{{ block.settings.link | default: '#' }}"
+        class="tp-occasions__card"
+        {{ block.shopify_attributes }}
+      >
+        <div class="tp-media tp-occasions__media">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 800
+              | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 104px, 30vw', widths: '300,500,800'
+            }}
+          {%- else -%}
+            <div class="tp-media__placeholder">{{ block.settings.title }}</div>
+          {%- endif -%}
+        </div>
+        <div class="tp-occasions__body">
+          <div class="tp-occasions__title">{{ block.settings.title }}</div>
+          {%- if block.settings.description != blank -%}
+            <p class="tp-occasions__text">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank -%}
+            <div class="tp-occasions__cta">{{ block.settings.link_label }} &rarr;</div>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-occasions {
+    padding-block: 8px 72px;
+  }
+
+  .tp-occasions__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .tp-occasions__card {
+    display: block;
+  }
+
+  .tp-occasions__media {
+    height: 300px;
+  }
+
+  .tp-occasions__title {
+    font-family: var(--tp-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 14px;
+  }
+
+  .tp-occasions__text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin: 6px 0 0;
+  }
+
+  .tp-occasions__cta {
+    font-size: 13px;
+    color: var(--tp-wine);
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-occasions__media {
+      height: 230px;
+    }
+
+    .tp-occasions__title {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-occasions {
+      padding-block: 0 34px;
+    }
+
+    .tp-occasions__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .tp-occasions__card {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .tp-occasions__media {
+      width: 104px;
+      height: 104px;
+      flex: none;
+    }
+
+    .tp-occasions__body {
+      min-width: 0;
+    }
+
+    .tp-occasions__title {
+      margin-top: 0;
+    }
+
+    .tp-occasions__text {
+      font-size: 13px;
+      line-height: 1.55;
+      margin-top: 4px;
+    }
+
+    .tp-occasions__cta {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Ocasiões",
+  "tag": "section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Ocasião",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Casamentos"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrição",
+          "default": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Texto do link",
+          "default": "Ver casamentos"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Ocasiões",
+      "blocks": [
+        { "type": "occasion" },
+        { "type": "occasion" },
+        { "type": "occasion" }
+      ]
+    }
+  ]
+}
+{% endschema %}

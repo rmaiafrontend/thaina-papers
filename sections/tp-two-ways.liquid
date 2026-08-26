@@ -1,0 +1,178 @@
+<section class="tp-section tp-two-ways">
+  <div class="tp-two-ways__grid">
+    {%- for block in section.blocks -%}
+      <div class="tp-two-ways__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.eyebrow != blank -%}
+          <div class="tp-two-ways__eyebrow">{{ block.settings.eyebrow }}</div>
+        {%- endif -%}
+        <div class="tp-two-ways__title">{{ block.settings.title }}</div>
+        {%- if block.settings.description != blank -%}
+          <p class="tp-two-ways__text">{{ block.settings.description }}</p>
+        {%- endif -%}
+
+        {%- assign items = block.settings.features | newline_to_br | split: '<br />' -%}
+        {%- if items.size > 0 -%}
+          <div class="tp-two-ways__list">
+            {%- for item in items -%}
+              {%- assign trimmed = item | strip -%}
+              {%- if trimmed != blank -%}
+                <div>{{ trimmed }}</div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.button_label != blank -%}
+          <a
+            href="{{ block.settings.button_link | default: '#' }}"
+            class="tp-btn {% if block.settings.button_style == 'outline' %}tp-btn--outline{% else %}tp-btn--solid{% endif %} tp-two-ways__btn"
+          >
+            {{- block.settings.button_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-two-ways {
+    padding-block: 8px 80px;
+  }
+
+  .tp-two-ways__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .tp-two-ways__card {
+    border: 1px solid var(--tp-line);
+    padding: 40px 36px 36px;
+  }
+
+  .tp-two-ways__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+  }
+
+  .tp-two-ways__title {
+    font-family: var(--tp-serif);
+    font-size: 30px;
+    font-weight: 500;
+    margin: 14px 0 10px;
+  }
+
+  .tp-two-ways__text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    margin: 0 0 22px;
+    max-width: 420px;
+  }
+
+  .tp-two-ways__list {
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+    margin-bottom: 26px;
+  }
+
+  .tp-two-ways__btn {
+    height: 48px;
+    padding: 0 24px;
+  }
+
+  @media (max-width: 899px) {
+    .tp-two-ways {
+      padding-block: 0 34px;
+    }
+
+    .tp-two-ways__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .tp-two-ways__card {
+      padding: 28px 22px 26px;
+    }
+
+    .tp-two-ways__title {
+      font-size: 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Escolha seu jeito",
+  "tag": "section",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "way",
+      "name": "Opção",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Rótulo",
+          "default": "Escolha seu jeito · 01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Tailor-made"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descrição",
+          "default": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você."
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Itens (um por linha)",
+          "default": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Botão",
+          "default": "Quero criar meu projeto"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link do botão"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Estilo do botão",
+          "options": [
+            { "value": "solid", "label": "Preenchido" },
+            { "value": "outline", "label": "Contorno" }
+          ],
+          "default": "solid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Escolha seu jeito",
+      "blocks": [
+        { "type": "way" },
+        { "type": "way" }
+      ]
+    }
+  ]
+}
+{% endschema %}

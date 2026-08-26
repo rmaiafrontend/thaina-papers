@@ -1,0 +1,155 @@
+{%- liquid
+  assign blocks = section.blocks
+-%}
+
+<section class="tp-section tp-portfolio">
+  <div class="tp-section-head">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="tp-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.link_label != blank -%}
+      <a href="{{ section.settings.link | default: '#' }}" class="tp-link-caps">{{ section.settings.link_label }}</a>
+    {%- endif -%}
+  </div>
+
+  <div class="tp-portfolio__grid">
+    {%- for block in blocks -%}
+      {%- assign position = forloop.index -%}
+      <div class="tp-portfolio__cell tp-portfolio__cell--{{ position }}" {{ block.shopify_attributes }}>
+        <div class="tp-media tp-portfolio__media">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 50vw, 33vw', widths: '400,700,1200'
+            }}
+          {%- else -%}
+            <div class="tp-media__placeholder">{{ block.settings.caption | default: 'Trabalho' }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-portfolio {
+    padding-block: 0 84px;
+  }
+
+  .tp-portfolio__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, 182px);
+    gap: 16px;
+  }
+
+  .tp-portfolio__media {
+    height: 100%;
+  }
+
+  .tp-portfolio__cell--1 {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .tp-portfolio__cell--2 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .tp-portfolio__cell--3 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .tp-portfolio__cell--4 {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .tp-portfolio__cell--5 {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  @media (max-width: 899px) {
+    .tp-portfolio {
+      padding-block: 0 34px;
+    }
+
+    .tp-portfolio__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      gap: 10px;
+    }
+
+    .tp-portfolio__cell {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      height: 160px;
+    }
+
+    .tp-portfolio__cell--1 {
+      grid-column: 1 / span 2 !important;
+      height: 220px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Trabalhos reais",
+  "tag": "section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Trabalhos reais"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Texto do link",
+      "default": "Ver portfólio"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "work",
+      "name": "Imagem",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Legenda do espaço vazio"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Trabalhos reais",
+      "blocks": [
+        { "type": "work" },
+        { "type": "work" },
+        { "type": "work" },
+        { "type": "work" },
+        { "type": "work" }
+      ]
+    }
+  ]
+}
+{% endschema %}

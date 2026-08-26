@@ -1,0 +1,113 @@
+<section class="tp-section tp-section--stone tp-quotes">
+  {%- if section.settings.eyebrow != blank -%}
+    <div class="tp-eyebrow tp-quotes__eyebrow">{{ section.settings.eyebrow }}</div>
+  {%- endif -%}
+
+  <div class="tp-quotes__grid">
+    {%- for block in section.blocks -%}
+      <blockquote class="tp-quotes__item" {{ block.shopify_attributes }}>
+        <p class="tp-quotes__text">{{ block.settings.quote }}</p>
+        {%- if block.settings.author != blank -%}
+          <cite class="tp-quotes__author">{{ block.settings.author }}</cite>
+        {%- endif -%}
+      </blockquote>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-quotes {
+    padding-block: 76px 80px;
+  }
+
+  .tp-quotes__eyebrow {
+    margin-bottom: 28px;
+  }
+
+  .tp-quotes__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .tp-quotes__item {
+    border-left: 1px solid rgba(36, 33, 31, 0.2);
+    padding-left: 22px;
+    margin: 0;
+  }
+
+  .tp-quotes__text {
+    font-family: var(--tp-serif);
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+
+  .tp-quotes__author {
+    font-size: 13px;
+    color: var(--tp-muted);
+    font-style: normal;
+  }
+
+  @media (max-width: 899px) {
+    .tp-quotes {
+      padding-block: 34px 36px;
+    }
+
+    .tp-quotes__grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .tp-quotes__text {
+      font-size: 18px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Depoimentos",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Quem já celebrou com a gente"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Depoimento",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Depoimento",
+          "default": "Cada peça chegou exatamente como estava na prévia."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autoria",
+          "default": "Marina e Rafael · Casamento, Curitiba"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Depoimentos",
+      "blocks": [
+        { "type": "quote" },
+        { "type": "quote" },
+        { "type": "quote" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,140 @@
+<section class="tp-section tp-categories">
+  {%- if section.settings.eyebrow != blank -%}
+    <div class="tp-eyebrow">{{ section.settings.eyebrow }}</div>
+  {%- endif -%}
+
+  <div class="tp-categories__grid">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '#' }}" class="tp-categories__item" {{ block.shopify_attributes }}>
+        <div class="tp-categories__frame">
+          <div class="tp-media tp-categories__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 500
+                | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 30vw, 15vw', widths: '200,320,500'
+              }}
+            {%- else -%}
+              <div class="tp-media__placeholder">{{ block.settings.title }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="tp-categories__label">{{ block.settings.title }}</div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-categories {
+    padding-block: 20px 76px;
+  }
+
+  .tp-categories__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .tp-categories__frame {
+    border: 1px solid var(--tp-line);
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .tp-categories__media {
+    height: 172px;
+  }
+
+  .tp-categories__label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 12px;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-categories__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-categories {
+      padding-block: 30px 34px;
+      border-top: 1px solid var(--tp-line-soft);
+    }
+
+    .tp-categories__grid {
+      gap: 14px 10px;
+    }
+
+    .tp-categories__frame {
+      padding: 3px;
+    }
+
+    .tp-categories__media {
+      height: 98px;
+    }
+
+    .tp-categories__label {
+      font-size: 13px;
+      margin-top: 9px;
+      text-align: left;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Categorias",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Comece por aqui"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoria",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Convites"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Categorias",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,193 @@
+<section class="tp-section tp-faq">
+  <div class="tp-faq__inner">
+    <div class="tp-faq__aside">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tp-heading tp-faq__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="tp-faq__intro">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="tp-faq__item" {{ block.shopify_attributes }}>
+          <summary class="tp-faq__question">
+            <span>{{ block.settings.question }}</span>
+            <span class="tp-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="tp-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-faq {
+    padding-block: 84px 80px;
+  }
+
+  .tp-faq__inner {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+  }
+
+  .tp-faq__aside {
+    width: 320px;
+    flex: none;
+  }
+
+  .tp-faq__heading {
+    line-height: 1.2;
+  }
+
+  .tp-faq__intro {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    margin: 14px 0 0;
+  }
+
+  .tp-faq__list {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-faq__item {
+    border-top: 1px solid var(--tp-line);
+  }
+
+  .tp-faq__item:last-child {
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 0;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .tp-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .tp-faq__icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    flex: none;
+  }
+
+  .tp-faq__icon::before,
+  .tp-faq__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--tp-ink);
+    transition: transform 0.2s ease;
+  }
+
+  .tp-faq__icon::before {
+    top: 5px;
+    left: 0;
+    width: 12px;
+    height: 1px;
+  }
+
+  .tp-faq__icon::after {
+    top: 0;
+    left: 5px;
+    width: 1px;
+    height: 12px;
+  }
+
+  .tp-faq__item[open] .tp-faq__icon::after {
+    transform: scaleY(0);
+  }
+
+  .tp-faq__answer {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    padding-bottom: 22px;
+  }
+
+  @media (max-width: 899px) {
+    .tp-faq {
+      padding-block: 34px 36px;
+    }
+
+    .tp-faq__inner {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .tp-faq__aside {
+      width: auto;
+    }
+
+    .tp-faq__list {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Perguntas frequentes",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Perguntas frequentes"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descrição",
+      "default": "Ficou alguma dúvida? Fale com a Thainá pelo WhatsApp."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pergunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pergunta",
+          "default": "Qual a diferença entre produto digital e físico?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Resposta",
+          "default": "<p>O digital é entregue por arquivo ou link — nenhum item físico será enviado.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Perguntas frequentes",
+      "blocks": [
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}

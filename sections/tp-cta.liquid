@@ -1,0 +1,164 @@
+<section class="tp-section tp-section--ink tp-cta">
+  <div class="tp-cta__inner">
+    <div class="tp-cta__copy">
+      {%- if section.settings.script_text != blank -%}
+        <div class="tp-cta__script">{{ section.settings.script_text }}</div>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <div class="tp-cta__heading">{{ section.settings.heading }}</div>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="tp-cta__text">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-cta__actions">
+      {%- if section.settings.button_1_label != blank -%}
+        <a href="{{ section.settings.button_1_link | default: '#' }}" class="tp-btn tp-btn--light tp-cta__btn">
+          {{- section.settings.button_1_label -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a href="{{ section.settings.button_2_link | default: '#' }}" class="tp-btn tp-btn--ghost-light tp-cta__btn">
+          {{- section.settings.button_2_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-cta {
+    padding-block: 90px 96px;
+  }
+
+  .tp-cta__inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  .tp-cta__copy {
+    max-width: 620px;
+  }
+
+  .tp-cta__script {
+    font-family: var(--tp-script);
+    font-size: 32px;
+    color: var(--tp-rose-light);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .tp-cta__heading {
+    font-family: var(--tp-serif);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .tp-cta__text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(250, 248, 243, 0.72);
+    margin: 0;
+  }
+
+  .tp-cta__actions {
+    display: flex;
+    gap: 12px;
+    flex: none;
+  }
+
+  .tp-cta__btn {
+    height: 52px;
+    padding: 0 28px;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-cta__heading {
+      font-size: 34px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-cta {
+      padding-block: 40px 44px;
+    }
+
+    .tp-cta__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+    }
+
+    .tp-cta__heading {
+      font-size: 28px;
+    }
+
+    .tp-cta__actions {
+      flex-wrap: wrap;
+    }
+
+    .tp-cta__btn {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Chamada final",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_text",
+      "label": "Texto manuscrito",
+      "default": "vamos começar"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Título",
+      "default": "Conte o que você está celebrando — o resto a gente desenha junto."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descrição",
+      "default": "Atendimento direto com a Thainá, de segunda a sexta."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Botão principal",
+      "default": "Falar no WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Link do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Botão secundário",
+      "default": "Ver o catálogo"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Link do botão secundário"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Chamada final"
+    }
+  ]
+}
+{% endschema %}

@@ -9,923 +9,270 @@
  */
 {
   "sections": {
-    "hero_G7CAX9": {
-      "type": "hero",
-      "blocks": {
-        "text_KJqzT8": {
-          "type": "text",
-          "settings": {
-            "text": "<h5>PAPELARIA AUTORAL PARA CELEBRAÇÕES</h5>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "h6",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 16,
-            "padding-inline-end": 16
-          },
-          "blocks": {}
-        },
-        "button_cTVbXA": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Explore o estúdio ↗",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-unstyled",
-            "custom_button_background": "{{ settings.color_palette.foreground }}",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "link_text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_KJqzT8",
-        "button_cTVbXA"
-      ],
-      "disabled": true,
-      "name": "t:names.hero",
+    "tp_hero": {
+      "type": "tp-hero",
       "settings": {
-        "media_type_1": "video",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 16,
-        "section_width": "full-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#00000030",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "script_text": "feito à mão",
+        "heading": "Não é só papel.",
+        "lead": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você.",
+        "tagline": "Menos excesso. Mais essência.",
+        "description": "Tailor-made stationery for celebrations. Impressos em pequenos lotes e templates editáveis no Canva.",
+        "button_1_label": "Ver todos os produtos",
+        "button_1_link": "shopify://collections/all",
+        "button_2_label": "Sob medida",
+        "button_2_link": "",
+        "image_1_alt": "Suíte de convites sobre linho",
+        "image_2_alt": "Menu ao lado do prato"
       }
     },
-    "section": {
-      "type": "section",
+    "tp_occasions": {
+      "type": "tp-occasions",
       "blocks": {
-        "text_jcLMz6": {
-          "type": "text",
-          "name": "t:names.heading",
+        "casamentos": {
+          "type": "occasion",
           "settings": {
-            "text": "<h2>O bom papel<br/><em>guarda memórias.</em></h2>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.foreground }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "title": "Casamentos",
+            "description": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
+            "link_label": "Ver casamentos",
+            "link": ""
+          }
         },
-        "button_ynEdzM": {
-          "type": "button",
-          "name": "t:names.button",
+        "formaturas": {
+          "type": "occasion",
           "settings": {
-            "label": "Good design takes time. Produtos e serviços 2026-27 ↗",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-unstyled",
-            "custom_button_background": "{{ settings.color_palette.foreground }}",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "link_text_color": "",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "title": "Formaturas",
+            "description": "Pacotes FORM, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
+            "link_label": "Ver formaturas",
+            "link": ""
+          }
+        },
+        "consultorios": {
+          "type": "occasion",
+          "settings": {
+            "title": "Consultórios",
+            "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
+            "link_label": "Ver consultórios",
+            "link": ""
+          }
         }
       },
-      "block_order": [
-        "text_jcLMz6",
-        "button_ynEdzM"
-      ],
-      "name": "t:names.pull_quote",
+      "block_order": ["casamentos", "formaturas", "consultorios"],
+      "settings": {}
+    },
+    "tp_categories": {
+      "type": "tp-categories",
+      "blocks": {
+        "convites": {
+          "type": "category",
+          "settings": { "title": "Convites", "link": "" }
+        },
+        "savethedate": {
+          "type": "category",
+          "settings": { "title": "Save the date", "link": "" }
+        },
+        "menus": {
+          "type": "category",
+          "settings": { "title": "Menus", "link": "" }
+        },
+        "adesivos": {
+          "type": "category",
+          "settings": { "title": "Adesivos", "link": "" }
+        },
+        "sinalizacao": {
+          "type": "category",
+          "settings": { "title": "Sinalização", "link": "" }
+        },
+        "templates": {
+          "type": "category",
+          "settings": { "title": "Templates Canva", "link": "" }
+        }
+      },
+      "block_order": ["convites", "savethedate", "menus", "adesivos", "sinalizacao", "templates"],
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 24,
-        "section_width": "full-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 60,
-        "padding-block-end": 60
+        "eyebrow": "Comece por aqui"
       }
     },
-    "product_list_YidTcf": {
-      "type": "product-list",
+    "tp_two_ways": {
+      "type": "tp-two-ways",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "static": true,
+        "tailor": {
+          "type": "way",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "eyebrow": "Escolha seu jeito · 01",
+            "title": "Tailor-made",
+            "description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
+            "features": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
+            "button_label": "Quero criar meu projeto",
+            "button_link": "",
+            "button_style": "solid"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "canva": {
+          "type": "way",
           "settings": {
-            "product_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_xE4xwn": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_image",
-              "settings": {
-                "image_ratio": "portrait",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "group_63jLqN": {
-              "type": "_product-card-group",
-              "name": "t:names.group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "background_color": "",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "link": "",
-                "open_in_new_tab": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "product_title_LqTDzV": {
-                  "type": "product-title",
-                  "name": "t:names.product_title",
-                  "settings": {
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "price_ECfK8q": {
-                  "type": "price",
-                  "name": "t:names.product_price",
-                  "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "h6",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "text_color": "",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "swatches_EpqgCG": {
-                  "type": "swatches",
-                  "name": "t:names.swatches",
-                  "disabled": true,
-                  "settings": {
-                    "product_swatches_alignment": "flex-start",
-                    "product_swatches_alignment_mobile": "flex-start",
-                    "hide_padding": false,
-                    "product_swatches_padding_top": 4,
-                    "product_swatches_padding_bottom": 0,
-                    "product_swatches_padding_left": 0,
-                    "product_swatches_padding_right": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "product_title_LqTDzV",
-                "price_ECfK8q",
-                "swatches_EpqgCG"
-              ]
-            }
-          },
-          "block_order": [
-            "product_card_gallery_xE4xwn",
-            "group_63jLqN"
-          ]
+            "eyebrow": "Escolha seu jeito · 02",
+            "title": "Template Canva",
+            "description": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
+            "features": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
+            "button_label": "Ver templates",
+            "button_link": "",
+            "button_style": "outline"
+          }
         }
       },
-      "name": "t:names.product_list",
+      "block_order": ["tailor", "canva"],
+      "settings": {}
+    },
+    "tp_products": {
+      "type": "tp-featured-products",
       "settings": {
+        "heading": "Mais procurados",
         "collection": "all",
-        "layout_type": "carousel",
-        "carousel_on_mobile": false,
-        "max_products": 6,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 36,
-        "icons_style": "none",
-        "icons_shape": "circle",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 24,
-        "padding-block-end": 48
+        "products_to_show": 4,
+        "price_prefix": "Total:",
+        "cta_label": "Comprar agora",
+        "link_label": "Ver todos os produtos",
+        "link": "shopify://collections/all"
       }
     },
-    "section_BkdmxX": {
-      "type": "section",
+    "tp_how": {
+      "type": "tp-how-it-works",
       "blocks": {
-        "group_nBjX4E": {
-          "type": "group",
-          "name": "t:names.content",
+        "step1": {
+          "type": "step",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_hbXDfN": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>Papelaria e design para eventos para quem acredita que os detalhes também contam histórias.</p><p></p><p>Desenvolvo identidades visuais, convites, papelaria de mesa, sinalização e peças personalizadas com olhar autoral, estética contemporânea e acabamentos cuidadosamente escolhidos.</p><p></p><p>Mais do que criar papelaria, busco traduzir a identidade de cada celebração em elementos que façam sentido, despertem expectativa e permaneçam na memória.</p><p></p><h3>Cada projeto é desenvolvido individualmente, unindo design, papel, textura, tipografia e personalidade para criar algo verdadeiramente seu.</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_TKN94J": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>Shall we create something together?</p>",
-                "width": "fit-content",
-                "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_hbXDfN",
-            "text_TKN94J"
-          ]
+            "title": "Escolha e envie os dados",
+            "description": "Adicione ao pedido e mande nomes, datas e fotos pelo WhatsApp. Quantidades são fixas e o preço é fechado."
+          }
         },
-        "button_tryV8k": {
-          "type": "button",
-          "name": "t:names.button",
+        "step2": {
+          "type": "step",
           "settings": {
-            "label": "(83) 98110-1510",
-            "link": "",
-            "open_in_new_tab": true,
-            "style_class": "button-unstyled",
-            "custom_button_background": "{{ settings.color_palette.foreground }}",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "link_text_color": "",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "title": "Aprove a arte",
+            "description": "Confira nomes, datas, horários e endereços com atenção antes de aprovar a arte final. Até 3 solicitações de correção."
+          }
+        },
+        "step3": {
+          "type": "step",
+          "settings": {
+            "title": "Receba",
+            "description": "Arquivos digitais em até 1 dia útil após a aprovação. Impressos entram em produção e seguem para o transporte."
+          }
         }
       },
-      "block_order": [
-        "group_nBjX4E",
-        "button_tryV8k"
-      ],
-      "name": "t:names.heading",
+      "block_order": ["step1", "step2", "step3"],
       "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": false,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "flex-end",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 24,
-        "padding-block-end": 0
+        "eyebrow": "Como funciona",
+        "footnote": "O prazo começa após confirmação do pagamento e envio de todas as informações necessárias."
       }
     },
-    "collection_list_3ejxRy": {
-      "type": "collection-list",
+    "tp_portfolio": {
+      "type": "tp-portfolio",
       "blocks": {
-        "group_KNYFmf": {
-          "type": "group",
-          "name": "t:names.header",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 8,
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_J8QkkF": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>SHOP BY</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h6",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_EjD6fk": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h3><em>Collection</em></h3>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_J8QkkF",
-            "text_EjD6fk"
-          ]
-        },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_dNxGHW": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "text_color": "{{ settings.color_palette.foreground }}",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_dNxGHW"
-          ]
-        }
+        "w1": { "type": "work", "settings": { "caption": "Mesa posta completa" } },
+        "w2": { "type": "work", "settings": { "caption": "Save the date" } },
+        "w3": { "type": "work", "settings": { "caption": "Menu oval" } },
+        "w4": { "type": "work", "settings": { "caption": "Convite negroni" } },
+        "w5": { "type": "work", "settings": { "caption": "Número de mesa" } }
       },
-      "block_order": [
-        "group_KNYFmf"
-      ],
-      "disabled": true,
-      "name": "t:names.collections_bento",
+      "block_order": ["w1", "w2", "w3", "w4", "w5"],
       "settings": {
-        "collection_list": [],
-        "layout_type": "bento",
-        "carousel_on_mobile": false,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 24
+        "heading": "Trabalhos reais",
+        "link_label": "Ver portfólio",
+        "link": ""
       }
     },
-    "media_with_content_HP7Qpp": {
-      "type": "media-with-content",
+    "tp_quotes": {
+      "type": "tp-testimonials",
       "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "disabled": true,
-          "static": true,
+        "q1": {
+          "type": "quote",
           "settings": {
-            "media_type": "image",
-            "link": "",
-            "video_loop": true,
-            "video_autoplay": false,
-            "image_position": "cover",
-            "video_position": "cover"
-          },
-          "blocks": {}
+            "quote": "Cada peça chegou exatamente como estava na prévia — e o convite virou lembrança na casa dos convidados.",
+            "author": "Marina e Rafael · Casamento, Curitiba"
+          }
         },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
+        "q2": {
+          "type": "quote",
           "settings": {
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 24
-          },
-          "blocks": {
-            "text_eEy4hr": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>OUR BESTSELLING PRODUCT</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h6",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "group_WG7cBJ": {
-              "type": "group",
-              "name": "t:names.group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 16,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "background_color": "",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_pp7GaT": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<h2>The Ultimate Set</h2>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_VzkkLz": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Made with care and unconditionally loved by our customers, this signature bestseller exceeds all expectations.</p>",
-                    "width": "fit-content",
-                    "max_width": "narrow",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_pp7GaT",
-                "text_VzkkLz"
-              ]
-            },
-            "button_UetELt": {
-              "type": "button",
-              "settings": {
-                "label": "SHOP NOW",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button-unstyled",
-                "custom_button_background": "{{ settings.color_palette.foreground }}",
-                "custom_button_text": "{{ settings.color_palette.background }}",
-                "custom_button_border": "{{ settings.color_palette.background }}",
-                "link_text_color": "",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_eEy4hr",
-            "group_WG7cBJ",
-            "button_UetELt"
-          ]
+            "quote": "Fechamos em quatro formandas e ficou muito mais em conta. Os adesivos sumiram na primeira hora da festa.",
+            "author": "Turma de Odontologia · Formatura"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "quote": "As cartelas organizaram a rotina dos meus pacientes sem eu precisar explicar duas vezes.",
+            "author": "Dra. Helena Braga · Consultório"
+          }
         }
       },
-      "name": "t:names.media_with_text",
+      "block_order": ["q1", "q2", "q3"],
       "settings": {
-        "media_position": "right",
-        "media_width": "narrow",
-        "media_height": "80svh",
-        "section_width": "page-width",
-        "extend_media": true,
-        "background_color": "{{ settings.color_palette.color1 }}",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "eyebrow": "Quem já celebrou com a gente"
+      }
+    },
+    "tp_faq": {
+      "type": "tp-faq",
+      "blocks": {
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "Qual a diferença entre produto digital e físico?",
+            "answer": "<p>O digital é entregue por arquivo ou link — nenhum item físico será enviado. O físico é impresso, embalado e transportado, com prazo de produção informado na página.</p>"
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Posso alterar a arte depois de pronta?",
+            "answer": "<p>Sim: até 3 solicitações de correção dos dados inseridos, com retorno em até 2 dias úteis.</p>"
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Como funciona o pagamento?",
+            "answer": "<p>PIX ou cartão em até 12x, combinado no WhatsApp junto com o frete. A produção começa após a aprovação da arte e a confirmação do pagamento.</p>"
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "O tamanho é o que eu imagino?",
+            "answer": "<p>Toda página traz a medida em centímetros comparada a uma folha A4, além do guia de medidas completo.</p>"
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "heading": "Perguntas frequentes",
+        "description": "Ficou alguma dúvida? Fale com a Thainá pelo WhatsApp."
+      }
+    },
+    "tp_cta": {
+      "type": "tp-cta",
+      "settings": {
+        "script_text": "vamos começar",
+        "heading": "Conte o que você está celebrando — o resto a gente desenha junto.",
+        "description": "Atendimento direto com a Thainá, de segunda a sexta.",
+        "button_1_label": "Falar no WhatsApp",
+        "button_1_link": "",
+        "button_2_label": "Ver o catálogo",
+        "button_2_link": "shopify://collections/all"
       }
     }
   },
   "order": [
-    "hero_G7CAX9",
-    "section",
-    "product_list_YidTcf",
-    "section_BkdmxX",
-    "collection_list_3ejxRy",
-    "media_with_content_HP7Qpp"
+    "tp_hero",
+    "tp_occasions",
+    "tp_categories",
+    "tp_two_ways",
+    "tp_products",
+    "tp_how",
+    "tp_portfolio",
+    "tp_quotes",
+    "tp_faq",
+    "tp_cta"
   ]
 }
