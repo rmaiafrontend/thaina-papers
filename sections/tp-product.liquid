@@ -1,0 +1,603 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign can_add_to_cart = false
+  assign add_to_cart_text = 'products.product.unavailable' | t
+
+  if variant
+    if variant.available
+      assign can_add_to_cart = true
+      assign add_to_cart_text = section.settings.add_to_cart_label | default: 'Adicionar ao pedido'
+    else
+      assign add_to_cart_text = 'products.product.sold_out' | t
+    endif
+  endif
+
+  assign media_list = product.media
+  assign main_media = media_list.first
+  assign thumb_media = media_list | slice: 1, 3
+
+  assign spec_blocks = section.blocks | where: 'type', 'spec_column'
+-%}
+
+<div class="tp-product">
+  <div class="tp-product__breadcrumb">
+    <a href="{{ routes.root_url }}">Início</a>
+    {%- assign crumb_collection = product.collections.first -%}
+    {%- if crumb_collection -%}
+      <span aria-hidden="true"> / </span>
+      <a href="{{ crumb_collection.url }}">{{ crumb_collection.title }}</a>
+    {%- endif -%}
+    <span aria-hidden="true"> / </span>
+    <span>{{ product.title }}</span>
+  </div>
+
+  <div class="tp-product__main">
+    <div class="tp-product__gallery">
+      <div class="tp-media tp-product__gallery-main" data-tp-gallery-main>
+        {%- if main_media -%}
+          {{
+            main_media
+            | image_url: width: 1200
+            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 45vw', widths: '600,900,1200', id: 'tp-gallery-main-img'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ product.title }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if thumb_media.size > 0 -%}
+        <div class="tp-product__gallery-thumbs">
+          {%- for media in thumb_media -%}
+            <button
+              type="button"
+              class="tp-media tp-product__gallery-thumb"
+              data-tp-gallery-thumb
+              data-full="{{ media | image_url: width: 1200 }}"
+              aria-label="Ver imagem {{ forloop.index }}"
+            >
+              {{ media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,300,400' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-product__buybox">
+      <h1 class="tp-product__title">{{ product.title }}</h1>
+
+      {%- if section.settings.short_description != blank -%}
+        <div class="tp-product__lead">{{ section.settings.short_description }}</div>
+      {%- endif -%}
+
+      <div class="tp-product__price">{{ product.price | money }}</div>
+      {%- if section.settings.quantity_note != blank -%}
+        <div class="tp-product__quantity-note">{{ section.settings.quantity_note }}</div>
+      {%- endif -%}
+
+      <div class="tp-product__actions">
+        <product-form-component
+          data-section-id="{{ section.id }}"
+          data-product-id="{{ product.id }}"
+          data-product-url="{{ product.url }}"
+          on:submit="/handleSubmit"
+        >
+          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+          {%- form 'product', product, id: 'tp-product-form', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+            <add-to-cart-component ref="addToCartButtonContainer">
+              <button
+                type="submit"
+                name="add"
+                ref="addToCartButton"
+                on:click="/handleClick"
+                class="tp-btn tp-btn--solid tp-product__submit"
+                {% unless can_add_to_cart %}disabled{% endunless %}
+              >
+                {{- add_to_cart_text -}}
+              </button>
+            </add-to-cart-component>
+          {%- endform -%}
+        </product-form-component>
+
+        {%- if section.settings.contact_label != blank -%}
+          <a href="{{ section.settings.contact_link | default: '#' }}" class="tp-btn tp-btn--outline tp-product__contact">
+            {{- section.settings.contact_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'info' -%}
+          <div class="tp-product__info" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <div class="tp-product__info-title">{{ block.settings.title }}</div>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="tp-product__info-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+            {%- assign info_items = block.settings.items | newline_to_br | split: '<br />' -%}
+            {%- assign has_items = false -%}
+            {%- for raw_item in info_items -%}
+              {%- if raw_item != blank -%}
+                {%- assign has_items = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_items -%}
+              <div class="tp-product__info-list">
+                {%- for raw_item in info_items -%}
+                  {%- assign item = raw_item | strip -%}
+                  {%- if item != blank -%}
+                    <div>{{ item }}</div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.note != blank -%}
+              <p class="tp-product__info-note">{{ block.settings.note }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if spec_blocks.size > 0 -%}
+    <div class="tp-product__specs">
+      <div class="tp-product__specs-grid">
+        {%- for block in spec_blocks -%}
+          <div class="tp-product__spec" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <div class="tp-product__spec-title">{{ block.settings.title }}</div>
+            {%- endif -%}
+
+            {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+            {%- assign has_rows = false -%}
+            {%- for raw_row in rows -%}
+              {%- if raw_row != blank -%}
+                {%- assign has_rows = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_rows -%}
+              <div class="tp-product__spec-rows">
+                {%- for raw_row in rows -%}
+                  {%- assign row = raw_row | strip -%}
+                  {%- if row != blank -%}
+                    {%- assign label = row | split: '|' | first | strip -%}
+                    {%- assign value = row | split: '|' | last | strip -%}
+                    <div class="tp-product__spec-row"><span>{{ label }}</span><span>{{ value }}</span></div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.body != blank -%}
+              <p class="tp-product__spec-body">{{ block.settings.body }}</p>
+            {%- endif -%}
+
+            {%- assign spec_items = block.settings.items | newline_to_br | split: '<br />' -%}
+            {%- assign has_spec_items = false -%}
+            {%- for raw_item in spec_items -%}
+              {%- if raw_item != blank -%}
+                {%- assign has_spec_items = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_spec_items -%}
+              <div class="tp-product__spec-list">
+                {%- for raw_item in spec_items -%}
+                  {%- assign item = raw_item | strip -%}
+                  {%- if item != blank -%}
+                    <div>{{ item }}</div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.note != blank -%}
+              <p class="tp-product__spec-note">{{ block.settings.note }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-tp-gallery-thumb]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var main = btn.closest('.tp-product')?.querySelector('[data-tp-gallery-main] img');
+        var full = btn.getAttribute('data-full');
+        if (main && full) {
+          main.src = full;
+          main.removeAttribute('srcset');
+        }
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .tp-product {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+  }
+
+  .tp-product * {
+    box-sizing: border-box;
+  }
+
+  .tp-product a,
+  .tp-product button {
+    color: inherit;
+    font-family: var(--tp-sans);
+  }
+
+  .tp-product .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-product .tp-btn--outline {
+    background: transparent;
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+  }
+
+  .tp-product__breadcrumb {
+    padding: 26px var(--tp-gutter) 0;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+  }
+
+  .tp-product__breadcrumb a:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-product__main {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+    padding: 26px var(--tp-gutter) 64px;
+  }
+
+  .tp-product__gallery {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-product__gallery-main {
+    height: 520px;
+  }
+
+  .tp-product__gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .tp-product__gallery-thumb {
+    height: 150px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  .tp-product__buybox {
+    width: 500px;
+    flex: none;
+  }
+
+  .tp-product__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1.16;
+    margin: 0 0 12px;
+  }
+
+  .tp-product__lead {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin: 0 0 22px;
+  }
+
+  .tp-product__price {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .tp-product__quantity-note {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-bottom: 24px;
+  }
+
+  .tp-product__actions {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .tp-product__actions product-form-component,
+  .tp-product__actions form {
+    display: block;
+  }
+
+  .tp-product__submit,
+  .tp-product__contact {
+    width: 100%;
+    height: 54px;
+    font-size: 15px;
+  }
+
+  .tp-product__submit[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .tp-product__info {
+    border-top: 1px solid var(--tp-line);
+    padding: 20px 0;
+  }
+
+  .tp-product__info-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 10px;
+  }
+
+  .tp-product__info-body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--tp-ink);
+  }
+
+  .tp-product__info-body p {
+    margin: 0 0 8px;
+  }
+
+  .tp-product__info-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tp-product__info-list {
+    display: grid;
+    gap: 7px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+  }
+
+  .tp-product__info-note {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 8px 0 0;
+  }
+
+  .tp-product__specs {
+    background: var(--tp-stone);
+    padding: 60px var(--tp-gutter) 64px;
+  }
+
+  .tp-product__specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .tp-product__spec-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 14px;
+  }
+
+  .tp-product__spec-rows {
+    display: grid;
+    gap: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .tp-product__spec-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tp-product__spec-row span:last-child {
+    color: var(--tp-muted);
+  }
+
+  .tp-product__spec-body {
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+
+  .tp-product__spec-list {
+    display: grid;
+    gap: 7px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+  }
+
+  .tp-product__spec-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 14px 0 0;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-product__main {
+      gap: 32px;
+    }
+
+    .tp-product__buybox {
+      width: 420px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-product__breadcrumb {
+      padding-top: 16px;
+      font-size: 11px;
+    }
+
+    .tp-product__main {
+      flex-direction: column;
+      gap: 28px;
+      padding-block: 16px 40px;
+    }
+
+    .tp-product__buybox {
+      width: auto;
+    }
+
+    .tp-product__gallery {
+      flex: none;
+      width: 100%;
+    }
+
+    .tp-product__gallery-main {
+      height: 380px;
+    }
+
+    .tp-product__gallery-thumb {
+      height: 96px;
+    }
+
+    .tp-product__title {
+      font-size: 28px;
+    }
+
+    .tp-product__specs {
+      padding-block: 36px 40px;
+    }
+
+    .tp-product__specs-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Produto",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "short_description",
+      "label": "Descrição curta",
+      "default": "<p>O convite que abre a celebração, impresso em pequeno lote e pronto para entregar.</p>"
+    },
+    {
+      "type": "text",
+      "id": "quantity_note",
+      "label": "Nota de quantidade/pagamento",
+      "default": "Quantidade fixa: 10 unidades · PIX ou até 12x"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Botão — adicionar ao pedido",
+      "default": "Adicionar ao pedido"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Botão — falar com a Thainá",
+      "default": "Falar com a Thainá"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Link do botão de contato"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info",
+      "name": "Bloco de informação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "O que é"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Lista (um item por linha)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Observação (menor, cinza)"
+        }
+      ]
+    },
+    {
+      "type": "spec_column",
+      "name": "Coluna de especificação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Prazo"
+        },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Linhas rótulo/valor (uma por linha: Rótulo | Valor)"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Lista (um item por linha)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Observação (menor, cinza)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Produto",
+      "blocks": [
+        { "type": "info" },
+        { "type": "info" },
+        { "type": "info" }
+      ]
+    }
+  ]
+}
+{% endschema %}

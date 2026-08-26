@@ -1,0 +1,148 @@
+{%- liquid
+  assign heading = section.settings.heading | default: 'Combina com'
+  assign limit = section.settings.max_products | default: 4
+-%}
+
+<div
+  id="tp-product-recs-{{ section.id }}"
+  data-tp-recommendations
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}&intent=related"
+>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <section class="tp-section tp-product-recs">
+      <div class="tp-section-head">
+        <h2 class="tp-heading">{{ heading }}</h2>
+        {%- if section.settings.link_label != blank -%}
+          {%- assign rec_collection = product.collections.first -%}
+          <a href="{{ section.settings.link | default: rec_collection.url | default: routes.all_products_collection_url }}" class="tp-link-caps">
+            {{- section.settings.link_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="tp-product-recs__grid">
+        {%- for recommended_product in recommendations.products -%}
+          <a href="{{ recommended_product.url }}" class="tp-product-recs__card">
+            <div class="tp-media tp-product-recs__media">
+              {%- if recommended_product.featured_media -%}
+                {{
+                  recommended_product.featured_media
+                  | image_url: width: 700
+                  | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 45vw, 22vw', widths: '300,500,700'
+                }}
+              {%- else -%}
+                <div class="tp-media__placeholder">{{ recommended_product.title }}</div>
+              {%- endif -%}
+            </div>
+            <div class="tp-product-recs__title">{{ recommended_product.title }}</div>
+            <div class="tp-product-recs__price">{{ recommended_product.price | money }}</div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var container = document.getElementById('tp-product-recs-{{ section.id }}');
+    if (!container) return;
+
+    fetch(container.dataset.url)
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var fresh = doc.getElementById('tp-product-recs-{{ section.id }}');
+        if (fresh) container.innerHTML = fresh.innerHTML;
+      })
+      .catch(function () {});
+  })();
+</script>
+
+{% stylesheet %}
+  .tp-product-recs {
+    padding-block: 60px 72px;
+  }
+
+  .tp-product-recs__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .tp-product-recs__media {
+    height: 260px;
+    border-radius: 18px;
+  }
+
+  .tp-product-recs__title {
+    font-size: 15px;
+    margin-top: 12px;
+    color: var(--tp-ink);
+  }
+
+  .tp-product-recs__price {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 8px;
+    color: var(--tp-ink);
+  }
+
+  @media (max-width: 1100px) {
+    .tp-product-recs__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-product-recs {
+      padding-block: 32px 36px;
+    }
+
+    .tp-product-recs__media {
+      height: 200px;
+      border-radius: 12px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Combina com",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Combina com"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Produtos exibidos",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Texto do link",
+      "default": "Ver casamentos"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Destino do link (padrão: coleção do produto)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Combina com"
+    }
+  ]
+}
+{% endschema %}
