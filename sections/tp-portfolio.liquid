@@ -16,17 +16,15 @@
     {%- for block in blocks -%}
       {%- assign position = forloop.index -%}
       <div class="tp-portfolio__cell tp-portfolio__cell--{{ position }}" {{ block.shopify_attributes }}>
-        <div class="tp-media tp-portfolio__media">
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 1200
-              | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 50vw, 33vw', widths: '400,700,1200'
-            }}
-          {%- else -%}
-            <div class="tp-media__placeholder">{{ block.settings.caption | default: 'Trabalho' }}</div>
-          {%- endif -%}
-        </div>
+        {%- render 'tp-image',
+          image: block.settings.image,
+          asset: block.settings.image_asset,
+          alt: block.settings.caption,
+          class: 'tp-portfolio__media',
+          width: 1200,
+          sizes: '(max-width: 899px) 50vw, 33vw',
+          widths: '400,700,1200'
+        -%}
       </div>
     {%- endfor -%}
   </div>
@@ -126,6 +124,12 @@
       "type": "work",
       "name": "Imagem",
       "settings": [
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (fallback)",
+          "info": "Usado só quando nenhuma imagem é escolhida."
+        },
         {
           "type": "image_picker",
           "id": "image",

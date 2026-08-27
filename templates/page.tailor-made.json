@@ -123,7 +123,9 @@
         "guests_options": "Até 50\nAté 80\nAté 150\nMais de 150",
         "budget_options": "Até R$ 1.000\nR$ 1.000 a R$ 2.000\nR$ 2.000 a R$ 4.000\nAcima de R$ 4.000",
         "pieces_options": "Convite\nSave the date\nPapelaria do dia\nManuais\nSinalização\nAinda não sei",
-        "announcement_override": "Projetos exclusivos · Agenda limitada por mês"
+        "announcement_override": "Projetos exclusivos · Agenda limitada por mês",
+        "hero_image_1_asset": "tp-tablescape-georgia.jpg",
+        "hero_image_2_asset": "tp-invite-vellum-wax-seal.jpg"
       }
     }
   },

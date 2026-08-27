@@ -7,17 +7,15 @@
     {%- for block in section.blocks -%}
       <a href="{{ block.settings.link | default: '#' }}" class="tp-categories__item" {{ block.shopify_attributes }}>
         <div class="tp-categories__frame">
-          <div class="tp-media tp-categories__media">
-            {%- if block.settings.image != blank -%}
-              {{
-                block.settings.image
-                | image_url: width: 500
-                | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 30vw, 15vw', widths: '200,320,500'
-              }}
-            {%- else -%}
-              <div class="tp-media__placeholder">{{ block.settings.title }}</div>
-            {%- endif -%}
-          </div>
+          {%- render 'tp-image',
+            image: block.settings.image,
+            asset: block.settings.image_asset,
+            alt: block.settings.title,
+            class: 'tp-categories__media',
+            width: 500,
+            sizes: '(max-width: 899px) 30vw, 15vw',
+            widths: '200,320,500'
+          -%}
         </div>
         <div class="tp-categories__label">{{ block.settings.title }}</div>
       </a>
@@ -104,6 +102,12 @@
       "type": "category",
       "name": "Categoria",
       "settings": [
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (fallback)",
+          "info": "Usado só quando nenhuma imagem é escolhida."
+        },
         {
           "type": "image_picker",
           "id": "image",

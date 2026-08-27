@@ -22,7 +22,9 @@
         "button_2_label": "Sob medida",
         "button_2_link": "/pages/contact?view=tailor-made",
         "image_1_alt": "Suíte de convites sobre linho",
-        "image_2_alt": "Menu ao lado do prato"
+        "image_2_alt": "Menu ao lado do prato",
+        "image_1_asset": "tp-tablescape-georgia.jpg",
+        "image_2_asset": "tp-invite-vellum-wax-seal.jpg"
       }
     },
     "tp_occasions": {
@@ -34,7 +36,8 @@
             "title": "Casamentos",
             "description": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
             "link_label": "Ver casamentos",
-            "link": "/collections/pacotes?view=casamentos"
+            "link": "/collections/pacotes?view=casamentos",
+            "image_asset": "tp-tablescape-balmoral.jpg"
           }
         },
         "formaturas": {
@@ -43,7 +46,8 @@
             "title": "Formaturas",
             "description": "Pacotes FORM, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
             "link_label": "Ver formaturas",
-            "link": "/collections/especial-formaturas?view=formaturas"
+            "link": "/collections/especial-formaturas?view=formaturas",
+            "image_asset": "tp-savethedate-champagne.jpg"
           }
         },
         "consultorios": {
@@ -52,7 +56,8 @@
             "title": "Consultórios",
             "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
             "link_label": "Ver consultórios",
-            "link": "/collections/avulsos?view=consultorios"
+            "link": "/collections/avulsos?view=consultorios",
+            "image_asset": "tp-tablenumber-narrative.jpg"
           }
         }
       },
@@ -70,42 +75,48 @@
           "type": "category",
           "settings": {
             "title": "Convites",
-            "link": "/collections/convites"
+            "link": "/collections/convites",
+            "image_asset": "tp-invite-guestlist-blue.jpg"
           }
         },
         "savethedate": {
           "type": "category",
           "settings": {
             "title": "Save the date",
-            "link": "/search?q=save+the+date"
+            "link": "/search?q=save+the+date",
+            "image_asset": "tp-savethedate-lace.jpg"
           }
         },
         "menus": {
           "type": "category",
           "settings": {
             "title": "Menus",
-            "link": "/search?q=menu"
+            "link": "/search?q=menu",
+            "image_asset": "tp-menu-scallop-orange.jpg"
           }
         },
         "adesivos": {
           "type": "category",
           "settings": {
             "title": "Adesivos",
-            "link": "/search?q=adesivo"
+            "link": "/search?q=adesivo",
+            "image_asset": "tp-favor-tag-amphora.jpg"
           }
         },
         "sinalizacao": {
           "type": "category",
           "settings": {
             "title": "Sinalização",
-            "link": "/search?q=sinaliza"
+            "link": "/search?q=sinaliza",
+            "image_asset": "tp-tablenumber-heritage.jpg"
           }
         },
         "templates": {
           "type": "category",
           "settings": {
             "title": "Templates Canva",
-            "link": "/collections/convites?view=templates"
+            "link": "/collections/convites?view=templates",
+            "image_asset": "tp-savethedate-swan.jpg"
           }
         }
       },
@@ -208,31 +219,36 @@
         "w1": {
           "type": "work",
           "settings": {
-            "caption": "Mesa posta completa"
+            "caption": "Mesa posta completa",
+            "image_asset": "tp-menu-tulip-placecard.jpg"
           }
         },
         "w2": {
           "type": "work",
           "settings": {
-            "caption": "Save the date"
+            "caption": "Save the date",
+            "image_asset": "tp-menu-ciaonina-folding.jpg"
           }
         },
         "w3": {
           "type": "work",
           "settings": {
-            "caption": "Menu oval"
+            "caption": "Menu oval",
+            "image_asset": "tp-savethedate-negroni.jpg"
           }
         },
         "w4": {
           "type": "work",
           "settings": {
-            "caption": "Convite negroni"
+            "caption": "Convite negroni",
+            "image_asset": "tp-menu-dine-oval.jpg"
           }
         },
         "w5": {
           "type": "work",
           "settings": {
-            "caption": "Número de mesa"
+            "caption": "Número de mesa",
+            "image_asset": "tp-tablescape-georgia.jpg"
           }
         }
       },

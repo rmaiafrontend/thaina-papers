@@ -43,28 +43,26 @@
     </div>
 
     <div class="tp-tailor__hero-media-group">
-      <div class="tp-media tp-tailor__hero-media">
-        {%- if section.settings.hero_image_1 != blank -%}
-          {{
-            section.settings.hero_image_1
-            | image_url: width: 900
-            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,600,900'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.hero_image_1_caption }}</div>
-        {%- endif -%}
-      </div>
-      <div class="tp-media tp-tailor__hero-media tp-tailor__hero-media--offset">
-        {%- if section.settings.hero_image_2 != blank -%}
-          {{
-            section.settings.hero_image_2
-            | image_url: width: 900
-            | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,600,900'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.hero_image_2_caption }}</div>
-        {%- endif -%}
-      </div>
+      {%- render 'tp-image',
+        image: section.settings.hero_image_1,
+        asset: section.settings.hero_image_1_asset,
+        alt: section.settings.hero_image_1_caption,
+        class: 'tp-tailor__hero-media',
+        width: 900,
+        sizes: '(max-width: 899px) 100vw, 40vw',
+        widths: '400,600,900',
+        loading: 'eager'
+      -%}
+      {%- render 'tp-image',
+        image: section.settings.hero_image_2,
+        asset: section.settings.hero_image_2_asset,
+        alt: section.settings.hero_image_2_caption,
+        class: 'tp-tailor__hero-media tp-tailor__hero-media--offset',
+        width: 900,
+        sizes: '(max-width: 899px) 100vw, 40vw',
+        widths: '400,600,900',
+        loading: 'lazy'
+      -%}
     </div>
   </div>
 
@@ -999,6 +997,12 @@
       "label": "Link do botão secundário"
     },
     {
+      "type": "text",
+      "id": "hero_image_1_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image_1",
       "label": "Imagem 1"
@@ -1008,6 +1012,12 @@
       "id": "hero_image_1_caption",
       "label": "Legenda da imagem 1 (sem imagem)",
       "default": "Projeto tailor-made"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_2_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida."
     },
     {
       "type": "image_picker",

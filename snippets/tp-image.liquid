@@ -1,0 +1,46 @@
+{%- doc -%}
+  Renderiza uma imagem com três níveis de fallback, na ordem:
+  1. imagem escolhida no editor (image_picker, vem dos Arquivos da loja);
+  2. imagem embutida no tema (assets/), útil enquanto a loja não tem
+     upload próprio — é o que evita a página nascer só com placeholder;
+  3. placeholder com legenda.
+
+  @param {image} [image] - valor de um setting image_picker
+  @param {string} [asset] - nome do arquivo em assets/ (ex.: 'tp-foo.jpg')
+  @param {string} [alt] - texto alternativo / legenda do placeholder
+  @param {string} [class] - classes extras no wrapper
+  @param {string} [sizes] - atributo sizes
+  @param {string} [widths] - larguras para o srcset
+  @param {number} [width] - largura base para image_url
+  @param {string} [loading] - lazy (padrão) ou eager
+
+  @example
+  {% render 'tp-image', image: section.settings.image_1, asset: section.settings.image_1_asset, alt: 'Convite', class: 'tp-hero__frame', width: 1200 %}
+{%- enddoc -%}
+
+{%- liquid
+  assign img_width = width | default: 900
+  assign img_sizes = sizes | default: '100vw'
+  assign img_widths = widths | default: '400,700,1000,1400'
+  assign img_loading = loading | default: 'lazy'
+-%}
+
+<div class="tp-media {{ class }}">
+  {%- if image != blank -%}
+    {{
+      image
+      | image_url: width: img_width
+      | image_tag: loading: img_loading, sizes: img_sizes, widths: img_widths, alt: alt
+    }}
+  {%- elsif asset != blank -%}
+    <img
+      src="{{ asset | asset_url }}"
+      alt="{{ alt | escape }}"
+      loading="{{ img_loading }}"
+      width="1400"
+      height="1400"
+    >
+  {%- else -%}
+    <div class="tp-media__placeholder">{{ alt }}</div>
+  {%- endif -%}
+</div>

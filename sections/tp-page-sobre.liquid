@@ -17,28 +17,26 @@
     </div>
 
     <div class="tp-page-sobre__hero-media-row">
-      <div class="tp-media tp-page-sobre__hero-media">
-        {%- if section.settings.hero_image_1 != blank -%}
-          {{
-            section.settings.hero_image_1
-            | image_url: width: 900
-            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 45vw, 330px', widths: '330,500,700,900'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.hero_image_1_label }}</div>
-        {%- endif -%}
-      </div>
-      <div class="tp-media tp-page-sobre__hero-media tp-page-sobre__hero-media--offset">
-        {%- if section.settings.hero_image_2 != blank -%}
-          {{
-            section.settings.hero_image_2
-            | image_url: width: 900
-            | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 45vw, 330px', widths: '330,500,700,900'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.hero_image_2_label }}</div>
-        {%- endif -%}
-      </div>
+      {%- render 'tp-image',
+        image: section.settings.hero_image_1,
+        asset: section.settings.hero_image_1_asset,
+        alt: section.settings.hero_image_1_label,
+        class: 'tp-page-sobre__hero-media',
+        width: 900,
+        sizes: '(max-width: 899px) 45vw, 330px',
+        widths: '330,500,700,900',
+        loading: 'eager'
+      -%}
+      {%- render 'tp-image',
+        image: section.settings.hero_image_2,
+        asset: section.settings.hero_image_2_asset,
+        alt: section.settings.hero_image_2_label,
+        class: 'tp-page-sobre__hero-media tp-page-sobre__hero-media--offset',
+        width: 900,
+        sizes: '(max-width: 899px) 45vw, 330px',
+        widths: '330,500,700,900',
+        loading: 'lazy'
+      -%}
     </div>
   </div>
 
@@ -389,6 +387,12 @@
       "default": "<p>Era 2019, o orçamento era curto e eu queria algo que parecesse com a gente. Fiz o convite, os menus e as tags numa mesa de jantar — e três amigas pediram igual.</p><p>Desde então são pequenos lotes, impressos com atenção a papel, corte e acabamento. Nada de estoque parado: cada peça é feita para uma data marcada no calendário de alguém.</p><p>Hoje o estúdio também tem templates no Canva — o mesmo cuidado de projeto, para quem prefere resolver no próprio tempo.</p>"
     },
     {
+      "type": "text",
+      "id": "hero_image_1_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image_1",
       "label": "Imagem 1"
@@ -398,6 +402,12 @@
       "id": "hero_image_1_label",
       "label": "Legenda da imagem 1 (sem foto)",
       "default": "Retrato da Thainá no estúdio"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_2_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida."
     },
     {
       "type": "image_picker",

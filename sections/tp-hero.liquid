@@ -14,17 +14,16 @@
     {%- endif -%}
 
     <figure class="tp-hero__figure tp-hero__figure--main">
-      <div class="tp-media tp-hero__frame">
-        {%- if img_1 != blank -%}
-          {{
-            img_1
-            | image_url: width: 1200
-            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 42vw', widths: '500,800,1200'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.image_1_alt | default: 'Imagem 1' }}</div>
-        {%- endif -%}
-      </div>
+      {%- render 'tp-image',
+        image: img_1,
+        asset: section.settings.image_1_asset,
+        alt: section.settings.image_1_alt,
+        class: 'tp-hero__frame',
+        width: 1200,
+        sizes: '(max-width: 899px) 100vw, 42vw',
+        widths: '500,800,1200',
+        loading: 'eager'
+      -%}
     </figure>
 
     <div class="tp-hero__body">
@@ -58,17 +57,16 @@
     </div>
 
     <figure class="tp-hero__figure tp-hero__figure--sub">
-      <div class="tp-media tp-hero__frame">
-        {%- if img_2 != blank -%}
-          {{
-            img_2
-            | image_url: width: 700
-            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 50vw, 20vw', widths: '300,500,700'
-          }}
-        {%- else -%}
-          <div class="tp-media__placeholder">{{ section.settings.image_2_alt | default: 'Imagem 2' }}</div>
-        {%- endif -%}
-      </div>
+      {%- render 'tp-image',
+        image: img_2,
+        asset: section.settings.image_2_asset,
+        alt: section.settings.image_2_alt,
+        class: 'tp-hero__frame',
+        width: 700,
+        sizes: '(max-width: 899px) 50vw, 20vw',
+        widths: '300,500,700',
+        loading: 'eager'
+      -%}
     </figure>
   </div>
 </section>
@@ -349,6 +347,12 @@
     },
     {
       "type": "text",
+      "id": "image_1_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida acima."
+    },
+    {
+      "type": "text",
       "id": "image_1_alt",
       "label": "Legenda do espaço principal",
       "default": "Suíte de convites sobre linho"
@@ -357,6 +361,12 @@
       "type": "image_picker",
       "id": "image_2",
       "label": "Imagem de apoio"
+    },
+    {
+      "type": "text",
+      "id": "image_2_asset",
+      "label": "Arquivo no tema (fallback)",
+      "info": "Usado só quando nenhuma imagem é escolhida acima."
     },
     {
       "type": "text",

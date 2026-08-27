@@ -6,17 +6,15 @@
         class="tp-occasions__card"
         {{ block.shopify_attributes }}
       >
-        <div class="tp-media tp-occasions__media">
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 800
-              | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 104px, 30vw', widths: '300,500,800'
-            }}
-          {%- else -%}
-            <div class="tp-media__placeholder">{{ block.settings.title }}</div>
-          {%- endif -%}
-        </div>
+        {%- render 'tp-image',
+          image: block.settings.image,
+          asset: block.settings.image_asset,
+          alt: block.settings.title,
+          class: 'tp-occasions__media',
+          width: 800,
+          sizes: '(max-width: 899px) 104px, 30vw',
+          widths: '300,500,800'
+        -%}
         <div class="tp-occasions__body">
           <div class="tp-occasions__title">{{ block.settings.title }}</div>
           {%- if block.settings.description != blank -%}
@@ -132,6 +130,12 @@
       "type": "occasion",
       "name": "Ocasião",
       "settings": [
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (fallback)",
+          "info": "Usado só quando nenhuma imagem é escolhida."
+        },
         {
           "type": "image_picker",
           "id": "image",
