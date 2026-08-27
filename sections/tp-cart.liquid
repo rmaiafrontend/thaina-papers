@@ -152,7 +152,10 @@
   .tp-cart {
     font-family: var(--tp-sans);
     color: var(--tp-ink);
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
     padding: 56px var(--tp-gutter) 72px;
+    box-sizing: border-box;
   }
 
   .tp-cart * {
