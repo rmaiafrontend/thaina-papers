@@ -1,0 +1,203 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_guia_medidas": {
+      "type": "tp-page-guia-medidas",
+      "blocks": {
+        "size_a4": {
+          "type": "size_row",
+          "settings": {
+            "format": "A4",
+            "measure": "21 × 29,7 cm",
+            "compare": "A folha inteira"
+          }
+        },
+        "size_a5": {
+          "type": "size_row",
+          "settings": {
+            "format": "A5",
+            "measure": "14,8 × 21 cm",
+            "compare": "Metade da folha"
+          }
+        },
+        "size_a6": {
+          "type": "size_row",
+          "settings": {
+            "format": "A6",
+            "measure": "10,5 × 14,8 cm",
+            "compare": "Um quarto da folha — tamanho de cartão-postal"
+          }
+        },
+        "size_10x15": {
+          "type": "size_row",
+          "settings": {
+            "format": "10 × 15",
+            "measure": "10 × 15 cm",
+            "compare": "Uma foto revelada"
+          }
+        },
+        "size_15x15": {
+          "type": "size_row",
+          "settings": {
+            "format": "15 × 15",
+            "measure": "15 × 15 cm",
+            "compare": "Pouco maior que um porta-copos duplo"
+          }
+        },
+        "size_8x8": {
+          "type": "size_row",
+          "settings": {
+            "format": "8 × 8",
+            "measure": "8 × 8 cm",
+            "compare": "Um post-it grande"
+          }
+        },
+        "size_7x7": {
+          "type": "size_row",
+          "settings": {
+            "format": "7 × 7",
+            "measure": "7 × 7 cm",
+            "compare": "Do tamanho de um cartão de visita quadrado"
+          }
+        },
+        "size_6x6": {
+          "type": "size_row",
+          "settings": {
+            "format": "6 × 6",
+            "measure": "6 × 6 cm",
+            "compare": "Pouco maior que uma tampa de garrafa"
+          }
+        },
+        "size_5x5": {
+          "type": "size_row",
+          "settings": {
+            "format": "5 × 5",
+            "measure": "5 × 5 cm",
+            "compare": "Do tamanho de um selo grande"
+          }
+        },
+        "bar_a4": {
+          "type": "scale_bar",
+          "settings": {
+            "label": "A4",
+            "width": 150,
+            "height": 100
+          }
+        },
+        "bar_a5": {
+          "type": "scale_bar",
+          "settings": {
+            "label": "A5",
+            "width": 106,
+            "height": 71
+          }
+        },
+        "bar_a6": {
+          "type": "scale_bar",
+          "settings": {
+            "label": "A6",
+            "width": 75,
+            "height": 50
+          }
+        },
+        "bar_menor": {
+          "type": "scale_bar",
+          "settings": {
+            "label": "",
+            "width": 36,
+            "height": 24
+          }
+        },
+        "sticker_5": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "5 cm",
+            "qty": "até 15 adesivos"
+          }
+        },
+        "sticker_6": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "6 cm",
+            "qty": "até 12 adesivos"
+          }
+        },
+        "sticker_7": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "7 cm",
+            "qty": "até 6 adesivos"
+          }
+        },
+        "sticker_8": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "8 cm",
+            "qty": "até 6 adesivos"
+          }
+        },
+        "sticker_9": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "9 cm",
+            "qty": "até 4 adesivos"
+          }
+        },
+        "sticker_10": {
+          "type": "sticker_row",
+          "settings": {
+            "size": "10 cm",
+            "qty": "até 2 adesivos"
+          }
+        }
+      },
+      "block_order": [
+        "size_a4",
+        "size_a5",
+        "size_a6",
+        "size_10x15",
+        "size_15x15",
+        "size_8x8",
+        "size_7x7",
+        "size_6x6",
+        "size_5x5",
+        "bar_a4",
+        "bar_a5",
+        "bar_a6",
+        "bar_menor",
+        "sticker_5",
+        "sticker_6",
+        "sticker_7",
+        "sticker_8",
+        "sticker_9",
+        "sticker_10"
+      ],
+      "name": "TP — Guia de medidas",
+      "settings": {
+        "announcement_override": "Todas as medidas comparadas a uma folha A4 (21 × 29,7 cm)",
+        "crumb_home": "Início",
+        "crumb_current": "Guia de medidas",
+        "heading": "Que tamanho é esse, de verdade?",
+        "intro": "<p>Toda peça do catálogo aparece aqui comparada a uma folha A4 — a régua que quase todo mundo tem em casa.</p>",
+        "col_format": "Formato",
+        "col_measure": "Medida",
+        "col_compare": "Comparado à A4",
+        "scale_label": "Escala visual",
+        "scale_note": "<p>Proporções reais entre os formatos mais usados do catálogo.</p>",
+        "sticker_label": "Adesivo redondo por cartela A4",
+        "sticker_link_label": "Ver adesivos bottom →"
+      }
+    }
+  },
+  "order": [
+    "tp_guia_medidas"
+  ]
+}

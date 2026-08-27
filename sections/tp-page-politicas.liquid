@@ -1,0 +1,505 @@
+{%- liquid
+  assign policy_links = section.blocks | where: 'type', 'policy_link'
+  assign clauses = section.blocks | where: 'type', 'clause'
+
+  # Um único item do índice fica marcado como atual: prioriza a marcação
+  # manual do lojista; se ninguém marcar, cai para a rota da página atual.
+  assign current_index = -1
+  for block in policy_links
+    if current_index == -1 and block.settings.is_current
+      assign current_index = forloop.index0
+    endif
+  endfor
+  if current_index == -1
+    for block in policy_links
+      assign link_path = block.settings.link | split: '?' | first
+      if current_index == -1 and link_path != blank and link_path == request.path
+        assign current_index = forloop.index0
+      endif
+    endfor
+  endif
+-%}
+
+<div class="tp-politicas">
+  <div class="tp-politicas__inner">
+    <aside class="tp-politicas__aside">
+      {%- if policy_links.size > 0 -%}
+        <div class="tp-politicas__aside-label">{{ section.settings.index_label }}</div>
+        <nav class="tp-politicas__index">
+          {%- for block in policy_links -%}
+            {%- assign is_current = false -%}
+            {%- if forloop.index0 == current_index -%}
+              {%- assign is_current = true -%}
+            {%- endif -%}
+            <a
+              href="{{ block.settings.link | default: '#' }}"
+              class="tp-politicas__index-link{% if is_current %} tp-politicas__index-link--current{% endif %}"
+              {% if is_current %}aria-current="page"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.label -}}
+            </a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      {%- if section.settings.help_title != blank -%}
+        <div class="tp-politicas__help">
+          <div class="tp-politicas__help-title">{{ section.settings.help_title }}</div>
+          {%- if section.settings.help_text != blank -%}
+            <div class="tp-politicas__help-text">{{ section.settings.help_text }}</div>
+          {%- endif -%}
+          {%- if section.settings.help_link_label != blank -%}
+            <a href="{{ section.settings.help_link | default: '#' }}" class="tp-politicas__help-link">
+              {{- section.settings.help_link_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </aside>
+
+    <div class="tp-politicas__content">
+      <div class="tp-politicas__breadcrumb">
+        <a href="{{ routes.root_url }}">Início</a>
+        <span aria-hidden="true"> / </span>
+        <span>{{ section.settings.breadcrumb_tail }}</span>
+      </div>
+
+      <h1 class="tp-politicas__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.updated_at != blank -%}
+        <div class="tp-politicas__updated">{{ section.settings.updated_at }}</div>
+      {%- endif -%}
+
+      {%- for block in clauses -%}
+        <div class="tp-politicas__clause{% if forloop.last %} tp-politicas__clause--last{% endif %}" {{ block.shopify_attributes }}>
+          <div class="tp-politicas__clause-title">{{ block.settings.title }}</div>
+
+          {%- if block.settings.body != blank -%}
+            <div class="tp-politicas__clause-body">{{ block.settings.body }}</div>
+          {%- endif -%}
+
+          {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+          {%- assign has_rows = false -%}
+          {%- for raw_row in rows -%}
+            {%- if raw_row != blank -%}
+              {%- assign has_rows = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if has_rows -%}
+            <div class="tp-politicas__rows">
+              {%- for raw_row in rows -%}
+                {%- assign row = raw_row | strip -%}
+                {%- if row != blank -%}
+                  {%- assign label = row | split: '|' | first | strip -%}
+                  {%- assign value = row | split: '|' | last | strip -%}
+                  <div class="tp-politicas__row"><span>{{ label }}</span><span>{{ value }}</span></div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+      {%- if section.settings.footer_note != blank -%}
+        <div class="tp-politicas__note">{{ section.settings.footer_note }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.announcement_override != blank -%}
+  <script>
+    (function () {
+      var text = {{ section.settings.announcement_override | json }};
+      var desktop = document.querySelector('.tp-header__announce--desktop');
+      var mobile = document.querySelector('.tp-header__announce--mobile');
+      if (desktop) desktop.textContent = text;
+      if (mobile) mobile.textContent = text;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .tp-politicas {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-politicas * {
+    box-sizing: border-box;
+  }
+
+  .tp-politicas a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tp-politicas__inner {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-block: 56px 72px;
+    padding-inline: var(--tp-gutter);
+  }
+
+  .tp-politicas__aside {
+    width: 300px;
+    flex: none;
+  }
+
+  .tp-politicas__aside-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 18px;
+  }
+
+  .tp-politicas__index {
+    display: grid;
+    font-size: 15px;
+  }
+
+  .tp-politicas__index-link {
+    padding-block: 12px;
+    border-top: 1px solid rgba(36, 33, 31, 0.14);
+  }
+
+  .tp-politicas__index-link:last-child {
+    border-bottom: 1px solid rgba(36, 33, 31, 0.14);
+  }
+
+  .tp-politicas__index-link:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-politicas__index-link--current {
+    color: var(--tp-wine);
+    font-weight: 500;
+  }
+
+  .tp-politicas__help {
+    margin-top: 26px;
+    border: 1px solid var(--tp-line);
+    padding: 20px 18px;
+  }
+
+  .tp-politicas__help-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .tp-politicas__help-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-bottom: 12px;
+  }
+
+  .tp-politicas__help-text p {
+    margin: 0;
+  }
+
+  .tp-politicas__help-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--tp-wine);
+  }
+
+  .tp-politicas__content {
+    flex: 1;
+    min-width: 0;
+    max-width: 760px;
+  }
+
+  .tp-politicas__breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 14px;
+  }
+
+  .tp-politicas__breadcrumb a:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-politicas__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1.16;
+    margin: 0 0 12px;
+  }
+
+  .tp-politicas__updated {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-bottom: 36px;
+  }
+
+  .tp-politicas__clause {
+    border-top: 1px solid var(--tp-line);
+    padding-block: 24px;
+  }
+
+  .tp-politicas__clause--last {
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-politicas__clause-title {
+    font-family: var(--tp-serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .tp-politicas__clause-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--tp-body);
+  }
+
+  .tp-politicas__clause-body p {
+    margin: 0;
+  }
+
+  .tp-politicas__clause-body p + p {
+    margin-top: 10px;
+  }
+
+  .tp-politicas__rows {
+    display: grid;
+    gap: 10px;
+    font-size: 15px;
+    max-width: 460px;
+    margin-top: 14px;
+  }
+
+  .tp-politicas__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid rgba(36, 33, 31, 0.12);
+    padding-bottom: 8px;
+  }
+
+  .tp-politicas__row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .tp-politicas__row span:last-child {
+    color: var(--tp-muted);
+    text-align: right;
+  }
+
+  .tp-politicas__note {
+    margin-top: 26px;
+    padding: 20px 22px;
+    background: var(--tp-stone);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--tp-body);
+  }
+
+  .tp-politicas__note p {
+    margin: 0;
+  }
+
+  .tp-politicas__note a {
+    color: var(--tp-wine);
+    font-weight: 500;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-politicas__inner {
+      gap: 32px;
+    }
+
+    .tp-politicas__aside {
+      width: 240px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-politicas__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 32px;
+      padding-block: 28px 40px;
+    }
+
+    .tp-politicas__aside {
+      width: auto;
+      order: 2;
+    }
+
+    .tp-politicas__content {
+      order: 1;
+      max-width: none;
+    }
+
+    .tp-politicas__title {
+      font-size: 30px;
+    }
+
+    .tp-politicas__updated {
+      margin-bottom: 24px;
+    }
+
+    .tp-politicas__clause-title {
+      font-size: 20px;
+    }
+
+    .tp-politicas__rows {
+      max-width: none;
+    }
+
+    .tp-politicas__row {
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tp-politicas__row span:last-child {
+      text-align: left;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Políticas",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_override",
+      "label": "Aviso do topo (só nesta página)",
+      "default": "Regras válidas para pedidos feitos a partir de 1º de setembro de 2026"
+    },
+    {
+      "type": "text",
+      "id": "index_label",
+      "label": "Título do índice lateral",
+      "default": "Políticas"
+    },
+    {
+      "type": "header",
+      "content": "Conteúdo"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_tail",
+      "label": "Breadcrumb (depois de \"Início /\")",
+      "default": "Políticas / Produtos físicos"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Política de produtos físicos"
+    },
+    {
+      "type": "text",
+      "id": "updated_at",
+      "label": "Data de atualização",
+      "default": "Atualizada em 26 de agosto de 2026"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_note",
+      "label": "Nota final (caixa destacada)",
+      "default": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Caixa de ajuda"
+    },
+    {
+      "type": "text",
+      "id": "help_title",
+      "label": "Título",
+      "default": "Ficou alguma dúvida?"
+    },
+    {
+      "type": "richtext",
+      "id": "help_text",
+      "label": "Texto",
+      "default": "<p>A Thainá responde pelo WhatsApp em até 2 dias úteis.</p>"
+    },
+    {
+      "type": "text",
+      "id": "help_link_label",
+      "label": "Link",
+      "default": "Falar no WhatsApp →"
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Destino do link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "policy_link",
+      "name": "Item do índice",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Catálogo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_current",
+          "label": "Esta é a página atual",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "clause",
+      "name": "Cláusula",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "1. Aprovação antes da produção"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Lista rótulo/valor (uma por linha: Rótulo | Valor)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Políticas",
+      "blocks": [
+        { "type": "policy_link" },
+        { "type": "policy_link" },
+        { "type": "clause" },
+        { "type": "clause" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,132 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_politicas": {
+      "type": "tp-page-politicas",
+      "blocks": {
+        "idx_catalogo": {
+          "type": "policy_link",
+          "settings": { "label": "Catálogo", "is_current": false }
+        },
+        "idx_fisicos": {
+          "type": "policy_link",
+          "settings": { "label": "Produtos físicos", "is_current": true }
+        },
+        "idx_digitais": {
+          "type": "policy_link",
+          "settings": { "label": "Produtos digitais", "is_current": false }
+        },
+        "idx_cancelamento": {
+          "type": "policy_link",
+          "settings": { "label": "Cancelamento", "is_current": false }
+        },
+        "idx_trocas": {
+          "type": "policy_link",
+          "settings": { "label": "Trocas", "is_current": false }
+        },
+        "idx_licenca": {
+          "type": "policy_link",
+          "settings": { "label": "Licença dos templates", "is_current": false }
+        },
+        "idx_privacidade": {
+          "type": "policy_link",
+          "settings": { "label": "Privacidade", "is_current": false }
+        },
+        "idx_termos": {
+          "type": "policy_link",
+          "settings": { "label": "Termos de uso", "is_current": false }
+        },
+        "clause_1": {
+          "type": "clause",
+          "settings": {
+            "title": "1. Aprovação antes da produção",
+            "body": "<p>Nenhuma peça entra em produção antes da aprovação expressa da arte final e da confirmação do pagamento.</p><p>Confira nomes, datas, horários e endereços com atenção antes de aprovar a arte final. Depois da aprovação, correções geram novo pedido.</p>"
+          }
+        },
+        "clause_2": {
+          "type": "clause",
+          "settings": {
+            "title": "2. Prazos",
+            "body": "<p>O prazo começa após confirmação do pagamento e envio de todas as informações necessárias, e é contado em dias úteis por etapa:</p>",
+            "rows": "Primeira prévia | 5 a 10 dias úteis\nRetorno de alterações | até 2 dias úteis\nProdução | informada na página do produto\nTransporte | conforme destino e transportadora"
+          }
+        },
+        "clause_3": {
+          "type": "clause",
+          "settings": {
+            "title": "3. Alterações",
+            "body": "<p>Cada pedido inclui até 3 solicitações de correção dos dados inseridos — textos, nomes, datas e informações. Mudanças de layout, formato ou projeto gráfico não entram nesse limite e são orçadas à parte.</p>"
+          }
+        },
+        "clause_4": {
+          "type": "clause",
+          "settings": {
+            "title": "4. Quantidades",
+            "body": "<p>As quantidades são fixas e informadas no nome do produto. Não há campo livre de quantidade: para outro volume, escolha a faixa correspondente ou fale com a Thainá.</p>"
+          }
+        },
+        "clause_5": {
+          "type": "clause",
+          "settings": {
+            "title": "5. Cor e acabamento",
+            "body": "<p>Telas e impressos podem apresentar pequena variação de cor. Papel, corte e acabamento seguem o descrito na página do produto; pequenas variações de corte são inerentes à produção artesanal em pequeno lote.</p>"
+          }
+        },
+        "clause_6": {
+          "type": "clause",
+          "settings": {
+            "title": "6. Frete e entrega",
+            "body": "<p>O frete não está incluído no preço e é combinado no atendimento pelo WhatsApp, junto com a forma de pagamento. O código de rastreio é enviado assim que a encomenda é postada.</p>"
+          }
+        },
+        "clause_7": {
+          "type": "clause",
+          "settings": {
+            "title": "7. Pagamento",
+            "body": "<p>PIX ou cartão em até 12x, combinado no atendimento. Pedidos sob medida podem exigir entrada — o percentual é informado na proposta antes do aceite.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "idx_catalogo",
+        "idx_fisicos",
+        "idx_digitais",
+        "idx_cancelamento",
+        "idx_trocas",
+        "idx_licenca",
+        "idx_privacidade",
+        "idx_termos",
+        "clause_1",
+        "clause_2",
+        "clause_3",
+        "clause_4",
+        "clause_5",
+        "clause_6",
+        "clause_7"
+      ],
+      "name": "TP — Políticas",
+      "settings": {
+        "announcement_override": "Regras válidas para pedidos feitos a partir de 1º de setembro de 2026",
+        "index_label": "Políticas",
+        "breadcrumb_tail": "Políticas / Produtos físicos",
+        "heading": "Política de produtos físicos",
+        "updated_at": "Atualizada em 26 de agosto de 2026",
+        "footer_note": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata.</p>",
+        "help_title": "Ficou alguma dúvida?",
+        "help_text": "<p>A Thainá responde pelo WhatsApp em até 2 dias úteis.</p>",
+        "help_link_label": "Falar no WhatsApp →"
+      }
+    }
+  },
+  "order": [
+    "tp_politicas"
+  ]
+}

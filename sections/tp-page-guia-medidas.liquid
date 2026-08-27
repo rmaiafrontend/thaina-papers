@@ -1,0 +1,651 @@
+{%- liquid
+  assign size_rows = section.blocks | where: 'type', 'size_row'
+  assign scale_bars = section.blocks | where: 'type', 'scale_bar'
+  assign sticker_rows = section.blocks | where: 'type', 'sticker_row'
+-%}
+
+<div class="tp-guia">
+  <div class="tp-guia__head">
+    {%- if section.settings.crumb_current != blank or section.settings.crumb_home != blank -%}
+      <nav class="tp-guia__crumb" aria-label="{{ section.settings.crumb_current | escape }}">
+        {%- if section.settings.crumb_home != blank -%}
+          <a href="{{ routes.root_url }}" class="tp-guia__crumb-link">{{ section.settings.crumb_home }}</a>
+        {%- endif -%}
+        {%- if section.settings.crumb_home != blank and section.settings.crumb_current != blank -%}
+          <span class="tp-guia__crumb-sep" aria-hidden="true">/</span>
+        {%- endif -%}
+        {%- if section.settings.crumb_current != blank -%}
+          <span class="tp-guia__crumb-current">{{ section.settings.crumb_current }}</span>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="tp-guia__title">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <div class="tp-guia__lead">{{ section.settings.intro }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="tp-guia__cols">
+    <div class="tp-guia__main">
+      <div class="tp-guia__table">
+        <div class="tp-guia__row tp-guia__row--head">
+          <div class="tp-guia__cell">{{ section.settings.col_format }}</div>
+          <div class="tp-guia__cell">{{ section.settings.col_measure }}</div>
+          <div class="tp-guia__cell">{{ section.settings.col_compare }}</div>
+        </div>
+
+        {%- for block in size_rows -%}
+          {%- liquid
+            assign zebra = forloop.index | modulo: 2
+            assign row_classes = 'tp-guia__row tp-guia__row--data'
+            if zebra == 0
+              assign row_classes = row_classes | append: ' tp-guia__row--alt'
+            endif
+          -%}
+          <div class="{{ row_classes }}" {{ block.shopify_attributes }}>
+            <div class="tp-guia__cell tp-guia__cell--format">{{ block.settings.format }}</div>
+            <div class="tp-guia__cell tp-guia__cell--value">
+              <span class="tp-guia__cell-tag">{{ section.settings.col_measure }}</span>
+              {{ block.settings.measure }}
+            </div>
+            <div class="tp-guia__cell tp-guia__cell--value tp-guia__cell--compare">
+              <span class="tp-guia__cell-tag">{{ section.settings.col_compare }}</span>
+              {{ block.settings.compare }}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <aside class="tp-guia__side">
+      <div class="tp-guia__card tp-guia__card--scale">
+        {%- if section.settings.scale_label != blank -%}
+          <div class="tp-guia__card-label">{{ section.settings.scale_label }}</div>
+        {%- endif -%}
+
+        {%- if scale_bars.size > 0 -%}
+          <div class="tp-guia__scale">
+            {%- for block in scale_bars -%}
+              <div
+                class="tp-guia__bar"
+                style="width: {{ block.settings.width }}px; height: {{ block.settings.height }}%;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.label != blank -%}
+                  <span class="tp-guia__bar-label">{{ block.settings.label }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.scale_note != blank -%}
+          <div class="tp-guia__scale-note">{{ section.settings.scale_note }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="tp-guia__card tp-guia__card--sticker">
+        {%- if section.settings.sticker_label != blank -%}
+          <div class="tp-guia__card-label">{{ section.settings.sticker_label }}</div>
+        {%- endif -%}
+
+        {%- if sticker_rows.size > 0 -%}
+          <div class="tp-guia__list">
+            {%- for block in sticker_rows -%}
+              <div class="tp-guia__list-row" {{ block.shopify_attributes }}>
+                <span class="tp-guia__list-size">{{ block.settings.size }}</span>
+                <span class="tp-guia__list-qty">{{ block.settings.qty }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.sticker_link_label != blank -%}
+          <a href="{{ section.settings.sticker_link_url | default: '#' }}" class="tp-guia__card-link">
+            {{- section.settings.sticker_link_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </aside>
+  </div>
+</div>
+
+{%- if section.settings.announcement_override != blank -%}
+  <script>
+    (function () {
+      var text = {{ section.settings.announcement_override | json }};
+      var desktop = document.querySelector('.tp-header__announce--desktop');
+      var mobile = document.querySelector('.tp-header__announce--mobile');
+      if (desktop) desktop.textContent = text;
+      if (mobile) mobile.textContent = text;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .tp-guia {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-guia * {
+    box-sizing: border-box;
+  }
+
+  .tp-guia a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ---------- Bloco 1 — cabeçalho ---------- */
+
+  .tp-guia__head {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 56px var(--tp-gutter) 32px;
+    box-sizing: border-box;
+  }
+
+  .tp-guia__crumb {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-block: 0 14px;
+  }
+
+  .tp-guia__crumb-sep {
+    margin-inline: 6px;
+  }
+
+  .tp-guia__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin-block: 0 16px;
+    max-width: 700px;
+  }
+
+  .tp-guia__lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    max-width: 620px;
+  }
+
+  .tp-guia__lead p {
+    margin: 0;
+  }
+
+  .tp-guia__lead p + p {
+    margin-block: 10px 0;
+  }
+
+  /* ---------- Bloco 2 — duas colunas ---------- */
+
+  .tp-guia__cols {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 24px var(--tp-gutter) 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-guia__main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ---------- Tabela de formatos ---------- */
+
+  .tp-guia__table {
+    border: 1px solid var(--tp-line);
+  }
+
+  .tp-guia__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.6fr;
+  }
+
+  .tp-guia__row--head {
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tp-guia__row--head .tp-guia__cell {
+    padding: 16px 22px;
+  }
+
+  .tp-guia__row--data {
+    font-size: 15px;
+    line-height: 1.55;
+    border-bottom: 1px solid rgba(36, 33, 31, 0.12);
+  }
+
+  .tp-guia__row--data:last-child {
+    border-bottom: 0;
+  }
+
+  .tp-guia__row--data .tp-guia__cell {
+    padding: 16px 22px;
+  }
+
+  .tp-guia__row--alt {
+    background: var(--tp-stone);
+  }
+
+  .tp-guia__cell--compare {
+    color: var(--tp-body);
+  }
+
+  .tp-guia__cell-tag {
+    display: none;
+  }
+
+  /* ---------- Coluna direita ---------- */
+
+  .tp-guia__side {
+    width: 420px;
+    flex: none;
+  }
+
+  .tp-guia__card {
+    border: 1px solid var(--tp-line);
+    padding: 26px 24px;
+  }
+
+  .tp-guia__card--scale {
+    margin-block: 0 24px;
+  }
+
+  .tp-guia__card-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-block: 0 16px;
+  }
+
+  /* Diagrama de proporção */
+
+  .tp-guia__scale {
+    width: 100%;
+    height: 300px;
+    background: var(--tp-stone);
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  /* As barras encolhem proporcionalmente (flex-shrink padrão distribui o
+     déficit na proporção da largura), então a leitura da escala se mantém
+     exata em qualquer viewport, sem barra de rolagem. */
+  .tp-guia__bar {
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line-strong);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-block: 8px 0;
+    font-size: 12px;
+    color: var(--tp-muted);
+    min-width: 0;
+  }
+
+  .tp-guia__bar-label {
+    line-height: 1;
+  }
+
+  .tp-guia__scale-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-block: 12px 0;
+  }
+
+  .tp-guia__scale-note p {
+    margin: 0;
+  }
+
+  /* Lista de adesivos */
+
+  .tp-guia__list {
+    display: grid;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .tp-guia__list-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid rgba(36, 33, 31, 0.12);
+    padding-block: 0 8px;
+  }
+
+  .tp-guia__list-row:last-child {
+    border-bottom: 0;
+    padding-block: 0;
+  }
+
+  .tp-guia__list-qty {
+    color: var(--tp-muted);
+  }
+
+  .tp-guia__card-link {
+    display: inline-flex;
+    margin-block: 18px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--tp-wine);
+  }
+
+  /* ---------- Responsivo ---------- */
+
+  @media (max-width: 1100px) {
+    .tp-guia__head {
+      padding-block: 44px 26px;
+    }
+
+    .tp-guia__title {
+      font-size: 38px;
+    }
+
+    .tp-guia__cols {
+      gap: 32px;
+      padding-block: 20px 52px;
+    }
+
+    .tp-guia__side {
+      width: 340px;
+    }
+
+    .tp-guia__row--head .tp-guia__cell,
+    .tp-guia__row--data .tp-guia__cell {
+      padding-inline: 16px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-guia__head {
+      padding-block: 32px 20px;
+    }
+
+    .tp-guia__title {
+      font-size: 30px;
+    }
+
+    .tp-guia__lead {
+      font-size: 15px;
+      max-width: none;
+    }
+
+    .tp-guia__cols {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+      padding-block: 16px 40px;
+    }
+
+    .tp-guia__side {
+      width: auto;
+    }
+
+    /* A tabela de 3 colunas vira uma pilha de cartões */
+    .tp-guia__row--head {
+      display: none;
+    }
+
+    .tp-guia__row--data {
+      display: block;
+      padding: 16px 18px;
+    }
+
+    .tp-guia__row--data .tp-guia__cell {
+      padding: 0;
+    }
+
+    .tp-guia__cell--format {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+      margin-block: 0 10px;
+    }
+
+    .tp-guia__cell--value {
+      font-size: 14px;
+    }
+
+    .tp-guia__cell--value + .tp-guia__cell--value {
+      margin-block: 12px 0;
+    }
+
+    .tp-guia__cell-tag {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+      margin-block: 0 4px;
+    }
+
+    .tp-guia__card {
+      padding: 22px 20px;
+    }
+
+    .tp-guia__scale {
+      height: 260px;
+      padding: 16px;
+      gap: 8px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Guia de medidas",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_override",
+      "label": "Aviso do topo (só nesta página)",
+      "default": "Todas as medidas comparadas a uma folha A4 (21 × 29,7 cm)"
+    },
+    {
+      "type": "header",
+      "content": "Cabeçalho"
+    },
+    {
+      "type": "text",
+      "id": "crumb_home",
+      "label": "Breadcrumb — início",
+      "default": "Início"
+    },
+    {
+      "type": "text",
+      "id": "crumb_current",
+      "label": "Breadcrumb — página atual",
+      "default": "Guia de medidas"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Que tamanho é esse, de verdade?"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texto de apoio",
+      "default": "<p>Toda peça do catálogo aparece aqui comparada a uma folha A4 — a régua que quase todo mundo tem em casa.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Tabela de formatos"
+    },
+    {
+      "type": "text",
+      "id": "col_format",
+      "label": "Coluna 1",
+      "default": "Formato"
+    },
+    {
+      "type": "text",
+      "id": "col_measure",
+      "label": "Coluna 2",
+      "default": "Medida"
+    },
+    {
+      "type": "text",
+      "id": "col_compare",
+      "label": "Coluna 3",
+      "default": "Comparado à A4"
+    },
+    {
+      "type": "header",
+      "content": "Escala visual"
+    },
+    {
+      "type": "text",
+      "id": "scale_label",
+      "label": "Rótulo do card",
+      "default": "Escala visual"
+    },
+    {
+      "type": "richtext",
+      "id": "scale_note",
+      "label": "Legenda do diagrama",
+      "default": "<p>Proporções reais entre os formatos mais usados do catálogo.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Adesivos por cartela"
+    },
+    {
+      "type": "text",
+      "id": "sticker_label",
+      "label": "Rótulo do card",
+      "default": "Adesivo redondo por cartela A4"
+    },
+    {
+      "type": "text",
+      "id": "sticker_link_label",
+      "label": "Texto do link",
+      "default": "Ver adesivos bottom →"
+    },
+    {
+      "type": "url",
+      "id": "sticker_link_url",
+      "label": "Link do card"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_row",
+      "name": "Linha de formato",
+      "settings": [
+        {
+          "type": "text",
+          "id": "format",
+          "label": "Formato",
+          "default": "A4"
+        },
+        {
+          "type": "text",
+          "id": "measure",
+          "label": "Medida",
+          "default": "21 × 29,7 cm"
+        },
+        {
+          "type": "text",
+          "id": "compare",
+          "label": "Comparado à A4",
+          "default": "A folha inteira"
+        }
+      ]
+    },
+    {
+      "type": "scale_bar",
+      "name": "Barra da escala",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo (opcional)",
+          "default": "A4"
+        },
+        {
+          "type": "number",
+          "id": "width",
+          "label": "Largura (px)",
+          "default": 150
+        },
+        {
+          "type": "number",
+          "id": "height",
+          "label": "Altura (%)",
+          "default": 100
+        }
+      ]
+    },
+    {
+      "type": "sticker_row",
+      "name": "Linha de adesivo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "size",
+          "label": "Tamanho",
+          "default": "5 cm"
+        },
+        {
+          "type": "text",
+          "id": "qty",
+          "label": "Quantidade",
+          "default": "até 15 adesivos"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Guia de medidas",
+      "blocks": [
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "size_row" },
+        { "type": "scale_bar" },
+        { "type": "scale_bar" },
+        { "type": "scale_bar" },
+        { "type": "scale_bar" },
+        { "type": "sticker_row" },
+        { "type": "sticker_row" },
+        { "type": "sticker_row" },
+        { "type": "sticker_row" },
+        { "type": "sticker_row" },
+        { "type": "sticker_row" }
+      ]
+    }
+  ]
+}
+{% endschema %}

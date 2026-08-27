@@ -18,28 +18,28 @@
           "type": "link_column",
           "settings": {
             "title": "Ocasiões",
-            "links": "Casamentos | /collections/all\nFormaturas | /collections/all\nConsultórios | /collections/all\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
+            "links": "Casamentos | /collections/pacotes?view=casamentos\nFormaturas | /collections/especial-formaturas?view=formaturas\nConsultórios | /collections/avulsos?view=consultorios\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
           }
         },
         "col_shop": {
           "type": "link_column",
           "settings": {
             "title": "Comprar",
-            "links": "Convites | /collections/all\nSave the date | /collections/all\nMenus e sinalização | /collections/all\nAdesivos e tags | /collections/all\nTemplates Canva | /collections/all"
+            "links": "Convites | /collections/all\nSave the date | /collections/all\nMenus e sinalização | /collections/all\nAdesivos e tags | /collections/all\nTemplates Canva | /collections/convites?view=templates"
           }
         },
         "col_help": {
           "type": "link_column",
           "settings": {
             "title": "Ajuda",
-            "links": "Como funciona | /\nGuia de medidas | /\nPrazos de produção | /\nAlterações e aprovação | /\nPerguntas frequentes | /"
+            "links": "Como funciona | /\nGuia de medidas | /pages/contact?view=guia-de-medidas\nPrazos de produção | /\nAlterações e aprovação | /\nPerguntas frequentes | /"
           }
         },
         "col_policies": {
           "type": "link_column",
           "settings": {
             "title": "Políticas",
-            "links": "Catálogo | /collections/all\nProdutos físicos | /policies/refund-policy\nProdutos digitais | /policies/refund-policy\nCancelamento e trocas | /policies/refund-policy\nLicença dos templates | /policies/terms-of-service\nPrivacidade e termos | /policies/privacy-policy"
+            "links": "Catálogo | /collections/all\nProdutos físicos | /pages/contact?view=politicas\nProdutos digitais | /policies/refund-policy\nCancelamento e trocas | /policies/refund-policy\nLicença dos templates | /policies/terms-of-service\nPrivacidade e termos | /policies/privacy-policy"
           }
         },
         "note_digital": {
@@ -65,15 +65,24 @@
         },
         "social_instagram": {
           "type": "social_link",
-          "settings": { "label": "Instagram", "link": "https://instagram.com/thainapapers" }
+          "settings": {
+            "label": "Instagram",
+            "link": "https://instagram.com/thainapapers"
+          }
         },
         "social_pinterest": {
           "type": "social_link",
-          "settings": { "label": "Pinterest", "link": "https://pinterest.com/thainapapers" }
+          "settings": {
+            "label": "Pinterest",
+            "link": "https://pinterest.com/thainapapers"
+          }
         },
         "social_whatsapp": {
           "type": "social_link",
-          "settings": { "label": "WhatsApp", "link": "https://wa.me/5500000000000" }
+          "settings": {
+            "label": "WhatsApp",
+            "link": "https://wa.me/5500000000000"
+          }
         }
       },
       "block_order": [
