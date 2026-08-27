@@ -24,14 +24,42 @@
       {{ menu_label }}
     </button>
 
-    <button
-      type="button"
-      class="tp-header__search button-unstyled"
-      on:click="#search-modal/showDialog"
-      aria-haspopup="dialog"
+    {%- comment -%}
+      No protótipo o slot de busca é o próprio campo: nas páginas comuns
+      aparece só o rótulo "Buscar" e, na página de busca, um input com o
+      termo. Clicar no rótulo troca para o input, sem abrir modal.
+    {%- endcomment -%}
+    {%- assign on_search = false -%}
+    {%- if template.name == 'search' -%}
+      {%- assign on_search = true -%}
+    {%- endif -%}
+    <form
+      action="{{ routes.search_url }}"
+      method="get"
+      role="search"
+      class="tp-header__search-form"
+      {% if on_search %}data-persistent="true"{% endif %}
     >
-      {{ search_label }}
-    </button>
+      <button
+        type="button"
+        class="tp-header__search button-unstyled"
+        data-tp-search-open
+        {% if on_search %}hidden{% endif %}
+      >
+        {{ search_label }}
+      </button>
+      <label class="visually-hidden" for="tp-header-q">{{ search_label }}</label>
+      <input
+        id="tp-header-q"
+        type="search"
+        name="q"
+        class="tp-header__search-input"
+        placeholder="{{ search_label }}"
+        value="{{ search.terms | escape }}"
+        data-tp-search-input
+        {% unless on_search %}hidden{% endunless %}
+      >
+    </form>
 
     <a href="{{ routes.root_url }}" class="tp-header__logo">
       {{- section.settings.logo_text | default: shop.name -}}
@@ -148,6 +176,34 @@
       if (event.key === 'Escape' && !menu.hidden) close();
     });
   })();
+
+  // Busca: o rótulo "Buscar" vira o campo de busca no mesmo lugar.
+  (function () {
+    var openBtn = document.querySelector('[data-tp-search-open]');
+    var input = document.querySelector('[data-tp-search-input]');
+    if (!openBtn || !input) return;
+
+    openBtn.addEventListener('click', function () {
+      openBtn.hidden = true;
+      input.hidden = false;
+      input.focus();
+    });
+
+    // Sem termo digitado, volta ao rótulo ao sair do campo.
+    input.addEventListener('blur', function () {
+      if (input.value.trim() !== '') return;
+      if (document.querySelector('.tp-header__search-form')?.dataset.persistent === 'true') return;
+      input.hidden = true;
+      openBtn.hidden = false;
+    });
+
+    input.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        input.value = '';
+        input.blur();
+      }
+    });
+  })();
 </script>
 
 {% stylesheet %}
@@ -214,14 +270,43 @@
     cursor: pointer;
   }
 
-  .tp-header__search {
+  .tp-header__search-form {
     grid-column: 1;
     grid-row: 1;
     justify-self: start;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .tp-header__search {
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
+  }
+
+  .tp-header__search[hidden],
+  .tp-header__search-input[hidden] {
+    display: none;
+  }
+
+  .tp-header__search-input {
+    height: 40px;
+    width: 300px;
+    max-width: 100%;
+    padding-inline: 14px;
+    border: 1px solid rgba(36, 33, 31, 0.28);
+    border-radius: 0;
+    background: var(--tp-cream);
+    font-family: var(--tp-sans);
+    font-size: 14px;
+    color: var(--tp-ink);
+  }
+
+  .tp-header__search-input:focus-visible {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: -1px;
   }
 
   .tp-header__logo {
@@ -378,9 +463,24 @@
       letter-spacing: 0.3em;
     }
 
-    .tp-header__search {
+    .tp-header__search-form {
       grid-column: 3;
       justify-self: end;
+    }
+
+    /* Com o campo aberto não cabem logo + input em 375px: o campo ocupa
+       o espaço a partir da 2ª coluna e o logo sai, mantendo o MENU. */
+    .tp-header__row:has(.tp-header__search-input:not([hidden])) .tp-header__logo {
+      display: none;
+    }
+
+    .tp-header__row:has(.tp-header__search-input:not([hidden])) .tp-header__search-form {
+      grid-column: 2 / -1;
+      justify-self: stretch;
+    }
+
+    .tp-header__search-input {
+      width: 100%;
     }
 
     .tp-header__actions {
