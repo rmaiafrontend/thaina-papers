@@ -1,0 +1,443 @@
+{%- liquid
+  assign phone = section.settings.whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+-%}
+
+<div class="tp-cart">
+  {%- if cart.item_count > 0 -%}
+    <h1 class="tp-cart__title">Seu pedido</h1>
+    <p class="tp-cart__lead">Revise os itens e envie para a Thainá pelo WhatsApp. Frete e forma de pagamento são combinados no atendimento.</p>
+
+    <div class="tp-cart__body">
+      <div class="tp-cart__items">
+        {%- for item in cart.items -%}
+          <div class="tp-cart__item">
+            <div class="tp-media tp-cart__item-media">
+              {%- if item.image -%}
+                {{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', widths: '150,220,300' }}
+              {%- else -%}
+                <div class="tp-media__placeholder">{{ item.product.title }}</div>
+              {%- endif -%}
+            </div>
+            <div class="tp-cart__item-body">
+              <div class="tp-cart__item-title">
+                {{ item.product.title }}{% if item.variant.title != 'Default Title' %} — {{ item.variant.title }}{% endif %}
+                {%- if item.quantity > 1 %} × {{ item.quantity }}{% endif -%}
+              </div>
+              {%- if item.requires_shipping -%}
+                <div class="tp-cart__item-meta">Produto físico · quantidade fixa</div>
+              {%- else -%}
+                <div class="tp-cart__item-meta">Produto digital · nenhum item físico será enviado</div>
+                <div class="tp-cart__item-badge">Produto digital</div>
+              {%- endif -%}
+              <a href="{{ item.url_to_remove }}" class="tp-cart__item-remove">Remover</a>
+            </div>
+            <div class="tp-cart__item-price">{{ item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <p class="tp-cart__note">As quantidades são fixas por item. Para outra quantidade, escolha a faixa correspondente na página do produto.</p>
+    </div>
+
+    <div class="tp-cart__summary">
+      <div class="tp-cart__summary-title">Resumo</div>
+      <div class="tp-cart__summary-row"><span>{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}itens{% endif %}</span><span>{{ cart.total_price | money }}</span></div>
+      <div class="tp-cart__summary-row tp-cart__summary-row--muted"><span>Frete</span><span>combinado no WhatsApp</span></div>
+      <div class="tp-cart__summary-total">
+        <span>Subtotal</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+
+      <label class="tp-cart__field-label" for="tp-cart-occasion">O que você está celebrando</label>
+      <input
+        type="text"
+        id="tp-cart-occasion"
+        class="tp-cart__field"
+        placeholder="Casamento — 14 de março"
+        value="{{ cart.note }}"
+        data-tp-cart-occasion
+      >
+      <div class="tp-cart__field-hint">Opcional. Entra na mensagem enviada à Thainá.</div>
+
+      <a
+        href="#"
+        class="tp-btn tp-btn--solid tp-cart__whatsapp"
+        data-tp-cart-whatsapp
+        data-phone="{{ phone }}"
+      >
+        Enviar pedido pelo WhatsApp
+      </a>
+      <a href="{{ section.settings.continue_link | default: routes.all_products_collection_url }}" class="tp-btn tp-btn--outline tp-cart__continue">
+        Continuar escolhendo
+      </a>
+
+      <div class="tp-cart__preview">
+        <div class="tp-cart__preview-title">Prévia da mensagem</div>
+        <div class="tp-cart__preview-body" data-tp-cart-preview></div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="tp-cart__empty">
+      <h1 class="tp-cart__title">Sua sacola está vazia</h1>
+      <p class="tp-cart__lead">Que tal começar por uma das nossas coleções?</p>
+      <a href="{{ section.settings.continue_link | default: routes.all_products_collection_url }}" class="tp-btn tp-btn--solid">
+        Ver produtos
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var cart = {{ cart | json }};
+    var occasionInput = document.querySelector('[data-tp-cart-occasion]');
+    var whatsappButton = document.querySelector('[data-tp-cart-whatsapp]');
+    var previewEl = document.querySelector('[data-tp-cart-preview]');
+
+    var announceDesktop = document.querySelector('.tp-header__announce--desktop');
+    var announceMobile = document.querySelector('.tp-header__announce--mobile');
+    var nav = document.querySelector('.tp-header__nav');
+    if (announceDesktop) announceDesktop.textContent = 'O pedido é fechado pelo WhatsApp · Frete e pagamento combinados no atendimento';
+    if (announceMobile) announceMobile.textContent = 'Pedido fechado pelo WhatsApp';
+    if (nav) nav.style.display = 'none';
+
+    if (!whatsappButton) return;
+
+    var reference = 'TP-' + String(Date.now()).slice(-5);
+
+    function buildMessage() {
+      var occasion = occasionInput ? occasionInput.value.trim() : '';
+      var lines = cart.items
+        .map(function (item) {
+          return item.quantity + '× ' + item.product_title + ' (' + formatMoney(item.final_line_price) + ')';
+        })
+        .join(' e ');
+
+      var message = 'Oi, Thainá! Vim pelo site e quero saber mais sobre: ' + lines + '. Total ' + formatMoney(cart.total_price) + '.';
+      if (occasion) message += ' Celebrando: ' + occasion + '.';
+      message += ' Pedido ' + reference + '.';
+      return message;
+    }
+
+    function formatMoney(cents) {
+      return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: cart.currency || 'BRL' });
+    }
+
+    function render() {
+      var message = buildMessage();
+      if (previewEl) previewEl.textContent = message;
+      whatsappButton.href = 'https://wa.me/' + whatsappButton.dataset.phone + '?text=' + encodeURIComponent(message);
+    }
+
+    var updateTimeout;
+    if (occasionInput) {
+      occasionInput.addEventListener('input', function () {
+        render();
+        clearTimeout(updateTimeout);
+        updateTimeout = setTimeout(function () {
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ note: occasionInput.value }),
+          }).catch(function () {});
+        }, 500);
+      });
+    }
+
+    render();
+  })();
+</script>
+
+{% stylesheet %}
+  .tp-cart {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    padding: 56px var(--tp-gutter) 72px;
+  }
+
+  .tp-cart * {
+    box-sizing: border-box;
+  }
+
+  .tp-cart a {
+    color: inherit;
+  }
+
+  .tp-cart .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-cart .tp-btn--outline {
+    background: transparent;
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+  }
+
+  .tp-cart__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.16;
+    margin: 0 0 10px;
+  }
+
+  .tp-cart__lead {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin: 0 0 30px;
+    max-width: 560px;
+  }
+
+  .tp-cart__body {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+  }
+
+  .tp-cart__items {
+    flex: 1;
+    min-width: 0;
+    border-top: 1px solid var(--tp-line);
+  }
+
+  .tp-cart__item {
+    display: flex;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-cart__item-media {
+    width: 110px;
+    height: 110px;
+    flex: none;
+  }
+
+  .tp-cart__item-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-cart__item-title {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .tp-cart__item-meta {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-bottom: 6px;
+  }
+
+  .tp-cart__item-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: rgba(93, 14, 9, 0.1);
+    color: var(--tp-wine);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .tp-cart__item-remove {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--tp-wine);
+    border-bottom: 1px solid rgba(93, 14, 9, 0.4);
+    padding-bottom: 2px;
+  }
+
+  .tp-cart__item-price {
+    flex: none;
+    text-align: right;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .tp-cart__note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 18px 0 0;
+    max-width: 620px;
+  }
+
+  .tp-cart__summary {
+    width: 420px;
+    flex: none;
+    border: 1px solid var(--tp-line);
+    padding: 30px 28px 28px;
+  }
+
+  .tp-cart__summary-title {
+    font-family: var(--tp-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .tp-cart__summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .tp-cart__summary-row--muted {
+    color: var(--tp-muted);
+    margin-bottom: 16px;
+  }
+
+  .tp-cart__summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--tp-line);
+    padding-top: 16px;
+    margin-bottom: 22px;
+  }
+
+  .tp-cart__summary-total span:first-child {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .tp-cart__summary-total span:last-child {
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  .tp-cart__field-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 8px;
+  }
+
+  .tp-cart__field {
+    display: block;
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--tp-line-strong);
+    font-size: 14px;
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+    margin-bottom: 8px;
+  }
+
+  .tp-cart__field-hint {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-bottom: 20px;
+  }
+
+  .tp-cart__whatsapp,
+  .tp-cart__continue {
+    display: flex;
+    width: 100%;
+  }
+
+  .tp-cart__whatsapp {
+    height: 54px;
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .tp-cart__continue {
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .tp-cart__preview {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--tp-line);
+  }
+
+  .tp-cart__preview-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 10px;
+  }
+
+  .tp-cart__preview-body {
+    background: var(--tp-stone);
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    white-space: pre-wrap;
+  }
+
+  .tp-cart__empty {
+    text-align: left;
+    padding-block: 40px;
+  }
+
+  .tp-cart__empty .tp-btn {
+    display: inline-flex;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-cart__body {
+      gap: 32px;
+    }
+
+    .tp-cart__summary {
+      width: 360px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-cart {
+      padding-block: 28px 40px;
+    }
+
+    .tp-cart__title {
+      font-size: 30px;
+    }
+
+    .tp-cart__body {
+      flex-direction: column;
+    }
+
+    .tp-cart__summary {
+      width: 100%;
+    }
+
+    .tp-cart__item-media {
+      width: 84px;
+      height: 84px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Sacola",
+  "settings": [
+    {
+      "type": "text",
+      "id": "whatsapp_phone",
+      "label": "WhatsApp (com DDI, só números)",
+      "default": "5500000000000"
+    },
+    {
+      "type": "url",
+      "id": "continue_link",
+      "label": "Link \"Continuar escolhendo\""
+    }
+  ]
+}
+{% endschema %}
