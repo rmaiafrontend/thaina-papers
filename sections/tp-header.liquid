@@ -39,19 +39,7 @@
 
     <div class="tp-header__actions">
       <a href="{{ routes.account_url }}" class="tp-header__account">{{ account_label }}</a>
-      {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
-        <button
-          type="button"
-          class="tp-header__cart button-unstyled"
-          on:click="#cart-drawer/toggle"
-          aria-haspopup="dialog"
-          aria-controls="cart-drawer"
-        >
-          {{ cart_label }} ({{ cart.item_count }})
-        </button>
-      {%- else -%}
-        <a href="{{ routes.cart_url }}" class="tp-header__cart">{{ cart_label }} ({{ cart.item_count }})</a>
-      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="tp-header__cart">{{ cart_label }} ({{ cart.item_count }})</a>
     </div>
   </div>
 
