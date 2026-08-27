@@ -43,9 +43,35 @@
     </div>
   </div>
 
+  {%- liquid
+    # Marca um único link como ativo: prioriza correspondência exata da rota;
+    # se nenhuma casar, cai para o primeiro link cuja rota é prefixo da atual.
+    assign active_index = -1
+    for block in section.blocks
+      assign nav_link = block.settings.link
+      if active_index == -1 and nav_link != blank and nav_link != '#' and nav_link == request.path
+        assign active_index = forloop.index0
+      endif
+    endfor
+    if active_index == -1
+      for block in section.blocks
+        assign nav_link = block.settings.link
+        if active_index == -1 and nav_link != blank and nav_link != '#' and nav_link != '/' and request.path contains nav_link
+          assign active_index = forloop.index0
+        endif
+      endfor
+    endif
+  -%}
+
   <nav class="tp-header__nav" aria-label="Menu principal">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+      <a
+        href="{{ block.settings.link | default: '#' }}"
+        {% if forloop.index0 == active_index %}
+          class="tp-header__nav-link--active" aria-current="page"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
         {{- block.settings.label -}}
       </a>
     {%- endfor -%}
@@ -218,6 +244,12 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     flex-wrap: wrap;
+  }
+
+  .tp-header .tp-header__nav-link--active {
+    color: var(--tp-wine);
+    border-bottom: 1px solid var(--tp-wine);
+    padding-bottom: 2px;
   }
 
   .tp-mobile-menu {

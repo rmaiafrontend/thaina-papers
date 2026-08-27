@@ -13,9 +13,9 @@
       </div>
       <h1 class="tp-hub__title">{{ section.settings.heading | default: collection.title }}</h1>
       {%- if section.settings.description != blank -%}
-        <p class="tp-hub__lead">{{ section.settings.description }}</p>
+        <div class="tp-hub__lead">{{ section.settings.description }}</div>
       {%- elsif collection.description != blank -%}
-        <p class="tp-hub__lead">{{ collection.description }}</p>
+        <div class="tp-hub__lead">{{ collection.description }}</div>
       {%- endif -%}
     </div>
     <div class="tp-media tp-hub__hero-media">
@@ -216,8 +216,15 @@
     font-size: 16px;
     line-height: 1.65;
     color: var(--tp-body);
-    margin: 0;
     max-width: 540px;
+  }
+
+  .tp-hub__lead p {
+    margin: 0;
+  }
+
+  .tp-hub__lead p + p {
+    margin-top: 10px;
   }
 
   .tp-hub__hero-media {
@@ -313,7 +320,7 @@
     align-items: center;
     height: 36px;
     padding: 0 16px;
-    border: 1px solid var(--tp-line-strong);
+    border: 1px solid rgba(36, 33, 31, 0.28);
     background: transparent;
     color: var(--tp-ink);
     font-size: 13px;

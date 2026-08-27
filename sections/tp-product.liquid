@@ -171,7 +171,7 @@
             {%- endif -%}
 
             {%- if block.settings.body != blank -%}
-              <p class="tp-product__spec-body">{{ block.settings.body }}</p>
+              <div class="tp-product__spec-body">{{ block.settings.body }}</div>
             {%- endif -%}
 
             {%- assign spec_items = block.settings.items | newline_to_br | split: '<br />' -%}
@@ -431,7 +431,11 @@
   .tp-product__spec-body {
     font-size: 15px;
     line-height: 1.65;
-    margin: 0 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .tp-product__spec-body p {
+    margin: 0;
   }
 
   .tp-product__spec-list {
