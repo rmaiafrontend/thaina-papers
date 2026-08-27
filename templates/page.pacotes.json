@@ -1,0 +1,157 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_pacotes": {
+      "type": "tp-page-pacotes",
+      "blocks": {
+        "plan_essential": {
+          "type": "plan",
+          "settings": {
+            "name": "Essential",
+            "price": "R$ 490",
+            "tagline": "Para celebrações enxutas",
+            "is_featured": false,
+            "cta_label": "Escolher Essential"
+          }
+        },
+        "plan_signature": {
+          "type": "plan",
+          "settings": {
+            "name": "Signature",
+            "price": "R$ 1.490",
+            "tagline": "O mais escolhido",
+            "is_featured": true,
+            "cta_label": "Escolher Signature"
+          }
+        },
+        "plan_bespoke": {
+          "type": "plan",
+          "settings": {
+            "name": "Bespoke",
+            "price": "R$ 2.900",
+            "tagline": "Projeto completo e exclusivo",
+            "is_featured": false,
+            "cta_label": "Escolher Bespoke"
+          }
+        },
+        "feature_identidade": {
+          "type": "feature",
+          "settings": {
+            "label": "Criação da identidade da celebração",
+            "v1": "Sim",
+            "muted1": false,
+            "v2": "Sim",
+            "muted2": false,
+            "v3": "Sim",
+            "muted3": false
+          }
+        },
+        "feature_convite": {
+          "type": "feature",
+          "settings": {
+            "label": "Convite impresso",
+            "v1": "10 unidades",
+            "muted1": false,
+            "v2": "30 unidades",
+            "muted2": false,
+            "v3": "60 unidades",
+            "muted3": false
+          }
+        },
+        "feature_save_the_date": {
+          "type": "feature",
+          "settings": {
+            "label": "Save the date",
+            "v1": "Digital",
+            "muted1": true,
+            "v2": "Digital + 10 impressos",
+            "muted2": false,
+            "v3": "Digital + 30 impressos",
+            "muted3": false
+          }
+        },
+        "feature_papelaria_dia": {
+          "type": "feature",
+          "settings": {
+            "label": "Papelaria do dia",
+            "v1": "Não incluída",
+            "muted1": true,
+            "v2": "Menus e marcadores",
+            "muted2": false,
+            "v3": "Menus, marcadores, tags e sinalização",
+            "muted3": false
+          }
+        },
+        "feature_manuais": {
+          "type": "feature",
+          "settings": {
+            "label": "Manuais (padrinhos, daminhas e pajens)",
+            "v1": "Não incluídos",
+            "muted1": true,
+            "v2": "Digitais",
+            "muted2": false,
+            "v3": "Digitais + impressos",
+            "muted3": false
+          }
+        },
+        "feature_prazo": {
+          "type": "feature",
+          "settings": {
+            "label": "Prazo de criação",
+            "v1": "5 dias úteis",
+            "muted1": false,
+            "v2": "10 dias úteis",
+            "muted2": false,
+            "v3": "10 dias úteis",
+            "muted3": false
+          }
+        },
+        "feature_correcoes": {
+          "type": "feature",
+          "settings": {
+            "label": "Solicitações de correção",
+            "v1": "Até 3",
+            "muted1": false,
+            "v2": "Até 3",
+            "muted2": false,
+            "v3": "Até 3",
+            "muted3": false
+          }
+        }
+      },
+      "block_order": [
+        "plan_essential",
+        "plan_signature",
+        "plan_bespoke",
+        "feature_identidade",
+        "feature_convite",
+        "feature_save_the_date",
+        "feature_papelaria_dia",
+        "feature_manuais",
+        "feature_prazo",
+        "feature_correcoes"
+      ],
+      "name": "TP — Pacotes",
+      "settings": {
+        "announcement_override": "Envio para todo o Brasil · Pagamento em até 12x",
+        "breadcrumb_home": "Início",
+        "breadcrumb_level_2": "Casamentos",
+        "breadcrumb_level_3": "Pacotes",
+        "heading": "Três formas de começar.",
+        "intro": "<p>Todos os pacotes incluem criação, prévia para aprovação e até 3 solicitações de correção. A diferença está no alcance da papelaria.</p>",
+        "table_note": "<p>Quantidades adicionais e itens avulsos entram como complemento, com preço de tabela. Frete combinado no atendimento.</p>"
+      }
+    }
+  },
+  "order": [
+    "tp_pacotes"
+  ]
+}

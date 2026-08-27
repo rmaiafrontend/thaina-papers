@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_promo_grupo": {
+      "type": "tp-page-promo-grupo",
+      "blocks": {
+        "tier_2": {
+          "type": "tier",
+          "settings": {
+            "group_label": "2 formandas",
+            "short_label": "2",
+            "discount": "10",
+            "price1": "R$ 441,00",
+            "price2": "R$ 621,00",
+            "price3": "R$ 801,00"
+          }
+        },
+        "tier_3": {
+          "type": "tier",
+          "settings": {
+            "group_label": "3 formandas",
+            "short_label": "3",
+            "discount": "15",
+            "price1": "R$ 416,50",
+            "price2": "R$ 586,50",
+            "price3": "R$ 756,50"
+          }
+        },
+        "tier_4": {
+          "type": "tier",
+          "settings": {
+            "group_label": "4 ou mais",
+            "short_label": "4+",
+            "discount": "20",
+            "price1": "R$ 392,00",
+            "price2": "R$ 552,00",
+            "price3": "R$ 712,00"
+          }
+        },
+        "package_essential": {
+          "type": "package",
+          "settings": {
+            "name": "FORM Essential",
+            "base_price": 490
+          }
+        },
+        "package_signature": {
+          "type": "package",
+          "settings": {
+            "name": "FORM Signature",
+            "base_price": 690
+          }
+        },
+        "package_bespoke": {
+          "type": "package",
+          "settings": {
+            "name": "FORM Bespoke",
+            "base_price": 890
+          }
+        },
+        "rule_mesmo_pacote": {
+          "type": "rule",
+          "settings": {
+            "title": "Todas escolhem o mesmo pacote",
+            "text": "O desconto vale quando o grupo inteiro fecha o mesmo pacote FORM."
+          }
+        },
+        "rule_prazo": {
+          "type": "rule",
+          "settings": {
+            "title": "Contratação em até 7 dias",
+            "text": "Todas as formandas do grupo precisam fechar dentro da mesma janela."
+          }
+        },
+        "rule_arte": {
+          "type": "rule",
+          "settings": {
+            "title": "Cada uma recebe a sua arte",
+            "text": "O grupo divide o desconto, não o projeto: cada formanda tem a própria identidade e as próprias peças."
+          }
+        },
+        "rule_atendimento": {
+          "type": "rule",
+          "settings": {
+            "title": "O valor com desconto aparece no atendimento",
+            "text": "O site mostra o preço de tabela; a Thainá confirma o total do grupo antes do pagamento."
+          }
+        }
+      },
+      "block_order": [
+        "tier_2",
+        "tier_3",
+        "tier_4",
+        "package_essential",
+        "package_signature",
+        "package_bespoke",
+        "rule_mesmo_pacote",
+        "rule_prazo",
+        "rule_arte",
+        "rule_atendimento"
+      ],
+      "name": "TP — Promoção de grupo",
+      "settings": {
+        "announcement_override": "Formou junto? Fechou junto! · Até 20% para grupos de formandas",
+        "breadcrumb_home": "Início",
+        "breadcrumb_parent": "Formaturas",
+        "breadcrumb_current": "Promoção de grupo",
+        "heading": "Formou junto? Fechou junto!",
+        "intro": "<p>Quanto mais formandas fecham juntas, menor o valor do pacote FORM para cada uma. O desconto é aplicado no atendimento, sobre o pacote escolhido.</p>",
+        "table_col_group": "Grupo",
+        "table_col_discount": "Desconto",
+        "table_note": "<p>Valores por formanda. O desconto se aplica aos pacotes FORM — extras, frete e upgrades seguem o preço de tabela.</p>",
+        "rules_heading": "Como funciona o grupo",
+        "sim_heading": "Simular o grupo",
+        "sim_group_label": "Quantas formandas fecham juntas",
+        "sim_package_label": "Pacote",
+        "sim_discount_label": "Desconto do grupo",
+        "sim_total_label": "Por formanda",
+        "sim_cta_label": "Enviar para o WhatsApp",
+        "sim_note": "<p>A mensagem já vai com o pacote escolhido e o número de formandas.</p>",
+        "whatsapp_phone": "5500000000000",
+        "whatsapp_message": "Oi, Thainá! Vim pelo simulador do site: somos um grupo de {grupo} e queremos o {pacote}. Com {desconto} de desconto, fica {valor} por formanda. Podemos fechar?"
+      }
+    }
+  },
+  "order": [
+    "tp_promo_grupo"
+  ]
+}

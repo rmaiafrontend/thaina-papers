@@ -1,0 +1,203 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "tp-product-variant",
+      "blocks": {
+        "diameter_5": {
+          "type": "diameter",
+          "settings": {
+            "label": "5 cm",
+            "yield_text": "até 15 adesivos",
+            "circle_px": 37,
+            "is_selected": false
+          }
+        },
+        "diameter_6": {
+          "type": "diameter",
+          "settings": {
+            "label": "6 cm",
+            "yield_text": "até 12 adesivos",
+            "circle_px": 44,
+            "is_selected": true
+          }
+        },
+        "diameter_7": {
+          "type": "diameter",
+          "settings": {
+            "label": "7 cm",
+            "yield_text": "até 6 adesivos",
+            "circle_px": 51,
+            "is_selected": false
+          }
+        },
+        "diameter_8": {
+          "type": "diameter",
+          "settings": {
+            "label": "8 cm",
+            "yield_text": "até 6 adesivos",
+            "circle_px": 59,
+            "is_selected": false
+          }
+        },
+        "diameter_9": {
+          "type": "diameter",
+          "settings": {
+            "label": "9 cm",
+            "yield_text": "até 4 adesivos",
+            "circle_px": 66,
+            "is_selected": false
+          }
+        },
+        "diameter_10": {
+          "type": "diameter",
+          "settings": {
+            "label": "10 cm",
+            "yield_text": "até 2 adesivos",
+            "circle_px": 73,
+            "is_selected": false
+          }
+        },
+        "tier_1": {
+          "type": "tier",
+          "settings": {
+            "label": "1 cartela",
+            "price_text": "R$ 20",
+            "link": "",
+            "is_current": true
+          }
+        },
+        "tier_5": {
+          "type": "tier",
+          "settings": {
+            "label": "5 cartelas",
+            "price_text": "R$ 90",
+            "link": "",
+            "is_current": false
+          }
+        },
+        "tier_10": {
+          "type": "tier",
+          "settings": {
+            "label": "10 cartelas",
+            "price_text": "R$ 160",
+            "link": "",
+            "is_current": false
+          }
+        },
+        "tier_20": {
+          "type": "tier",
+          "settings": {
+            "label": "20 cartelas",
+            "price_text": "R$ 280",
+            "link": "",
+            "is_current": false
+          }
+        },
+        "info_size": {
+          "type": "info",
+          "settings": {
+            "title": "Tamanho",
+            "body": "<p>Cartela A4 (21 × 29,7 cm) com adesivos redondos de 6 cm de diâmetro.</p>",
+            "items": "",
+            "note": "Para você visualizar: cada adesivo corresponde aproximadamente a uma tampa de garrafa."
+          }
+        },
+        "info_data": {
+          "type": "info",
+          "settings": {
+            "title": "Dados inseridos no modelo",
+            "body": "",
+            "items": "Nome da formanda e do curso\nAno ou data da formatura\nUma frase curta ou apelido da turma\nFoto, quando o modelo escolhido tiver espaço",
+            "note": ""
+          }
+        },
+        "spec_rendimento": {
+          "type": "spec",
+          "settings": {
+            "title": "Rendimento por diâmetro",
+            "rows": "5 cm | até 15\n6 cm | até 12\n7 cm | até 6\n8 cm | até 6\n9 cm | até 4\n10 cm | até 2",
+            "body": "",
+            "items": "",
+            "note": ""
+          }
+        },
+        "spec_prazo": {
+          "type": "spec",
+          "settings": {
+            "title": "Prazo",
+            "rows": "Criação | 5 dias úteis\nAprovação | até 2 dias úteis\nProdução | 3 dias úteis\nTransporte | conforme destino",
+            "body": "",
+            "items": "",
+            "note": ""
+          }
+        },
+        "spec_not_included": {
+          "type": "spec",
+          "settings": {
+            "title": "O que não está incluído",
+            "rows": "",
+            "body": "",
+            "items": "Frete\nRecorte especial (produto próprio)\nMais de um diâmetro no mesmo pedido\nArquivo editável da arte",
+            "note": ""
+          }
+        },
+        "spec_before_buy": {
+          "type": "spec",
+          "settings": {
+            "title": "Antes de comprar",
+            "rows": "",
+            "body": "",
+            "items": "Nome e curso como devem aparecer\nDiâmetro escolhido\nPaleta ou referência visual, se houver",
+            "note": "Telas e impressos podem apresentar pequena variação de cor."
+          }
+        }
+      },
+      "block_order": [
+        "diameter_5",
+        "diameter_6",
+        "diameter_7",
+        "diameter_8",
+        "diameter_9",
+        "diameter_10",
+        "tier_1",
+        "tier_5",
+        "tier_10",
+        "tier_20",
+        "info_size",
+        "info_data",
+        "spec_rendimento",
+        "spec_prazo",
+        "spec_not_included",
+        "spec_before_buy"
+      ],
+      "name": "TP — Produto variação",
+      "settings": {
+        "announcement_override": "Formou junto? Fechou junto! · Até 20% para grupos de formandas",
+        "breadcrumb_tail": "Formaturas / Adesivos bottom",
+        "title_fallback": "Adesivos bottom",
+        "short_description": "<p>O detalhe que vira lembrança: adesivos redondos com a identidade da sua formatura.</p>",
+        "price_note": "Preço por cartela · o diâmetro não altera o valor",
+        "diameter_label": "Diâmetro",
+        "diameter_note": "Mesmo tamanho por pedido",
+        "yield_prefix": "Nesta escolha, cada cartela A4 rende",
+        "tiers_label": "Quantidade de cartelas",
+        "tiers_note": "Cada faixa é um produto próprio — a escolha troca a página, não um campo de quantidade.",
+        "add_to_cart_label": "Adicionar ao pedido",
+        "contact_label": "Falar com a Thainá",
+        "contact_link": "https://wa.me/5500000000000"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,1010 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign can_add_to_cart = false
+  assign add_to_cart_text = 'products.product.unavailable' | t
+
+  if variant
+    if variant.available
+      assign can_add_to_cart = true
+      assign add_to_cart_text = section.settings.add_to_cart_label | default: 'Adicionar ao pedido'
+    else
+      assign add_to_cart_text = 'products.product.sold_out' | t
+    endif
+  endif
+
+  assign media_list = product.media
+  assign main_media = media_list.first
+  assign thumb_media = media_list | slice: 1, 3
+
+  assign product_title = product.title | default: section.settings.title_fallback
+
+  assign diameter_blocks = section.blocks | where: 'type', 'diameter'
+  assign tier_blocks = section.blocks | where: 'type', 'tier'
+  assign info_blocks = section.blocks | where: 'type', 'info'
+  assign spec_blocks = section.blocks | where: 'type', 'spec'
+
+  assign selected_index = 0
+  for block in diameter_blocks
+    if block.settings.is_selected
+      assign selected_index = forloop.index0
+    endif
+  endfor
+  assign selected_diameter = diameter_blocks[selected_index]
+  assign selected_circle = selected_diameter.settings.circle_px | default: 44
+-%}
+
+<div class="tp-pvar">
+  <div class="tp-pvar__breadcrumb">
+    <a href="{{ routes.root_url }}">Início</a>
+    {%- if section.settings.breadcrumb_tail != blank -%}
+      <span aria-hidden="true"> / </span>
+      <span>{{ section.settings.breadcrumb_tail }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="tp-pvar__main">
+    <div class="tp-pvar__gallery">
+      <div class="tp-media tp-pvar__gallery-main" data-tp-gallery-main>
+        {%- if main_media -%}
+          {{
+            main_media
+            | image_url: width: 1200
+            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 45vw', widths: '600,900,1200', id: 'tp-pvar-gallery-main-img'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ product_title }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if thumb_media.size > 0 -%}
+        <div class="tp-pvar__gallery-thumbs">
+          {%- for media in thumb_media -%}
+            <button
+              type="button"
+              class="tp-media tp-pvar__gallery-thumb"
+              data-tp-gallery-thumb
+              data-full="{{ media | image_url: width: 1200 }}"
+              aria-label="Ver imagem {{ forloop.index }}"
+            >
+              {{ media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,300,400' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-pvar__buybox">
+      <h1 class="tp-pvar__title">{{ product_title }}</h1>
+
+      {%- if section.settings.short_description != blank -%}
+        <div class="tp-pvar__lead">{{ section.settings.short_description }}</div>
+      {%- endif -%}
+
+      <div class="tp-pvar__price">{{ product.price | money }}</div>
+      {%- if section.settings.price_note != blank -%}
+        <div class="tp-pvar__price-note">{{ section.settings.price_note }}</div>
+      {%- endif -%}
+
+      {%- if diameter_blocks.size > 0 -%}
+        <div class="tp-pvar__card tp-pvar__card--diameter">
+          <div class="tp-pvar__card-head">
+            <span class="tp-pvar__card-label">{{ section.settings.diameter_label }}</span>
+            {%- if section.settings.diameter_note != blank -%}
+              <span class="tp-pvar__card-note">{{ section.settings.diameter_note }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="tp-pvar__diameters" role="group" aria-label="{{ section.settings.diameter_label }}">
+            {%- for block in diameter_blocks -%}
+              <button
+                type="button"
+                class="tp-pvar__diameter{% if forloop.index0 == selected_index %} tp-pvar__diameter--active{% endif %}"
+                data-tp-diameter
+                data-label="{{ block.settings.label | escape }}"
+                data-yield="{{ block.settings.yield_text | escape }}"
+                data-circle="{{ block.settings.circle_px | default: 44 }}"
+                aria-pressed="{% if forloop.index0 == selected_index %}true{% else %}false{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {{- block.settings.label -}}
+              </button>
+            {%- endfor -%}
+          </div>
+
+          <div class="tp-pvar__yield">
+            <span
+              class="tp-pvar__yield-circle"
+              data-tp-yield-circle
+              style="width: {{ selected_circle }}px; height: {{ selected_circle }}px;"
+              aria-hidden="true"
+            ></span>
+            <span class="tp-pvar__yield-text">
+              {{- section.settings.yield_prefix }}
+              <span class="tp-pvar__yield-strong" data-tp-yield-text>{{ selected_diameter.settings.yield_text }}</span>
+              de <span data-tp-yield-size>{{ selected_diameter.settings.label }}</span>.
+            </span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if tier_blocks.size > 0 -%}
+        <div class="tp-pvar__card tp-pvar__card--tiers">
+          <div class="tp-pvar__card-label tp-pvar__card-label--block">{{ section.settings.tiers_label }}</div>
+
+          <div class="tp-pvar__tiers">
+            {%- for block in tier_blocks -%}
+              <a
+                href="{{ block.settings.link | default: '#' }}"
+                class="tp-pvar__tier{% if block.settings.is_current %} tp-pvar__tier--current{% endif %}"
+                {% if block.settings.is_current %}aria-current="page"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                <span>{{ block.settings.label }}</span>
+                <span>{{ block.settings.price_text }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+
+          {%- if section.settings.tiers_note != blank -%}
+            <p class="tp-pvar__tiers-note">{{ section.settings.tiers_note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="tp-pvar__actions">
+        <product-form-component
+          data-section-id="{{ section.id }}"
+          data-product-id="{{ product.id }}"
+          data-product-url="{{ product.url }}"
+          on:submit="/handleSubmit"
+        >
+          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+          {%- form 'product', product, id: 'tp-product-variant-form', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+            <add-to-cart-component ref="addToCartButtonContainer">
+              <button
+                type="submit"
+                name="add"
+                ref="addToCartButton"
+                on:click="/handleClick"
+                class="tp-btn tp-btn--solid tp-pvar__submit"
+                {% unless can_add_to_cart %}disabled{% endunless %}
+              >
+                {{- add_to_cart_text -}}
+              </button>
+            </add-to-cart-component>
+          {%- endform -%}
+        </product-form-component>
+
+        {%- if section.settings.contact_label != blank -%}
+          <a href="{{ section.settings.contact_link | default: '#' }}" class="tp-btn tp-btn--outline tp-pvar__contact">
+            {{- section.settings.contact_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- for block in info_blocks -%}
+        <div class="tp-pvar__info" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <div class="tp-pvar__info-title">{{ block.settings.title }}</div>
+          {%- endif -%}
+          {%- if block.settings.body != blank -%}
+            <div class="tp-pvar__info-body">{{ block.settings.body }}</div>
+          {%- endif -%}
+          {%- assign info_items = block.settings.items | newline_to_br | split: '<br />' -%}
+          {%- assign has_items = false -%}
+          {%- for raw_item in info_items -%}
+            {%- if raw_item != blank -%}
+              {%- assign has_items = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if has_items -%}
+            <div class="tp-pvar__info-list">
+              {%- for raw_item in info_items -%}
+                {%- assign item = raw_item | strip -%}
+                {%- if item != blank -%}
+                  <div>{{ item }}</div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.note != blank -%}
+            <p class="tp-pvar__info-note">{{ block.settings.note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if spec_blocks.size > 0 -%}
+    <div class="tp-pvar__specs">
+      <div class="tp-pvar__specs-grid">
+        {%- for block in spec_blocks -%}
+          <div class="tp-pvar__spec" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <div class="tp-pvar__spec-title">{{ block.settings.title }}</div>
+            {%- endif -%}
+
+            {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+            {%- assign has_rows = false -%}
+            {%- for raw_row in rows -%}
+              {%- if raw_row != blank -%}
+                {%- assign has_rows = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_rows -%}
+              <div class="tp-pvar__spec-rows">
+                {%- for raw_row in rows -%}
+                  {%- assign row = raw_row | strip -%}
+                  {%- if row != blank -%}
+                    {%- assign label = row | split: '|' | first | strip -%}
+                    {%- assign value = row | split: '|' | last | strip -%}
+                    <div class="tp-pvar__spec-row"><span>{{ label }}</span><span>{{ value }}</span></div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.body != blank -%}
+              <div class="tp-pvar__spec-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+
+            {%- assign spec_items = block.settings.items | newline_to_br | split: '<br />' -%}
+            {%- assign has_spec_items = false -%}
+            {%- for raw_item in spec_items -%}
+              {%- if raw_item != blank -%}
+                {%- assign has_spec_items = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_spec_items -%}
+              <div class="tp-pvar__spec-list">
+                {%- for raw_item in spec_items -%}
+                  {%- assign item = raw_item | strip -%}
+                  {%- if item != blank -%}
+                    <div>{{ item }}</div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.note != blank -%}
+              <p class="tp-pvar__spec-note">{{ block.settings.note }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('tp-pvar')) {
+      root = document.querySelector('.tp-pvar');
+    }
+    if (!root) return;
+
+    root.querySelectorAll('[data-tp-gallery-thumb]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var main = root.querySelector('[data-tp-gallery-main] img');
+        var full = btn.getAttribute('data-full');
+        if (main && full) {
+          main.src = full;
+          main.removeAttribute('srcset');
+        }
+      });
+    });
+
+    var options = root.querySelectorAll('[data-tp-diameter]');
+    var yieldText = root.querySelector('[data-tp-yield-text]');
+    var yieldSize = root.querySelector('[data-tp-yield-size]');
+    var yieldCircle = root.querySelector('[data-tp-yield-circle]');
+
+    options.forEach(function (option) {
+      option.addEventListener('click', function () {
+        options.forEach(function (other) {
+          other.classList.remove('tp-pvar__diameter--active');
+          other.setAttribute('aria-pressed', 'false');
+        });
+        option.classList.add('tp-pvar__diameter--active');
+        option.setAttribute('aria-pressed', 'true');
+
+        if (yieldText) yieldText.textContent = option.dataset.yield || '';
+        if (yieldSize) yieldSize.textContent = option.dataset.label || '';
+
+        var size = parseInt(option.dataset.circle, 10);
+        if (yieldCircle && size > 0) {
+          yieldCircle.style.width = size + 'px';
+          yieldCircle.style.height = size + 'px';
+        }
+      });
+    });
+  })();
+</script>
+
+{%- if section.settings.announcement_override != blank -%}
+  <script>
+    (function () {
+      var text = {{ section.settings.announcement_override | json }};
+      var desktop = document.querySelector('.tp-header__announce--desktop');
+      var mobile = document.querySelector('.tp-header__announce--mobile');
+      if (desktop) desktop.textContent = text;
+      if (mobile) mobile.textContent = text;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .tp-pvar {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-pvar * {
+    box-sizing: border-box;
+  }
+
+  .tp-pvar a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tp-pvar a,
+  .tp-pvar button {
+    font-family: var(--tp-sans);
+  }
+
+  .tp-pvar .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-pvar .tp-btn--outline {
+    background: transparent;
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+  }
+
+  .tp-pvar__breadcrumb {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 26px var(--tp-gutter) 0;
+    box-sizing: border-box;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+  }
+
+  .tp-pvar__breadcrumb a:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-pvar__main {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 26px var(--tp-gutter) 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-pvar__gallery {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-pvar__gallery-main {
+    height: 520px;
+  }
+
+  .tp-pvar__gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .tp-pvar__gallery-thumb {
+    height: 150px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  .tp-pvar__buybox {
+    width: 500px;
+    flex: none;
+  }
+
+  .tp-pvar__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1.16;
+    margin: 0 0 12px;
+  }
+
+  .tp-pvar__lead {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin: 0 0 22px;
+  }
+
+  .tp-pvar__lead p {
+    margin: 0;
+  }
+
+  .tp-pvar__price {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .tp-pvar__price-note {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-bottom: 26px;
+  }
+
+  .tp-pvar__card {
+    border: 1px solid var(--tp-line);
+    padding: 22px 22px 24px;
+  }
+
+  .tp-pvar__card--diameter {
+    margin-bottom: 22px;
+  }
+
+  .tp-pvar__card--tiers {
+    margin-bottom: 26px;
+  }
+
+  .tp-pvar__card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .tp-pvar__card-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+  }
+
+  .tp-pvar__card-label--block {
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .tp-pvar__card-note {
+    font-size: 13px;
+    color: var(--tp-muted);
+  }
+
+  .tp-pvar__diameters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tp-pvar__diameter {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    font-size: 15px;
+    color: var(--tp-ink);
+    background: transparent;
+    border: 1px solid rgba(36, 33, 31, 0.28);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .tp-pvar__diameter--active {
+    border-color: var(--tp-ink);
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+  }
+
+  .tp-pvar__yield {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--tp-stone);
+    padding: 14px 16px;
+  }
+
+  .tp-pvar__yield-circle {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line-strong);
+    flex: none;
+  }
+
+  .tp-pvar__yield-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--tp-ink);
+  }
+
+  .tp-pvar__yield-strong {
+    font-weight: 500;
+  }
+
+  .tp-pvar__tiers {
+    display: grid;
+    gap: 8px;
+  }
+
+  /* Escopadas sob .tp-pvar para vencer ".tp-pvar a { color: inherit }",
+     que tem especificidade maior que uma classe sozinha. */
+  .tp-pvar .tp-pvar__tier {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 48px;
+    padding: 0 16px;
+    font-size: 15px;
+    color: var(--tp-ink);
+    border: 1px solid rgba(36, 33, 31, 0.28);
+  }
+
+  .tp-pvar .tp-pvar__tier--current {
+    border-color: var(--tp-ink);
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+  }
+
+  .tp-pvar__tiers-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 12px 0 0;
+  }
+
+  .tp-pvar__actions {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .tp-pvar__actions product-form-component,
+  .tp-pvar__actions form {
+    display: block;
+  }
+
+  .tp-pvar__submit,
+  .tp-pvar__contact {
+    width: 100%;
+    height: 54px;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+
+  .tp-pvar__submit[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .tp-pvar__info {
+    border-top: 1px solid var(--tp-line);
+    padding-block: 20px;
+  }
+
+  .tp-pvar__info:last-of-type {
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-pvar__info-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 10px;
+  }
+
+  .tp-pvar__info-body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--tp-ink);
+  }
+
+  .tp-pvar__info-body p {
+    margin: 0 0 8px;
+  }
+
+  .tp-pvar__info-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tp-pvar__info-list {
+    display: grid;
+    gap: 7px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+  }
+
+  .tp-pvar__info-note {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 8px 0 0;
+  }
+
+  .tp-pvar__specs {
+    background: var(--tp-stone);
+  }
+
+  .tp-pvar__specs-grid {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 56px var(--tp-gutter) 60px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .tp-pvar__spec-title {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 14px;
+  }
+
+  .tp-pvar__spec-rows {
+    display: grid;
+    gap: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .tp-pvar__spec:first-child .tp-pvar__spec-rows {
+    font-size: 14px;
+  }
+
+  .tp-pvar__spec-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tp-pvar__spec-row span:last-child {
+    color: var(--tp-muted);
+  }
+
+  .tp-pvar__spec-body {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .tp-pvar__spec-body p {
+    margin: 0;
+  }
+
+  .tp-pvar__spec-list {
+    display: grid;
+    gap: 7px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+  }
+
+  .tp-pvar__spec-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin: 14px 0 0;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-pvar__main {
+      gap: 32px;
+    }
+
+    .tp-pvar__buybox {
+      width: 420px;
+    }
+
+    .tp-pvar__diameter {
+      flex: 0 0 calc((100% - 16px) / 3);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-pvar__breadcrumb {
+      padding-top: 16px;
+      font-size: 11px;
+    }
+
+    .tp-pvar__main {
+      flex-direction: column;
+      gap: 28px;
+      padding-block: 16px 40px;
+    }
+
+    .tp-pvar__buybox {
+      width: auto;
+    }
+
+    .tp-pvar__gallery {
+      flex: none;
+      width: 100%;
+    }
+
+    .tp-pvar__gallery-main {
+      height: 380px;
+    }
+
+    .tp-pvar__gallery-thumb {
+      height: 96px;
+    }
+
+    .tp-pvar__title {
+      font-size: 28px;
+    }
+
+    .tp-pvar__card-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .tp-pvar__diameter {
+      flex: 0 0 calc((100% - 16px) / 3);
+    }
+
+    .tp-pvar__specs-grid {
+      padding-block: 36px 40px;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Produto variação",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_override",
+      "label": "Aviso do topo (só nesta página)",
+      "default": "Formou junto? Fechou junto! · Até 20% para grupos de formandas"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_tail",
+      "label": "Breadcrumb (depois de \"Início /\")",
+      "default": "Formaturas / Adesivos bottom"
+    },
+    {
+      "type": "text",
+      "id": "title_fallback",
+      "label": "Título (usado se não houver produto)",
+      "default": "Adesivo bottom"
+    },
+    {
+      "type": "richtext",
+      "id": "short_description",
+      "label": "Descrição curta",
+      "default": "<p>O detalhe que vira lembrança: adesivos redondos com a identidade da sua formatura.</p>"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Nota abaixo do preço",
+      "default": "Preço por cartela · o diâmetro não altera o valor"
+    },
+    {
+      "type": "header",
+      "content": "Diâmetro"
+    },
+    {
+      "type": "text",
+      "id": "diameter_label",
+      "label": "Rótulo do card de diâmetro",
+      "default": "Diâmetro"
+    },
+    {
+      "type": "text",
+      "id": "diameter_note",
+      "label": "Nota do card de diâmetro",
+      "default": "Mesmo tamanho por pedido"
+    },
+    {
+      "type": "text",
+      "id": "yield_prefix",
+      "label": "Início da frase de rendimento",
+      "default": "Nesta escolha, cada cartela A4 rende"
+    },
+    {
+      "type": "header",
+      "content": "Quantidade de cartelas"
+    },
+    {
+      "type": "text",
+      "id": "tiers_label",
+      "label": "Rótulo do card de quantidade",
+      "default": "Quantidade de cartelas"
+    },
+    {
+      "type": "text",
+      "id": "tiers_note",
+      "label": "Nota do card de quantidade",
+      "default": "Cada faixa é um produto próprio — a escolha troca a página, não um campo de quantidade."
+    },
+    {
+      "type": "header",
+      "content": "Botões"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Botão — adicionar ao pedido",
+      "default": "Adicionar ao pedido"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Botão — falar com a Thainá",
+      "default": "Falar com a Thainá"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Link do botão de contato"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diameter",
+      "name": "Diâmetro",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo (ex.: 6 cm)",
+          "default": "6 cm"
+        },
+        {
+          "type": "text",
+          "id": "yield_text",
+          "label": "Rendimento (ex.: até 12 adesivos)",
+          "default": "até 12 adesivos"
+        },
+        {
+          "type": "number",
+          "id": "circle_px",
+          "label": "Tamanho do círculo em px",
+          "default": 44
+        },
+        {
+          "type": "checkbox",
+          "id": "is_selected",
+          "label": "Selecionado por padrão",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "tier",
+      "name": "Faixa de quantidade",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "1 cartela"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Preço",
+          "default": "R$ 20"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link do produto da faixa"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_current",
+          "label": "Faixa atual",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "name": "Bloco de informação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Tamanho"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Lista (um item por linha)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Observação (menor, cinza)"
+        }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Coluna de especificação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Prazo"
+        },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Linhas rótulo/valor (uma por linha: Rótulo | Valor)"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Lista (um item por linha)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Observação (menor, cinza)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Produto variação",
+      "blocks": [
+        { "type": "diameter" },
+        { "type": "tier" },
+        { "type": "info" },
+        { "type": "spec" }
+      ]
+    }
+  ]
+}
+{% endschema %}

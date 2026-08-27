@@ -14,35 +14,59 @@
       "blocks": {
         "idx_catalogo": {
           "type": "policy_link",
-          "settings": { "label": "Catálogo", "is_current": false }
+          "settings": {
+            "label": "Catálogo",
+            "is_current": false
+          }
         },
         "idx_fisicos": {
           "type": "policy_link",
-          "settings": { "label": "Produtos físicos", "is_current": true }
+          "settings": {
+            "label": "Produtos físicos",
+            "is_current": true
+          }
         },
         "idx_digitais": {
           "type": "policy_link",
-          "settings": { "label": "Produtos digitais", "is_current": false }
+          "settings": {
+            "label": "Produtos digitais",
+            "is_current": false
+          }
         },
         "idx_cancelamento": {
           "type": "policy_link",
-          "settings": { "label": "Cancelamento", "is_current": false }
+          "settings": {
+            "label": "Cancelamento",
+            "is_current": false
+          }
         },
         "idx_trocas": {
           "type": "policy_link",
-          "settings": { "label": "Trocas", "is_current": false }
+          "settings": {
+            "label": "Trocas",
+            "is_current": false
+          }
         },
         "idx_licenca": {
           "type": "policy_link",
-          "settings": { "label": "Licença dos templates", "is_current": false }
+          "settings": {
+            "label": "Licença dos templates",
+            "is_current": false
+          }
         },
         "idx_privacidade": {
           "type": "policy_link",
-          "settings": { "label": "Privacidade", "is_current": false }
+          "settings": {
+            "label": "Privacidade",
+            "is_current": false
+          }
         },
         "idx_termos": {
           "type": "policy_link",
-          "settings": { "label": "Termos de uso", "is_current": false }
+          "settings": {
+            "label": "Termos de uso",
+            "is_current": false
+          }
         },
         "clause_1": {
           "type": "clause",
@@ -119,7 +143,7 @@
         "breadcrumb_tail": "Políticas / Produtos físicos",
         "heading": "Política de produtos físicos",
         "updated_at": "Atualizada em 26 de agosto de 2026",
-        "footer_note": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata.</p>",
+        "footer_note": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata. <a href=\"/pages/contact?view=politicas\">Ver política de produtos digitais →</a></p>",
         "help_title": "Ficou alguma dúvida?",
         "help_text": "<p>A Thainá responde pelo WhatsApp em até 2 dias úteis.</p>",
         "help_link_label": "Falar no WhatsApp →"

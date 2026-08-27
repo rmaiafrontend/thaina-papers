@@ -106,7 +106,12 @@ body:has(.tp-page-sobre),
 body:has(.tp-contato),
 body:has(.tp-tailor),
 body:has(.tp-politicas),
-body:has(.tp-guia) {
+body:has(.tp-guia),
+body:has(.tp-pvar),
+body:has(.tp-pdig),
+body:has(.tp-pacotes),
+body:has(.tp-promo),
+body:has(.tp-busca) {
   background: var(--tp-cream);
 }
 

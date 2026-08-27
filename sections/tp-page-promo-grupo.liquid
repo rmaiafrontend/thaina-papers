@@ -1,0 +1,934 @@
+{%- liquid
+  assign tiers = section.blocks | where: 'type', 'tier'
+  assign packages = section.blocks | where: 'type', 'package'
+  assign rules = section.blocks | where: 'type', 'rule'
+
+  assign phone = section.settings.whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+
+  assign pkg_1_name = packages[0].settings.name
+  assign pkg_2_name = packages[1].settings.name
+  assign pkg_3_name = packages[2].settings.name
+
+  comment
+    Dados dos blocks serializados para o JS do simulador (nada de preço ou
+    percentual hardcode no script). Separador improvável no conteúdo real.
+  endcomment
+  assign sep = '~|~'
+
+  assign discount_raw = ''
+  assign group_raw = ''
+  for block in tiers
+    assign discount_raw = discount_raw | append: block.settings.discount | append: sep
+    assign group_raw = group_raw | append: block.settings.group_label | append: sep
+  endfor
+  assign discount_list = discount_raw | split: sep
+  assign group_list = group_raw | split: sep
+
+  assign package_name_raw = ''
+  assign package_price_raw = ''
+  for block in packages
+    assign package_name_raw = package_name_raw | append: block.settings.name | append: sep
+    assign package_price_raw = package_price_raw | append: block.settings.base_price | append: sep
+  endfor
+  assign package_name_list = package_name_raw | split: sep
+  assign package_price_list = package_price_raw | split: sep
+
+  assign sim_group_id = 'TpPromoSizes-' | append: section.id
+  assign sim_select_id = 'TpPromoPackage-' | append: section.id
+-%}
+
+<div class="tp-promo" id="tp-promo-{{ section.id }}">
+  <div class="tp-promo__head">
+    <div class="tp-promo__breadcrumb">
+      <a href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home }}</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ section.settings.breadcrumb_parent_link | default: '#' }}">
+        {{- section.settings.breadcrumb_parent -}}
+      </a>
+      <span aria-hidden="true">/</span>
+      <span class="tp-promo__breadcrumb-current">{{ section.settings.breadcrumb_current }}</span>
+    </div>
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="tp-promo__title">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <div class="tp-promo__lead">{{ section.settings.intro }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="tp-promo__table-wrap">
+    <div class="tp-promo__table">
+      <div class="tp-promo__row tp-promo__row--head">
+        <div class="tp-promo__cell">{{ section.settings.table_col_group }}</div>
+        <div class="tp-promo__cell">{{ section.settings.table_col_discount }}</div>
+        <div class="tp-promo__cell">{{ pkg_1_name }}</div>
+        <div class="tp-promo__cell">{{ pkg_2_name }}</div>
+        <div class="tp-promo__cell">{{ pkg_3_name }}</div>
+      </div>
+
+      {%- for block in tiers -%}
+        {%- liquid
+          assign zebra = forloop.index | modulo: 2
+          assign row_classes = 'tp-promo__row tp-promo__row--data'
+          if zebra == 0
+            assign row_classes = row_classes | append: ' tp-promo__row--alt'
+          endif
+        -%}
+        <div class="{{ row_classes }}" {{ block.shopify_attributes }}>
+          <div class="tp-promo__cell tp-promo__cell--group">{{ block.settings.group_label }}</div>
+          <div class="tp-promo__cell tp-promo__cell--discount">{{ block.settings.discount }}%</div>
+          <div class="tp-promo__cell tp-promo__cell--price">
+            <span class="tp-promo__cell-tag">{{ pkg_1_name }}</span>
+            <span class="tp-promo__cell-value">{{ block.settings.price1 }}</span>
+          </div>
+          <div class="tp-promo__cell tp-promo__cell--price">
+            <span class="tp-promo__cell-tag">{{ pkg_2_name }}</span>
+            <span class="tp-promo__cell-value">{{ block.settings.price2 }}</span>
+          </div>
+          <div class="tp-promo__cell tp-promo__cell--price">
+            <span class="tp-promo__cell-tag">{{ pkg_3_name }}</span>
+            <span class="tp-promo__cell-value">{{ block.settings.price3 }}</span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.table_note != blank -%}
+      <div class="tp-promo__table-note">{{ section.settings.table_note }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="tp-promo__band">
+    <div class="tp-promo__band-inner">
+      <div class="tp-promo__rules">
+        {%- if section.settings.rules_heading != blank -%}
+          <h2 class="tp-promo__rules-title">{{ section.settings.rules_heading }}</h2>
+        {%- endif -%}
+
+        {%- if rules.size > 0 -%}
+          <div class="tp-promo__rules-list">
+            {%- for block in rules -%}
+              <div class="tp-promo__rule" {{ block.shopify_attributes }}>
+                <div class="tp-promo__rule-title">{{ block.settings.title }}</div>
+                <div class="tp-promo__rule-text">{{ block.settings.text }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="tp-promo__sim">
+        {%- if section.settings.sim_heading != blank -%}
+          <div class="tp-promo__sim-title">{{ section.settings.sim_heading }}</div>
+        {%- endif -%}
+
+        <span class="tp-promo__sim-label" id="{{ sim_group_id }}">{{ section.settings.sim_group_label }}</span>
+        <div class="tp-promo__sizes" role="group" aria-labelledby="{{ sim_group_id }}">
+          {%- for block in tiers -%}
+            <button
+              type="button"
+              class="tp-promo__size"
+              data-tp-size
+              data-index="{{ forloop.index0 }}"
+              aria-pressed="{% if forloop.last %}true{% else %}false{% endif %}"
+            >
+              {{- block.settings.short_label -}}
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <label class="tp-promo__sim-label" for="{{ sim_select_id }}">{{ section.settings.sim_package_label }}</label>
+        <select id="{{ sim_select_id }}" class="tp-promo__select" data-tp-package>
+          {%- for block in packages -%}
+            {%- comment -%}
+              O pacote do meio (FORM Signature no artboard) vem pré-selecionado.
+            {%- endcomment -%}
+            <option value="{{ forloop.index0 }}" {% if forloop.index == 2 %}selected{% endif %}>
+              {{- block.settings.name }} — R$ {{ block.settings.base_price -}}
+            </option>
+          {%- endfor -%}
+        </select>
+
+        <div class="tp-promo__sim-row">
+          <span>{{ section.settings.sim_discount_label }}</span>
+          <span data-tp-discount></span>
+        </div>
+
+        <div class="tp-promo__sim-total">
+          <span class="tp-promo__sim-total-label">{{ section.settings.sim_total_label }}</span>
+          <span class="tp-promo__sim-total-value" data-tp-total></span>
+        </div>
+
+        <a href="#" class="tp-btn tp-btn--solid tp-promo__sim-cta" data-tp-whatsapp>
+          {{- section.settings.sim_cta_label -}}
+        </a>
+
+        {%- if section.settings.sim_note != blank -%}
+          <div class="tp-promo__sim-note">{{ section.settings.sim_note }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('tp-promo-{{ section.id }}');
+    if (!root) return;
+
+    var discounts = {{ discount_list | json }};
+    var groups = {{ group_list | json }};
+    var packageNames = {{ package_name_list | json }};
+    var packagePrices = {{ package_price_list | json }};
+    var messageTemplate = {{ section.settings.whatsapp_message | json }};
+    var phone = {{ phone | json }};
+
+    var sizeButtons = Array.prototype.slice.call(root.querySelectorAll('[data-tp-size]'));
+    var packageSelect = root.querySelector('[data-tp-package]');
+    var discountOutput = root.querySelector('[data-tp-discount]');
+    var totalOutput = root.querySelector('[data-tp-total]');
+    var whatsappButton = root.querySelector('[data-tp-whatsapp]');
+
+    if (!sizeButtons.length || !packageSelect) return;
+
+    var tierIndex = sizeButtons.length - 1;
+    sizeButtons.forEach(function (button, index) {
+      if (button.getAttribute('aria-pressed') === 'true') tierIndex = index;
+    });
+
+    function toNumber(value) {
+      var parsed = parseFloat(String(value == null ? '' : value).replace(',', '.'));
+      return isNaN(parsed) ? 0 : parsed;
+    }
+
+    function formatMoney(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function fill(template, token, value) {
+      return template.split(token).join(value);
+    }
+
+    function render() {
+      var packageIndex = parseInt(packageSelect.value, 10) || 0;
+      var discount = toNumber(discounts[tierIndex]);
+      var basePrice = toNumber(packagePrices[packageIndex]);
+      var perPerson = basePrice * (1 - discount / 100);
+      var discountText = discount.toLocaleString('pt-BR') + '%';
+      var priceText = formatMoney(perPerson);
+
+      sizeButtons.forEach(function (button, index) {
+        button.setAttribute('aria-pressed', index === tierIndex ? 'true' : 'false');
+      });
+
+      if (discountOutput) discountOutput.textContent = discountText;
+      if (totalOutput) totalOutput.textContent = priceText;
+
+      if (whatsappButton) {
+        var message = messageTemplate || '';
+        message = fill(message, '{grupo}', groups[tierIndex] || '');
+        message = fill(message, '{pacote}', packageNames[packageIndex] || '');
+        message = fill(message, '{desconto}', discountText);
+        message = fill(message, '{valor}', priceText);
+        whatsappButton.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+      }
+    }
+
+    sizeButtons.forEach(function (button, index) {
+      button.addEventListener('click', function () {
+        tierIndex = index;
+        render();
+      });
+    });
+
+    packageSelect.addEventListener('change', render);
+
+    render();
+  })();
+</script>
+
+{%- if section.settings.announcement_override != blank -%}
+  <script>
+    (function () {
+      var text = {{ section.settings.announcement_override | json }};
+      var desktop = document.querySelector('.tp-header__announce--desktop');
+      var mobile = document.querySelector('.tp-header__announce--mobile');
+      if (desktop) desktop.textContent = text;
+      if (mobile) mobile.textContent = text;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .tp-promo {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-promo * {
+    box-sizing: border-box;
+  }
+
+  .tp-promo a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* .tp-btn--solid é escopado em .tp-section no tp-home.css */
+  .tp-promo .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  /* ---------- Cabeçalho ---------- */
+
+  .tp-promo__head {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 56px 40px;
+    box-sizing: border-box;
+  }
+
+  .tp-promo__breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-block: 0 14px;
+  }
+
+  .tp-promo__breadcrumb-current {
+    color: var(--tp-ink);
+  }
+
+  .tp-promo__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin-block: 0 16px;
+    max-width: 700px;
+  }
+
+  .tp-promo__lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    max-width: 620px;
+  }
+
+  .tp-promo__lead p {
+    margin: 0;
+  }
+
+  .tp-promo__lead p + p {
+    margin-block: 10px 0;
+  }
+
+  /* ---------- Tabela de descontos ---------- */
+
+  .tp-promo__table-wrap {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 0 56px;
+    box-sizing: border-box;
+  }
+
+  .tp-promo__table {
+    border: 1px solid var(--tp-line);
+  }
+
+  .tp-promo__row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr 1fr 1fr;
+  }
+
+  .tp-promo__row--head {
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tp-promo__row--head .tp-promo__cell {
+    padding: 16px 20px;
+  }
+
+  .tp-promo__row--data {
+    font-size: 16px;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(36, 33, 31, 0.12);
+  }
+
+  .tp-promo__row--data:last-child {
+    border-bottom: 0;
+  }
+
+  .tp-promo__row--data .tp-promo__cell {
+    padding: 20px;
+  }
+
+  .tp-promo__row--alt {
+    background: var(--tp-stone);
+  }
+
+  .tp-promo__cell--discount {
+    color: var(--tp-wine);
+    font-weight: 500;
+  }
+
+  .tp-promo__cell-tag {
+    display: none;
+  }
+
+  .tp-promo__table-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-block: 14px 0;
+  }
+
+  .tp-promo__table-note p {
+    margin: 0;
+  }
+
+  /* ---------- Banda stone ---------- */
+
+  .tp-promo__band {
+    background: var(--tp-stone);
+  }
+
+  .tp-promo__band-inner {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 56px 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-promo__rules {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-promo__rules-title {
+    font-family: var(--tp-serif);
+    font-size: 30px;
+    font-weight: 500;
+    margin-block: 0 22px;
+  }
+
+  .tp-promo__rules-list {
+    display: grid;
+    gap: 16px;
+    max-width: 620px;
+  }
+
+  .tp-promo__rule {
+    border-top: 1px solid rgba(36, 33, 31, 0.18);
+    padding-block: 14px 0;
+  }
+
+  .tp-promo__rule-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-block: 0 6px;
+  }
+
+  .tp-promo__rule-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--tp-body);
+  }
+
+  /* ---------- Card do simulador ---------- */
+
+  .tp-promo__sim {
+    width: 420px;
+    flex: none;
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line);
+    padding: 30px 28px;
+  }
+
+  .tp-promo__sim-title {
+    font-family: var(--tp-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin-block: 0 18px;
+  }
+
+  .tp-promo__sim-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-block: 0 8px;
+  }
+
+  .tp-promo__sizes {
+    display: flex;
+    gap: 8px;
+    margin-block: 0 20px;
+  }
+
+  .tp-promo__size {
+    flex: 1;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--tp-ink);
+    background: transparent;
+    border: 1px solid rgba(36, 33, 31, 0.28);
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .tp-promo__size[aria-pressed='true'] {
+    border-color: var(--tp-ink);
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+  }
+
+  .tp-promo__size:focus-visible {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: 2px;
+  }
+
+  .tp-promo__select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid rgba(36, 33, 31, 0.24);
+    border-radius: 0;
+    background: var(--tp-cream);
+    color: var(--tp-ink);
+    font-family: inherit;
+    font-size: 14px;
+    margin-block: 0 22px;
+  }
+
+  .tp-promo__select:focus {
+    outline: 1px solid var(--tp-line-strong);
+    outline-offset: 0;
+  }
+
+  .tp-promo__sim-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 15px;
+    color: var(--tp-muted);
+    margin-block: 0 8px;
+  }
+
+  .tp-promo__sim-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    border-top: 1px solid var(--tp-line);
+    padding-block: 14px 0;
+    margin-block: 0 20px;
+  }
+
+  .tp-promo__sim-total-label {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .tp-promo__sim-total-value {
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  .tp-promo__sim-cta {
+    display: flex;
+    width: 100%;
+    height: 52px;
+    font-size: 15px;
+  }
+
+  .tp-promo__sim-note {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-block: 14px 0;
+  }
+
+  .tp-promo__sim-note p {
+    margin: 0;
+  }
+
+  /* ---------- Responsivo ---------- */
+
+  @media (max-width: 1100px) {
+    .tp-promo__head {
+      padding-block: 44px 32px;
+    }
+
+    .tp-promo__title {
+      font-size: 38px;
+    }
+
+    .tp-promo__row--head .tp-promo__cell,
+    .tp-promo__row--data .tp-promo__cell {
+      padding-inline: 16px;
+    }
+
+    .tp-promo__table-wrap {
+      padding-block: 0 44px;
+    }
+
+    .tp-promo__band-inner {
+      gap: 32px;
+      padding-block: 48px 52px;
+    }
+
+    .tp-promo__sim {
+      width: 360px;
+      padding: 26px 24px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-promo__head {
+      padding-block: 32px 24px;
+    }
+
+    .tp-promo__title {
+      font-size: 30px;
+    }
+
+    .tp-promo__lead {
+      font-size: 15px;
+      max-width: none;
+    }
+
+    .tp-promo__table-wrap {
+      padding-block: 0 36px;
+    }
+
+    /* A tabela de 5 colunas vira uma pilha de cartões */
+    .tp-promo__row--head {
+      display: none;
+    }
+
+    .tp-promo__row--data {
+      display: block;
+      padding: 16px 18px;
+    }
+
+    .tp-promo__row--data .tp-promo__cell {
+      padding: 0;
+    }
+
+    .tp-promo__cell--group {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .tp-promo__cell--discount {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-block: 4px 12px;
+    }
+
+    .tp-promo__cell--price {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .tp-promo__cell--price + .tp-promo__cell--price {
+      margin-block: 8px 0;
+    }
+
+    .tp-promo__cell-tag {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+    }
+
+    .tp-promo__band-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+      padding-block: 36px 44px;
+    }
+
+    .tp-promo__rules-title {
+      font-size: 24px;
+    }
+
+    .tp-promo__rules-list {
+      max-width: none;
+    }
+
+    .tp-promo__sim {
+      width: auto;
+      padding: 24px 20px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Promoção de grupo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_override",
+      "label": "Aviso do topo (só nesta página)",
+      "default": "Formou junto? Fechou junto! · Até 20% para grupos de formandas"
+    },
+    {
+      "type": "header",
+      "content": "Cabeçalho"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Breadcrumb — início",
+      "default": "Início"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_parent",
+      "label": "Breadcrumb — seção",
+      "default": "Formaturas"
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_parent_link",
+      "label": "Link da seção"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_current",
+      "label": "Breadcrumb — página atual",
+      "default": "Promoção de grupo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Formou junto? Fechou junto!"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texto de apoio",
+      "default": "<p>Quanto mais formandas fecham juntas, menor o valor do pacote FORM para cada uma. O desconto é aplicado no atendimento, sobre o pacote escolhido.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Tabela de descontos"
+    },
+    {
+      "type": "text",
+      "id": "table_col_group",
+      "label": "Coluna — grupo",
+      "default": "Grupo"
+    },
+    {
+      "type": "text",
+      "id": "table_col_discount",
+      "label": "Coluna — desconto",
+      "default": "Desconto"
+    },
+    {
+      "type": "richtext",
+      "id": "table_note",
+      "label": "Observação abaixo da tabela",
+      "default": "<p>Valores por formanda. O desconto se aplica aos pacotes FORM — extras, frete e upgrades seguem o preço de tabela.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Como funciona o grupo"
+    },
+    {
+      "type": "text",
+      "id": "rules_heading",
+      "label": "Título",
+      "default": "Como funciona o grupo"
+    },
+    {
+      "type": "header",
+      "content": "Simulador"
+    },
+    {
+      "type": "text",
+      "id": "sim_heading",
+      "label": "Título do card",
+      "default": "Simular o grupo"
+    },
+    {
+      "type": "text",
+      "id": "sim_group_label",
+      "label": "Rótulo do tamanho do grupo",
+      "default": "Quantas formandas fecham juntas"
+    },
+    {
+      "type": "text",
+      "id": "sim_package_label",
+      "label": "Rótulo do pacote",
+      "default": "Pacote"
+    },
+    {
+      "type": "text",
+      "id": "sim_discount_label",
+      "label": "Rótulo do desconto",
+      "default": "Desconto do grupo"
+    },
+    {
+      "type": "text",
+      "id": "sim_total_label",
+      "label": "Rótulo do total",
+      "default": "Por formanda"
+    },
+    {
+      "type": "text",
+      "id": "sim_cta_label",
+      "label": "Botão do WhatsApp",
+      "default": "Enviar para o WhatsApp"
+    },
+    {
+      "type": "richtext",
+      "id": "sim_note",
+      "label": "Observação do card",
+      "default": "<p>A mensagem já vai com o pacote escolhido e o número de formandas.</p>"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_phone",
+      "label": "WhatsApp (com DDI, só números)",
+      "default": "5500000000000"
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_message",
+      "label": "Mensagem ({grupo}, {pacote}, {desconto}, {valor})",
+      "default": "Oi, Thainá! Vim pelo simulador do site: somos um grupo de {grupo} e queremos o {pacote}. Com {desconto} de desconto, fica {valor} por formanda. Podemos fechar?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Faixa de desconto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "group_label",
+          "label": "Grupo",
+          "default": "2 formandas"
+        },
+        {
+          "type": "text",
+          "id": "short_label",
+          "label": "Rótulo do botão",
+          "default": "2"
+        },
+        {
+          "type": "text",
+          "id": "discount",
+          "label": "Desconto (%) — só o número",
+          "default": "10"
+        },
+        {
+          "type": "text",
+          "id": "price1",
+          "label": "Preço no pacote 1",
+          "default": "R$ 441,00"
+        },
+        {
+          "type": "text",
+          "id": "price2",
+          "label": "Preço no pacote 2",
+          "default": "R$ 621,00"
+        },
+        {
+          "type": "text",
+          "id": "price3",
+          "label": "Preço no pacote 3",
+          "default": "R$ 801,00"
+        }
+      ]
+    },
+    {
+      "type": "package",
+      "name": "Pacote FORM",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome do pacote",
+          "default": "FORM Essential"
+        },
+        {
+          "type": "number",
+          "id": "base_price",
+          "label": "Preço de tabela (R$)",
+          "default": 490
+        }
+      ]
+    },
+    {
+      "type": "rule",
+      "name": "Regra do grupo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Todas escolhem o mesmo pacote"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "O desconto vale quando o grupo inteiro fecha o mesmo pacote FORM."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Promoção de grupo",
+      "blocks": [
+        { "type": "tier" },
+        { "type": "tier" },
+        { "type": "tier" },
+        { "type": "package" },
+        { "type": "package" },
+        { "type": "package" },
+        { "type": "rule" },
+        { "type": "rule" },
+        { "type": "rule" },
+        { "type": "rule" }
+      ]
+    }
+  ]
+}
+{% endschema %}

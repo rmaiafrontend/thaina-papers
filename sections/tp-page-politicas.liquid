@@ -176,7 +176,9 @@
     color: var(--tp-wine);
   }
 
-  .tp-politicas__index-link--current {
+  /* Escopadas sob .tp-politicas para vencer ".tp-politicas a { color: inherit }",
+     que tem especificidade maior que uma classe sozinha. */
+  .tp-politicas .tp-politicas__index-link--current {
     color: var(--tp-wine);
     font-weight: 500;
   }
@@ -204,7 +206,7 @@
     margin: 0;
   }
 
-  .tp-politicas__help-link {
+  .tp-politicas .tp-politicas__help-link {
     font-size: 13px;
     font-weight: 500;
     color: var(--tp-wine);
@@ -413,7 +415,7 @@
       "type": "richtext",
       "id": "footer_note",
       "label": "Nota final (caixa destacada)",
-      "default": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata.</p>"
+      "default": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata. <a href=\"#\">Ver política de produtos digitais →</a></p>"
     },
     {
       "type": "header",

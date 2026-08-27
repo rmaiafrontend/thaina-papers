@@ -1,0 +1,106 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "tp-product-digital",
+      "blocks": {
+        "info_receive": {
+          "type": "info",
+          "settings": {
+            "title": "O que você recebe",
+            "body": "",
+            "items": "Link do Canva com 12 artes editáveis\nInstruções de duplicação do arquivo\nLicença de uso em PDF",
+            "note": ""
+          }
+        },
+        "info_editable": {
+          "type": "info",
+          "settings": {
+            "title": "O que pode ser editado",
+            "body": "",
+            "items": "Textos, nomes e datas\nCores da paleta\nFotos e elementos gráficos\nFontes (as originais vêm indicadas)",
+            "note": ""
+          }
+        },
+        "info_pro": {
+          "type": "info",
+          "settings": {
+            "title": "Precisa de Canva Pro?",
+            "body": "<p>Não. Todas as artes funcionam na conta gratuita — só os efeitos de fundo removido pedem Pro, e há versão alternativa incluída.</p>",
+            "items": "",
+            "note": ""
+          }
+        },
+        "info_formats": {
+          "type": "info",
+          "settings": {
+            "title": "Formatos e dimensões",
+            "body": "",
+            "items": "Adesivos 6 × 6 cm · cartela A4\nMenu retangular 10 × 21 cm\nConvite digital 1080 × 1920 px\nExportação em PDF de impressão e PNG",
+            "note": ""
+          }
+        },
+        "note_how": {
+          "type": "note_col",
+          "settings": {
+            "title": "Como usar",
+            "items": "1. Receba o link por e-mail e WhatsApp\n2. Duplique o arquivo antes de editar\n3. Edite, exporte e mande imprimir",
+            "body": "",
+            "note": ""
+          }
+        },
+        "note_license": {
+          "type": "note_col",
+          "settings": {
+            "title": "Licença de uso",
+            "items": "",
+            "body": "<p>Uso pessoal, para a sua própria formatura.</p>",
+            "note": "Proibida a revenda, a redistribuição e o compartilhamento do link-mestre."
+          }
+        },
+        "note_delivery": {
+          "type": "note_col",
+          "settings": {
+            "title": "Entrega e trocas",
+            "items": "",
+            "body": "<p>O link é liberado logo após a confirmação do pagamento.</p>",
+            "note": "Por ser um arquivo digital de entrega imediata, não há devolução após o acesso ao link."
+          }
+        }
+      },
+      "block_order": [
+        "info_receive",
+        "info_editable",
+        "info_pro",
+        "info_formats",
+        "note_how",
+        "note_license",
+        "note_delivery"
+      ],
+      "name": "TP — Produto digital",
+      "settings": {
+        "announcement_override": "Templates liberados na hora · Edite no Canva quantas vezes quiser",
+        "notice_label": "Produto digital",
+        "notice_text": "Nenhum item físico será enviado.",
+        "breadcrumb_tail": "Templates Canva / Formaturas",
+        "title_fallback": "Kit de formatura no Canva",
+        "short_description": "<p>Você edita, exporta e imprime onde quiser — sem esperar prazo de criação.</p>",
+        "delivery_note": "Entrega imediata por link · Licença de uso pessoal",
+        "add_to_cart_label": "Adicionar ao pedido",
+        "contact_label": "Quero algo exclusivo",
+        "contact_link": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
