@@ -76,7 +76,9 @@
         "empty_results": "Nenhum produto encontrado para essa busca.",
         "products_per_page": 24,
         "prev_label": "Anteriores",
-        "next_label": "Próximos"
+        "next_label": "Próximos",
+        "search_label": "Buscar",
+        "search_placeholder": "O que você está procurando?"
       }
     }
   },

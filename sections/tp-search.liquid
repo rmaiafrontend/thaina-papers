@@ -44,6 +44,22 @@
     </aside>
 
     <div class="tp-busca__main">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="tp-busca__form">
+        <label class="visually-hidden" for="tp-busca-q">{{ section.settings.search_label }}</label>
+        <input
+          id="tp-busca-q"
+          type="search"
+          name="q"
+          class="tp-busca__field"
+          placeholder="{{ section.settings.search_placeholder }}"
+          value="{{ search.terms | escape }}"
+          autofocus
+        >
+        <button type="submit" class="tp-btn tp-btn--solid tp-busca__submit">
+          {{- section.settings.search_label -}}
+        </button>
+      </form>
+
       <div class="tp-busca__head">
         <h1 class="tp-busca__title">
           {%- if search.terms != blank -%}
@@ -380,6 +396,45 @@
     min-width: 0;
   }
 
+  .tp-busca .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-busca__form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .tp-busca__field {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    padding-inline: 16px;
+    border: 1px solid rgba(36, 33, 31, 0.28);
+    border-radius: 0;
+    background: var(--tp-cream);
+    font-family: var(--tp-sans);
+    font-size: 15px;
+    color: var(--tp-ink);
+  }
+
+  .tp-busca__field:focus-visible {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: -1px;
+  }
+
+  .tp-busca__submit {
+    flex: none;
+    height: 48px;
+    padding-inline: 26px;
+    font-size: 14px;
+    border: none;
+    font-family: var(--tp-sans);
+    cursor: pointer;
+  }
+
   .tp-busca__head {
     display: flex;
     align-items: baseline;
@@ -593,6 +648,18 @@
       "id": "filters_title",
       "label": "Título da barra de filtros",
       "default": "Filtrar"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Botão de busca",
+      "default": "Buscar"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder do campo",
+      "default": "O que você está procurando?"
     },
     {
       "type": "text",
