@@ -158,6 +158,7 @@
 
   .tp-header__hamburger {
     display: none;
+    grid-row: 1;
     justify-self: start;
     font-size: 12px;
     letter-spacing: 0.12em;
@@ -166,6 +167,8 @@
   }
 
   .tp-header__search {
+    grid-column: 1;
+    grid-row: 1;
     justify-self: start;
     font-size: 12px;
     letter-spacing: 0.12em;
@@ -175,6 +178,7 @@
 
   .tp-header__logo {
     grid-column: 2;
+    grid-row: 1;
     font-size: 14px;
     letter-spacing: 0.34em;
     color: var(--tp-wine);
@@ -183,6 +187,8 @@
   }
 
   .tp-header__actions {
+    grid-column: 3;
+    grid-row: 1;
     justify-self: end;
     display: flex;
     gap: 24px;
@@ -311,6 +317,7 @@
 
     .tp-header__hamburger {
       display: block;
+      grid-column: 1;
     }
 
     .tp-header__logo {
@@ -319,6 +326,7 @@
     }
 
     .tp-header__search {
+      grid-column: 3;
       justify-self: end;
     }
 
