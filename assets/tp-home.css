@@ -96,7 +96,7 @@
   background: var(--tp-cream);
 }
 
-.tp-section > * {
+body .tp-section > * {
   max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
   margin-inline: auto;
   padding-inline: var(--tp-gutter);
