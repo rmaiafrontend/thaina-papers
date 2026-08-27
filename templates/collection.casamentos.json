@@ -1,0 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_collection": {
+      "type": "tp-collection",
+      "blocks": {
+        "pkg_essential": {
+          "type": "package",
+          "settings": {
+            "title": "Essential",
+            "description": "Identidade + convite + papelaria base",
+            "price": "R$ 490",
+            "link": ""
+          }
+        },
+        "pkg_signature": {
+          "type": "package",
+          "settings": {
+            "title": "Signature",
+            "description": "Suíte completa e papelaria do dia",
+            "price": "R$ 1.490",
+            "link": ""
+          }
+        },
+        "pkg_bespoke": {
+          "type": "package",
+          "settings": {
+            "title": "Bespoke",
+            "description": "Projeto exclusivo, do zero ao dia",
+            "price": "R$ 2.900",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["pkg_essential", "pkg_signature", "pkg_bespoke"],
+      "name": "TP — Hub casamentos",
+      "settings": {
+        "heading": "Da identidade visual ao último detalhe da mesa.",
+        "description": "<p>Convites, manuais, papelaria do dia e produtos avulsos — em pacote fechado ou peça a peça, com preço à vista na página.</p>",
+        "cta_heading": "Não achou a peça que você imaginou?",
+        "cta_description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você.",
+        "cta_label": "Quero algo exclusivo",
+        "cta_link": ""
+      }
+    }
+  },
+  "order": [
+    "tp_collection"
+  ]
+}
