@@ -24,15 +24,15 @@
         },
         "nav_formaturas": {
           "type": "nav_link",
-          "settings": { "label": "Formaturas", "link": "shopify://collections/all" }
+          "settings": { "label": "Formaturas", "link": "/collections/especial-formaturas?view=formaturas" }
         },
         "nav_consultorios": {
           "type": "nav_link",
-          "settings": { "label": "Consultórios", "link": "shopify://collections/all" }
+          "settings": { "label": "Consultórios", "link": "/collections/avulsos?view=consultorios" }
         },
         "nav_templates": {
           "type": "nav_link",
-          "settings": { "label": "Templates Canva", "link": "shopify://collections/all" }
+          "settings": { "label": "Templates Canva", "link": "/collections/convites?view=templates" }
         },
         "nav_tailormade": {
           "type": "nav_link",

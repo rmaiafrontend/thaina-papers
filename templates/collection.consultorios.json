@@ -1,0 +1,123 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_hub_consultorios": {
+      "type": "tp-hub-consultorios",
+      "blocks": {
+        "kit_essencial": {
+          "type": "kit",
+          "settings": {
+            "title": "Kit Essencial",
+            "description": "3 cartelas: Café / Almoço / Jantar, Jejum e Uso contínuo.",
+            "price": "R$ 39,90",
+            "link_label": "Ver kit →",
+            "link": ""
+          }
+        },
+        "kit_completo": {
+          "type": "kit",
+          "settings": {
+            "title": "Kit Completo",
+            "description": "5 cartelas, incluindo Geladeira e Se necessário.",
+            "price": "R$ 64,90",
+            "link_label": "Ver kit →",
+            "link": ""
+          }
+        },
+        "cartela_cafe": {
+          "type": "cartela",
+          "settings": {
+            "title": "Cartela Café / Almoço / Jantar",
+            "price": "R$ 14,90"
+          }
+        },
+        "cartela_jejum": {
+          "type": "cartela",
+          "settings": {
+            "title": "Cartela Jejum / Antes / Depois",
+            "price": "R$ 14,90"
+          }
+        },
+        "cartela_uso_continuo": {
+          "type": "cartela",
+          "settings": {
+            "title": "Cartela Uso contínuo / Se necessário",
+            "price": "R$ 14,90"
+          }
+        },
+        "cartela_geladeira": {
+          "type": "cartela",
+          "settings": {
+            "title": "Cartela Geladeira",
+            "price": "R$ 14,90"
+          }
+        },
+        "soon_identidade": {
+          "type": "em_breve",
+          "settings": {
+            "eyebrow": "Em breve",
+            "title": "Identidade Visual para Consultório",
+            "description": "Escopo e investimento em definição.",
+            "link_label": "Falar com a Thainá →",
+            "link": ""
+          }
+        },
+        "soon_papelaria": {
+          "type": "em_breve",
+          "settings": {
+            "eyebrow": "Em breve",
+            "title": "Papelaria do Consultório",
+            "description": "Itens e valores em definição.",
+            "link_label": "Falar com a Thainá →",
+            "link": ""
+          }
+        },
+        "soon_template": {
+          "type": "em_breve",
+          "settings": {
+            "eyebrow": "Em breve",
+            "title": "Template de orientação editável",
+            "description": "Licença e preço em definição.",
+            "link_label": "Falar com a Thainá →",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "kit_essencial",
+        "kit_completo",
+        "cartela_cafe",
+        "cartela_jejum",
+        "cartela_uso_continuo",
+        "cartela_geladeira",
+        "soon_identidade",
+        "soon_papelaria",
+        "soon_template"
+      ],
+      "name": "TP — Hub consultórios",
+      "settings": {
+        "breadcrumb_label": "Consultórios",
+        "heading": "Organização que o paciente entende de primeira.",
+        "description": "<p>Cartelas, papelaria e materiais de apoio para a rotina do consultório — desenhados para reduzir dúvida, não para substituir orientação.</p>",
+        "hero_image_alt": "Cartelas de consultório",
+        "notice_label": "Aviso",
+        "notice_text": "<p>Os materiais são apoio de organização e comunicação. Não substituem prescrição, orientação profissional ou acompanhamento clínico, e não garantem adesão ao tratamento.</p>",
+        "kits_heading": "Kits",
+        "kits_note": "Entrega em cartelas impressas",
+        "cartelas_heading": "Cartelas avulsas",
+        "cartelas_note": "R$ 14,90 cada"
+      }
+    }
+  },
+  "order": [
+    "tp_hub_consultorios"
+  ]
+}

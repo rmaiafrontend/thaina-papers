@@ -1,0 +1,461 @@
+{%- liquid
+  assign categories = section.blocks | where: 'type', 'category'
+  assign info_columns = section.blocks | where: 'type', 'info_column'
+-%}
+
+<div class="tp-hub-templates">
+  <div class="tp-hub-templates__intro">
+    <div class="tp-hub-templates__col">
+      <div class="tp-hub-templates__breadcrumb">
+        <a href="{{ routes.root_url }}">Início</a>
+        <span aria-hidden="true"> / </span>
+        <span>{{ section.settings.breadcrumb_label | default: collection.title }}</span>
+      </div>
+      <h1 class="tp-hub-templates__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.description != blank -%}
+        <div class="tp-hub-templates__lead">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+    <div class="tp-media tp-hub-templates__hero-media">
+      {%- if section.settings.hero_image != blank -%}
+        {{
+          section.settings.hero_image
+          | image_url: width: 900
+          | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 420px', widths: '400,650,900'
+        }}
+      {%- else -%}
+        <div class="tp-media__placeholder">Templates no Canva</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="tp-hub-templates__notice-wrap">
+    <div class="tp-hub-templates__notice">
+      {%- if section.settings.digital_notice_label != blank -%}
+        <div class="tp-hub-templates__notice-label">{{ section.settings.digital_notice_label }}</div>
+      {%- endif -%}
+      <div class="tp-hub-templates__notice-divider" aria-hidden="true"></div>
+      {%- if section.settings.digital_notice_text != blank -%}
+        <div class="tp-hub-templates__notice-text">{{ section.settings.digital_notice_text }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if categories.size > 0 -%}
+    <div class="tp-hub-templates__categories-wrap">
+      <div class="tp-hub-templates__categories-grid">
+        {%- for block in categories -%}
+          <a href="{{ block.settings.link | default: '#' }}" class="tp-hub-templates__category" {{ block.shopify_attributes }}>
+            <div class="tp-media tp-hub-templates__category-media">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 100vw, 45vw', widths: '400,600,800'
+                }}
+              {%- else -%}
+                <div class="tp-media__placeholder">{{ block.settings.title }}</div>
+              {%- endif -%}
+            </div>
+            <div class="tp-hub-templates__category-body">
+              <div class="tp-hub-templates__category-title">{{ block.settings.title }}</div>
+              {%- if block.settings.description != blank -%}
+                <div class="tp-hub-templates__category-desc">{{ block.settings.description }}</div>
+              {%- endif -%}
+              {%- if block.settings.meta != blank -%}
+                <div class="tp-hub-templates__category-meta">{{ block.settings.meta }}</div>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if info_columns.size > 0 -%}
+    <div class="tp-hub-templates__info">
+      <div class="tp-hub-templates__info-grid">
+        {%- for block in info_columns -%}
+          <div class="tp-hub-templates__info-column" {{ block.shopify_attributes }}>
+            {%- if block.settings.eyebrow != blank -%}
+              <div class="tp-hub-templates__info-eyebrow">{{ block.settings.eyebrow }}</div>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="tp-hub-templates__info-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .tp-hub-templates {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-hub-templates * {
+    box-sizing: border-box;
+  }
+
+  .tp-hub-templates a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tp-hub-templates__intro {
+    display: flex;
+    gap: 60px;
+    align-items: flex-end;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 56px var(--tp-gutter) 40px;
+  }
+
+  .tp-hub-templates__col {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-hub-templates__breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 14px;
+  }
+
+  .tp-hub-templates__breadcrumb a:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-hub-templates__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin: 0 0 16px;
+    max-width: 640px;
+  }
+
+  .tp-hub-templates__lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    max-width: 560px;
+  }
+
+  .tp-hub-templates__lead p {
+    margin: 0;
+  }
+
+  .tp-hub-templates__lead p + p {
+    margin-top: 10px;
+  }
+
+  .tp-hub-templates__hero-media {
+    flex: none;
+    width: 420px;
+    height: 260px;
+  }
+
+  .tp-hub-templates__notice-wrap {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 0 var(--tp-gutter);
+    margin-block: 0 44px;
+  }
+
+  .tp-hub-templates__notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 22px;
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-hub-templates__notice-label {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    flex: none;
+  }
+
+  .tp-hub-templates__notice-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(250, 248, 243, 0.4);
+    flex: none;
+  }
+
+  .tp-hub-templates__notice-text {
+    font-size: 14px;
+  }
+
+  .tp-hub-templates__categories-wrap {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 0 var(--tp-gutter) 56px;
+  }
+
+  .tp-hub-templates__categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .tp-hub-templates__category {
+    display: block;
+    border: 1px solid var(--tp-line);
+    padding: 6px 6px 26px;
+    transition: border-color 0.2s ease;
+  }
+
+  .tp-hub-templates__category:hover {
+    border-color: var(--tp-line-strong);
+  }
+
+  .tp-hub-templates__category-media {
+    height: 240px;
+  }
+
+  .tp-hub-templates__category-body {
+    padding: 22px 26px 0;
+  }
+
+  .tp-hub-templates__category-title {
+    font-family: var(--tp-serif);
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .tp-hub-templates__category-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin-bottom: 12px;
+  }
+
+  .tp-hub-templates__category-desc p {
+    margin: 0;
+  }
+
+  .tp-hub-templates__category-meta {
+    font-size: 13px;
+    color: var(--tp-muted);
+  }
+
+  .tp-hub-templates__info {
+    background: var(--tp-stone);
+  }
+
+  .tp-hub-templates__info-grid {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 56px var(--tp-gutter) 60px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .tp-hub-templates__info-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 12px;
+  }
+
+  .tp-hub-templates__info-body {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .tp-hub-templates__info-body p {
+    margin: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-hub-templates__info-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-hub-templates__intro {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 24px;
+      padding-block: 28px 32px;
+    }
+
+    .tp-hub-templates__hero-media {
+      width: 100%;
+      height: 200px;
+    }
+
+    .tp-hub-templates__title {
+      font-size: 30px;
+    }
+
+    .tp-hub-templates__notice-wrap {
+      margin-block: 0 32px;
+    }
+
+    .tp-hub-templates__notice {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .tp-hub-templates__notice-divider {
+      display: none;
+    }
+
+    .tp-hub-templates__categories-wrap {
+      padding-bottom: 32px;
+    }
+
+    .tp-hub-templates__categories-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .tp-hub-templates__category-media {
+      height: 200px;
+    }
+
+    .tp-hub-templates__category-body {
+      padding: 18px 20px 0;
+    }
+
+    .tp-hub-templates__info-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-block: 36px 40px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Hub templates Canva",
+  "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_label",
+      "label": "Breadcrumb (padrão: nome da coleção)",
+      "default": "Templates Canva"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "O mesmo cuidado, no seu tempo."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descrição",
+      "default": "<p>Artes prontas para editar no Canva, com link liberado logo após o pagamento. Você ajusta textos, cores e fotos — e imprime onde preferir.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagem de destaque"
+    },
+    {
+      "type": "header",
+      "content": "Aviso de produto digital"
+    },
+    {
+      "type": "text",
+      "id": "digital_notice_label",
+      "label": "Rótulo",
+      "default": "Produto digital"
+    },
+    {
+      "type": "textarea",
+      "id": "digital_notice_text",
+      "label": "Texto",
+      "default": "Nenhum item físico será enviado. A entrega é o link do Canva, com instruções e licença."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoria",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Nome",
+          "default": "Casamentos"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descrição",
+          "default": "<p>Save the date, convite, manual dos padrinhos, menu e tags.</p>"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Contagem e preço (texto)",
+          "default": "12 artes · a partir de R$ 49"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "info_column",
+      "name": "Coluna de informação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Rótulo",
+          "default": "Entrega"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto",
+          "default": "<p>Link do Canva por e-mail e WhatsApp, liberado após a confirmação do pagamento.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Hub templates Canva",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "info_column" },
+        { "type": "info_column" },
+        { "type": "info_column" },
+        { "type": "info_column" }
+      ]
+    }
+  ]
+}
+{% endschema %}

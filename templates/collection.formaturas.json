@@ -15,8 +15,8 @@
         "pkg_essential": {
           "type": "package",
           "settings": {
-            "title": "Essential",
-            "description": "Identidade + convite + papelaria base",
+            "title": "FORM Essential",
+            "description": "Identidade + convite digital + adesivos",
             "price": "R$ 490",
             "link": ""
           }
@@ -24,28 +24,33 @@
         "pkg_signature": {
           "type": "package",
           "settings": {
-            "title": "Signature",
-            "description": "Suíte completa e papelaria do dia",
-            "price": "R$ 1.490",
+            "title": "FORM Signature",
+            "description": "Essential + menus, tatuagens e mini totens",
+            "price": "R$ 690",
             "link": ""
           }
         },
         "pkg_bespoke": {
           "type": "package",
           "settings": {
-            "title": "Bespoke",
-            "description": "Projeto exclusivo, do zero ao dia",
-            "price": "R$ 2.900",
+            "title": "FORM Bespoke",
+            "description": "Projeto completo, do save the date ao canudo",
+            "price": "R$ 890",
             "link": ""
+          }
+        },
+        "promo_group": {
+          "type": "promo_banner",
+          "settings": {
+            "title": "Formou junto? Fechou junto!",
+            "description": "<p>10% para 2 formandas, 15% para 3 e 20% a partir de 4 — aplicado sobre os pacotes FORM.</p>",
+            "button_label": "Ver a promoção de grupo",
+            "button_link": ""
           }
         },
         "filter_fisico": {
           "type": "filter_pill",
           "settings": { "label": "Produto físico", "value": "fisico" }
-        },
-        "filter_arquivo": {
-          "type": "filter_pill",
-          "settings": { "label": "Arquivo digital", "value": "arquivo-digital" }
         },
         "filter_arte": {
           "type": "filter_pill",
@@ -60,19 +65,16 @@
         "pkg_essential",
         "pkg_signature",
         "pkg_bespoke",
+        "promo_group",
         "filter_fisico",
-        "filter_arquivo",
         "filter_arte",
         "filter_canva"
       ],
-      "name": "TP — Hub casamentos",
+      "name": "TP — Hub formaturas",
       "settings": {
-        "heading": "Da identidade visual ao último detalhe da mesa.",
-        "description": "<p>Convites, manuais, papelaria do dia e produtos avulsos — em pacote fechado ou peça a peça, com preço à vista na página.</p>",
-        "cta_heading": "Não achou a peça que você imaginou?",
-        "cta_description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você.",
-        "cta_label": "Quero algo exclusivo",
-        "cta_link": ""
+        "heading": "A formatura inteira com a sua cara.",
+        "description": "<p>Pacotes FORM, adesivos, tatuagens, menus e extras — com desconto progressivo para quem fecha em grupo.</p>",
+        "show_cta": false
       }
     }
   },

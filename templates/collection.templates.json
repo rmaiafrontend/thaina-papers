@@ -1,0 +1,103 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_hub_templates": {
+      "type": "tp-hub-templates",
+      "blocks": {
+        "cat_casamentos": {
+          "type": "category",
+          "settings": {
+            "title": "Casamentos",
+            "description": "<p>Save the date, convite, manual dos padrinhos, menu e tags.</p>",
+            "meta": "12 artes · a partir de R$ 49",
+            "link": ""
+          }
+        },
+        "cat_formaturas": {
+          "type": "category",
+          "settings": {
+            "title": "Formaturas",
+            "description": "<p>Adesivos, tatuagens, menu, save the date e cards de brincadeira.</p>",
+            "meta": "15 artes · a partir de R$ 39",
+            "link": ""
+          }
+        },
+        "cat_consultorios": {
+          "type": "category",
+          "settings": {
+            "title": "Consultórios",
+            "description": "<p>Orientações, organização de medicamentos, avisos e materiais informativos.</p>",
+            "meta": "8 artes · a partir de R$ 29",
+            "link": ""
+          }
+        },
+        "cat_organizacao": {
+          "type": "category",
+          "settings": {
+            "title": "Organização",
+            "description": "<p>Listas de convidados, controle de RSVP e planejamento de mesa.</p>",
+            "meta": "6 artes · a partir de R$ 29",
+            "link": ""
+          }
+        },
+        "info_entrega": {
+          "type": "info_column",
+          "settings": {
+            "eyebrow": "Entrega",
+            "body": "<p>Link do Canva por e-mail e WhatsApp, liberado após a confirmação do pagamento.</p>"
+          }
+        },
+        "info_canva": {
+          "type": "info_column",
+          "settings": {
+            "eyebrow": "Canva gratuito",
+            "body": "<p>Todas as artes funcionam na conta gratuita; quando algum recurso pede Pro, há versão alternativa.</p>"
+          }
+        },
+        "info_antes": {
+          "type": "info_column",
+          "settings": {
+            "eyebrow": "Antes de editar",
+            "body": "<p>Duplique o arquivo. O link-mestre continua intacto para você recomeçar quando quiser.</p>"
+          }
+        },
+        "info_licenca": {
+          "type": "info_column",
+          "settings": {
+            "eyebrow": "Licença",
+            "body": "<p>Uso pessoal. Proibida a revenda, a redistribuição e o compartilhamento do link-mestre.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_casamentos",
+        "cat_formaturas",
+        "cat_consultorios",
+        "cat_organizacao",
+        "info_entrega",
+        "info_canva",
+        "info_antes",
+        "info_licenca"
+      ],
+      "name": "TP — Hub templates Canva",
+      "settings": {
+        "breadcrumb_label": "Templates Canva",
+        "heading": "O mesmo cuidado, no seu tempo.",
+        "description": "<p>Artes prontas para editar no Canva, com link liberado logo após o pagamento. Você ajusta textos, cores e fotos — e imprime onde preferir.</p>",
+        "digital_notice_label": "Produto digital",
+        "digital_notice_text": "Nenhum item físico será enviado. A entrega é o link do Canva, com instruções e licença."
+      }
+    }
+  },
+  "order": [
+    "tp_hub_templates"
+  ]
+}
