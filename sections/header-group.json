@@ -20,7 +20,7 @@
         },
         "nav_casamentos": {
           "type": "nav_link",
-          "settings": { "label": "Casamentos", "link": "shopify://collections/all" }
+          "settings": { "label": "Casamentos", "link": "/collections/pacotes?view=casamentos" }
         },
         "nav_formaturas": {
           "type": "nav_link",

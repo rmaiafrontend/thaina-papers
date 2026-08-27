@@ -90,6 +90,15 @@
   }
 }
 
+/* Páginas já redesenhadas usam o off-white do protótipo em vez do bege
+   herdado do tema Dwell. Escopado para não alterar páginas ainda antigas. */
+body:has(.tp-section),
+body:has(.tp-hub),
+body:has(.tp-product),
+body:has(.tp-cart) {
+  background: var(--tp-cream);
+}
+
 .tp-section {
   font-family: var(--tp-sans);
   color: var(--tp-ink);

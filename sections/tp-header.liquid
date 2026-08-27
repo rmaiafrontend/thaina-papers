@@ -48,15 +48,15 @@
     # se nenhuma casar, cai para o primeiro link cuja rota é prefixo da atual.
     assign active_index = -1
     for block in section.blocks
-      assign nav_link = block.settings.link
-      if active_index == -1 and nav_link != blank and nav_link != '#' and nav_link == request.path
+      assign nav_path = block.settings.link | split: '?' | first
+      if active_index == -1 and nav_path != blank and nav_path != '#' and nav_path == request.path
         assign active_index = forloop.index0
       endif
     endfor
     if active_index == -1
       for block in section.blocks
-        assign nav_link = block.settings.link
-        if active_index == -1 and nav_link != blank and nav_link != '#' and nav_link != '/' and request.path contains nav_link
+        assign nav_path = block.settings.link | split: '?' | first
+        if active_index == -1 and nav_path != blank and nav_path != '#' and nav_path != '/' and request.path contains nav_path
           assign active_index = forloop.index0
         endif
       endfor
