@@ -20,7 +20,7 @@
         "button_1_label": "Ver todos os produtos",
         "button_1_link": "shopify://collections/all",
         "button_2_label": "Sob medida",
-        "button_2_link": "",
+        "button_2_link": "/pages/contact?view=tailor-made",
         "image_1_alt": "Suíte de convites sobre linho",
         "image_2_alt": "Menu ao lado do prato"
       }
@@ -34,7 +34,7 @@
             "title": "Casamentos",
             "description": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
             "link_label": "Ver casamentos",
-            "link": ""
+            "link": "/collections/pacotes?view=casamentos"
           }
         },
         "formaturas": {
@@ -43,7 +43,7 @@
             "title": "Formaturas",
             "description": "Pacotes FORM, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
             "link_label": "Ver formaturas",
-            "link": ""
+            "link": "/collections/especial-formaturas?view=formaturas"
           }
         },
         "consultorios": {
@@ -52,7 +52,7 @@
             "title": "Consultórios",
             "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
             "link_label": "Ver consultórios",
-            "link": ""
+            "link": "/collections/avulsos?view=consultorios"
           }
         }
       },
@@ -70,42 +70,42 @@
           "type": "category",
           "settings": {
             "title": "Convites",
-            "link": ""
+            "link": "/collections/convites"
           }
         },
         "savethedate": {
           "type": "category",
           "settings": {
             "title": "Save the date",
-            "link": ""
+            "link": "/search?q=save+the+date"
           }
         },
         "menus": {
           "type": "category",
           "settings": {
             "title": "Menus",
-            "link": ""
+            "link": "/search?q=menu"
           }
         },
         "adesivos": {
           "type": "category",
           "settings": {
             "title": "Adesivos",
-            "link": ""
+            "link": "/search?q=adesivo"
           }
         },
         "sinalizacao": {
           "type": "category",
           "settings": {
             "title": "Sinalização",
-            "link": ""
+            "link": "/search?q=sinaliza"
           }
         },
         "templates": {
           "type": "category",
           "settings": {
             "title": "Templates Canva",
-            "link": ""
+            "link": "/collections/convites?view=templates"
           }
         }
       },
@@ -132,7 +132,7 @@
             "description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
             "features": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
             "button_label": "Quero criar meu projeto",
-            "button_link": "",
+            "button_link": "/pages/contact?view=tailor-made",
             "button_style": "solid"
           }
         },
@@ -144,7 +144,7 @@
             "description": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
             "features": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
             "button_label": "Ver templates",
-            "button_link": "",
+            "button_link": "/collections/convites?view=templates",
             "button_style": "outline"
           }
         }
@@ -246,7 +246,7 @@
       "settings": {
         "heading": "Trabalhos reais",
         "link_label": "Ver portfólio",
-        "link": ""
+        "link": "/collections/all"
       }
     },
     "tp_quotes": {
@@ -333,7 +333,7 @@
         "heading": "Conte o que você está celebrando — o resto a gente desenha junto.",
         "description": "Atendimento direto com a Thainá, de segunda a sexta.",
         "button_1_label": "Falar no WhatsApp",
-        "button_1_link": "",
+        "button_1_link": "https://wa.me/5500000000000",
         "button_2_label": "Ver o catálogo",
         "button_2_link": "shopify://collections/all"
       }
