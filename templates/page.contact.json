@@ -6,139 +6,108 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "main": {
-      "type": "main-page",
+    "tp_contato": {
+      "type": "tp-page-contato",
       "blocks": {
-        "title": {
-          "type": "text",
-          "name": "t:names.title",
+        "subject_novo": {
+          "type": "subject",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Um pedido novo"
+          }
         },
-        "content": {
-          "type": "text",
-          "name": "t:names.content",
+        "subject_andamento": {
+          "type": "subject",
           "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Um pedido em andamento"
+          }
+        },
+        "subject_templates": {
+          "type": "subject",
+          "settings": {
+            "label": "Templates Canva"
+          }
+        },
+        "subject_parcerias": {
+          "type": "subject",
+          "settings": {
+            "label": "Parcerias"
+          }
+        },
+        "social_instagram": {
+          "type": "social",
+          "settings": {
+            "label": "Instagram"
+          }
+        },
+        "social_pinterest": {
+          "type": "social",
+          "settings": {
+            "label": "Pinterest"
+          }
+        },
+        "card_medidas": {
+          "type": "link_card",
+          "settings": {
+            "title": "Guia de medidas",
+            "description": "Formatos comparados a uma folha A4",
+            "link": "/pages/contact?view=guia-de-medidas"
+          }
+        },
+        "card_prazos": {
+          "type": "link_card",
+          "settings": {
+            "title": "Prazos e alterações",
+            "description": "Como funcionam correções e aprovação"
+          }
+        },
+        "card_politicas": {
+          "type": "link_card",
+          "settings": {
+            "title": "Políticas",
+            "description": "Catálogo, físicos, digitais e cancelamento",
+            "link": "/pages/contact?view=politicas"
+          }
         }
       },
       "block_order": [
-        "title",
-        "content"
+        "subject_novo",
+        "subject_andamento",
+        "subject_templates",
+        "subject_parcerias",
+        "social_instagram",
+        "social_pinterest",
+        "card_medidas",
+        "card_prazos",
+        "card_politicas"
       ],
+      "name": "TP — Contato",
       "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 0
-      }
-    },
-    "form": {
-      "type": "section",
-      "blocks": {
-        "contact_form_UwiCkQ": {
-          "type": "contact-form",
-          "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
-            "custom_width_mobile": 100,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit",
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "block_order": [
-        "contact_form_UwiCkQ"
-      ],
-      "name": "t:names.contact_form",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "page-width",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 70
+        "announcement_override": "Atendimento de segunda a sexta, das 9h às 18h",
+        "heading": "Fale com a Thainá",
+        "lead": "<p>O caminho mais rápido é o WhatsApp. Se preferir escrever com calma, use o formulário — respondo em até 2 dias úteis.</p>",
+        "whatsapp_label": "WhatsApp",
+        "whatsapp_number": "(41) 99000-0000",
+        "whatsapp_button_label": "Abrir conversa",
+        "email_label": "E-mail",
+        "email_value": "oi@thainapapers.com.br",
+        "hours_label": "Atendimento",
+        "hours_value": "<p>Segunda a sexta, 9h às 18h<br/>Curitiba, PR · atendimento remoto para todo o Brasil</p>",
+        "social_label": "Redes",
+        "form_heading": "Escreva para a gente",
+        "name_label": "Seu nome",
+        "email_field_label": "E-mail",
+        "subject_label": "Sobre o que você quer falar",
+        "message_label": "Mensagem",
+        "privacy_note": "Usamos seus dados apenas para responder este contato.",
+        "submit_label": "Enviar mensagem",
+        "success_message": "Mensagem enviada! Respondo em até 2 dias úteis."
       }
     }
   },
   "order": [
-    "main",
-    "form"
+    "tp_contato"
   ]
 }

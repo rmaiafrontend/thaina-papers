@@ -16,35 +16,59 @@
       "blocks": {
         "nav_inicio": {
           "type": "nav_link",
-          "settings": { "label": "Início", "link": "/" }
+          "settings": {
+            "label": "Início",
+            "link": "/"
+          }
         },
         "nav_casamentos": {
           "type": "nav_link",
-          "settings": { "label": "Casamentos", "link": "/collections/pacotes?view=casamentos" }
+          "settings": {
+            "label": "Casamentos",
+            "link": "/collections/pacotes?view=casamentos"
+          }
         },
         "nav_formaturas": {
           "type": "nav_link",
-          "settings": { "label": "Formaturas", "link": "/collections/especial-formaturas?view=formaturas" }
+          "settings": {
+            "label": "Formaturas",
+            "link": "/collections/especial-formaturas?view=formaturas"
+          }
         },
         "nav_consultorios": {
           "type": "nav_link",
-          "settings": { "label": "Consultórios", "link": "/collections/avulsos?view=consultorios" }
+          "settings": {
+            "label": "Consultórios",
+            "link": "/collections/avulsos?view=consultorios"
+          }
         },
         "nav_templates": {
           "type": "nav_link",
-          "settings": { "label": "Templates Canva", "link": "/collections/convites?view=templates" }
+          "settings": {
+            "label": "Templates Canva",
+            "link": "/collections/convites?view=templates"
+          }
         },
         "nav_tailormade": {
           "type": "nav_link",
-          "settings": { "label": "Tailor-made", "link": "/pages/contact?view=tailor-made" }
+          "settings": {
+            "label": "Tailor-made",
+            "link": "/pages/contact?view=tailor-made"
+          }
         },
         "nav_sobre": {
           "type": "nav_link",
-          "settings": { "label": "Sobre", "link": "/pages/contact?view=sobre" }
+          "settings": {
+            "label": "Sobre",
+            "link": "/pages/contact?view=sobre"
+          }
         },
         "nav_contato": {
           "type": "nav_link",
-          "settings": { "label": "Contato", "link": "/pages/contact?view=contato" }
+          "settings": {
+            "label": "Contato",
+            "link": "/pages/contact"
+          }
         }
       },
       "block_order": [

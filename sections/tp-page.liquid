@@ -1,0 +1,153 @@
+{%- comment -%}
+  Página genérica: usada pelo template padrão de páginas, para que
+  qualquer página criada no admin já nasça no design novo em vez de
+  cair no layout herdado do tema antigo.
+{%- endcomment -%}
+
+<div class="tp-page">
+  <div class="tp-page__inner">
+    {%- if section.settings.show_breadcrumb -%}
+      <div class="tp-page__breadcrumb">
+        <a href="{{ routes.root_url }}">{{ section.settings.home_label }}</a>
+        <span aria-hidden="true"> / </span>
+        <span>{{ page.title }}</span>
+      </div>
+    {%- endif -%}
+
+    <h1 class="tp-page__title">{{ page.title }}</h1>
+
+    {%- if page.content != blank -%}
+      <div class="tp-page__content rte">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .tp-page {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-page * {
+    box-sizing: border-box;
+  }
+
+  .tp-page__inner {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-block: 56px 72px;
+    padding-inline: var(--tp-gutter);
+  }
+
+  .tp-page__breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 14px;
+  }
+
+  .tp-page .tp-page__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tp-page .tp-page__breadcrumb a:hover {
+    color: var(--tp-wine);
+  }
+
+  .tp-page__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin: 0 0 24px;
+    max-width: 760px;
+  }
+
+  .tp-page__content {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--tp-body);
+    max-width: 760px;
+  }
+
+  .tp-page__content > * {
+    margin-block: 0 18px;
+  }
+
+  .tp-page__content > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .tp-page__content h2,
+  .tp-page__content h3 {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    color: var(--tp-ink);
+    margin-block: 32px 12px;
+  }
+
+  .tp-page__content h2 {
+    font-size: 28px;
+  }
+
+  .tp-page__content h3 {
+    font-size: 22px;
+  }
+
+  .tp-page .tp-page__content a {
+    color: var(--tp-wine);
+    font-weight: 500;
+  }
+
+  .tp-page__content ul,
+  .tp-page__content ol {
+    padding-inline-start: 20px;
+  }
+
+  .tp-page__content li {
+    margin-bottom: 8px;
+  }
+
+  .tp-page__content img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 899px) {
+    .tp-page__inner {
+      padding-block: 28px 40px;
+    }
+
+    .tp-page__title {
+      font-size: 30px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Página",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Mostrar breadcrumb",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "home_label",
+      "label": "Rótulo da página inicial",
+      "default": "Início"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Página"
+    }
+  ]
+}
+{% endschema %}
