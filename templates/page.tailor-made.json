@@ -1,0 +1,133 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_tailor_made": {
+      "type": "tp-page-tailor-made",
+      "blocks": {
+        "row_o_que_e": {
+          "type": "row",
+          "settings": {
+            "label": "O que é",
+            "value_a": "Projeto criado do zero para a sua celebração",
+            "value_b": "Arte pronta que você edita no Canva"
+          }
+        },
+        "row_exclusividade": {
+          "type": "row",
+          "settings": {
+            "label": "Exclusividade",
+            "value_a": "Só sua",
+            "value_b": "Compartilhada com outras compradoras"
+          }
+        },
+        "row_contato": {
+          "type": "row",
+          "settings": {
+            "label": "Contato",
+            "value_a": "Atendimento direto com a Thainá",
+            "value_b": "Suporte por WhatsApp para dúvidas do arquivo"
+          }
+        },
+        "row_alteracoes": {
+          "type": "row",
+          "settings": {
+            "label": "Alterações",
+            "value_a": "Até 3 solicitações de correção",
+            "value_b": "Ilimitadas, feitas por você"
+          }
+        },
+        "row_prazo": {
+          "type": "row",
+          "settings": {
+            "label": "Prazo",
+            "value_a": "De 5 a 10 dias úteis de criação",
+            "value_b": "Imediato"
+          }
+        },
+        "row_entrega": {
+          "type": "row",
+          "settings": {
+            "label": "Entrega",
+            "value_a": "Arquivos finais e/ou peças impressas",
+            "value_b": "Link do Canva com instruções e licença"
+          }
+        },
+        "pillar_resposta": {
+          "type": "pillar",
+          "settings": {
+            "text": "Resposta em até 2 dias úteis"
+          }
+        },
+        "pillar_agenda": {
+          "type": "pillar",
+          "settings": {
+            "text": "Agenda limitada por mês"
+          }
+        },
+        "pillar_investimento": {
+          "type": "pillar",
+          "settings": {
+            "text": "Investimento a partir de R$ 490"
+          }
+        }
+      },
+      "block_order": [
+        "row_o_que_e",
+        "row_exclusividade",
+        "row_contato",
+        "row_alteracoes",
+        "row_prazo",
+        "row_entrega",
+        "pillar_resposta",
+        "pillar_agenda",
+        "pillar_investimento"
+      ],
+      "name": "TP — Tailor-made",
+      "settings": {
+        "hero_script": "sob medida",
+        "hero_heading": "Cada projeto começa com uma conversa.",
+        "hero_text": "<p>Do primeiro traço à última tag da mesa, desenhado especialmente para você — com acompanhamento em cada etapa.</p>",
+        "hero_cta_primary_label": "Quero criar meu projeto",
+        "hero_cta_secondary_label": "Ver pacotes",
+        "hero_image_1_caption": "Projeto tailor-made",
+        "hero_image_2_caption": "Detalhe do convite",
+        "table_heading": "Tailor-made ou template?",
+        "table_note": "As duas entregas têm o mesmo cuidado de projeto",
+        "table_col_a": "Tailor-made",
+        "table_col_b": "Template Canva",
+        "table_cta_a_label": "Quero criar meu projeto",
+        "table_cta_b_label": "Ver templates",
+        "briefing_heading": "Comece pelo briefing",
+        "briefing_text": "<p>Leva cinco minutos. Com ele em mãos, a Thainá responde com escopo, prazo e investimento.</p>",
+        "briefing_footnote": "<p>Ao enviar, você concorda com o uso dos dados apenas para o atendimento deste projeto.</p>",
+        "briefing_submit_label": "Enviar briefing",
+        "briefing_success": "Briefing enviado! A Thainá responde em até 2 dias úteis.",
+        "label_name": "Seu nome",
+        "label_email": "E-mail",
+        "label_phone": "WhatsApp",
+        "label_occasion": "Ocasião",
+        "label_date": "Data da celebração",
+        "label_guests": "Número de convidados",
+        "label_budget": "Investimento previsto",
+        "label_pieces": "Peças que você imagina",
+        "label_message": "Conte um pouco sobre a celebração",
+        "occasion_options": "Casamento\nFormatura\nConsultório\nOutro",
+        "guests_options": "Até 50\nAté 80\nAté 150\nMais de 150",
+        "budget_options": "Até R$ 1.000\nR$ 1.000 a R$ 2.000\nR$ 2.000 a R$ 4.000\nAcima de R$ 4.000",
+        "pieces_options": "Convite\nSave the date\nPapelaria do dia\nManuais\nSinalização\nAinda não sei",
+        "announcement_override": "Projetos exclusivos · Agenda limitada por mês"
+      }
+    }
+  },
+  "order": [
+    "tp_tailor_made"
+  ]
+}

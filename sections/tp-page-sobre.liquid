@@ -1,0 +1,483 @@
+{%- liquid
+  assign pilares = section.blocks | where: 'type', 'pilar'
+-%}
+
+<div class="tp-page-sobre">
+  <div class="tp-page-sobre__hero">
+    <div class="tp-page-sobre__col">
+      {%- if section.settings.hero_script != blank -%}
+        <div class="tp-page-sobre__script">{{ section.settings.hero_script }}</div>
+      {%- endif -%}
+      {%- if section.settings.hero_heading != blank -%}
+        <h1 class="tp-page-sobre__title">{{ section.settings.hero_heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.hero_body != blank -%}
+        <div class="tp-page-sobre__lead">{{ section.settings.hero_body }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-page-sobre__hero-media-row">
+      <div class="tp-media tp-page-sobre__hero-media">
+        {%- if section.settings.hero_image_1 != blank -%}
+          {{
+            section.settings.hero_image_1
+            | image_url: width: 900
+            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 45vw, 330px', widths: '330,500,700,900'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ section.settings.hero_image_1_label }}</div>
+        {%- endif -%}
+      </div>
+      <div class="tp-media tp-page-sobre__hero-media tp-page-sobre__hero-media--offset">
+        {%- if section.settings.hero_image_2 != blank -%}
+          {{
+            section.settings.hero_image_2
+            | image_url: width: 900
+            | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 45vw, 330px', widths: '330,500,700,900'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ section.settings.hero_image_2_label }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if pilares.size > 0 -%}
+    <div class="tp-page-sobre__pillars">
+      <div class="tp-page-sobre__pillars-grid">
+        {%- for block in pilares -%}
+          <div class="tp-page-sobre__pillar" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <div class="tp-page-sobre__pillar-title">{{ block.settings.title }}</div>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="tp-page-sobre__pillar-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="tp-page-sobre__cta">
+    <div class="tp-page-sobre__cta-col">
+      {%- if section.settings.cta_heading != blank -%}
+        <div class="tp-page-sobre__cta-title">{{ section.settings.cta_heading }}</div>
+      {%- endif -%}
+      {%- if section.settings.cta_body != blank -%}
+        <div class="tp-page-sobre__cta-text">{{ section.settings.cta_body }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-page-sobre__cta-actions">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_link | default: '#' }}" class="tp-btn tp-btn--solid">
+          {{- section.settings.cta_primary_label -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="tp-btn tp-btn--outline">
+          {{- section.settings.cta_secondary_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .tp-page-sobre {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-page-sobre * {
+    box-sizing: border-box;
+  }
+
+  .tp-page-sobre a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Bloco 1 — hero editorial */
+
+  .tp-page-sobre__hero {
+    display: flex;
+    gap: 72px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 80px 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-page-sobre__col {
+    width: 560px;
+    flex: none;
+  }
+
+  .tp-page-sobre__script {
+    font-family: var(--tp-script);
+    font-size: 32px;
+    color: var(--tp-rose);
+    line-height: 1;
+    margin-block: 0 14px;
+  }
+
+  .tp-page-sobre__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin-block: 0 22px;
+  }
+
+  .tp-page-sobre__lead {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--tp-body);
+  }
+
+  .tp-page-sobre__lead p {
+    margin-block: 0 18px;
+  }
+
+  .tp-page-sobre__lead p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tp-page-sobre__hero-media-row {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .tp-page-sobre__hero-media {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 460px;
+  }
+
+  .tp-page-sobre__hero-media--offset {
+    margin-top: 60px;
+  }
+
+  /* Bloco 2 — banda stone com pilares */
+
+  .tp-page-sobre__pillars {
+    background: var(--tp-stone);
+  }
+
+  .tp-page-sobre__pillars-grid {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 60px 64px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  .tp-page-sobre__pillar {
+    border-top: 1px solid rgba(36, 33, 31, 0.22);
+    padding-top: 20px;
+  }
+
+  .tp-page-sobre__pillar-title {
+    font-family: var(--tp-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin-block: 0 10px;
+  }
+
+  .tp-page-sobre__pillar-body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--tp-body);
+  }
+
+  .tp-page-sobre__pillar-body p {
+    margin: 0;
+  }
+
+  .tp-page-sobre__pillar-body p + p {
+    margin-top: 10px;
+  }
+
+  /* Bloco 3 — CTA final */
+
+  .tp-page-sobre__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 60px 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-page-sobre__cta-col {
+    max-width: 560px;
+  }
+
+  .tp-page-sobre__cta-title {
+    font-family: var(--tp-serif);
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-block: 0 10px;
+  }
+
+  .tp-page-sobre__cta-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--tp-body);
+  }
+
+  .tp-page-sobre__cta-text p {
+    margin: 0;
+  }
+
+  .tp-page-sobre__cta-actions {
+    display: flex;
+    gap: 12px;
+    flex: none;
+  }
+
+  /* As variantes de .tp-btn em tp-home.css são escopadas em .tp-section,
+     por isso precisam ser replicadas aqui. */
+
+  .tp-page-sobre .tp-btn {
+    height: 52px;
+    padding-inline: 28px;
+  }
+
+  .tp-page-sobre .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-page-sobre .tp-btn--outline {
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+    background: transparent;
+  }
+
+  @media (max-width: 1100px) {
+    .tp-page-sobre__hero {
+      gap: 40px;
+      padding-block: 52px 44px;
+    }
+
+    .tp-page-sobre__col {
+      width: 46%;
+    }
+
+    .tp-page-sobre__title {
+      font-size: 38px;
+    }
+
+    .tp-page-sobre__hero-media {
+      height: 380px;
+    }
+
+    .tp-page-sobre__hero-media--offset {
+      margin-top: 40px;
+    }
+
+    .tp-page-sobre__pillars-grid {
+      gap: 28px;
+      padding-block: 48px 52px;
+    }
+
+    .tp-page-sobre__cta {
+      gap: 28px;
+    }
+
+    .tp-page-sobre__cta-title {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-page-sobre__hero {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+      padding-block: 32px 36px;
+    }
+
+    .tp-page-sobre__col {
+      width: 100%;
+    }
+
+    .tp-page-sobre__title {
+      font-size: 30px;
+    }
+
+    .tp-page-sobre__lead {
+      font-size: 15px;
+    }
+
+    .tp-page-sobre__hero-media {
+      height: 260px;
+    }
+
+    .tp-page-sobre__hero-media--offset {
+      margin-top: 24px;
+    }
+
+    .tp-page-sobre__pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-block: 36px 40px;
+    }
+
+    .tp-page-sobre__pillar-title {
+      font-size: 22px;
+    }
+
+    .tp-page-sobre__cta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding-block: 36px 40px;
+    }
+
+    .tp-page-sobre__cta-title {
+      font-size: 26px;
+    }
+
+    .tp-page-sobre__cta-actions {
+      flex-wrap: wrap;
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Página Sobre",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Abertura"
+    },
+    {
+      "type": "text",
+      "id": "hero_script",
+      "label": "Assinatura manuscrita",
+      "default": "prazer, Thainá"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Título",
+      "default": "Comecei desenhando o convite do meu próprio casamento."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_body",
+      "label": "Texto de abertura",
+      "default": "<p>Era 2019, o orçamento era curto e eu queria algo que parecesse com a gente. Fiz o convite, os menus e as tags numa mesa de jantar — e três amigas pediram igual.</p><p>Desde então são pequenos lotes, impressos com atenção a papel, corte e acabamento. Nada de estoque parado: cada peça é feita para uma data marcada no calendário de alguém.</p><p>Hoje o estúdio também tem templates no Canva — o mesmo cuidado de projeto, para quem prefere resolver no próprio tempo.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_1",
+      "label": "Imagem 1"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_1_label",
+      "label": "Legenda da imagem 1 (sem foto)",
+      "default": "Retrato da Thainá no estúdio"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_2",
+      "label": "Imagem 2 (deslocada)"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_2_label",
+      "label": "Legenda da imagem 2 (sem foto)",
+      "default": "Detalhe do processo"
+    },
+    {
+      "type": "header",
+      "content": "Chamada final"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Título",
+      "default": "Vamos conversar sobre a sua celebração?"
+    },
+    {
+      "type": "richtext",
+      "id": "cta_body",
+      "label": "Texto",
+      "default": "<p>Atendimento direto comigo, de segunda a sexta, das 9h às 18h.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Botão principal",
+      "default": "Falar no WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Link do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Botão secundário",
+      "default": "Preencher briefing"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Link do botão secundário"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pilar",
+      "name": "Pilar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Pequenos lotes"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto",
+          "default": "<p>Quantidades fixas e produção sob demanda. Nada é impresso antes de existir uma celebração.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Página Sobre",
+      "blocks": [
+        { "type": "pilar" },
+        { "type": "pilar" },
+        { "type": "pilar" }
+      ]
+    }
+  ]
+}
+{% endschema %}

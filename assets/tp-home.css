@@ -94,8 +94,13 @@
    herdado do tema Dwell. Escopado para não alterar páginas ainda antigas. */
 body:has(.tp-section),
 body:has(.tp-hub),
+body:has(.tp-hub-consultorios),
+body:has(.tp-hub-templates),
 body:has(.tp-product),
-body:has(.tp-cart) {
+body:has(.tp-cart),
+body:has(.tp-page-sobre),
+body:has(.tp-contato),
+body:has(.tp-tailor) {
   background: var(--tp-cream);
 }
 

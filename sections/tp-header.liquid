@@ -44,15 +44,37 @@
   </div>
 
   {%- liquid
-    # Marca um único link como ativo: prioriza correspondência exata da rota;
-    # se nenhuma casar, cai para o primeiro link cuja rota é prefixo da atual.
+    # Marca um único link como ativo, em ordem de precisão:
+    # 1) links com ?view= só casam se o sufixo do template atual for o mesmo
+    #    (vários links podem apontar para a mesma rota com views diferentes);
+    # 2) links sem ?view= casam pela rota exata;
+    # 3) fallback: primeira rota que é prefixo da atual.
     assign active_index = -1
+
     for block in section.blocks
       assign nav_path = block.settings.link | split: '?' | first
-      if active_index == -1 and nav_path != blank and nav_path != '#' and nav_path == request.path
+      assign nav_view = ''
+      if block.settings.link contains 'view='
+        assign nav_view = block.settings.link | split: 'view=' | last | split: '&' | first
+      endif
+      if active_index == -1 and nav_view != blank and nav_path == request.path and nav_view == template.suffix
         assign active_index = forloop.index0
       endif
     endfor
+
+    if active_index == -1
+      for block in section.blocks
+        assign nav_path = block.settings.link | split: '?' | first
+        assign has_view = false
+        if block.settings.link contains 'view='
+          assign has_view = true
+        endif
+        if active_index == -1 and has_view == false and nav_path != blank and nav_path != '#' and nav_path == request.path
+          assign active_index = forloop.index0
+        endif
+      endfor
+    endif
+
     if active_index == -1
       for block in section.blocks
         assign nav_path = block.settings.link | split: '?' | first

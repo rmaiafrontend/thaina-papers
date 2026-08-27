@@ -1,0 +1,99 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_contato": {
+      "type": "tp-page-contato",
+      "blocks": {
+        "subject_novo": {
+          "type": "subject",
+          "settings": { "label": "Um pedido novo" }
+        },
+        "subject_andamento": {
+          "type": "subject",
+          "settings": { "label": "Um pedido em andamento" }
+        },
+        "subject_templates": {
+          "type": "subject",
+          "settings": { "label": "Templates Canva" }
+        },
+        "subject_parcerias": {
+          "type": "subject",
+          "settings": { "label": "Parcerias" }
+        },
+        "social_instagram": {
+          "type": "social",
+          "settings": { "label": "Instagram" }
+        },
+        "social_pinterest": {
+          "type": "social",
+          "settings": { "label": "Pinterest" }
+        },
+        "card_medidas": {
+          "type": "link_card",
+          "settings": {
+            "title": "Guia de medidas",
+            "description": "Formatos comparados a uma folha A4"
+          }
+        },
+        "card_prazos": {
+          "type": "link_card",
+          "settings": {
+            "title": "Prazos e alterações",
+            "description": "Como funcionam correções e aprovação"
+          }
+        },
+        "card_politicas": {
+          "type": "link_card",
+          "settings": {
+            "title": "Políticas",
+            "description": "Catálogo, físicos, digitais e cancelamento"
+          }
+        }
+      },
+      "block_order": [
+        "subject_novo",
+        "subject_andamento",
+        "subject_templates",
+        "subject_parcerias",
+        "social_instagram",
+        "social_pinterest",
+        "card_medidas",
+        "card_prazos",
+        "card_politicas"
+      ],
+      "name": "TP — Contato",
+      "settings": {
+        "announcement_override": "Atendimento de segunda a sexta, das 9h às 18h",
+        "heading": "Fale com a Thainá",
+        "lead": "<p>O caminho mais rápido é o WhatsApp. Se preferir escrever com calma, use o formulário — respondo em até 2 dias úteis.</p>",
+        "whatsapp_label": "WhatsApp",
+        "whatsapp_number": "(41) 99000-0000",
+        "whatsapp_button_label": "Abrir conversa",
+        "email_label": "E-mail",
+        "email_value": "oi@thainapapers.com.br",
+        "hours_label": "Atendimento",
+        "hours_value": "<p>Segunda a sexta, 9h às 18h<br/>Curitiba, PR · atendimento remoto para todo o Brasil</p>",
+        "social_label": "Redes",
+        "form_heading": "Escreva para a gente",
+        "name_label": "Seu nome",
+        "email_field_label": "E-mail",
+        "subject_label": "Sobre o que você quer falar",
+        "message_label": "Mensagem",
+        "privacy_note": "Usamos seus dados apenas para responder este contato.",
+        "submit_label": "Enviar mensagem",
+        "success_message": "Mensagem enviada! Respondo em até 2 dias úteis."
+      }
+    }
+  },
+  "order": [
+    "tp_contato"
+  ]
+}

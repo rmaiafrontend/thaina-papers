@@ -1,0 +1,61 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tp_page_sobre": {
+      "type": "tp-page-sobre",
+      "blocks": {
+        "pilar_lotes": {
+          "type": "pilar",
+          "settings": {
+            "title": "Pequenos lotes",
+            "body": "<p>Quantidades fixas e produção sob demanda. Nada é impresso antes de existir uma celebração.</p>"
+          }
+        },
+        "pilar_preco": {
+          "type": "pilar",
+          "settings": {
+            "title": "Preço na página",
+            "body": "<p>Valor fechado, quantidade visível e prazo separado por etapa. Sem \"sob consulta\".</p>"
+          }
+        },
+        "pilar_conversa": {
+          "type": "pilar",
+          "settings": {
+            "title": "Conversa antes do traço",
+            "body": "<p>Todo projeto sob medida começa com um briefing e segue com aprovação em cada etapa.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pilar_lotes",
+        "pilar_preco",
+        "pilar_conversa"
+      ],
+      "name": "TP — Página Sobre",
+      "settings": {
+        "hero_script": "prazer, Thainá",
+        "hero_heading": "Comecei desenhando o convite do meu próprio casamento.",
+        "hero_body": "<p>Era 2019, o orçamento era curto e eu queria algo que parecesse com a gente. Fiz o convite, os menus e as tags numa mesa de jantar — e três amigas pediram igual.</p><p>Desde então são pequenos lotes, impressos com atenção a papel, corte e acabamento. Nada de estoque parado: cada peça é feita para uma data marcada no calendário de alguém.</p><p>Hoje o estúdio também tem templates no Canva — o mesmo cuidado de projeto, para quem prefere resolver no próprio tempo.</p>",
+        "hero_image_1_label": "Retrato da Thainá no estúdio",
+        "hero_image_2_label": "Detalhe do processo",
+        "cta_heading": "Vamos conversar sobre a sua celebração?",
+        "cta_body": "<p>Atendimento direto comigo, de segunda a sexta, das 9h às 18h.</p>",
+        "cta_primary_label": "Falar no WhatsApp",
+        "cta_primary_link": "",
+        "cta_secondary_label": "Preencher briefing",
+        "cta_secondary_link": ""
+      }
+    }
+  },
+  "order": [
+    "tp_page_sobre"
+  ]
+}

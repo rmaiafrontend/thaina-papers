@@ -1,0 +1,1249 @@
+{%- liquid
+  assign rows = section.blocks | where: 'type', 'row'
+  assign pillars = section.blocks | where: 'type', 'pillar'
+
+  assign form_id = 'TailorBriefing-' | append: section.id
+
+  assign occasion_options = section.settings.occasion_options | newline_to_br | split: '<br />'
+  assign guests_options = section.settings.guests_options | newline_to_br | split: '<br />'
+  assign budget_options = section.settings.budget_options | newline_to_br | split: '<br />'
+  assign pieces_options = section.settings.pieces_options | newline_to_br | split: '<br />'
+-%}
+
+<div class="tp-tailor">
+  <div class="tp-tailor__hero">
+    <div class="tp-tailor__hero-text">
+      {%- if section.settings.hero_script != blank -%}
+        <div class="tp-tailor__script">{{ section.settings.hero_script }}</div>
+      {%- endif -%}
+      {%- if section.settings.hero_heading != blank -%}
+        <h1 class="tp-tailor__title">{{ section.settings.hero_heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.hero_text != blank -%}
+        <div class="tp-tailor__lead">{{ section.settings.hero_text }}</div>
+      {%- endif -%}
+      <div class="tp-tailor__hero-actions">
+        {%- if section.settings.hero_cta_primary_label != blank -%}
+          <a
+            href="{{ section.settings.hero_cta_primary_link | default: '#' }}"
+            class="tp-btn tp-btn--solid tp-tailor__hero-btn"
+          >
+            {{- section.settings.hero_cta_primary_label -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.hero_cta_secondary_label != blank -%}
+          <a
+            href="{{ section.settings.hero_cta_secondary_link | default: '#' }}"
+            class="tp-btn tp-btn--outline tp-tailor__hero-btn"
+          >
+            {{- section.settings.hero_cta_secondary_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="tp-tailor__hero-media-group">
+      <div class="tp-media tp-tailor__hero-media">
+        {%- if section.settings.hero_image_1 != blank -%}
+          {{
+            section.settings.hero_image_1
+            | image_url: width: 900
+            | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,600,900'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ section.settings.hero_image_1_caption }}</div>
+        {%- endif -%}
+      </div>
+      <div class="tp-media tp-tailor__hero-media tp-tailor__hero-media--offset">
+        {%- if section.settings.hero_image_2 != blank -%}
+          {{
+            section.settings.hero_image_2
+            | image_url: width: 900
+            | image_tag: loading: 'lazy', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,600,900'
+          }}
+        {%- else -%}
+          <div class="tp-media__placeholder">{{ section.settings.hero_image_2_caption }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-tailor__compare">
+    <div class="tp-tailor__compare-head">
+      {%- if section.settings.table_heading != blank -%}
+        <h2 class="tp-tailor__compare-title">{{ section.settings.table_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.table_note != blank -%}
+        <div class="tp-tailor__compare-note">{{ section.settings.table_note }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-tailor__table">
+      <div class="tp-tailor__row tp-tailor__row--head">
+        <div class="tp-tailor__cell tp-tailor__cell--label"></div>
+        <div class="tp-tailor__cell">{{ section.settings.table_col_a }}</div>
+        <div class="tp-tailor__cell">{{ section.settings.table_col_b }}</div>
+      </div>
+
+      {%- for block in rows -%}
+        {%- liquid
+          assign zebra = forloop.index | modulo: 2
+          assign row_classes = 'tp-tailor__row tp-tailor__row--data'
+          if zebra == 0
+            assign row_classes = row_classes | append: ' tp-tailor__row--alt'
+          endif
+        -%}
+        <div class="{{ row_classes }}" {{ block.shopify_attributes }}>
+          <div class="tp-tailor__cell tp-tailor__cell--label">{{ block.settings.label }}</div>
+          <div class="tp-tailor__cell tp-tailor__cell--value">
+            <span class="tp-tailor__cell-tag">{{ section.settings.table_col_a }}</span>
+            {{ block.settings.value_a }}
+          </div>
+          <div class="tp-tailor__cell tp-tailor__cell--value">
+            <span class="tp-tailor__cell-tag">{{ section.settings.table_col_b }}</span>
+            {{ block.settings.value_b }}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <div class="tp-tailor__row tp-tailor__row--cta">
+        <div class="tp-tailor__cell tp-tailor__cell--label"></div>
+        <div class="tp-tailor__cell">
+          {%- if section.settings.table_cta_a_label != blank -%}
+            <a
+              href="{{ section.settings.table_cta_a_link | default: '#' }}"
+              class="tp-btn tp-btn--solid tp-tailor__table-btn"
+            >
+              {{- section.settings.table_cta_a_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+        <div class="tp-tailor__cell">
+          {%- if section.settings.table_cta_b_label != blank -%}
+            <a
+              href="{{ section.settings.table_cta_b_link | default: '#' }}"
+              class="tp-btn tp-btn--outline tp-tailor__table-btn"
+            >
+              {{- section.settings.table_cta_b_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tp-tailor__briefing">
+    <div class="tp-tailor__briefing-inner">
+      <div class="tp-tailor__briefing-intro">
+        {%- if section.settings.briefing_heading != blank -%}
+          <h2 class="tp-tailor__briefing-title">{{ section.settings.briefing_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.briefing_text != blank -%}
+          <div class="tp-tailor__briefing-text">{{ section.settings.briefing_text }}</div>
+        {%- endif -%}
+        {%- if pillars.size > 0 -%}
+          <div class="tp-tailor__pillars">
+            {%- for block in pillars -%}
+              <div class="tp-tailor__pillar" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', id: form_id, class: 'tp-tailor__form' -%}
+        <input
+          name="contact[id]"
+          type="hidden"
+          value="{{ form_id }}"
+        >
+
+        {%- liquid
+          assign form_matches = false
+          if form.id == form_id or form.id == blank
+            assign form_matches = true
+          endif
+        -%}
+
+        {%- if form.errors and form_matches -%}
+          <div
+            class="tp-tailor__form-message tp-tailor__form-message--error"
+            tabindex="-1"
+            autofocus
+          >
+            {{- form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email -}}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? and form_matches -%}
+          <div
+            class="tp-tailor__form-message tp-tailor__form-message--success"
+            tabindex="-1"
+            autofocus
+          >
+            {{- section.settings.briefing_success -}}
+          </div>
+        {%- endif -%}
+
+        <div class="tp-tailor__fields">
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-name">{{ section.settings.label_name }}</label>
+            <input
+              type="text"
+              id="{{ form_id }}-name"
+              class="tp-tailor__input"
+              name="contact[name]"
+              autocomplete="name"
+              required
+              aria-required="true"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            >
+          </div>
+
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-email">{{ section.settings.label_email }}</label>
+            <input
+              type="email"
+              id="{{ form_id }}-email"
+              class="tp-tailor__input"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              required
+              aria-required="true"
+              {% if form.errors contains 'email' and form_matches %}
+                aria-invalid="true"
+              {% endif %}
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            >
+          </div>
+
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-phone">{{ section.settings.label_phone }}</label>
+            <input
+              type="tel"
+              id="{{ form_id }}-phone"
+              class="tp-tailor__input"
+              name="contact[phone]"
+              autocomplete="tel"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            >
+          </div>
+
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-occasion">{{ section.settings.label_occasion }}</label>
+            <select
+              id="{{ form_id }}-occasion"
+              class="tp-tailor__select"
+              name="contact[Ocasião]"
+            >
+              {%- for option in occasion_options -%}
+                {%- assign option_label = option | strip -%}
+                {%- if option_label != blank -%}
+                  <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                {%- endif -%}
+              {%- endfor -%}
+            </select>
+          </div>
+
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-date">{{ section.settings.label_date }}</label>
+            <input
+              type="date"
+              id="{{ form_id }}-date"
+              class="tp-tailor__input"
+              name="contact[Data da celebração]"
+            >
+          </div>
+
+          <div class="tp-tailor__field">
+            <label class="tp-tailor__label" for="{{ form_id }}-guests">{{ section.settings.label_guests }}</label>
+            <select
+              id="{{ form_id }}-guests"
+              class="tp-tailor__select"
+              name="contact[Número de convidados]"
+            >
+              {%- for option in guests_options -%}
+                {%- assign option_label = option | strip -%}
+                {%- if option_label != blank -%}
+                  <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                {%- endif -%}
+              {%- endfor -%}
+            </select>
+          </div>
+
+          <div class="tp-tailor__field tp-tailor__field--wide">
+            <label class="tp-tailor__label" for="{{ form_id }}-budget">{{ section.settings.label_budget }}</label>
+            <select
+              id="{{ form_id }}-budget"
+              class="tp-tailor__select"
+              name="contact[Investimento previsto]"
+            >
+              {%- for option in budget_options -%}
+                {%- assign option_label = option | strip -%}
+                {%- if option_label != blank -%}
+                  <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                {%- endif -%}
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+
+        <fieldset class="tp-tailor__group tp-tailor__fieldset">
+          <legend class="tp-tailor__label">{{ section.settings.label_pieces }}</legend>
+          <div class="tp-tailor__chips">
+            {%- for option in pieces_options -%}
+              {%- assign option_label = option | strip -%}
+              {%- if option_label != blank -%}
+                <input
+                  type="checkbox"
+                  class="tp-tailor__chip-input"
+                  id="{{ form_id }}-piece-{{ forloop.index }}"
+                  name="contact[Peças]"
+                  value="{{ option_label | escape }}"
+                >
+                <label class="tp-tailor__chip" for="{{ form_id }}-piece-{{ forloop.index }}">{{ option_label }}</label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </fieldset>
+
+        <div class="tp-tailor__group">
+          <label class="tp-tailor__label" for="{{ form_id }}-body">{{ section.settings.label_message }}</label>
+          <textarea
+            id="{{ form_id }}-body"
+            class="tp-tailor__textarea"
+            name="contact[body]"
+            rows="4"
+          >{{- form.body -}}</textarea>
+        </div>
+
+        <div class="tp-tailor__form-footer">
+          {%- if section.settings.briefing_footnote != blank -%}
+            <div class="tp-tailor__form-note">{{ section.settings.briefing_footnote }}</div>
+          {%- endif -%}
+          <button type="submit" class="tp-btn tp-btn--solid tp-tailor__submit">
+            {{- section.settings.briefing_submit_label -}}
+          </button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.announcement_override != blank -%}
+  <script>
+    (function () {
+      var text = {{ section.settings.announcement_override | json }};
+      var desktop = document.querySelector('.tp-header__announce--desktop');
+      var mobile = document.querySelector('.tp-header__announce--mobile');
+      if (desktop) desktop.textContent = text;
+      if (mobile) mobile.textContent = text;
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .tp-tailor {
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    background: var(--tp-cream);
+  }
+
+  .tp-tailor * {
+    box-sizing: border-box;
+  }
+
+  .tp-tailor a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* .tp-btn--solid / --outline são escopados em .tp-section no tp-home.css */
+  .tp-tailor .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-tailor .tp-btn--outline {
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+    background: transparent;
+  }
+
+  /* ---------- Hero ---------- */
+
+  .tp-tailor__hero {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 76px var(--tp-gutter) 64px;
+    box-sizing: border-box;
+  }
+
+  .tp-tailor__hero-text {
+    width: 520px;
+    flex: none;
+  }
+
+  .tp-tailor__script {
+    font-family: var(--tp-script);
+    font-size: 32px;
+    color: var(--tp-rose);
+    line-height: 1;
+    margin-block: 0 14px;
+  }
+
+  .tp-tailor__title {
+    font-family: var(--tp-serif);
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.14;
+    margin-block: 0 18px;
+  }
+
+  .tp-tailor__lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    max-width: 440px;
+    margin-block: 0 28px;
+  }
+
+  .tp-tailor__lead p {
+    margin: 0;
+  }
+
+  .tp-tailor__lead p + p {
+    margin-block: 10px 0;
+  }
+
+  .tp-tailor__hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tp-tailor__hero-btn {
+    height: 52px;
+    padding: 0 28px;
+  }
+
+  .tp-tailor__hero-media-group {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .tp-tailor__hero-media {
+    flex: 1;
+    min-width: 0;
+    height: 400px;
+  }
+
+  .tp-tailor__hero-media--offset {
+    margin-block: 52px 0;
+  }
+
+  /* ---------- Tabela comparativa ---------- */
+
+  .tp-tailor__compare {
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--tp-gutter);
+    padding-block: 0 72px;
+    box-sizing: border-box;
+  }
+
+  .tp-tailor__compare-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-block: 0 26px;
+  }
+
+  .tp-tailor__compare-title {
+    font-family: var(--tp-serif);
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .tp-tailor__compare-note {
+    font-size: 13px;
+    color: var(--tp-muted);
+    text-align: right;
+  }
+
+  .tp-tailor__table {
+    border: 1px solid var(--tp-line);
+  }
+
+  .tp-tailor__row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.2fr;
+  }
+
+  .tp-tailor__row--head {
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tp-tailor__row--head .tp-tailor__cell {
+    padding: 16px 24px;
+  }
+
+  .tp-tailor__row--data {
+    font-size: 15px;
+    line-height: 1.55;
+    border-bottom: 1px solid rgba(36, 33, 31, 0.12);
+  }
+
+  .tp-tailor__row--data .tp-tailor__cell {
+    padding: 18px 24px;
+  }
+
+  .tp-tailor__row--alt {
+    background: var(--tp-stone);
+  }
+
+  .tp-tailor__row--data .tp-tailor__cell--label {
+    color: var(--tp-muted);
+  }
+
+  .tp-tailor__row--cta .tp-tailor__cell {
+    padding: 22px 24px;
+  }
+
+  .tp-tailor__table-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .tp-tailor__cell-tag {
+    display: none;
+  }
+
+  /* ---------- Briefing ---------- */
+
+  .tp-tailor__briefing {
+    background: var(--tp-stone);
+  }
+
+  .tp-tailor__briefing-inner {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+    max-width: calc(var(--tp-content-width) + var(--tp-gutter) * 2);
+    margin-inline: auto;
+    padding: 64px var(--tp-gutter) 72px;
+    box-sizing: border-box;
+  }
+
+  .tp-tailor__briefing-intro {
+    width: 400px;
+    flex: none;
+  }
+
+  .tp-tailor__briefing-title {
+    font-family: var(--tp-serif);
+    font-size: 30px;
+    font-weight: 500;
+    margin-block: 0 14px;
+  }
+
+  .tp-tailor__briefing-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    margin-block: 0 22px;
+  }
+
+  .tp-tailor__briefing-text p {
+    margin: 0;
+  }
+
+  .tp-tailor__briefing-text p + p {
+    margin-block: 10px 0;
+  }
+
+  .tp-tailor__pillars {
+    display: grid;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+  }
+
+  /* ---------- Formulário (o próprio <form> é o card) ---------- */
+
+  .tp-tailor__form {
+    flex: 1;
+    min-width: 0;
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line);
+    padding: 34px 34px 30px;
+    margin: 0;
+  }
+
+  .tp-tailor__form-message {
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 12px 16px;
+    border: 1px solid;
+    margin-block: 0 20px;
+  }
+
+  .tp-tailor__form-message--error {
+    border-color: var(--tp-wine);
+    color: var(--tp-wine);
+  }
+
+  .tp-tailor__form-message--success {
+    border-color: var(--tp-ink);
+    background: var(--tp-stone);
+    color: var(--tp-ink);
+  }
+
+  .tp-tailor__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+  }
+
+  .tp-tailor__field--wide {
+    grid-column: 1 / -1;
+  }
+
+  .tp-tailor__label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    padding: 0;
+    margin-block: 0 8px;
+  }
+
+  .tp-tailor__input,
+  .tp-tailor__select {
+    width: 100%;
+    height: 46px;
+    border: 1px solid rgba(36, 33, 31, 0.24);
+    border-radius: 0;
+    background: var(--tp-cream);
+    color: var(--tp-ink);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 0 14px;
+  }
+
+  .tp-tailor__textarea {
+    width: 100%;
+    height: 110px;
+    border: 1px solid rgba(36, 33, 31, 0.24);
+    border-radius: 0;
+    background: var(--tp-cream);
+    color: var(--tp-ink);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.55;
+    padding: 12px 14px;
+    resize: vertical;
+  }
+
+  .tp-tailor__input:focus,
+  .tp-tailor__select:focus,
+  .tp-tailor__textarea:focus {
+    outline: 1px solid var(--tp-line-strong);
+    outline-offset: 0;
+  }
+
+  .tp-tailor__group {
+    margin-block: 20px 0;
+  }
+
+  .tp-tailor__fieldset {
+    border: 0;
+    padding: 0;
+    margin-inline: 0;
+    min-width: 0;
+  }
+
+  .tp-tailor__chips {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tp-tailor__chip-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tp-tailor__chip {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 16px;
+    border: 1px solid rgba(36, 33, 31, 0.24);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .tp-tailor__chip-input:checked + .tp-tailor__chip {
+    background: var(--tp-ink);
+    color: var(--tp-cream);
+    border-color: var(--tp-ink);
+  }
+
+  .tp-tailor__chip-input:focus-visible + .tp-tailor__chip {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: 2px;
+  }
+
+  .tp-tailor__form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-block: 26px 0;
+  }
+
+  .tp-tailor__form-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    max-width: 420px;
+  }
+
+  .tp-tailor__form-note p {
+    margin: 0;
+  }
+
+  .tp-tailor__submit {
+    flex: none;
+    height: 52px;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+
+  /* ---------- Responsivo ---------- */
+
+  @media (max-width: 1100px) {
+    .tp-tailor__hero {
+      gap: 40px;
+      padding-block: 52px 48px;
+    }
+
+    .tp-tailor__hero-text {
+      width: 420px;
+    }
+
+    .tp-tailor__title {
+      font-size: 38px;
+    }
+
+    .tp-tailor__hero-media {
+      height: 320px;
+    }
+
+    .tp-tailor__hero-media--offset {
+      margin-block: 36px 0;
+    }
+
+    .tp-tailor__compare {
+      padding-block: 0 52px;
+    }
+
+    .tp-tailor__row--head .tp-tailor__cell,
+    .tp-tailor__row--data .tp-tailor__cell,
+    .tp-tailor__row--cta .tp-tailor__cell {
+      padding-inline: 18px;
+    }
+
+    .tp-tailor__briefing-inner {
+      gap: 32px;
+      padding-block: 48px 52px;
+    }
+
+    .tp-tailor__briefing-intro {
+      width: 320px;
+    }
+
+    .tp-tailor__form {
+      padding: 26px 26px 24px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-tailor__hero {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+      padding-block: 32px 36px;
+    }
+
+    .tp-tailor__hero-text {
+      width: auto;
+    }
+
+    .tp-tailor__title {
+      font-size: 30px;
+    }
+
+    .tp-tailor__lead {
+      max-width: none;
+      font-size: 15px;
+    }
+
+    .tp-tailor__hero-btn {
+      height: 48px;
+      padding: 0 20px;
+      flex: 1 1 auto;
+    }
+
+    .tp-tailor__hero-media {
+      height: 220px;
+    }
+
+    .tp-tailor__hero-media--offset {
+      margin-block: 0;
+    }
+
+    .tp-tailor__compare {
+      padding-block: 0 36px;
+    }
+
+    .tp-tailor__compare-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-block: 0 18px;
+    }
+
+    .tp-tailor__compare-title {
+      font-size: 24px;
+    }
+
+    .tp-tailor__compare-note {
+      text-align: left;
+    }
+
+    /* A tabela de 3 colunas vira uma pilha de cartões */
+    .tp-tailor__row--head {
+      display: none;
+    }
+
+    .tp-tailor__row--data {
+      display: block;
+      padding: 16px 18px;
+    }
+
+    .tp-tailor__row--data .tp-tailor__cell {
+      padding: 0;
+    }
+
+    .tp-tailor__row--data .tp-tailor__cell--label {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+      margin-block: 0 10px;
+    }
+
+    .tp-tailor__cell--value {
+      font-size: 14px;
+    }
+
+    .tp-tailor__cell--value + .tp-tailor__cell--value {
+      margin-block: 12px 0;
+    }
+
+    .tp-tailor__cell-tag {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+      margin-block: 0 4px;
+    }
+
+    .tp-tailor__row--cta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 18px;
+    }
+
+    .tp-tailor__row--cta .tp-tailor__cell {
+      padding: 0;
+    }
+
+    .tp-tailor__row--cta .tp-tailor__cell--label {
+      display: none;
+    }
+
+    .tp-tailor__briefing-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 26px;
+      padding-block: 36px 44px;
+    }
+
+    .tp-tailor__briefing-intro {
+      width: auto;
+    }
+
+    .tp-tailor__briefing-title {
+      font-size: 24px;
+    }
+
+    .tp-tailor__form {
+      padding: 22px 20px 20px;
+    }
+
+    .tp-tailor__fields {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .tp-tailor__form-footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .tp-tailor__form-note {
+      max-width: none;
+    }
+
+    .tp-tailor__submit {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Tailor-made",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_override",
+      "label": "Aviso do topo (só nesta página)",
+      "default": "Projetos exclusivos · Agenda limitada por mês"
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_script",
+      "label": "Assinatura manuscrita",
+      "default": "sob medida"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Título",
+      "default": "Cada projeto começa com uma conversa."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_text",
+      "label": "Texto de apoio",
+      "default": "<p>Do primeiro traço à última tag da mesa, desenhado especialmente para você — com acompanhamento em cada etapa.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_primary_label",
+      "label": "Botão principal",
+      "default": "Quero criar meu projeto"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_primary_link",
+      "label": "Link do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_secondary_label",
+      "label": "Botão secundário",
+      "default": "Ver pacotes"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_secondary_link",
+      "label": "Link do botão secundário"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_1",
+      "label": "Imagem 1"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_1_caption",
+      "label": "Legenda da imagem 1 (sem imagem)",
+      "default": "Projeto tailor-made"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_2",
+      "label": "Imagem 2"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_2_caption",
+      "label": "Legenda da imagem 2 (sem imagem)",
+      "default": "Detalhe do convite"
+    },
+    {
+      "type": "header",
+      "content": "Tabela comparativa"
+    },
+    {
+      "type": "text",
+      "id": "table_heading",
+      "label": "Título",
+      "default": "Tailor-made ou template?"
+    },
+    {
+      "type": "text",
+      "id": "table_note",
+      "label": "Observação",
+      "default": "As duas entregas têm o mesmo cuidado de projeto"
+    },
+    {
+      "type": "text",
+      "id": "table_col_a",
+      "label": "Coluna 1",
+      "default": "Tailor-made"
+    },
+    {
+      "type": "text",
+      "id": "table_col_b",
+      "label": "Coluna 2",
+      "default": "Template Canva"
+    },
+    {
+      "type": "text",
+      "id": "table_cta_a_label",
+      "label": "Botão da coluna 1",
+      "default": "Quero criar meu projeto"
+    },
+    {
+      "type": "url",
+      "id": "table_cta_a_link",
+      "label": "Link do botão da coluna 1"
+    },
+    {
+      "type": "text",
+      "id": "table_cta_b_label",
+      "label": "Botão da coluna 2",
+      "default": "Ver templates"
+    },
+    {
+      "type": "url",
+      "id": "table_cta_b_link",
+      "label": "Link do botão da coluna 2"
+    },
+    {
+      "type": "header",
+      "content": "Briefing"
+    },
+    {
+      "type": "text",
+      "id": "briefing_heading",
+      "label": "Título",
+      "default": "Comece pelo briefing"
+    },
+    {
+      "type": "richtext",
+      "id": "briefing_text",
+      "label": "Texto de apoio",
+      "default": "<p>Leva cinco minutos. Com ele em mãos, a Thainá responde com escopo, prazo e investimento.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "briefing_footnote",
+      "label": "Aviso do rodapé do formulário",
+      "default": "<p>Ao enviar, você concorda com o uso dos dados apenas para o atendimento deste projeto.</p>"
+    },
+    {
+      "type": "text",
+      "id": "briefing_submit_label",
+      "label": "Botão de envio",
+      "default": "Enviar briefing"
+    },
+    {
+      "type": "text",
+      "id": "briefing_success",
+      "label": "Mensagem de sucesso",
+      "default": "Briefing enviado! A Thainá responde em até 2 dias úteis."
+    },
+    {
+      "type": "header",
+      "content": "Rótulos dos campos"
+    },
+    {
+      "type": "text",
+      "id": "label_name",
+      "label": "Nome",
+      "default": "Seu nome"
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "E-mail",
+      "default": "E-mail"
+    },
+    {
+      "type": "text",
+      "id": "label_phone",
+      "label": "Telefone",
+      "default": "WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "label_occasion",
+      "label": "Ocasião",
+      "default": "Ocasião"
+    },
+    {
+      "type": "text",
+      "id": "label_date",
+      "label": "Data",
+      "default": "Data da celebração"
+    },
+    {
+      "type": "text",
+      "id": "label_guests",
+      "label": "Convidados",
+      "default": "Número de convidados"
+    },
+    {
+      "type": "text",
+      "id": "label_budget",
+      "label": "Investimento",
+      "default": "Investimento previsto"
+    },
+    {
+      "type": "text",
+      "id": "label_pieces",
+      "label": "Peças",
+      "default": "Peças que você imagina"
+    },
+    {
+      "type": "text",
+      "id": "label_message",
+      "label": "Mensagem",
+      "default": "Conte um pouco sobre a celebração"
+    },
+    {
+      "type": "header",
+      "content": "Opções dos campos (uma por linha)"
+    },
+    {
+      "type": "textarea",
+      "id": "occasion_options",
+      "label": "Opções de ocasião",
+      "default": "Casamento\nFormatura\nConsultório\nOutro"
+    },
+    {
+      "type": "textarea",
+      "id": "guests_options",
+      "label": "Opções de convidados",
+      "default": "Até 50\nAté 80\nAté 150\nMais de 150"
+    },
+    {
+      "type": "textarea",
+      "id": "budget_options",
+      "label": "Opções de investimento",
+      "default": "Até R$ 1.000\nR$ 1.000 a R$ 2.000\nR$ 2.000 a R$ 4.000\nAcima de R$ 4.000"
+    },
+    {
+      "type": "textarea",
+      "id": "pieces_options",
+      "label": "Opções de peças",
+      "default": "Convite\nSave the date\nPapelaria do dia\nManuais\nSinalização\nAinda não sei"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Linha da tabela",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "O que é"
+        },
+        {
+          "type": "text",
+          "id": "value_a",
+          "label": "Coluna 1",
+          "default": "Projeto criado do zero para a sua celebração"
+        },
+        {
+          "type": "text",
+          "id": "value_b",
+          "label": "Coluna 2",
+          "default": "Arte pronta que você edita no Canva"
+        }
+      ]
+    },
+    {
+      "type": "pillar",
+      "name": "Pilar do briefing",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Resposta em até 2 dias úteis"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Tailor-made",
+      "blocks": [
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "pillar" },
+        { "type": "pillar" },
+        { "type": "pillar" }
+      ]
+    }
+  ]
+}
+{% endschema %}

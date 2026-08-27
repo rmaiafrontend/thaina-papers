@@ -36,15 +36,15 @@
         },
         "nav_tailormade": {
           "type": "nav_link",
-          "settings": { "label": "Tailor-made", "link": "shopify://collections/all" }
+          "settings": { "label": "Tailor-made", "link": "/pages/contact?view=tailor-made" }
         },
         "nav_sobre": {
           "type": "nav_link",
-          "settings": { "label": "Sobre", "link": "shopify://collections/all" }
+          "settings": { "label": "Sobre", "link": "/pages/contact?view=sobre" }
         },
         "nav_contato": {
           "type": "nav_link",
-          "settings": { "label": "Contato", "link": "shopify://pages/contact" }
+          "settings": { "label": "Contato", "link": "/pages/contact?view=contato" }
         }
       },
       "block_order": [
