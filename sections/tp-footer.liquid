@@ -45,14 +45,16 @@
     </div>
   </div>
 
-  <div class="tp-footer__notes">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'note' -%}
-        <div class="tp-footer__note" {{ block.shopify_attributes }}>
-          <strong>{{ block.settings.title }}</strong><br>{{ block.settings.text }}
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+  <div class="tp-footer__notes-band">
+    <div class="tp-footer__notes">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'note' -%}
+          <div class="tp-footer__note" {{ block.shopify_attributes }}>
+            <strong>{{ block.settings.title }}</strong><br>{{ block.settings.text }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
 
   <div class="tp-footer__bottom">
@@ -171,12 +173,17 @@
     line-height: 1.4;
   }
 
+  /* Faixa azul separa as condições de compra da navegação e do rodapé
+     legal, criando três blocos legíveis em vez de um bloco só. */
+  .tp-footer__notes-band {
+    background: var(--tp-blue);
+  }
+
   .tp-footer__notes {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px;
     padding-block: 32px 36px;
-    border-bottom: 1px solid var(--tp-line);
   }
 
   .tp-footer__note {

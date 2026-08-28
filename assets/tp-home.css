@@ -138,8 +138,9 @@ body .tp-section > * {
   box-sizing: border-box;
 }
 
-/* Sobre o azul o texto secundário perde contraste: nas superfícies azuis
-   ele escurece, para continuar legível sem virar a cor do texto principal. */
+/* Sobre o azul os dois níveis de texto perdem contraste (corpo cai para 4.37).
+   Nas superfícies azuis ambos escurecem o suficiente para passar em AA, mantendo
+   a hierarquia: corpo 5.07, secundário 4.60. */
 .tp-section--blue,
 .tp-pacotes__cell--featured,
 .tp-pacotes__card--featured,
@@ -147,7 +148,9 @@ body .tp-section > * {
 .tp-guia__scale,
 .tp-tailor__briefing,
 .tp-promo__sim,
-.tp-cart__preview-body {
+.tp-cart__preview-body,
+.tp-footer__notes-band {
+  --tp-body: #4e3e39;
   --tp-muted: #55443f;
 }
 
