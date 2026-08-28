@@ -61,7 +61,7 @@
      dark chocolate e branco. Os nomes antigos (--tp-wine, --tp-ink)
      seguem como apelido para não reescrever centenas de usos. */
   --tp-cherry: #6b1017;
-  --tp-blue: #c8d9ec;
+  --tp-blue: #a2bad4;
   --tp-butter: #ffedad;
   --tp-choc: #3d2722;
   --tp-white: #ffffff;
@@ -136,6 +136,19 @@ body .tp-section > * {
   margin-inline: auto;
   padding-inline: var(--tp-gutter);
   box-sizing: border-box;
+}
+
+/* Sobre o azul o texto secundário perde contraste: nas superfícies azuis
+   ele escurece, para continuar legível sem virar a cor do texto principal. */
+.tp-section--blue,
+.tp-pacotes__cell--featured,
+.tp-pacotes__card--featured,
+.tp-contato__form-card,
+.tp-guia__scale,
+.tp-tailor__briefing,
+.tp-promo__sim,
+.tp-cart__preview-body {
+  --tp-muted: #55443f;
 }
 
 .tp-section--stone {
