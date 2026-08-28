@@ -20,12 +20,29 @@
 
   .tp-drawer::backdrop {
     background: rgba(61, 39, 34, 0.4);
-    opacity: 0;
-    transition: opacity 0.28s ease;
   }
 
-  .tp-drawer.is-open::backdrop {
-    opacity: 1;
+  /* Animação em vez de transição: o painel acaba de sair de display:none e
+     nesse caso o navegador ignora transições — mas roda animações. É o que
+     garante que a gaveta entre de fora para dentro, e não apareça no lugar. */
+  @keyframes tp-drawer-panel-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes tp-drawer-panel-out {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+
+  @keyframes tp-drawer-scrim-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes tp-drawer-scrim-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
   }
 
   .tp-drawer * {
@@ -43,18 +60,29 @@
     border-inline-start: 1px solid var(--tp-line);
     font-family: var(--tp-sans);
     color: var(--tp-ink);
-    transform: translateX(100%);
-    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  .tp-drawer.is-open .tp-drawer__panel {
-    transform: translateX(0);
+  .tp-drawer[open] .tp-drawer__panel {
+    animation: tp-drawer-panel-in 0.36s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .tp-drawer[open]::backdrop {
+    animation: tp-drawer-scrim-in 0.36s ease both;
+  }
+
+  /* Mesma especificidade das regras de abertura, então precisam vir depois. */
+  .tp-drawer.is-closing .tp-drawer__panel {
+    animation-name: tp-drawer-panel-out;
+  }
+
+  .tp-drawer.is-closing::backdrop {
+    animation-name: tp-drawer-scrim-out;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tp-drawer::backdrop,
-    .tp-drawer__panel {
-      transition: none;
+    .tp-drawer[open] .tp-drawer__panel,
+    .tp-drawer[open]::backdrop {
+      animation-duration: 1ms;
     }
   }
 

@@ -8,7 +8,7 @@
  */
 (function () {
   var SECTION = 'tp-cart-drawer';
-  var CLOSE_FALLBACK = 400;
+  var CLOSE_FALLBACK = 450;
 
   function drawer() {
     return document.getElementById('tp-cart-drawer');
@@ -21,18 +21,16 @@
   function open() {
     var el = drawer();
     if (!el) return;
+    // A animação de entrada está presa a [open] no CSS, então basta abrir.
+    el.classList.remove('is-closing');
     if (!el.open) el.showModal();
     document.documentElement.classList.add('tp-drawer-open');
-    // Um frame de folga para o transform inicial valer antes da transição.
-    requestAnimationFrame(function () {
-      el.classList.add('is-open');
-    });
   }
 
   function close() {
     var el = drawer();
-    if (!el || !el.open) return;
-    el.classList.remove('is-open');
+    if (!el || !el.open || el.classList.contains('is-closing')) return;
+    el.classList.add('is-closing');
 
     var panel = el.querySelector('.tp-drawer__panel');
     var done = false;
@@ -40,11 +38,12 @@
       if (done) return;
       done = true;
       el.close();
+      el.classList.remove('is-closing');
       document.documentElement.classList.remove('tp-drawer-open');
     };
 
-    if (panel) panel.addEventListener('transitionend', finish, { once: true });
-    // Se a transição não rodar (reduced motion, aba em segundo plano), fecha assim mesmo.
+    if (panel) panel.addEventListener('animationend', finish, { once: true });
+    // Se a animação não rodar (reduced motion, aba em segundo plano), fecha assim mesmo.
     setTimeout(finish, CLOSE_FALLBACK);
   }
 
@@ -142,7 +141,7 @@
 
     // Rede de segurança: qualquer fechamento destrava a rolagem da página.
     el.addEventListener('close', function () {
-      el.classList.remove('is-open');
+      el.classList.remove('is-closing');
       document.documentElement.classList.remove('tp-drawer-open');
     });
   }
