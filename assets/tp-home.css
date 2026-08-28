@@ -85,7 +85,7 @@
   --tp-script: 'Allura', 'Brush Script MT', cursive;
 
   --tp-gutter: 96px;
-  --tp-content-width: 1440px;
+  --tp-content-width: 1240px;
 }
 
 @media (max-width: 1100px) {
