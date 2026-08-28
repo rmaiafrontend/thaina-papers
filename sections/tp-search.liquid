@@ -362,7 +362,7 @@
     width: 15px;
     height: 15px;
     flex: none;
-    border: 1px solid rgba(36, 33, 31, 0.4);
+    border: 1px solid rgba(61, 39, 34, 0.4);
   }
 
   .tp-busca__opt-input:checked + .tp-busca__opt--checkbox .tp-busca__box {
@@ -375,7 +375,7 @@
     align-items: center;
     height: 32px;
     padding-inline: 12px;
-    border: 1px solid rgba(36, 33, 31, 0.28);
+    border: 1px solid rgba(61, 39, 34, 0.28);
     font-size: 13px;
     cursor: pointer;
   }
@@ -412,7 +412,7 @@
     min-width: 0;
     height: 48px;
     padding-inline: 16px;
-    border: 1px solid rgba(36, 33, 31, 0.28);
+    border: 1px solid rgba(61, 39, 34, 0.28);
     border-radius: 0;
     background: var(--tp-cream);
     font-family: var(--tp-sans);
@@ -534,7 +534,7 @@
     left: 14px;
     top: 14px;
     padding: 6px 12px;
-    background: rgba(36, 33, 31, 0.72);
+    background: rgba(61, 39, 34, 0.72);
     color: var(--tp-cream);
     font-size: 12px;
     border-radius: 999px;
@@ -542,7 +542,29 @@
   }
 
   .tp-busca__badge--accent {
-    background: rgba(93, 14, 9, 0.9);
+    background: rgba(142, 24, 37, 0.9);
+  }
+
+
+  /* Cor com função: cada tipo de entrega tem seu selo. */
+  .tp-busca__card[data-delivery='fisico'] .tp-busca__card-badge {
+    background: var(--tp-choc);
+    color: var(--tp-cream);
+  }
+
+  .tp-busca__card[data-delivery='arquivo-digital'] .tp-busca__card-badge {
+    background: var(--tp-blue);
+    color: var(--tp-choc);
+  }
+
+  .tp-busca__card[data-delivery='arte-digital'] .tp-busca__card-badge {
+    background: var(--tp-cherry);
+    color: var(--tp-white);
+  }
+
+  .tp-busca__card[data-delivery='template-canva'] .tp-busca__card-badge {
+    background: var(--tp-butter);
+    color: var(--tp-choc);
   }
 
   .tp-busca__card-body {
