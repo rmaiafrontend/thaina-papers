@@ -43,10 +43,14 @@
             <div class="tp-products__meta">{{ product.type }}</div>
           {%- endif -%}
           <div class="tp-products__price">
-            {{- section.settings.price_prefix }} {{ product.price | money -}}
+            {%- if section.settings.price_prefix != blank -%}
+              <span class="tp-products__price-label">{{ section.settings.price_prefix }}</span>
+            {%- endif -%}
+            {{ product.price | money }}
           </div>
           <a href="{{ product.url }}" class="tp-products__cta">
-            {{- section.settings.cta_label }} &rarr;
+            <span>{{ section.settings.cta_label }}</span>
+            <span class="tp-products__cta-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </div>
@@ -82,9 +86,20 @@
     display: block;
   }
 
+  /* Nesta faixa o texto ficava solto sobre o azul, sem nada que o
+     ancorasse. Cada produto passa a ser um cartão creme de verdade: a
+     mesma linguagem de canto das outras seções, agora aplicada ao card
+     inteiro em vez de só à foto. */
+  .tp-products__card {
+    display: flex;
+    flex-direction: column;
+    background: var(--tp-cream);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
   .tp-products__media {
     height: 320px;
-    border-radius: 18px;
   }
 
   .tp-products__badge {
@@ -101,12 +116,16 @@
   }
 
   .tp-products__body {
-    padding-top: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 18px 18px;
   }
 
   .tp-section .tp-products__title {
     display: block;
     font-size: 16px;
+    line-height: 1.35;
     color: var(--tp-ink);
   }
 
@@ -116,21 +135,55 @@
     margin-top: 3px;
   }
 
+  /* O preço é o dado que se procura, então ganha a serifada — e o "Total"
+     sai da frente do número, que antes quebrava linha no card estreito. */
   .tp-products__price {
-    font-size: 17px;
+    font-family: var(--tp-serif);
+    font-size: 21px;
     font-weight: 500;
+    line-height: 1.15;
     color: var(--tp-ink);
     margin-top: 10px;
   }
 
+  .tp-products__price-label {
+    display: block;
+    font-family: var(--tp-sans);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 3px;
+  }
+
+  /* Empurrado para o fim do card: com títulos de alturas diferentes, os
+     rodapés dos quatro cartões param na mesma linha. */
   .tp-section .tp-products__cta {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 10px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--tp-line);
     font-size: 14px;
     font-weight: 500;
     color: var(--tp-wine);
+  }
+
+  .tp-products__cta-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .tp-products__card:hover .tp-products__cta-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tp-products__cta-arrow {
+      transition: none;
+    }
   }
 
   @media (max-width: 1100px) {
@@ -148,9 +201,35 @@
       padding-block: 34px 36px;
     }
 
-    .tp-products__media {
-      height: 210px;
+    .tp-products__card {
       border-radius: 12px;
+    }
+
+    /* Proporção em vez de altura fixa: a foto acompanha a largura da
+       coluna em qualquer tela em vez de achatar. */
+    .tp-products__media {
+      height: auto;
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .tp-products__body {
+      padding: 13px 14px 15px;
+    }
+
+    .tp-section .tp-products__title {
+      font-size: 15px;
+    }
+
+    .tp-products__price {
+      font-size: 19px;
+      margin-top: 8px;
+    }
+
+    .tp-section .tp-products__cta {
+      padding-top: 12px;
+      font-size: 13px;
     }
   }
 {% endstylesheet %}
@@ -183,8 +262,8 @@
     {
       "type": "text",
       "id": "price_prefix",
-      "label": "Prefixo do preço",
-      "default": "Total:"
+      "label": "Rótulo do preço",
+      "default": "Total"
     },
     {
       "type": "text",

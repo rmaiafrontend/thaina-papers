@@ -172,7 +172,7 @@
         "heading": "Mais procurados",
         "collection": "all",
         "products_to_show": 4,
-        "price_prefix": "Total:",
+        "price_prefix": "Total",
         "cta_label": "Comprar agora",
         "link_label": "Ver todos os produtos",
         "link": "shopify://collections/all"
