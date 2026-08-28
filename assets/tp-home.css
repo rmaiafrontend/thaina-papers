@@ -60,7 +60,7 @@
   /* Paleta da marca: cherry red, columbia blue, butter yellow,
      dark chocolate e branco. Os nomes antigos (--tp-wine, --tp-ink)
      seguem como apelido para não reescrever centenas de usos. */
-  --tp-cherry: #8e1825;
+  --tp-cherry: #6b1017;
   --tp-blue: #c8d9ec;
   --tp-butter: #ffedad;
   --tp-choc: #3d2722;
@@ -207,7 +207,7 @@ body .tp-section > * {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--tp-wine);
-  border-bottom: 1px solid rgba(142, 24, 37, 0.4);
+  border-bottom: 1px solid rgba(107, 16, 23, 0.4);
   padding-bottom: 3px;
 }
 
