@@ -312,14 +312,6 @@ body .tp-section > * {
 }
 
 @media (max-width: 749px) {
-  /* Lado a lado num celular, o título e o link "ver todos" quebram os dois
-     em duas linhas e se atropelam. Empilhados, cada um respira. */
-  .tp-section-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
   .tp-eyebrow {
     margin-bottom: 18px;
   }
