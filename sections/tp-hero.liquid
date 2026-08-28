@@ -207,13 +207,15 @@
     }
   }
 
+  /* No estreito a assimetria não é abandonada, é reescrita: a imagem
+     principal sangra até as bordas da tela e a secundária continua
+     encavalada no canto dela, saindo pela direita. Empilhar tudo centrado
+     jogaria fora justamente o que define esta hero. */
   @media (max-width: 899px) {
     .tp-hero {
-      padding-block: 32px 40px;
+      padding-block: 32px 44px;
     }
 
-    /* Sem espaço para sobreposição: vira uma pilha, com a imagem
-       principal logo após o título e a secundária como remate. */
     .tp-hero__inner {
       grid-template-columns: repeat(6, minmax(0, 1fr));
       row-gap: 0;
@@ -228,28 +230,36 @@
     .tp-hero__title {
       grid-column: 1 / -1;
       grid-row: 2;
-      font-size: clamp(36px, 11vw, 56px);
-      line-height: 1.02;
+      font-size: clamp(42px, 12.4vw, 64px);
+      line-height: 0.98;
     }
 
     .tp-hero__figure--main {
       grid-column: 1 / -1;
       grid-row: 3;
-      height: 300px;
-      margin-top: 24px;
+      height: 340px;
+      margin-top: 26px;
+      /* Sangra o gutter: a foto encosta nas bordas da tela. */
+      margin-inline: calc(var(--tp-gutter) * -1);
+    }
+
+    /* Mesma sobreposição do desktop, ancorada no rodapé da foto principal. */
+    .tp-hero__figure--sub {
+      grid-column: 4 / 7;
+      grid-row: 3;
+      align-self: end;
+      z-index: 2;
+      height: 128px;
+      margin-bottom: -46px;
+      margin-inline-end: calc(var(--tp-gutter) * -1);
+      box-shadow: 0 0 0 8px var(--tp-cream);
     }
 
     .tp-hero__body {
       grid-column: 1 / -1;
       grid-row: 4;
-      padding-top: 24px;
-    }
-
-    .tp-hero__figure--sub {
-      grid-column: 1 / 4;
-      grid-row: 5;
-      height: 150px;
-      margin-top: 24px;
+      /* Espaço para a secundária, que desce 46px sobre esta área. */
+      padding-top: 74px;
     }
 
     .tp-hero__lead {
@@ -263,14 +273,31 @@
   }
 
   @media (max-width: 749px) {
+    .tp-hero__figure--main {
+      height: 300px;
+    }
+
     .tp-hero__figure--sub {
-      display: none;
+      grid-column: 3 / 7;
+      height: 112px;
+      margin-bottom: -40px;
+    }
+
+    .tp-hero__body {
+      padding-top: 66px;
+    }
+
+    /* Lado a lado, "Ver todos os produtos" quebra em duas linhas e o texto
+       é cortado pela altura fixa do botão. Empilhados, cabem. */
+    .tp-hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
     }
 
     .tp-hero__actions .tp-btn {
-      height: 48px;
-      padding: 0 16px;
-      flex: 1;
+      height: 50px;
+      width: 100%;
     }
   }
 {% endstylesheet %}
