@@ -1,0 +1,122 @@
+{% doc %}
+  Renderiza a sacola como gaveta à direita. Usado em dois lugares:
+
+  - no layout, com o wrapper de section, para o primeiro carregamento;
+  - em sections/tp-cart-drawer.liquid, sem wrapper, para o Section Rendering
+    API — o JS busca `?sections=tp-cart-drawer` e troca só o miolo
+    (`[data-tp-drawer-content]`), preservando o <dialog> aberto.
+
+  @param {boolean} [render_wrapper] - Envolve no wrapper que a SRA adiciona sozinha.
+{% enddoc %}
+
+{%- liquid
+  assign render_wrapper = render_wrapper | default: false, allow_false: true
+  assign phone = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+-%}
+
+{%- capture wa_message -%}
+  Oi, Thainá! Vim pelo site e quero saber mais sobre: {% for item in cart.items %}{{ item.quantity }}× {{ item.product.title }} ({{ item.final_line_price | money }}){% unless forloop.last %} e {% endunless %}{% endfor %}. Total {{ cart.total_price | money }}.{% if cart.note != blank %} Celebrando: {{ cart.note }}.{% endif %}
+{%- endcapture -%}
+
+{%- comment -%}
+  Na própria página da sacola a gaveta seria redundante e ficaria desatualizada
+  se o cliente removesse um item por ela — lá o link do header segue link.
+{%- endcomment -%}
+{%- unless template.name == 'cart' -%}
+
+{%- if render_wrapper -%}
+  <div id="shopify-section-tp-cart-drawer" class="shopify-section">
+{%- endif -%}
+
+<dialog class="tp-drawer" id="tp-cart-drawer" aria-label="Sacola">
+  <div class="tp-drawer__panel">
+    <div
+      class="tp-drawer__inner"
+      data-tp-drawer-content
+      data-cart-count="{{ cart.item_count }}"
+    >
+      <div class="tp-drawer__head">
+        <div>
+          <div class="tp-drawer__eyebrow">Sacola</div>
+          <div class="tp-drawer__title">
+            {%- if cart.item_count > 0 -%}
+              {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}itens{% endif %}
+            {%- else -%}
+              Vazia por enquanto
+            {%- endif -%}
+          </div>
+        </div>
+        <button type="button" class="tp-drawer__close" data-tp-drawer-close aria-label="Fechar sacola">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      {%- if cart.item_count > 0 -%}
+        <div class="tp-drawer__items">
+          {%- for item in cart.items -%}
+            <div class="tp-drawer__item">
+              <div class="tp-media tp-drawer__item-media">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 220 | image_tag: loading: 'lazy', widths: '110,160,220' }}
+                {%- else -%}
+                  <div class="tp-media__placeholder">{{ item.product.title }}</div>
+                {%- endif -%}
+              </div>
+              <div class="tp-drawer__item-body">
+                <div class="tp-drawer__item-title">
+                  {{ item.product.title }}{% if item.variant.title != 'Default Title' %} — {{ item.variant.title }}{% endif %}
+                </div>
+                {%- unless item.requires_shipping -%}
+                  <div class="tp-drawer__item-badge">Produto digital</div>
+                {%- endunless -%}
+                <div class="tp-drawer__item-meta">
+                  {{ item.quantity }} × {{ item.final_price | money }}
+                </div>
+                <a
+                  href="{{ item.url_to_remove }}"
+                  class="tp-drawer__item-remove"
+                  data-tp-drawer-remove
+                  data-line="{{ forloop.index }}"
+                >
+                  Remover
+                </a>
+              </div>
+              <div class="tp-drawer__item-price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="tp-drawer__foot">
+          <div class="tp-drawer__total">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <div class="tp-drawer__note">Frete e forma de pagamento são combinados no atendimento.</div>
+          <a
+            href="https://wa.me/{{ phone }}?text={{ wa_message | strip | url_encode }}"
+            class="tp-btn tp-btn--solid tp-drawer__cta"
+          >
+            Enviar pedido pelo WhatsApp
+          </a>
+          <a href="{{ routes.cart_url }}" class="tp-btn tp-btn--outline tp-drawer__cta">
+            Ver sacola completa
+          </a>
+        </div>
+      {%- else -%}
+        <div class="tp-drawer__empty">
+          <p class="tp-drawer__empty-text">Nada por aqui ainda. Comece por uma das nossas coleções.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="tp-btn tp-btn--solid tp-drawer__cta">
+            Ver produtos
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</dialog>
+
+{%- if render_wrapper -%}
+  </div>
+  <script src="{{ 'tp-cart-drawer.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{%- endunless -%}

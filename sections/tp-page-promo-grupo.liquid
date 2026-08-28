@@ -3,7 +3,7 @@
   assign packages = section.blocks | where: 'type', 'package'
   assign rules = section.blocks | where: 'type', 'rule'
 
-  assign phone = section.settings.whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign phone = section.settings.whatsapp_phone | default: settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
 
   assign pkg_1_name = packages[0].settings.name
   assign pkg_2_name = packages[1].settings.name
@@ -824,8 +824,7 @@
     {
       "type": "text",
       "id": "whatsapp_phone",
-      "label": "WhatsApp (com DDI, só números)",
-      "default": "5500000000000"
+      "label": "WhatsApp (deixe vazio para usar o do tema)"
     },
     {
       "type": "textarea",

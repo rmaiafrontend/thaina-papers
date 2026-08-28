@@ -8,6 +8,25 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Thainá Papers",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Atendimento"
+      },
+      {
+        "type": "paragraph",
+        "content": "Número usado na gaveta da sacola e, quando os campos das seções ficam em branco, também na página da sacola e na promoção de grupo."
+      },
+      {
+        "type": "text",
+        "id": "tp_whatsapp_phone",
+        "label": "WhatsApp (com DDI, só números)",
+        "default": "5500000000000"
+      }
+    ]
+  },
+  {
     "name": "t:names.logo_and_favicon",
     "settings": [
       {

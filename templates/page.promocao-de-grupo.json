@@ -126,7 +126,7 @@
         "sim_total_label": "Por formanda",
         "sim_cta_label": "Enviar para o WhatsApp",
         "sim_note": "<p>A mensagem já vai com o pacote escolhido e o número de formandas.</p>",
-        "whatsapp_phone": "5500000000000",
+        "whatsapp_phone": "",
         "whatsapp_message": "Oi, Thainá! Vim pelo simulador do site: somos um grupo de {grupo} e queremos o {pacote}. Com {desconto} de desconto, fica {valor} por formanda. Podemos fechar?"
       }
     }

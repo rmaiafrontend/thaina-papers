@@ -1,0 +1,279 @@
+{% # Alvo do Section Rendering API. O wrapper vem da própria API. %}
+{% render 'tp-cart-drawer', render_wrapper: false %}
+
+{% stylesheet %}
+  /* A gaveta ocupa a viewport inteira e é transparente: o painel fica à
+     direita e a área vazia à esquerda é o alvo de clique para fechar. */
+  .tp-drawer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .tp-drawer::backdrop {
+    background: rgba(61, 39, 34, 0.4);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+  }
+
+  .tp-drawer.is-open::backdrop {
+    opacity: 1;
+  }
+
+  .tp-drawer * {
+    box-sizing: border-box;
+  }
+
+  .tp-drawer__panel {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    width: min(460px, 100%);
+    display: flex;
+    flex-direction: column;
+    background: var(--tp-cream);
+    border-inline-start: 1px solid var(--tp-line);
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .tp-drawer.is-open .tp-drawer__panel {
+    transform: translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tp-drawer::backdrop,
+    .tp-drawer__panel {
+      transition: none;
+    }
+  }
+
+  .tp-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .tp-drawer a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tp-drawer .tp-btn--solid {
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-drawer .tp-btn--outline {
+    background: transparent;
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+  }
+
+  .tp-drawer__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 26px 28px 20px;
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-drawer__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 8px;
+  }
+
+  .tp-drawer__title {
+    font-family: var(--tp-serif);
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  .tp-drawer__close {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--tp-line);
+    background: transparent;
+    color: var(--tp-ink);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .tp-drawer__close:hover {
+    border-color: var(--tp-line-strong);
+    color: var(--tp-wine);
+  }
+
+  .tp-drawer__items {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-inline: 28px;
+  }
+
+  .tp-drawer__item {
+    display: flex;
+    gap: 16px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--tp-line);
+  }
+
+  .tp-drawer__item-media {
+    width: 76px;
+    height: 76px;
+    flex: none;
+  }
+
+  .tp-drawer__item-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tp-drawer__item-title {
+    font-size: 15px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  /* Mesmo selo azul de "arquivo digital" usado nos hubs de coleção. */
+  .tp-drawer__item-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    background: var(--tp-blue);
+    color: var(--tp-choc);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .tp-drawer__item-meta {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-bottom: 6px;
+  }
+
+  .tp-drawer__item-remove {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--tp-wine);
+    border-bottom: 1px solid rgba(107, 16, 23, 0.4);
+    padding-bottom: 1px;
+  }
+
+  .tp-drawer__item-price {
+    flex: none;
+    text-align: right;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .tp-drawer__foot {
+    flex: none;
+    padding: 22px 28px 26px;
+    border-top: 1px solid var(--tp-line);
+  }
+
+  .tp-drawer__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .tp-drawer__total span:first-child {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .tp-drawer__total span:last-child {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .tp-drawer__note {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    margin-bottom: 18px;
+  }
+
+  .tp-drawer__cta {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .tp-drawer__cta + .tp-drawer__cta {
+    margin-top: 10px;
+  }
+
+  .tp-drawer__empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px;
+  }
+
+  .tp-drawer__empty-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--tp-body);
+    margin: 0 0 20px;
+  }
+
+  /* Com a gaveta aberta a página atrás não rola. Quem rola neste tema é
+     .page-wrapper, não o <html> — travar a raiz não teria efeito nenhum. */
+  .tp-drawer-open .page-wrapper {
+    overflow: hidden;
+  }
+
+  @media (max-width: 749px) {
+    .tp-drawer__panel {
+      width: min(400px, 92%);
+    }
+
+    .tp-drawer__head {
+      padding: 20px 20px 16px;
+    }
+
+    .tp-drawer__items {
+      padding-inline: 20px;
+    }
+
+    .tp-drawer__foot {
+      padding: 18px 20px 22px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Gaveta da sacola"
+}
+{% endschema %}

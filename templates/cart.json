@@ -13,7 +13,7 @@
       "type": "tp-cart",
       "name": "TP — Sacola",
       "settings": {
-        "whatsapp_phone": "5500000000000",
+        "whatsapp_phone": "",
         "continue_link": ""
       }
     }

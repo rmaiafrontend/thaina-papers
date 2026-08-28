@@ -1,5 +1,5 @@
 {%- liquid
-  assign phone = section.settings.whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign phone = section.settings.whatsapp_phone | default: settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
 -%}
 
 <div class="tp-cart">
@@ -435,8 +435,7 @@
     {
       "type": "text",
       "id": "whatsapp_phone",
-      "label": "WhatsApp (com DDI, só números)",
-      "default": "5500000000000"
+      "label": "WhatsApp (deixe vazio para usar o do tema)"
     },
     {
       "type": "url",
