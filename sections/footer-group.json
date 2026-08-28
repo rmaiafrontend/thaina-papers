@@ -32,7 +32,7 @@
           "type": "link_column",
           "settings": {
             "title": "Ajuda",
-            "links": "Como funciona | /\nGuia de medidas | /pages/contact?view=guia-de-medidas\nPrazos de produção | /\nAlterações e aprovação | /\nPerguntas frequentes | /"
+            "links": "Como funciona | /#como-funciona\nGuia de medidas | /pages/contact?view=guia-de-medidas\nPrazos de produção | /#como-funciona\nAlterações e aprovação | /#perguntas-frequentes\nPerguntas frequentes | /#perguntas-frequentes"
           }
         },
         "col_policies": {

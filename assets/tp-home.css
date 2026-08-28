@@ -123,6 +123,15 @@ body:has(.tp-pacotes),
 body:has(.tp-promo),
 body:has(.tp-busca) {
   background: var(--tp-cream);
+
+  /* O Dwell pinta os campos com `input:not([type=checkbox],[type=radio])`, que
+     tem especificidade maior que uma classe sozinha e sequestrava o fundo e a
+     borda dos nossos formulários para o bege dele. Como a regra dele lê estas
+     duas variáveis, redefini-las aqui corrige todo campo das nossas páginas —
+     inclusive os que ainda não existem. Seções que quiserem outro visual
+     precisam escopar pela raiz para vencer os 0,1,1 do Dwell. */
+  --color-input-background: var(--tp-cream);
+  --color-input-border: var(--tp-line-strong);
 }
 
 .tp-section {
