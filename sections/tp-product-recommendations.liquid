@@ -35,6 +35,9 @@
               {%- endif -%}
             </div>
             <div class="tp-product-recs__title">{{ recommended_product.title }}</div>
+            {%- if recommended_product.type != blank -%}
+              <div class="tp-product-recs__meta">{{ recommended_product.type }}</div>
+            {%- endif -%}
             <div class="tp-product-recs__price">{{ recommended_product.price | money }}</div>
           </a>
         {%- endfor -%}
@@ -82,6 +85,13 @@
     line-height: 1.28;
     margin-top: 12px;
     color: var(--tp-ink);
+  }
+
+  /* Mesma linha descritiva dos outros cards de produto, no mesmo ritmo. */
+  .tp-product-recs__meta {
+    font-size: 13px;
+    color: var(--tp-muted);
+    margin-top: 2px;
   }
 
   .tp-product-recs__price {
