@@ -8,7 +8,21 @@
       <h2 class="tp-heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
     {%- if section.settings.link_label != blank -%}
-      <a href="{{ section.settings.link | default: '#' }}" class="tp-link-caps">{{ section.settings.link_label }}</a>
+      {%- assign destino = section.settings.link | default: routes.root_url -%}
+      {%- comment -%}
+        Link externo abre em aba nova: quem está vendo os trabalhos não
+        deve perder a navegação da loja ao conferir o perfil.
+      {%- endcomment -%}
+      <a
+        href="{{ destino }}"
+        class="tp-link-caps"
+        {% if destino contains '://' %}
+          target="_blank"
+          rel="noopener"
+        {% endif %}
+      >
+        {{- section.settings.link_label -}}
+      </a>
     {%- endif -%}
   </div>
 
