@@ -22,7 +22,7 @@
         "type": "text",
         "id": "tp_whatsapp_phone",
         "label": "WhatsApp (com DDI, só números)",
-        "default": "5500000000000"
+        "info": "Com DDI e só números — ex.: 5583981101510. Usado na gaveta da sacola e herdado por todo botão de WhatsApp sem link próprio."
       }
     ]
   },

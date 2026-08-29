@@ -1,3 +1,13 @@
+{%- liquid
+  # O botão principal desta faixa é o contato: sem link próprio ele cai no
+  # WhatsApp global, para o número viver num lugar só.
+  assign _whats = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign _cta_1 = section.settings.button_1_link
+  if _cta_1 == blank and _whats != blank
+    assign _cta_1 = 'https://wa.me/' | append: _whats
+  endif
+-%}
+
 <section class="tp-section tp-section--ink tp-cta">
   <div class="tp-cta__inner">
     <div class="tp-cta__copy">
@@ -14,7 +24,7 @@
 
     <div class="tp-cta__actions">
       {%- if section.settings.button_1_label != blank -%}
-        <a {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %} class="tp-btn tp-btn--light tp-cta__btn">
+        <a {% if _cta_1 != blank %}href="{{ _cta_1 }}"{% endif %} class="tp-btn tp-btn--light tp-cta__btn">
           {{- section.settings.button_1_label -}}
         </a>
       {%- endif -%}

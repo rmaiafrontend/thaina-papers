@@ -86,7 +86,8 @@
       "color4": "#FFE0F4",
       "color2": "#faf8f3",
       "color5": "{{ settings.color_palette.background }}"
-    }
+    },
+    "tp_whatsapp_phone": "5583981101510"
   },
   "presets": {
     "Dwell": {
