@@ -31,7 +31,14 @@
     </a>
 
     <div class="tp-header__actions">
-      <a href="{{ routes.account_url }}" class="tp-header__account">{{ account_label }}</a>
+      {%- comment -%}
+        O pedido fecha no WhatsApp: não há checkout, então ninguém cria conta
+        e a área logada estaria sempre vazia. Fica desligada por padrão, pronta
+        para voltar se o checkout nativo entrar um dia.
+      {%- endcomment -%}
+      {%- if section.settings.show_account -%}
+        <a href="{{ routes.account_url }}" class="tp-header__account">{{ account_label }}</a>
+      {%- endif -%}
       <a href="{{ routes.cart_url }}" class="tp-header__cart"
         {% unless template.name == 'cart' %}data-tp-cart-open{% endunless %}
       >
@@ -112,7 +119,9 @@
       {%- endfor -%}
     </nav>
     <div class="tp-mobile-menu__foot">
-      <a href="{{ routes.account_url }}">{{ account_label }}</a>
+      {%- if section.settings.show_account -%}
+        <a href="{{ routes.account_url }}">{{ account_label }}</a>
+      {%- endif -%}
       <a href="{{ routes.cart_url }}" {% unless template.name == 'cart' %}data-tp-cart-open{% endunless %}>
         {{- cart_label }} (<span data-tp-cart-count>{{ cart.item_count }}</span>)
       </a>
@@ -426,6 +435,13 @@
       "id": "menu_label",
       "label": "Rótulo — menu (mobile)",
       "default": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Mostrar “Conta” no header",
+      "default": false,
+      "info": "Só faz sentido com checkout nativo ligado. Hoje o pedido fecha no WhatsApp."
     },
     {
       "type": "text",
