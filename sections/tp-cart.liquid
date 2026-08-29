@@ -8,6 +8,7 @@
     <p class="tp-cart__lead">Revise os itens e envie para a Thainá pelo WhatsApp. Frete e forma de pagamento são combinados no atendimento.</p>
 
     <div class="tp-cart__body">
+      <div class="tp-cart__col">
       <div class="tp-cart__items">
         {%- for item in cart.items -%}
           <div class="tp-cart__item">
@@ -26,8 +27,8 @@
               {%- if item.requires_shipping -%}
                 <div class="tp-cart__item-meta">Produto físico · quantidade fixa</div>
               {%- else -%}
-                <div class="tp-cart__item-meta">Produto digital · nenhum item físico será enviado</div>
                 <div class="tp-cart__item-badge">Produto digital</div>
+                <div class="tp-cart__item-meta">Nenhum item físico será enviado.</div>
               {%- endif -%}
               <a href="{{ item.url_to_remove }}" class="tp-cart__item-remove">Remover</a>
             </div>
@@ -37,7 +38,7 @@
       </div>
 
       <p class="tp-cart__note">As quantidades são fixas por item. Para outra quantidade, escolha a faixa correspondente na página do produto.</p>
-    </div>
+      </div>
 
     <div class="tp-cart__summary">
       <div class="tp-cart__summary-title">Resumo</div>
@@ -75,6 +76,7 @@
         <div class="tp-cart__preview-title">Prévia da mensagem</div>
         <div class="tp-cart__preview-body" data-tp-cart-preview></div>
       </div>
+    </div>
     </div>
   {%- else -%}
     <div class="tp-cart__empty">
@@ -200,9 +202,15 @@
     align-items: flex-start;
   }
 
-  .tp-cart__items {
+  /* O resumo estava FORA do body: a nota ocupava o lugar dele no flex e o
+     resumo desabava para baixo, com 420px encostados na esquerda. Agora a
+     coluna esquerda agrupa lista + nota, e o resumo é a coluna direita. */
+  .tp-cart__col {
     flex: 1;
     min-width: 0;
+  }
+
+  .tp-cart__items {
     border-top: 1px solid var(--tp-line);
   }
 
@@ -275,6 +283,10 @@
     flex: none;
     border: 1px solid var(--tp-line);
     padding: 30px 28px 28px;
+    /* Com muitos itens o resumo acompanha a rolagem: o total e o botão de
+       enviar ficam sempre à vista. */
+    position: sticky;
+    top: 24px;
   }
 
   .tp-cart__summary-title {
@@ -407,6 +419,35 @@
   @media (max-width: 899px) {
     .tp-cart {
       padding-block: 28px 40px;
+    }
+
+    /* Lado a lado num celular, o preço espremia o título em três linhas.
+       Em grade ele desce para baixo do nome e a coluna volta a respirar. */
+    .tp-cart__item {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 6px;
+    }
+
+    .tp-cart__item-media {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .tp-cart__item-body {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .tp-cart__item-price {
+      grid-column: 2;
+      grid-row: 2;
+      text-align: left;
+    }
+
+    .tp-cart__summary {
+      position: static;
     }
 
     .tp-cart__title {
