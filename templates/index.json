@@ -170,7 +170,7 @@
       "type": "tp-featured-products",
       "settings": {
         "heading": "Mais procurados",
-        "collection": "all",
+        "collection": "mais-procurados",
         "products_to_show": 4,
         "price_prefix": "Total:",
         "cta_label": "Comprar agora",

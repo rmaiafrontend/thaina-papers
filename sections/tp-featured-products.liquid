@@ -31,7 +31,20 @@
               <div class="tp-media__placeholder">{{ product.title }}</div>
             {%- endif -%}
           </div>
-          {%- assign badge = product.tags | first -%}
+          {%- liquid
+            # Pegava a primeira tag crua e imprimia como estava: o card mostrava
+            # "arquivo-digital". Agora usa o mesmo vocabulário dos hubs.
+            assign badge = ''
+            if product.tags contains 'template-canva'
+              assign badge = 'Template Canva'
+            elsif product.tags contains 'arte-digital'
+              assign badge = 'Arte digital'
+            elsif product.tags contains 'arquivo-digital'
+              assign badge = 'Arquivo digital'
+            elsif product.requires_shipping == false
+              assign badge = 'Arquivo digital'
+            endif
+          -%}
           {%- if badge != blank -%}
             <div class="tp-products__badge">{{ badge }}</div>
           {%- endif -%}
