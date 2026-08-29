@@ -53,7 +53,7 @@
           "settings": {
             "title": "Guia de medidas",
             "description": "Formatos comparados a uma folha A4",
-            "link": "/pages/contact?view=guia-de-medidas"
+            "link": "/pages/guia-de-medidas"
           }
         },
         "card_prazos": {
@@ -68,7 +68,7 @@
           "settings": {
             "title": "Políticas",
             "description": "Catálogo, físicos, digitais e cancelamento",
-            "link": "/pages/contact?view=politicas"
+            "link": "/pages/politicas"
           }
         }
       },

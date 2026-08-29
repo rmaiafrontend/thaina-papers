@@ -32,14 +32,14 @@
           "type": "link_column",
           "settings": {
             "title": "Ajuda",
-            "links": "Como funciona | /#como-funciona\nGuia de medidas | /pages/contact?view=guia-de-medidas\nPrazos de produção | /#como-funciona\nAlterações e aprovação | /#perguntas-frequentes\nPerguntas frequentes | /#perguntas-frequentes"
+            "links": "Como funciona | /#como-funciona\nGuia de medidas | /pages/guia-de-medidas\nPrazos de produção | /#como-funciona\nAlterações e aprovação | /#perguntas-frequentes\nPerguntas frequentes | /#perguntas-frequentes"
           }
         },
         "col_policies": {
           "type": "link_column",
           "settings": {
             "title": "Políticas",
-            "links": "Catálogo | /collections/all\nProdutos físicos | /pages/contact?view=politicas\nProdutos digitais | /policies/refund-policy\nCancelamento e trocas | /policies/refund-policy\nLicença dos templates | /policies/terms-of-service\nPrivacidade e termos | /policies/privacy-policy"
+            "links": "Catálogo | /collections/all\nProdutos físicos | /pages/politicas\nProdutos digitais | /policies/refund-policy\nCancelamento e trocas | /policies/refund-policy\nLicença dos templates | /policies/terms-of-service\nPrivacidade e termos | /policies/privacy-policy"
           }
         },
         "note_digital": {

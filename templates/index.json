@@ -20,7 +20,7 @@
         "button_1_label": "Ver todos os produtos",
         "button_1_link": "shopify://collections/all",
         "button_2_label": "Sob medida",
-        "button_2_link": "/pages/contact?view=tailor-made",
+        "button_2_link": "/pages/tailor-made",
         "image_1_alt": "Suíte de convites sobre linho",
         "image_2_alt": "Menu ao lado do prato",
         "image_1_asset": "tp-tablescape-georgia.jpg",
@@ -143,7 +143,7 @@
             "description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
             "features": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
             "button_label": "Quero criar meu projeto",
-            "button_link": "/pages/contact?view=tailor-made",
+            "button_link": "/pages/tailor-made",
             "button_style": "solid"
           }
         },

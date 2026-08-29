@@ -53,14 +53,14 @@
           "type": "nav_link",
           "settings": {
             "label": "Tailor-made",
-            "link": "/pages/contact?view=tailor-made"
+            "link": "/pages/tailor-made"
           }
         },
         "nav_sobre": {
           "type": "nav_link",
           "settings": {
             "label": "Sobre",
-            "link": "/pages/contact?view=sobre"
+            "link": "/pages/sobre"
           }
         },
         "nav_contato": {
