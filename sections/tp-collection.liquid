@@ -4,10 +4,14 @@
   assign filter_pills = section.blocks | where: 'type', 'filter_pill'
   assign products = collection.products
   assign show_cta = section.settings.show_cta
+
+  # Sem imagem de verdade o hero reservava metade da tela para um retângulo
+  # cinza. Resolvendo a fonte antes, a seção decide se a coluna existe.
+  assign hero_image = section.settings.hero_image | default: collection.image
 -%}
 
 <div class="tp-hub">
-  <div class="tp-hub__intro">
+  <div class="tp-hub__intro{% unless hero_image %} tp-hub__intro--sem-imagem{% endunless %}">
     <div class="tp-hub__col">
       <div class="tp-hub__breadcrumb">
         <a href="{{ routes.root_url }}">Início</a>
@@ -21,23 +25,15 @@
         <div class="tp-hub__lead">{{ collection.description }}</div>
       {%- endif -%}
     </div>
-    <div class="tp-media tp-hub__hero-media">
-      {%- if section.settings.hero_image != blank -%}
+    {%- if hero_image -%}
+      <div class="tp-media tp-hub__hero-media">
         {{
-          section.settings.hero_image
+          hero_image
           | image_url: width: 900
           | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,650,900'
         }}
-      {%- elsif collection.image -%}
-        {{
-          collection.image
-          | image_url: width: 900
-          | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,650,900'
-        }}
-      {%- else -%}
-        <div class="tp-media__placeholder">{{ collection.title }}</div>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 
   {%- if packages.size > 0 -%}
@@ -75,12 +71,14 @@
     <div class="tp-hub__filters">
       <div class="tp-hub__filter-group">
         <span class="tp-hub__filter-label">Tipo de entrega</span>
-        <button type="button" class="tp-hub__pill tp-hub__pill--active" data-tp-filter="all">Todos</button>
-        {%- for block in filter_pills -%}
-          <button type="button" class="tp-hub__pill" data-tp-filter="{{ block.settings.value }}" {{ block.shopify_attributes }}>
-            {{- block.settings.label -}}
-          </button>
-        {%- endfor -%}
+        <div class="tp-hub__pills">
+          <button type="button" class="tp-hub__pill tp-hub__pill--active" data-tp-filter="all">Todos</button>
+          {%- for block in filter_pills -%}
+            <button type="button" class="tp-hub__pill" data-tp-filter="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+              {{- block.settings.label -}}
+            </button>
+          {%- endfor -%}
+        </div>
       </div>
       <div class="tp-hub__count" data-tp-count>{{ collection.products_count }} produtos</div>
     </div>
@@ -227,6 +225,16 @@
   .tp-hub__col {
     grid-column: 1 / 7;
     min-width: 0;
+  }
+
+  /* Sem a foto, o texto respira em oito colunas em vez de seis — e o bloco
+     encolhe, para o catálogo começar acima da dobra. */
+  .tp-hub__intro--sem-imagem {
+    padding-block: 44px 28px;
+  }
+
+  .tp-hub__intro--sem-imagem .tp-hub__col {
+    grid-column: 1 / 9;
   }
 
   .tp-hub__breadcrumb {
@@ -379,6 +387,13 @@
   }
 
   .tp-hub__filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tp-hub__pills {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -597,10 +612,47 @@
       flex-direction: column;
       align-items: stretch;
       gap: 14px;
+      /* O wrap vem da regra de desktop. Em column ele cria COLUNAS novas em
+         vez de linhas, e os filhos passam a medir pelo conteúdo — era daí
+         que vinha a rolagem lateral da página inteira. */
+      flex-wrap: nowrap;
     }
 
     .tp-hub__count {
       order: -1;
+    }
+
+    /* Empilhados, os cinco filtros quebravam em quatro fileiras irregulares e
+       empurravam a grade para fora da tela. O rótulo sobe para a própria linha
+       e os pills viram uma tira que rola na horizontal. */
+    .tp-hub__filter-group {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      min-width: 0;
+      flex-wrap: nowrap;
+    }
+
+    .tp-hub__pills {
+      flex-wrap: nowrap;
+      /* Sem isto o min-width:auto do flexbox deixa a tira crescer até o
+         conteúdo e é a PÁGINA que passa a rolar de lado, não ela. */
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      /* Sangra o gutter: os pills continuam além da borda em vez de
+         parecerem cortados dentro dela. */
+      margin-inline: calc(var(--tp-gutter) * -1);
+      padding-inline: var(--tp-gutter);
+    }
+
+    .tp-hub__pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tp-hub__pill {
+      flex: none;
+      white-space: nowrap;
     }
 
     .tp-hub__grid {

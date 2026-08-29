@@ -2,10 +2,14 @@
   assign kit_blocks = section.blocks | where: 'type', 'kit'
   assign cartela_blocks = section.blocks | where: 'type', 'cartela'
   assign soon_blocks = section.blocks | where: 'type', 'em_breve'
+
+  # Sem imagem de verdade o hero reservava metade da tela para um retângulo
+  # cinza. Resolvendo a fonte antes, a seção decide se a coluna existe.
+  assign hero_image = section.settings.hero_image | default: collection.image
 -%}
 
 <div class="tp-hub-consultorios">
-  <div class="tp-hub-consultorios__intro">
+  <div class="tp-hub-consultorios__intro{% unless hero_image %} tp-hub-consultorios__intro--sem-imagem{% endunless %}">
     <div class="tp-hub-consultorios__col">
       <div class="tp-hub-consultorios__breadcrumb">
         <a href="{{ routes.root_url }}">Início</a>
@@ -17,23 +21,15 @@
         <div class="tp-hub-consultorios__lead">{{ section.settings.description }}</div>
       {%- endif -%}
     </div>
-    <div class="tp-media tp-hub-consultorios__hero-media">
-      {%- if section.settings.hero_image != blank -%}
+    {%- if hero_image -%}
+      <div class="tp-media tp-hub-consultorios__hero-media">
         {{
-          section.settings.hero_image
+          hero_image
           | image_url: width: 900
           | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,650,900'
         }}
-      {%- elsif collection.image -%}
-        {{
-          collection.image
-          | image_url: width: 900
-          | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,650,900'
-        }}
-      {%- else -%}
-        <div class="tp-media__placeholder">{{ section.settings.hero_image_alt }}</div>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 
   <div class="tp-hub-consultorios__notice-wrap">
@@ -169,6 +165,16 @@
   .tp-hub-consultorios__col {
     grid-column: 1 / 7;
     min-width: 0;
+  }
+
+  /* Sem a foto, o texto respira em oito colunas em vez de seis — e o bloco
+     encolhe, para o conteúdo começar acima da dobra. */
+  .tp-hub-consultorios__intro--sem-imagem {
+    padding-block: 44px 28px;
+  }
+
+  .tp-hub-consultorios__intro--sem-imagem .tp-hub-consultorios__col {
+    grid-column: 1 / 9;
   }
 
   .tp-hub-consultorios__breadcrumb {

@@ -1,10 +1,14 @@
 {%- liquid
   assign categories = section.blocks | where: 'type', 'category'
   assign info_columns = section.blocks | where: 'type', 'info_column'
+
+  # Sem imagem de verdade o hero reservava metade da tela para um retângulo
+  # cinza. Resolvendo a fonte antes, a seção decide se a coluna existe.
+  assign hero_image = section.settings.hero_image | default: collection.image
 -%}
 
 <div class="tp-hub-templates">
-  <div class="tp-hub-templates__intro">
+  <div class="tp-hub-templates__intro{% unless hero_image %} tp-hub-templates__intro--sem-imagem{% endunless %}">
     <div class="tp-hub-templates__col">
       <div class="tp-hub-templates__breadcrumb">
         <a href="{{ routes.root_url }}">Início</a>
@@ -16,17 +20,15 @@
         <div class="tp-hub-templates__lead">{{ section.settings.description }}</div>
       {%- endif -%}
     </div>
-    <div class="tp-media tp-hub-templates__hero-media">
-      {%- if section.settings.hero_image != blank -%}
+    {%- if hero_image -%}
+      <div class="tp-media tp-hub-templates__hero-media">
         {{
-          section.settings.hero_image
+          hero_image
           | image_url: width: 900
           | image_tag: loading: 'eager', sizes: '(max-width: 899px) 100vw, 40vw', widths: '400,650,900'
         }}
-      {%- else -%}
-        <div class="tp-media__placeholder">Templates no Canva</div>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 
   <div class="tp-hub-templates__notice-wrap">
@@ -126,6 +128,16 @@
   .tp-hub-templates__col {
     grid-column: 1 / 7;
     min-width: 0;
+  }
+
+  /* Sem a foto, o texto respira em oito colunas em vez de seis — e o bloco
+     encolhe, para o conteúdo começar acima da dobra. */
+  .tp-hub-templates__intro--sem-imagem {
+    padding-block: 44px 28px;
+  }
+
+  .tp-hub-templates__intro--sem-imagem .tp-hub-templates__col {
+    grid-column: 1 / 9;
   }
 
   .tp-hub-templates__breadcrumb {

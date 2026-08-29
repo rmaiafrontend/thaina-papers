@@ -37,6 +37,8 @@
       ],
       "name": "TP — Hub de coleção",
       "settings": {
+        "heading": "Todo o cat\u00e1logo",
+        "description": "<p>Convites, save the date, menus, adesivos e templates \u2014 impressos em pequeno lote ou entregues em arquivo. Use o filtro de entrega para ver s\u00f3 o que voc\u00ea precisa.<\/p>",
         "show_cta": true,
         "cta_heading": "Não achou a peça que você imaginou?",
         "cta_description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você.",
