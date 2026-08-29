@@ -69,8 +69,8 @@
               {%- if block.settings.price != blank -%}
                 <div class="tp-hub-consultorios__kit-price">{{ block.settings.price }}</div>
               {%- endif -%}
-              {%- if block.settings.link_label != blank -%}
-                <a href="{{ block.settings.link | default: '#' }}" class="tp-hub-consultorios__kit-link">{{ block.settings.link_label }}</a>
+              {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="tp-hub-consultorios__kit-link">{{ block.settings.link_label }}</a>
               {%- endif -%}
             </div>
           </div>
@@ -119,8 +119,8 @@
             {%- if block.settings.description != blank -%}
               <p class="tp-hub-consultorios__soon-text">{{ block.settings.description }}</p>
             {%- endif -%}
-            {%- if block.settings.link_label != blank -%}
-              <a href="{{ block.settings.link | default: '#' }}" class="tp-hub-consultorios__soon-link">{{ block.settings.link_label }}</a>
+            {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="tp-hub-consultorios__soon-link">{{ block.settings.link_label }}</a>
             {%- endif -%}
           </div>
         {%- endfor -%}
