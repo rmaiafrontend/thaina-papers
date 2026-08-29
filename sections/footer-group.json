@@ -18,7 +18,7 @@
           "type": "link_column",
           "settings": {
             "title": "Ocasiões",
-            "links": "Casamentos | /collections/pacotes?view=casamentos\nFormaturas | /collections/especial-formaturas?view=formaturas\nConsultórios | /collections/avulsos?view=consultorios\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
+            "links": "Casamentos | /collections/casamentos\nFormaturas | /collections/formaturas\nConsultórios | /collections/avulsos?view=consultorios\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
           }
         },
         "col_shop": {

@@ -25,14 +25,14 @@
           "type": "nav_link",
           "settings": {
             "label": "Casamentos",
-            "link": "/collections/pacotes?view=casamentos"
+            "link": "/collections/casamentos"
           }
         },
         "nav_formaturas": {
           "type": "nav_link",
           "settings": {
             "label": "Formaturas",
-            "link": "/collections/especial-formaturas?view=formaturas"
+            "link": "/collections/formaturas"
           }
         },
         "nav_consultorios": {
