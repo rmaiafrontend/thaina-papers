@@ -56,7 +56,7 @@
             "title": "Consultórios",
             "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
             "link_label": "Ver consultórios",
-            "link": "/collections/avulsos?view=consultorios",
+            "link": "/collections/consultorios",
             "image_asset": "tp-tablenumber-narrative.jpg"
           }
         }
@@ -115,7 +115,7 @@
           "type": "category",
           "settings": {
             "title": "Templates Canva",
-            "link": "/collections/convites?view=templates",
+            "link": "/collections/templates-canva",
             "image_asset": "tp-savethedate-swan.jpg"
           }
         }
@@ -155,7 +155,7 @@
             "description": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
             "features": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
             "button_label": "Ver templates",
-            "button_link": "/collections/convites?view=templates",
+            "button_link": "/collections/templates-canva",
             "button_style": "outline"
           }
         }

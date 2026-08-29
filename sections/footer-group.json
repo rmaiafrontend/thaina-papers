@@ -18,14 +18,14 @@
           "type": "link_column",
           "settings": {
             "title": "Ocasiões",
-            "links": "Casamentos | /collections/casamentos\nFormaturas | /collections/formaturas\nConsultórios | /collections/avulsos?view=consultorios\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
+            "links": "Casamentos | /collections/casamentos\nFormaturas | /collections/formaturas\nConsultórios | /collections/consultorios\nPromoção de grupo | /collections/all\nPacotes e comparativos | /collections/all"
           }
         },
         "col_shop": {
           "type": "link_column",
           "settings": {
             "title": "Comprar",
-            "links": "Convites | /collections/all\nSave the date | /collections/all\nMenus e sinalização | /collections/all\nAdesivos e tags | /collections/all\nTemplates Canva | /collections/convites?view=templates"
+            "links": "Convites | /collections/all\nSave the date | /collections/all\nMenus e sinalização | /collections/all\nAdesivos e tags | /collections/all\nTemplates Canva | /collections/templates-canva"
           }
         },
         "col_help": {
