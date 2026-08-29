@@ -103,10 +103,12 @@
     position: relative;
     z-index: 3;
     font-family: var(--tp-serif);
-    font-weight: 500;
+    /* A mono tem cor forte e avanço fixo: aliviar o peso e fechar o
+       espacejamento tira dela o ar de código e a aproxima de um display. */
+    font-weight: 300;
     font-size: clamp(46px, 7.4vw, 116px);
     line-height: 0.94;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.05em;
     margin: 0;
   }
 
