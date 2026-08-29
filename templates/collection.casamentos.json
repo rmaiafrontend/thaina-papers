@@ -27,7 +27,7 @@
             "title": "Signature",
             "description": "Suíte completa e papelaria do dia",
             "price": "R$ 1.490",
-            "link": "/products/essential-copia"
+            "link": "/products/signature"
           }
         },
         "pkg_bespoke": {
@@ -36,7 +36,7 @@
             "title": "Bespoke",
             "description": "Projeto exclusivo, do zero ao dia",
             "price": "R$ 2.900",
-            "link": "/products/signature-copia"
+            "link": "/products/bespoke"
           }
         },
         "filter_fisico": {

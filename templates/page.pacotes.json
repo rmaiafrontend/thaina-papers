@@ -31,7 +31,7 @@
             "tagline": "O mais escolhido",
             "is_featured": true,
             "cta_label": "Escolher Signature",
-            "cta_link": "/products/essential-copia"
+            "cta_link": "/products/signature"
           }
         },
         "plan_bespoke": {
@@ -42,7 +42,7 @@
             "tagline": "Projeto completo e exclusivo",
             "is_featured": false,
             "cta_label": "Escolher Bespoke",
-            "cta_link": "/products/signature-copia"
+            "cta_link": "/products/bespoke"
           }
         },
         "feature_identidade": {
