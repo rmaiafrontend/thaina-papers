@@ -18,7 +18,7 @@
             "title": "Essential",
             "description": "Identidade + convite + papelaria base",
             "price": "R$ 490",
-            "link": ""
+            "link": "/products/essential"
           }
         },
         "pkg_signature": {
@@ -27,7 +27,7 @@
             "title": "Signature",
             "description": "Suíte completa e papelaria do dia",
             "price": "R$ 1.490",
-            "link": ""
+            "link": "/products/essential-copia"
           }
         },
         "pkg_bespoke": {
@@ -36,7 +36,7 @@
             "title": "Bespoke",
             "description": "Projeto exclusivo, do zero ao dia",
             "price": "R$ 2.900",
-            "link": ""
+            "link": "/products/signature-copia"
           }
         },
         "filter_fisico": {

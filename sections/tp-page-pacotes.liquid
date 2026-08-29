@@ -88,8 +88,8 @@
               endif
             -%}
             <div class="{{ cta_classes }}">
-              {%- if plan.settings.cta_label != blank -%}
-                <a href="{{ plan.settings.cta_link | default: '#' }}" class="{{ btn_classes }}">
+              {%- if plan.settings.cta_label != blank and plan.settings.cta_link != blank -%}
+                <a href="{{ plan.settings.cta_link }}" class="{{ btn_classes }}">
                   {{- plan.settings.cta_label -}}
                 </a>
               {%- endif -%}
@@ -143,8 +143,8 @@
               </div>
             {%- endif -%}
 
-            {%- if plan.settings.cta_label != blank -%}
-              <a href="{{ plan.settings.cta_link | default: '#' }}" class="{{ btn_classes }}">
+            {%- if plan.settings.cta_label != blank and plan.settings.cta_link != blank -%}
+              <a href="{{ plan.settings.cta_link }}" class="{{ btn_classes }}">
                 {{- plan.settings.cta_label -}}
               </a>
             {%- endif -%}

@@ -39,12 +39,25 @@
   {%- if packages.size > 0 -%}
     <div class="tp-hub__packages">
       {%- for block in packages -%}
-        <a href="{{ block.settings.link | default: '#' }}" class="tp-hub__package" {{ block.shopify_attributes }}>
+        {%- comment -%}
+          Sem destino o card virava <a href="#">: parecia clicável e não ia a
+          lugar nenhum. Sem link ele é um cartão informativo, e pronto.
+        {%- endcomment -%}
+        {%- capture package_body -%}
           <div class="tp-hub__package-eyebrow">Pacote</div>
           <div class="tp-hub__package-title">{{ block.settings.title }}</div>
           <div class="tp-hub__package-text">{{ block.settings.description }}</div>
           <div class="tp-hub__package-price">{{ block.settings.price }}</div>
-        </a>
+        {%- endcapture -%}
+        {%- if block.settings.link != blank -%}
+          <a href="{{ block.settings.link }}" class="tp-hub__package" {{ block.shopify_attributes }}>
+            {{ package_body }}
+          </a>
+        {%- else -%}
+          <div class="tp-hub__package tp-hub__package--sem-link" {{ block.shopify_attributes }}>
+            {{ package_body }}
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   {%- endif -%}
@@ -58,8 +71,8 @@
             <div class="tp-hub__promo-text">{{ block.settings.description }}</div>
           {%- endif -%}
         </div>
-        {%- if block.settings.button_label != blank -%}
-          <a href="{{ block.settings.button_link | default: '#' }}" class="tp-btn tp-btn--solid tp-hub__promo-btn">
+        {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+          <a href="{{ block.settings.button_link }}" class="tp-btn tp-btn--solid tp-hub__promo-btn">
             {{- block.settings.button_label -}}
           </a>
         {%- endif -%}
@@ -283,6 +296,15 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
+  }
+
+  /* Sem link o cartão não reage ao mouse: nada sugere clique. */
+  .tp-hub__package--sem-link {
+    cursor: default;
+  }
+
+  .tp-hub__package--sem-link:hover {
+    border-color: var(--tp-line);
   }
 
   .tp-hub__package {

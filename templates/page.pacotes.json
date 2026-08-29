@@ -19,7 +19,8 @@
             "price": "R$ 490",
             "tagline": "Para celebrações enxutas",
             "is_featured": false,
-            "cta_label": "Escolher Essential"
+            "cta_label": "Escolher Essential",
+            "cta_link": "/products/essential"
           }
         },
         "plan_signature": {
@@ -29,7 +30,8 @@
             "price": "R$ 1.490",
             "tagline": "O mais escolhido",
             "is_featured": true,
-            "cta_label": "Escolher Signature"
+            "cta_label": "Escolher Signature",
+            "cta_link": "/products/essential-copia"
           }
         },
         "plan_bespoke": {
@@ -39,7 +41,8 @@
             "price": "R$ 2.900",
             "tagline": "Projeto completo e exclusivo",
             "is_featured": false,
-            "cta_label": "Escolher Bespoke"
+            "cta_label": "Escolher Bespoke",
+            "cta_link": "/products/signature-copia"
           }
         },
         "feature_identidade": {
