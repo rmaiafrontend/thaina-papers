@@ -44,12 +44,12 @@
 
       <div class="tp-hero__actions">
         {%- if section.settings.button_1_label != blank -%}
-          <a href="{{ section.settings.button_1_link | default: '#' }}" class="tp-btn tp-btn--solid">
+          <a {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %} class="tp-btn tp-btn--solid">
             {{- section.settings.button_1_label -}}
           </a>
         {%- endif -%}
         {%- if section.settings.button_2_label != blank -%}
-          <a href="{{ section.settings.button_2_link | default: '#' }}" class="tp-btn tp-btn--outline">
+          <a {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %} class="tp-btn tp-btn--outline">
             {{- section.settings.button_2_label -}}
           </a>
         {%- endif -%}
@@ -94,7 +94,10 @@
     font-size: 34px;
     line-height: 1;
     color: var(--tp-rose);
-    margin-bottom: 10px;
+    /* A Fraunces transborda a própria caixa de linha (glifos de 131px numa
+       caixa de 100px), então boa parte do respiro já vem da fonte. A margem
+       aqui é só o ajuste fino. */
+    margin-bottom: 2px;
   }
 
   .tp-hero__title {
@@ -142,7 +145,7 @@
   .tp-hero__body {
     grid-column: 1 / 5;
     grid-row: 3;
-    padding-top: 44px;
+    padding-top: 22px;
   }
 
   .tp-hero__lead {
@@ -202,8 +205,14 @@
       margin-top: 72px;
     }
 
+    /* Entre 900 e 1100 o título ainda é grande mas a coluna encolhe: com a
+       margem do desktop os glifos se tocavam. */
+    .tp-hero__script {
+      margin-bottom: 10px;
+    }
+
     .tp-hero__body {
-      padding-top: 28px;
+      padding-top: 26px;
     }
   }
 
@@ -225,6 +234,9 @@
       grid-column: 1 / -1;
       grid-row: 1;
       font-size: 28px;
+      /* No corpo menor a caixa de linha encolhe junto e os glifos passavam a
+         se tocar: aqui a margem volta a fazer falta. */
+      margin-bottom: 8px;
     }
 
     .tp-hero__title {

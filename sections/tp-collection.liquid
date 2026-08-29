@@ -50,7 +50,7 @@
           <div class="tp-hub__package-price">{{ block.settings.price }}</div>
         {%- endcapture -%}
         {%- if block.settings.link != blank -%}
-          <a href="{{ block.settings.link }}" class="tp-hub__package" {{ block.shopify_attributes }}>
+          <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="tp-hub__package" {{ block.shopify_attributes }}>
             {{ package_body }}
           </a>
         {%- else -%}
@@ -72,7 +72,7 @@
           {%- endif -%}
         </div>
         {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
-          <a href="{{ block.settings.button_link }}" class="tp-btn tp-btn--solid tp-hub__promo-btn">
+          <a {% if block.settings.button_link != blank %}href="{{ block.settings.button_link }}"{% endif %} class="tp-btn tp-btn--solid tp-hub__promo-btn">
             {{- block.settings.button_label -}}
           </a>
         {%- endif -%}
@@ -160,7 +160,7 @@
         {%- endif -%}
       </div>
       {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: '#' }}" class="tp-btn tp-btn--light tp-hub__cta-btn">
+        <a {% if section.settings.cta_link != blank %}href="{{ section.settings.cta_link }}"{% endif %} class="tp-btn tp-btn--light tp-hub__cta-btn">
           {{- section.settings.cta_label -}}
         </a>
       {%- endif -%}

@@ -14,12 +14,12 @@
 
     <div class="tp-cta__actions">
       {%- if section.settings.button_1_label != blank -%}
-        <a href="{{ section.settings.button_1_link | default: '#' }}" class="tp-btn tp-btn--light tp-cta__btn">
+        <a {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %} class="tp-btn tp-btn--light tp-cta__btn">
           {{- section.settings.button_1_label -}}
         </a>
       {%- endif -%}
       {%- if section.settings.button_2_label != blank -%}
-        <a href="{{ section.settings.button_2_link | default: '#' }}" class="tp-btn tp-btn--ghost-light tp-cta__btn">
+        <a {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %} class="tp-btn tp-btn--ghost-light tp-cta__btn">
           {{- section.settings.button_2_label -}}
         </a>
       {%- endif -%}

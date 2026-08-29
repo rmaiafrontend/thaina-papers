@@ -42,7 +42,7 @@
     <div class="tp-promo__breadcrumb">
       <a href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home }}</a>
       <span aria-hidden="true">/</span>
-      <a href="{{ section.settings.breadcrumb_parent_link | default: '#' }}">
+      <a {% if section.settings.breadcrumb_parent_link != blank %}href="{{ section.settings.breadcrumb_parent_link }}"{% endif %}>
         {{- section.settings.breadcrumb_parent -}}
       </a>
       <span aria-hidden="true">/</span>
@@ -161,7 +161,15 @@
           <span class="tp-promo__sim-total-value" data-tp-total></span>
         </div>
 
-        <a href="#" class="tp-btn tp-btn--solid tp-promo__sim-cta" data-tp-whatsapp>
+        {%- comment -%}
+          O JS reescreve o href com a mensagem montada pela simulação. O
+          destino base garante que o botão funcione mesmo se o script falhar.
+        {%- endcomment -%}
+        <a
+          {% if phone != blank %}href="https://wa.me/{{ phone }}"{% endif %}
+          class="tp-btn tp-btn--solid tp-promo__sim-cta"
+          data-tp-whatsapp
+        >
           {{- section.settings.sim_cta_label -}}
         </a>
 

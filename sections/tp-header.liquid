@@ -92,7 +92,7 @@
   <nav class="tp-header__nav" aria-label="Menu principal">
     {%- for block in section.blocks -%}
       <a
-        href="{{ block.settings.link | default: '#' }}"
+        {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
         {% if forloop.index0 == active_index %}
           class="tp-header__nav-link--active" aria-current="page"
         {% endif %}
@@ -115,7 +115,7 @@
     </div>
     <nav class="tp-mobile-menu__nav">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.label }}</a>
+        <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>{{ block.settings.label }}</a>
       {%- endfor -%}
     </nav>
     <div class="tp-mobile-menu__foot">

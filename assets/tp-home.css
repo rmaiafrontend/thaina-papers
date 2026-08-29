@@ -329,3 +329,12 @@ body .tp-section > * {
     margin-bottom: 20px;
   }
 }
+
+/* Âncora sem destino não é link: o Liquid omite o href em vez de emitir "#"
+   ou "" (que recarregaria a própria página). Aqui ela perde a aparência
+   clicável, para não prometer o que não faz. */
+.tp-section a:not([href]),
+[class^='tp-'] a:not([href]) {
+  cursor: default;
+  pointer-events: none;
+}

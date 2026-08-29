@@ -10,7 +10,7 @@
       <h2 class="tp-heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
     {%- if section.settings.link_label != blank -%}
-      <a href="{{ section.settings.link | default: collection.url | default: '#' }}" class="tp-link-caps">
+      <a href="{{ section.settings.link | default: collection.url }}" class="tp-link-caps">
         {{- section.settings.link_label -}}
       </a>
     {%- endif -%}

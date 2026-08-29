@@ -2,6 +2,14 @@
   assign columns = section.blocks | where: 'type', 'link_column'
   assign socials = section.blocks | where: 'type', 'social_link'
 -%}
+{%- liquid
+  # Sem destino próprio, o botão cai no WhatsApp global do tema.
+  assign _whats = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign _whats_url = ''
+  if _whats != blank
+    assign _whats_url = 'https://wa.me/' | append: _whats
+  endif
+-%}
 
 <footer class="tp-footer">
   <div class="tp-footer__top">
@@ -11,7 +19,7 @@
         <p class="tp-footer__description">{{ section.settings.description }}</p>
       {%- endif -%}
       {%- if section.settings.whatsapp_label != blank -%}
-        <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="tp-btn tp-btn--solid tp-footer__whatsapp">
+        <a {% assign _dest = section.settings.whatsapp_link | default: _whats_url %}{% if _dest != blank %}href="{{ _dest }}"{% endif %} class="tp-btn tp-btn--solid tp-footer__whatsapp">
           {{- section.settings.whatsapp_label -}}
         </a>
       {%- endif -%}
@@ -37,7 +45,7 @@
               {%- endif -%}
               {%- assign label = line | split: '|' | first | strip -%}
               {%- assign url = line | split: '|' | last | strip -%}
-              <a href="{{ url | default: '#' }}">{{ label }}</a>
+              <a href="{{ url }}">{{ label }}</a>
             {%- endfor -%}
           </div>
         </div>
@@ -62,7 +70,7 @@
     {%- if socials.size > 0 -%}
       <div class="tp-footer__socials">
         {%- for block in socials -%}
-          <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
         {%- endfor -%}
       </div>
     {%- endif -%}

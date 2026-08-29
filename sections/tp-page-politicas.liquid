@@ -32,7 +32,7 @@
               {%- assign is_current = true -%}
             {%- endif -%}
             <a
-              href="{{ block.settings.link | default: '#' }}"
+              {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
               class="tp-politicas__index-link{% if is_current %} tp-politicas__index-link--current{% endif %}"
               {% if is_current %}aria-current="page"{% endif %}
               {{ block.shopify_attributes }}
@@ -50,7 +50,7 @@
             <div class="tp-politicas__help-text">{{ section.settings.help_text }}</div>
           {%- endif -%}
           {%- if section.settings.help_link_label != blank -%}
-            <a href="{{ section.settings.help_link | default: '#' }}" class="tp-politicas__help-link">
+            <a {% if section.settings.help_link != blank %}href="{{ section.settings.help_link }}"{% endif %} class="tp-politicas__help-link">
               {{- section.settings.help_link_label -}}
             </a>
           {%- endif -%}

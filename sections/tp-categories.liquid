@@ -5,7 +5,7 @@
 
   <div class="tp-categories__grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.link | default: '#' }}" class="tp-categories__item" {{ block.shopify_attributes }}>
+      <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="tp-categories__item" {{ block.shopify_attributes }}>
         <div class="tp-categories__frame">
           {%- render 'tp-image',
             image: block.settings.image,

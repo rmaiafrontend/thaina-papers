@@ -25,7 +25,7 @@
       <div class="tp-tailor__hero-actions">
         {%- if section.settings.hero_cta_primary_label != blank -%}
           <a
-            href="{{ section.settings.hero_cta_primary_link | default: '#' }}"
+            {% if section.settings.hero_cta_primary_link != blank %}href="{{ section.settings.hero_cta_primary_link }}"{% endif %}
             class="tp-btn tp-btn--solid tp-tailor__hero-btn"
           >
             {{- section.settings.hero_cta_primary_label -}}
@@ -33,7 +33,7 @@
         {%- endif -%}
         {%- if section.settings.hero_cta_secondary_label != blank -%}
           <a
-            href="{{ section.settings.hero_cta_secondary_link | default: '#' }}"
+            {% if section.settings.hero_cta_secondary_link != blank %}href="{{ section.settings.hero_cta_secondary_link }}"{% endif %}
             class="tp-btn tp-btn--outline tp-tailor__hero-btn"
           >
             {{- section.settings.hero_cta_secondary_label -}}
@@ -109,7 +109,7 @@
         <div class="tp-tailor__cell">
           {%- if section.settings.table_cta_a_label != blank -%}
             <a
-              href="{{ section.settings.table_cta_a_link | default: '#' }}"
+              {% if section.settings.table_cta_a_link != blank %}href="{{ section.settings.table_cta_a_link }}"{% endif %}
               class="tp-btn tp-btn--solid tp-tailor__table-btn"
             >
               {{- section.settings.table_cta_a_label -}}
@@ -119,7 +119,7 @@
         <div class="tp-tailor__cell">
           {%- if section.settings.table_cta_b_label != blank -%}
             <a
-              href="{{ section.settings.table_cta_b_link | default: '#' }}"
+              {% if section.settings.table_cta_b_link != blank %}href="{{ section.settings.table_cta_b_link }}"{% endif %}
               class="tp-btn tp-btn--outline tp-tailor__table-btn"
             >
               {{- section.settings.table_cta_b_label -}}

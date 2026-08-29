@@ -105,7 +105,7 @@
         {%- endif -%}
 
         {%- if section.settings.sticker_link_label != blank -%}
-          <a href="{{ section.settings.sticker_link_url | default: '#' }}" class="tp-guia__card-link">
+          <a {% if section.settings.sticker_link_url != blank %}href="{{ section.settings.sticker_link_url }}"{% endif %} class="tp-guia__card-link">
             {{- section.settings.sticker_link_label -}}
           </a>
         {%- endif -%}

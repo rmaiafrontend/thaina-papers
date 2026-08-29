@@ -4,6 +4,14 @@
   assign subjects = section.blocks | where: 'type', 'subject'
   assign form_id = 'ContatoForm-' | append: section.id
 -%}
+{%- liquid
+  # Sem destino próprio, o botão cai no WhatsApp global do tema.
+  assign _whats = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign _whats_url = ''
+  if _whats != blank
+    assign _whats_url = 'https://wa.me/' | append: _whats
+  endif
+-%}
 
 <div class="tp-contato">
   <div class="tp-contato__inner">
@@ -20,7 +28,7 @@
         {%- endif -%}
         {%- if section.settings.whatsapp_button_label != blank -%}
           <a
-            href="{{ section.settings.whatsapp_link | default: '#' }}"
+            {% assign _dest = section.settings.whatsapp_link | default: _whats_url %}{% if _dest != blank %}href="{{ _dest }}"{% endif %}
             class="tp-btn tp-btn--solid tp-contato__wa-btn"
           >
             {{- section.settings.whatsapp_button_label -}}
@@ -43,7 +51,7 @@
           <div class="tp-contato__info-label">{{ section.settings.social_label }}</div>
           <div class="tp-contato__socials">
             {%- for block in socials -%}
-              <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+              <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} {{ block.shopify_attributes }}>
                 {{- block.settings.label -}}
               </a>
             {%- endfor -%}
@@ -151,7 +159,7 @@
       {%- if link_cards.size > 0 -%}
         <div class="tp-contato__cards">
           {%- for block in link_cards -%}
-            <a href="{{ block.settings.link | default: '#' }}" class="tp-contato__card" {{ block.shopify_attributes }}>
+            <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="tp-contato__card" {{ block.shopify_attributes }}>
               <div class="tp-contato__card-title">{{ block.settings.title }}</div>
               <div class="tp-contato__card-text">{{ block.settings.description }}</div>
             </a>

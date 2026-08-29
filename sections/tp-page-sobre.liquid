@@ -67,14 +67,24 @@
       {%- endif -%}
     </div>
 
+    {%- liquid
+      # Os dois botões estavam sem destino e viravam href="#". O principal cai
+      # no WhatsApp global do tema quando o campo está vazio, para seguir o
+      # número configurado num lugar só.
+      assign whats = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+      assign cta_primario = section.settings.cta_primary_link
+      if cta_primario == blank and whats != blank
+        assign cta_primario = 'https://wa.me/' | append: whats
+      endif
+    -%}
     <div class="tp-page-sobre__cta-actions">
-      {%- if section.settings.cta_primary_label != blank -%}
-        <a href="{{ section.settings.cta_primary_link | default: '#' }}" class="tp-btn tp-btn--solid">
+      {%- if section.settings.cta_primary_label != blank and cta_primario != blank -%}
+        <a href="{{ cta_primario }}" class="tp-btn tp-btn--solid">
           {{- section.settings.cta_primary_label -}}
         </a>
       {%- endif -%}
-      {%- if section.settings.cta_secondary_label != blank -%}
-        <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="tp-btn tp-btn--outline">
+      {%- if section.settings.cta_secondary_label != blank and section.settings.cta_secondary_link != blank -%}
+        <a {% if section.settings.cta_secondary_link != blank %}href="{{ section.settings.cta_secondary_link }}"{% endif %} class="tp-btn tp-btn--outline">
           {{- section.settings.cta_secondary_label -}}
         </a>
       {%- endif -%}
