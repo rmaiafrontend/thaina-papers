@@ -19,7 +19,7 @@
             "description": "3 cartelas: Café / Almoço / Jantar, Jejum e Uso contínuo.",
             "price": "R$ 39,90",
             "link_label": "Ver kit →",
-            "link": ""
+            "link": "/products/kit-essencial"
           }
         },
         "kit_completo": {
@@ -29,35 +29,43 @@
             "description": "5 cartelas, incluindo Geladeira e Se necessário.",
             "price": "R$ 64,90",
             "link_label": "Ver kit →",
-            "link": ""
+            "link": "/products/kit-completo"
           }
         },
         "cartela_cafe": {
           "type": "cartela",
           "settings": {
             "title": "Cartela Café / Almoço / Jantar",
-            "price": "R$ 14,90"
+            "price": "R$ 14,90",
+            "link": "/products/cartela-cafe-almoco-jantar",
+            "link_label": ""
           }
         },
         "cartela_jejum": {
           "type": "cartela",
           "settings": {
             "title": "Cartela Jejum / Antes / Depois",
-            "price": "R$ 14,90"
+            "price": "R$ 14,90",
+            "link": "/products/cartela-jejum-antes-depois",
+            "link_label": ""
           }
         },
         "cartela_uso_continuo": {
           "type": "cartela",
           "settings": {
             "title": "Cartela Uso contínuo / Se necessário",
-            "price": "R$ 14,90"
+            "price": "R$ 14,90",
+            "link": "/products/cartela-uso-continuo-se-necessario",
+            "link_label": ""
           }
         },
         "cartela_geladeira": {
           "type": "cartela",
           "settings": {
             "title": "Cartela Geladeira",
-            "price": "R$ 14,90"
+            "price": "R$ 14,90",
+            "link": "/products/cartela-geladeira",
+            "link_label": ""
           }
         },
         "soon_identidade": {

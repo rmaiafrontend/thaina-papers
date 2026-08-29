@@ -85,7 +85,7 @@
       </div>
       <div class="tp-hub-consultorios__cartelas-grid">
         {%- for block in cartela_blocks -%}
-          <div class="tp-hub-consultorios__cartela" {{ block.shopify_attributes }}>
+          {%- capture cartela_miolo -%}
             <div class="tp-media tp-hub-consultorios__cartela-media">
               {%- if block.settings.image != blank -%}
                 {{
@@ -103,7 +103,16 @@
                 <div class="tp-hub-consultorios__cartela-price">{{ block.settings.price }}</div>
               {%- endif -%}
             </div>
-          </div>
+          {%- endcapture -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="tp-hub-consultorios__cartela" {{ block.shopify_attributes }}>
+              {{ cartela_miolo }}
+            </a>
+          {%- else -%}
+            <div class="tp-hub-consultorios__cartela" {{ block.shopify_attributes }}>
+              {{ cartela_miolo }}
+            </div>
+          {%- endif -%}
         {%- endfor -%}
       </div>
     {%- endif -%}
@@ -649,6 +658,11 @@
           "id": "price",
           "label": "Preço (texto)",
           "default": "R$ 14,90"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
         }
       ]
     },
@@ -692,15 +706,33 @@
     {
       "name": "TP — Hub consultórios",
       "blocks": [
-        { "type": "kit" },
-        { "type": "kit" },
-        { "type": "cartela" },
-        { "type": "cartela" },
-        { "type": "cartela" },
-        { "type": "cartela" },
-        { "type": "em_breve" },
-        { "type": "em_breve" },
-        { "type": "em_breve" }
+        {
+          "type": "kit"
+        },
+        {
+          "type": "kit"
+        },
+        {
+          "type": "cartela"
+        },
+        {
+          "type": "cartela"
+        },
+        {
+          "type": "cartela"
+        },
+        {
+          "type": "cartela"
+        },
+        {
+          "type": "em_breve"
+        },
+        {
+          "type": "em_breve"
+        },
+        {
+          "type": "em_breve"
+        }
       ]
     }
   ]
