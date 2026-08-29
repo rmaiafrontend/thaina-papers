@@ -80,6 +80,13 @@
     </div>
   {%- endfor -%}
 
+  {%- comment -%}
+    Coleção sem produto renderizava a moldura vazia: barra de filtros que não
+    filtra nada, contador em zero e uma frase de estado vazio. A faixa inteira
+    só aparece quando há o que mostrar — e volta sozinha quando a coleção for
+    populada no admin.
+  {%- endcomment -%}
+  {%- if products.size > 0 -%}
   <div class="tp-hub__catalog">
     <div class="tp-hub__filters">
       <div class="tp-hub__filter-group">
@@ -139,11 +146,10 @@
             <a href="{{ product.url }}" class="tp-hub__card-link">Ver produto &rarr;</a>
           </div>
         </div>
-      {%- else -%}
-        <p class="tp-hub__empty">Nenhum produto nesta coleção ainda.</p>
       {%- endfor -%}
     </div>
   </div>
+  {%- endif -%}
 
   {%- if show_cta -%}
     <div class="tp-hub__cta">
