@@ -39,7 +39,7 @@
           "type": "link_column",
           "settings": {
             "title": "Políticas",
-            "links": "Catálogo | /collections/all\nProdutos físicos | /pages/politicas\nProdutos digitais | /policies/refund-policy\nCancelamento e trocas | /policies/refund-policy\nLicença dos templates | /policies/terms-of-service\nPrivacidade e termos | /policies/privacy-policy"
+            "links": "Catálogo | /collections/all\nProdutos físicos | /pages/politicas#tp-pol-fisicos\nProdutos digitais | /pages/politicas#tp-pol-digitais\nCancelamento e trocas | /pages/politicas#tp-pol-cancelamento\nLicença dos templates | /pages/politicas#tp-pol-licenca\nPrivacidade e termos | /pages/politicas#tp-pol-privacidade"
           }
         },
         "note_digital": {
