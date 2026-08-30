@@ -441,7 +441,9 @@
 
   .tp-contato__cards {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Acompanha quantos cards existem: com três colunas fixas, remover um
+       bloco deixava uma coluna vazia e os cards encolhidos. */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
     margin-top: 24px;
   }

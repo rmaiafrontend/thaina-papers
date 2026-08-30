@@ -58,19 +58,11 @@
             "link": "/pages/guia-de-medidas"
           }
         },
-        "card_prazos": {
-          "type": "link_card",
-          "settings": {
-            "title": "Prazos e alterações",
-            "description": "Como funcionam correções e aprovação",
-            "link": "/#perguntas-frequentes"
-          }
-        },
         "card_politicas": {
           "type": "link_card",
           "settings": {
             "title": "Políticas",
-            "description": "Catálogo, físicos, digitais e cancelamento",
+            "description": "Prazos, alterações, catálogo, físicos, digitais e cancelamento",
             "link": "/pages/politicas"
           }
         }
@@ -83,7 +75,6 @@
         "social_instagram",
         "social_pinterest",
         "card_medidas",
-        "card_prazos",
         "card_politicas"
       ],
       "name": "TP — Contato",
