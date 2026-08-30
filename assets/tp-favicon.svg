@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Thainá Papers">
+  <!-- O "T" da Thainá em creme sobre vinho: os dois tons que carregam a marca
+       no site inteiro. Quadrado cheio e sem canto arredondado, como todo o
+       resto do tema — é o que dá presença numa aba de 16px.
+
+       Toda medida é par de propósito: em 32 elas caem em pixel inteiro a 16,
+       então nenhuma haste vira borrão cinza. Uma versão serifada de verdade
+       foi testada e reprovada nesse tamanho — as serifas do travessão
+       embolavam. O pé de slab ficou, que é o que sobra de impresso aqui. -->
+  <rect width="32" height="32" fill="#6b1017"/>
+  <g fill="#faf8f3">
+    <rect x="4" y="6" width="24" height="4"/>
+    <rect x="14" y="6" width="4" height="20"/>
+    <rect x="10" y="22" width="12" height="4"/>
+  </g>
+</svg>

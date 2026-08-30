@@ -6,12 +6,22 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {%- comment -%}
+      A marca da aba vem do tema, então a loja nunca fica com o ícone genérico
+      da Shopify por falta de upload. O campo Favicon dos ajustes continua
+      ganhando se alguém preencher — é a saída para trocar sem mexer em código.
+    {%- endcomment -%}
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
         type="image/png"
         href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
       >
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- else -%}
+      <link rel="icon" type="image/svg+xml" href="{{ 'tp-favicon.svg' | asset_url }}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ 'tp-favicon-32.png' | asset_url }}">
+      <link rel="apple-touch-icon" href="{{ 'tp-favicon-180.png' | asset_url }}">
     {%- endif -%}
 
     {% comment %}
