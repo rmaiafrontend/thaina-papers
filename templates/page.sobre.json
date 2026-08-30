@@ -51,7 +51,7 @@
         "cta_primary_label": "Falar no WhatsApp",
         "cta_primary_link": "",
         "cta_secondary_label": "Preencher briefing",
-        "cta_secondary_link": "/pages/tailor-made",
+        "cta_secondary_link": "/pages/tailor-made#briefing",
         "hero_image_1_asset": "tp-tablescape-balmoral.jpg",
         "hero_image_2_asset": "tp-menu-tulip-placecard.jpg"
       }

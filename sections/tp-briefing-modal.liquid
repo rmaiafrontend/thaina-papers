@@ -1,0 +1,647 @@
+{%- comment -%}
+  Modal do briefing. Fica no layout, então qualquer botão do site abre o
+  mesmo formulário sem sair da página. Na página tailor-made o briefing já
+  está no corpo do texto — lá o modal não existe e o link #briefing volta a
+  ser âncora, rolando até o formulário de verdade.
+{%- endcomment -%}
+
+{%- unless template == 'page.tailor-made' -%}
+
+{%- liquid
+  assign form_id = 'TpBriefingModal'
+  assign occasion_options = section.settings.occasion_options | newline_to_br | split: '<br />'
+  assign guests_options = section.settings.guests_options | newline_to_br | split: '<br />'
+  assign budget_options = section.settings.budget_options | newline_to_br | split: '<br />'
+  assign pieces_options = section.settings.pieces_options | newline_to_br | split: '<br />'
+-%}
+
+<dialog class="tp-briefing" id="tp-briefing" aria-labelledby="{{ form_id }}-title">
+  <div class="tp-briefing__panel">
+    <div class="tp-briefing__scroll">
+      {%- comment -%}
+        A barra do fechar gruda no topo da área que rola: absoluta, ela
+        passaria por cima do primeiro campo assim que o cliente descesse.
+      {%- endcomment -%}
+      <div class="tp-briefing__bar">
+        <button type="button" class="tp-briefing__close" data-tp-briefing-close aria-label="Fechar briefing">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="tp-briefing__body">
+      {%- form 'contact', id: form_id, class: 'tp-briefing__form' -%}
+        <input name="contact[id]" type="hidden" value="{{ form_id }}">
+
+        {%- liquid
+          assign is_mine = false
+          if form.id == form_id
+            assign is_mine = true
+          endif
+          assign sent = false
+          if form.posted_successfully? and is_mine
+            assign sent = true
+          endif
+        -%}
+
+        {%- if sent -%}
+          {%- comment -%}
+            O envio recarrega a página (o formulário de contato da Shopify não
+            é ajax). Esta marca diz ao JS para reabrir o modal já na confirmação.
+          {%- endcomment -%}
+          <span data-tp-briefing-posted hidden></span>
+
+          <div class="tp-briefing__done" tabindex="-1" autofocus>
+            <div class="tp-briefing__eyebrow">{{ section.settings.eyebrow }}</div>
+            <h2 class="tp-briefing__title" id="{{ form_id }}-title">{{ section.settings.success_heading }}</h2>
+            <div class="tp-briefing__intro">{{ section.settings.success_text }}</div>
+            <button type="button" class="tp-btn tp-btn--solid tp-briefing__submit" data-tp-briefing-close>
+              {{- section.settings.success_close_label -}}
+            </button>
+          </div>
+        {%- else -%}
+          <div class="tp-briefing__head">
+            {%- if section.settings.eyebrow != blank -%}
+              <div class="tp-briefing__eyebrow">{{ section.settings.eyebrow }}</div>
+            {%- endif -%}
+            <h2 class="tp-briefing__title" id="{{ form_id }}-title">{{ section.settings.heading }}</h2>
+            {%- if section.settings.intro != blank -%}
+              <div class="tp-briefing__intro">{{ section.settings.intro }}</div>
+            {%- endif -%}
+          </div>
+
+          {%- if form.errors and is_mine -%}
+            <div class="tp-briefing__message" tabindex="-1" autofocus>
+              {{- form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email -}}
+            </div>
+          {%- endif -%}
+
+          <div class="tp-briefing__fields">
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-name">{{ section.settings.label_name }}</label>
+              <input
+                type="text"
+                id="{{ form_id }}-name"
+                class="tp-briefing__input"
+                name="contact[name]"
+                autocomplete="name"
+                required
+                aria-required="true"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              >
+            </div>
+
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-email">{{ section.settings.label_email }}</label>
+              <input
+                type="email"
+                id="{{ form_id }}-email"
+                class="tp-briefing__input"
+                name="contact[email]"
+                autocomplete="email"
+                spellcheck="false"
+                autocapitalize="off"
+                required
+                aria-required="true"
+                {% if form.errors contains 'email' and is_mine %}aria-invalid="true"{% endif %}
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              >
+            </div>
+
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-phone">{{ section.settings.label_phone }}</label>
+              <input
+                type="tel"
+                id="{{ form_id }}-phone"
+                class="tp-briefing__input"
+                name="contact[phone]"
+                autocomplete="tel"
+                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              >
+            </div>
+
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-occasion">{{ section.settings.label_occasion }}</label>
+              <select id="{{ form_id }}-occasion" class="tp-briefing__select" name="contact[Ocasião]">
+                {%- for option in occasion_options -%}
+                  {%- assign option_label = option | strip -%}
+                  {%- if option_label != blank -%}
+                    <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-date">{{ section.settings.label_date }}</label>
+              <input type="date" id="{{ form_id }}-date" class="tp-briefing__input" name="contact[Data da celebração]">
+            </div>
+
+            <div class="tp-briefing__field">
+              <label class="tp-briefing__label" for="{{ form_id }}-guests">{{ section.settings.label_guests }}</label>
+              <select id="{{ form_id }}-guests" class="tp-briefing__select" name="contact[Número de convidados]">
+                {%- for option in guests_options -%}
+                  {%- assign option_label = option | strip -%}
+                  {%- if option_label != blank -%}
+                    <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+
+            <div class="tp-briefing__field tp-briefing__field--wide">
+              <label class="tp-briefing__label" for="{{ form_id }}-budget">{{ section.settings.label_budget }}</label>
+              <select id="{{ form_id }}-budget" class="tp-briefing__select" name="contact[Investimento previsto]">
+                {%- for option in budget_options -%}
+                  {%- assign option_label = option | strip -%}
+                  {%- if option_label != blank -%}
+                    <option value="{{ option_label | escape }}">{{ option_label }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="tp-briefing__group tp-briefing__fieldset">
+            <legend class="tp-briefing__label">{{ section.settings.label_pieces }}</legend>
+            <div class="tp-briefing__chips">
+              {%- for option in pieces_options -%}
+                {%- assign option_label = option | strip -%}
+                {%- if option_label != blank -%}
+                  <input
+                    type="checkbox"
+                    class="tp-briefing__chip-input"
+                    id="{{ form_id }}-piece-{{ forloop.index }}"
+                    name="contact[Peças]"
+                    value="{{ option_label | escape }}"
+                  >
+                  <label class="tp-briefing__chip" for="{{ form_id }}-piece-{{ forloop.index }}">{{ option_label }}</label>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </fieldset>
+
+          <div class="tp-briefing__group">
+            <label class="tp-briefing__label" for="{{ form_id }}-body">{{ section.settings.label_message }}</label>
+            <textarea id="{{ form_id }}-body" class="tp-briefing__textarea" name="contact[body]" rows="4">{{- form.body -}}</textarea>
+          </div>
+
+          <div class="tp-briefing__footer">
+            {%- if section.settings.footnote != blank -%}
+              <div class="tp-briefing__note">{{ section.settings.footnote }}</div>
+            {%- endif -%}
+            <button type="submit" class="tp-btn tp-btn--solid tp-briefing__submit">
+              {{- section.settings.submit_label -}}
+            </button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script src="{{ 'tp-briefing.js' | asset_url }}" defer></script>
+
+{%- endunless -%}
+
+{% stylesheet %}
+  /* O <dialog> cobre a viewport inteira e é transparente: o painel fica no
+     centro e o vazio em volta é o alvo de clique para fechar. */
+  .tp-briefing {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .tp-briefing::backdrop {
+    background: rgba(61, 39, 34, 0.45);
+  }
+
+  /* Animação em vez de transição: o painel acaba de sair de display:none e
+     nesse caso o navegador ignora transições — mas roda animações. Mesma
+     armadilha já resolvida na gaveta da sacola. */
+  @keyframes tp-briefing-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes tp-briefing-out {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(16px) scale(0.98); }
+  }
+
+  @keyframes tp-briefing-scrim-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes tp-briefing-scrim-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  .tp-briefing * {
+    box-sizing: border-box;
+  }
+
+  .tp-briefing__panel {
+    position: absolute;
+    inset: 0;
+    width: min(660px, 100%);
+    max-height: min(880px, 100%);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line);
+    font-family: var(--tp-sans);
+    color: var(--tp-ink);
+  }
+
+  .tp-briefing[open] .tp-briefing__panel {
+    animation: tp-briefing-in 0.28s cubic-bezier(0.45, 0.05, 0.55, 0.95) both;
+  }
+
+  .tp-briefing[open]::backdrop {
+    animation: tp-briefing-scrim-in 0.28s cubic-bezier(0.45, 0.05, 0.55, 0.95) both;
+  }
+
+  /* Mesma especificidade das regras de abertura, então precisam vir depois. */
+  .tp-briefing.is-closing .tp-briefing__panel {
+    animation-name: tp-briefing-out;
+  }
+
+  .tp-briefing.is-closing::backdrop {
+    animation-name: tp-briefing-scrim-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tp-briefing[open] .tp-briefing__panel,
+    .tp-briefing[open]::backdrop {
+      animation-duration: 1ms;
+    }
+  }
+
+  .tp-briefing__bar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 14px 14px 0;
+    background: var(--tp-cream);
+  }
+
+  .tp-briefing__close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--tp-line);
+    background: var(--tp-cream);
+    color: var(--tp-ink);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .tp-briefing__close:hover {
+    border-color: var(--tp-line-strong);
+    color: var(--tp-wine);
+  }
+
+  .tp-briefing__scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .tp-briefing__body {
+    padding: 14px 44px 36px;
+  }
+
+  .tp-briefing__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tp-wine);
+    margin-bottom: 10px;
+  }
+
+  .tp-briefing__title {
+    font-family: var(--tp-serif);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+
+  .tp-briefing__intro {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--tp-body);
+  }
+
+  .tp-briefing__intro p {
+    margin: 0;
+  }
+
+  .tp-briefing__head {
+    margin-bottom: 28px;
+  }
+
+  .tp-briefing__message {
+    border: 1px solid var(--tp-wine);
+    color: var(--tp-wine);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+
+  .tp-briefing__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 20px;
+  }
+
+  .tp-briefing__field--wide {
+    grid-column: 1 / -1;
+  }
+
+  .tp-briefing__label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tp-muted);
+    margin-bottom: 8px;
+    padding: 0;
+  }
+
+  /* O base.css do Dwell estiliza `input:not([type=checkbox], [type=radio])`
+     com especificidade 0,1,1 e ganharia de uma classe sozinha — por isso
+     cada regra de campo é escopada pela raiz da seção. */
+  .tp-briefing .tp-briefing__input,
+  .tp-briefing .tp-briefing__select,
+  .tp-briefing .tp-briefing__textarea {
+    width: 100%;
+    background: var(--tp-cream);
+    border: 1px solid var(--tp-line-strong);
+    border-radius: 0;
+    color: var(--tp-ink);
+    font-family: var(--tp-sans);
+    font-size: 15px;
+    padding: 11px 13px;
+    box-shadow: none;
+  }
+
+  .tp-briefing .tp-briefing__input:focus,
+  .tp-briefing .tp-briefing__select:focus,
+  .tp-briefing .tp-briefing__textarea:focus {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: -2px;
+  }
+
+  .tp-briefing .tp-briefing__textarea {
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .tp-briefing__group {
+    margin-top: 22px;
+    border: none;
+    padding: 0;
+  }
+
+  .tp-briefing__fieldset {
+    margin-inline: 0;
+  }
+
+  .tp-briefing__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tp-briefing__chip-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tp-briefing__chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--tp-line-strong);
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .tp-briefing__chip:hover {
+    border-color: var(--tp-wine);
+    color: var(--tp-wine);
+  }
+
+  .tp-briefing__chip-input:checked + .tp-briefing__chip {
+    background: var(--tp-wine);
+    border-color: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-briefing__chip-input:focus-visible + .tp-briefing__chip {
+    outline: 2px solid var(--tp-wine);
+    outline-offset: 2px;
+  }
+
+  .tp-briefing__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--tp-line);
+  }
+
+  .tp-briefing__note {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--tp-muted);
+    max-width: 42ch;
+  }
+
+  .tp-briefing__note p {
+    margin: 0;
+  }
+
+  .tp-briefing .tp-briefing__submit {
+    flex: none;
+    height: 50px;
+    font-size: 14px;
+    background: var(--tp-wine);
+    color: var(--tp-cream);
+  }
+
+  .tp-briefing__done {
+    padding-block: 24px 8px;
+  }
+
+  .tp-briefing__done .tp-briefing__submit {
+    margin-top: 24px;
+  }
+
+  /* Com o modal aberto a página atrás não rola. Quem rola neste tema é
+     .page-wrapper, não o <html> — travar a raiz não teria efeito nenhum. */
+  .tp-briefing-open .page-wrapper {
+    overflow: hidden;
+  }
+
+  @media (max-width: 749px) {
+    .tp-briefing__panel {
+      width: 100%;
+      max-height: 100%;
+      border: none;
+    }
+
+    .tp-briefing__body {
+      padding: 8px 20px 28px;
+    }
+
+    .tp-briefing__title {
+      font-size: 26px;
+    }
+
+    .tp-briefing__fields {
+      grid-template-columns: 1fr;
+    }
+
+    .tp-briefing__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .tp-briefing .tp-briefing__submit {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Modal do briefing",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Abre em qualquer botão que aponte para #briefing. Na página tailor-made o modal não aparece — lá o link rola até o formulário do corpo da página."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Chapéu",
+      "default": "Tailor-made"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Comece pelo briefing"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texto de abertura",
+      "default": "<p>Leva cinco minutos. Com ele em mãos, a Thainá responde com escopo, prazo e investimento.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Nota de rodapé",
+      "default": "<p>Ao enviar, você concorda com o uso dos dados apenas para o atendimento deste projeto.</p>"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Texto do botão de envio",
+      "default": "Enviar briefing"
+    },
+    {
+      "type": "header",
+      "content": "Confirmação"
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Título",
+      "default": "Briefing enviado!"
+    },
+    {
+      "type": "richtext",
+      "id": "success_text",
+      "label": "Texto",
+      "default": "<p>A Thainá responde em até 2 dias úteis, no e-mail e no WhatsApp que você deixou.</p>"
+    },
+    {
+      "type": "text",
+      "id": "success_close_label",
+      "label": "Texto do botão",
+      "default": "Voltar ao site"
+    },
+    {
+      "type": "header",
+      "content": "Rótulos dos campos"
+    },
+    { "type": "text", "id": "label_name", "label": "Nome", "default": "Seu nome" },
+    { "type": "text", "id": "label_email", "label": "E-mail", "default": "E-mail" },
+    { "type": "text", "id": "label_phone", "label": "Telefone", "default": "WhatsApp" },
+    { "type": "text", "id": "label_occasion", "label": "Ocasião", "default": "Ocasião" },
+    { "type": "text", "id": "label_date", "label": "Data", "default": "Data da celebração" },
+    { "type": "text", "id": "label_guests", "label": "Convidados", "default": "Número de convidados" },
+    { "type": "text", "id": "label_budget", "label": "Investimento", "default": "Investimento previsto" },
+    { "type": "text", "id": "label_pieces", "label": "Peças", "default": "Peças que você imagina" },
+    { "type": "text", "id": "label_message", "label": "Mensagem", "default": "Conte um pouco sobre a celebração" },
+    {
+      "type": "header",
+      "content": "Opções dos campos",
+      "info": "Uma por linha."
+    },
+    {
+      "type": "textarea",
+      "id": "occasion_options",
+      "label": "Ocasião",
+      "default": "Casamento\nFormatura\nConsultório\nOutro"
+    },
+    {
+      "type": "textarea",
+      "id": "guests_options",
+      "label": "Número de convidados",
+      "default": "Até 50\nAté 80\nAté 150\nMais de 150"
+    },
+    {
+      "type": "textarea",
+      "id": "budget_options",
+      "label": "Investimento previsto",
+      "default": "Até R$ 1.000\nR$ 1.000 a R$ 2.000\nR$ 2.000 a R$ 4.000\nAcima de R$ 4.000"
+    },
+    {
+      "type": "textarea",
+      "id": "pieces_options",
+      "label": "Peças",
+      "default": "Convite\nSave the date\nPapelaria do dia\nManuais\nSinalização\nAinda não sei"
+    }
+  ]
+}
+{% endschema %}
