@@ -1,0 +1,26 @@
+{% doc %}
+  Diz o tipo de entrega de um produto: fisico, arquivo-digital, arte-digital
+  ou template-canva.
+
+  Mora num lugar só porque a faixa de catálogo precisa da mesma resposta duas
+  vezes — para montar as pílulas de filtro (só entra a que tem produto) e para
+  o selo de cada card. Duplicada, as duas saíam de sincronia calada.
+
+  A etiqueta manda. Sem etiqueta, quem não pede frete é arquivo digital — é o
+  que salva o catálogo enquanto ninguém etiqueta produto no admin.
+
+  @param {object} product - O produto a classificar.
+{% enddoc %}
+{%- liquid
+  assign tp_delivery = 'fisico'
+  if product.tags contains 'template-canva'
+    assign tp_delivery = 'template-canva'
+  elsif product.tags contains 'arte-digital'
+    assign tp_delivery = 'arte-digital'
+  elsif product.tags contains 'arquivo-digital'
+    assign tp_delivery = 'arquivo-digital'
+  elsif product.requires_shipping == false
+    assign tp_delivery = 'arquivo-digital'
+  endif
+  echo tp_delivery
+-%}

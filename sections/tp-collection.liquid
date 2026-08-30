@@ -91,12 +91,27 @@
     <div class="tp-hub__filters">
       <div class="tp-hub__filter-group">
         <span class="tp-hub__filter-label">Tipo de entrega</span>
+        {%- comment -%}
+          Quais tipos de entrega existem nesta coleção. Sem isso a régua
+          oferece filtro que não leva a nada: em Formaturas, "Arte digital
+          pronta" abria uma grade vazia, sem nem uma frase explicando.
+          A pílula que falta também aparece sozinha quando surgir produto
+          dela — era o caso do Save the Date, sem pílula para chamá-lo.
+        {%- endcomment -%}
+        {%- capture deliveries_present -%}
+          {%- for product in products -%},{%- render 'tp-delivery-type', product: product -%}{%- endfor -%},
+        {%- endcapture -%}
+        {%- assign deliveries_present = deliveries_present | strip -%}
+
         <div class="tp-hub__pills">
           <button type="button" class="tp-hub__pill tp-hub__pill--active" data-tp-filter="all">Todos</button>
           {%- for block in filter_pills -%}
-            <button type="button" class="tp-hub__pill" data-tp-filter="{{ block.settings.value }}" {{ block.shopify_attributes }}>
-              {{- block.settings.label -}}
-            </button>
+            {%- assign pill_key = ',' | append: block.settings.value | append: ',' -%}
+            {%- if deliveries_present contains pill_key -%}
+              <button type="button" class="tp-hub__pill" data-tp-filter="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+                {{- block.settings.label -}}
+              </button>
+            {%- endif -%}
           {%- endfor -%}
         </div>
       </div>
@@ -105,22 +120,19 @@
 
     <div class="tp-hub__grid" data-tp-grid>
       {%- for product in products -%}
+        {%- capture delivery -%}{%- render 'tp-delivery-type', product: product -%}{%- endcapture -%}
         {%- liquid
-          assign delivery = 'fisico'
-          assign badge = 'Produto físico'
-          if product.tags contains 'template-canva'
-            assign delivery = 'template-canva'
-            assign badge = 'Template Canva'
-          elsif product.tags contains 'arte-digital'
-            assign delivery = 'arte-digital'
-            assign badge = 'Arte digital'
-          elsif product.tags contains 'arquivo-digital'
-            assign delivery = 'arquivo-digital'
-            assign badge = 'Arquivo digital'
-          elsif product.requires_shipping == false
-            assign delivery = 'arquivo-digital'
-            assign badge = 'Arquivo digital'
-          endif
+          assign delivery = delivery | strip
+          case delivery
+            when 'template-canva'
+              assign badge = 'Template Canva'
+            when 'arte-digital'
+              assign badge = 'Arte digital'
+            when 'arquivo-digital'
+              assign badge = 'Arquivo digital'
+            else
+              assign badge = 'Produto físico'
+          endcase
         -%}
         <div class="tp-hub__card" data-tp-card data-delivery="{{ delivery }}">
           <a href="{{ product.url }}" class="tp-hub__card-media-link">
