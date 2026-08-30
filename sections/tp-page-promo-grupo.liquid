@@ -522,14 +522,17 @@
   .tp-promo .tp-promo__select {
     width: 100%;
     height: 46px;
-    padding: 0 14px;
+    padding: 0 38px 0 14px;
     border: 1px solid rgba(61, 39, 34, 0.24);
     border-radius: 0;
-    background: var(--tp-cream);
+    background: var(--tp-cream) var(--tp-select-arrow) no-repeat right 14px center;
+    background-size: 12px 8px;
     color: var(--tp-ink);
     font-family: inherit;
     font-size: 14px;
     margin-block: 0 22px;
+    appearance: none;
+    -webkit-appearance: none;
   }
 
   .tp-promo__select:focus {
