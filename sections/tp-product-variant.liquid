@@ -140,11 +140,36 @@
           <div class="tp-pvar__card-label tp-pvar__card-label--block">{{ section.settings.tiers_label }}</div>
 
           <div class="tp-pvar__tiers">
+            {%- liquid
+              # Cada faixa é um produto próprio, e todas compartilham este
+              # template. Se alguma apontar para o produto aberto, é ela a
+              # atual — assim uma configuração só serve as quatro páginas e
+              # nenhuma marca a faixa errada. Sem nenhuma apontando, vale a
+              # marcação manual do lojista.
+              assign tier_match = false
+              for block in tier_blocks
+                assign tier_path = block.settings.link | split: '?' | first | split: '#' | first
+                if tier_path != blank and tier_path == product.url
+                  assign tier_match = true
+                endif
+              endfor
+            -%}
             {%- for block in tier_blocks -%}
+              {%- liquid
+                assign tier_path = block.settings.link | split: '?' | first | split: '#' | first
+                assign tier_current = false
+                if tier_match
+                  if tier_path == product.url
+                    assign tier_current = true
+                  endif
+                elsif block.settings.is_current
+                  assign tier_current = true
+                endif
+              -%}
               <a
-                {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
-                class="tp-pvar__tier{% if block.settings.is_current %} tp-pvar__tier--current{% endif %}"
-                {% if block.settings.is_current %}aria-current="page"{% endif %}
+                {% if block.settings.link != blank and tier_current == false %}href="{{ block.settings.link }}"{% endif %}
+                class="tp-pvar__tier{% if tier_current %} tp-pvar__tier--current{% endif %}"
+                {% if tier_current %}aria-current="page"{% endif %}
                 {{ block.shopify_attributes }}
               >
                 <span>{{ block.settings.label }}</span>

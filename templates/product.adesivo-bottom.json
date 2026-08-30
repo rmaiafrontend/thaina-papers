@@ -71,8 +71,8 @@
           "settings": {
             "label": "1 cartela",
             "price_text": "R$ 20",
-            "link": "",
-            "is_current": true
+            "link": "/products/adesivos-bottom",
+            "is_current": false
           }
         },
         "tier_5": {
@@ -80,7 +80,7 @@
           "settings": {
             "label": "5 cartelas",
             "price_text": "R$ 90",
-            "link": "",
+            "link": "/products/adesivos-bottom-5-cartelas",
             "is_current": false
           }
         },
@@ -89,7 +89,7 @@
           "settings": {
             "label": "10 cartelas",
             "price_text": "R$ 160",
-            "link": "",
+            "link": "/products/adesivos-bottom-10-cartelas",
             "is_current": false
           }
         },
@@ -98,7 +98,7 @@
           "settings": {
             "label": "20 cartelas",
             "price_text": "R$ 280",
-            "link": "",
+            "link": "/products/adesivos-bottom-20-cartelas",
             "is_current": false
           }
         },
@@ -185,7 +185,7 @@
         "breadcrumb_tail": "Formaturas / Adesivos bottom",
         "title_fallback": "Adesivos bottom",
         "short_description": "<p>O detalhe que vira lembrança: adesivos redondos com a identidade da sua formatura.</p>",
-        "price_note": "Preço por cartela · o diâmetro não altera o valor",
+        "price_note": "O diâmetro escolhido não altera o valor",
         "diameter_label": "Diâmetro",
         "diameter_note": "Mesmo tamanho por pedido",
         "yield_prefix": "Nesta escolha, cada cartela A4 rende",
