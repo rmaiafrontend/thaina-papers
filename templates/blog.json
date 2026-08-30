@@ -1,109 +1,67 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+ * O blog está desligado. A loja não publica artigo, e o layout que vinha aqui
+ * era o do tema antigo (Dwell) — quem chegasse por um link velho via um site
+ * diferente do resto. Enquanto a Thainá não apagar o blog no admin, o endereço
+ * continua respondendo, mas agora responde com a cara da Thainá Papers e manda
+ * a pessoa para onde o conteúdo realmente está.
+ */
+{
   "sections": {
-    "main": {
-      "type": "main-blog",
+    "tp_sem_blog": {
+      "type": "tp-404",
+      "name": "TP — Sem blog",
+      "settings": {
+        "eyebrow": "Sem blog por aqui",
+        "heading": "A Thainá Papers não tem blog.",
+        "text": "Se você chegou por um link antigo, ele não leva mais a lugar nenhum. O que caberia num blog está espalhado pelo site: como funciona cada etapa, os prazos de produção e o guia de medidas.",
+        "search_label": "Buscar",
+        "search_placeholder": "Convite, save the date, template...",
+        "links_title": "Ir para"
+      },
       "blocks": {
-        "title": {
-          "type": "text",
-          "name": "t:names.title",
+        "inicio": {
+          "type": "shortcut",
           "settings": {
-            "text": "<h1>{{ closest.blog.title }}</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 48,
-            "padding-block-end": 48,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Início",
+            "note": "A vitrine completa, por ocasião e por tipo de peça.",
+            "link": "/"
+          }
         },
-        "static-blog-post-card": {
-          "type": "_blog-post-card",
-          "static": true,
+        "como_funciona": {
+          "type": "shortcut",
           "settings": {
-            "alignment": "left"
-          },
-          "blocks": {
-            "heading": {
-              "type": "_heading",
-              "name": "t:names.title",
-              "static": true,
-              "settings": {
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "read_only": true,
-                "alignment": "left",
-                "show_alignment": false,
-                "padding-block-start": 0,
-                "padding-block-end": 10,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "blog-post-details": {
-              "type": "_blog-post-info-text",
-              "name": "t:names.details",
-              "static": true,
-              "settings": {
-                "show_date": false,
-                "show_author": false,
-                "alignment": "left",
-                "show_alignment": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
-            "image": {
-              "type": "_blog-post-image",
-              "static": true,
-              "settings": {
-                "height": "large",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 4
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
+            "label": "Como funciona",
+            "note": "Da conversa à entrega, etapa por etapa.",
+            "link": "/#como-funciona"
+          }
+        },
+        "medidas": {
+          "type": "shortcut",
+          "settings": {
+            "label": "Guia de medidas",
+            "note": "Formatos, papéis e o que cabe em cada peça.",
+            "link": "/pages/guia-de-medidas"
+          }
+        },
+        "duvidas": {
+          "type": "shortcut",
+          "settings": {
+            "label": "Perguntas frequentes",
+            "note": "Prazos, alterações e formas de pagamento.",
+            "link": "/#perguntas-frequentes"
+          }
+        },
+        "contato": {
+          "type": "shortcut",
+          "settings": {
+            "label": "Falar com a Thainá",
+            "note": "Para projetos sob medida ou dúvidas de pedido.",
+            "link": "/pages/contact"
+          }
         }
       },
-      "block_order": [
-        "title"
-      ],
-      "settings": {
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
-        "padding-block-end": 48
-      }
+      "block_order": ["inicio", "como_funciona", "medidas", "duvidas", "contato"]
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["tp_sem_blog"]
 }
