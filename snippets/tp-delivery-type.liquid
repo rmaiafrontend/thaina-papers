@@ -10,8 +10,7 @@
   que salva o catálogo enquanto ninguém etiqueta produto no admin.
 
   @param {object} product - O produto a classificar.
-{% enddoc %}
-{%- liquid
+{% enddoc %}{%- liquid
   assign tp_delivery = 'fisico'
   if product.tags contains 'template-canva'
     assign tp_delivery = 'template-canva'

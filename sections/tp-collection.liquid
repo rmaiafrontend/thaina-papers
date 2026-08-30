@@ -87,21 +87,39 @@
     populada no admin.
   {%- endcomment -%}
   {%- if products.size > 0 -%}
+
+  {%- comment -%}
+    Quais tipos de entrega existem nesta coleção. Sem isso a régua oferece
+    filtro que não leva a nada: em Formaturas, "Arte digital pronta" abria
+    uma grade vazia, sem nem uma frase explicando. A pílula que falta também
+    aparece sozinha quando surgir produto dela — era o caso do Save the Date,
+    que não tinha pílula para chamá-lo.
+  {%- endcomment -%}
+  {%- liquid
+    # Montado com append em vez de capture: dentro de um capture a quebra de
+    # linha do próprio arquivo entra na string, e ",fisico," nunca bate com
+    # ",\nfisico,". Falha calada, sem erro nenhum na página.
+    assign deliveries_present = ','
+    for product in products
+      capture one
+        render 'tp-delivery-type', product: product
+      endcapture
+      assign one_key = one | strip | append: ','
+      unless deliveries_present contains one_key
+        assign deliveries_present = deliveries_present | append: one_key
+      endunless
+    endfor
+
+    # Com um tipo só, "Todos" e a única pílula mostram exatamente a mesma
+    # coisa — régua que não separa nada é ruído.
+    assign tipos_count = deliveries_present | remove_first: ',' | split: ',' | size
+  -%}
+
   <div class="tp-hub__catalog">
-    <div class="tp-hub__filters">
+    <div class="tp-hub__filters{% if tipos_count < 2 %} tp-hub__filters--sem-regua{% endif %}">
+      {%- if tipos_count > 1 -%}
       <div class="tp-hub__filter-group">
         <span class="tp-hub__filter-label">Tipo de entrega</span>
-        {%- comment -%}
-          Quais tipos de entrega existem nesta coleção. Sem isso a régua
-          oferece filtro que não leva a nada: em Formaturas, "Arte digital
-          pronta" abria uma grade vazia, sem nem uma frase explicando.
-          A pílula que falta também aparece sozinha quando surgir produto
-          dela — era o caso do Save the Date, sem pílula para chamá-lo.
-        {%- endcomment -%}
-        {%- capture deliveries_present -%}
-          {%- for product in products -%},{%- render 'tp-delivery-type', product: product -%}{%- endfor -%},
-        {%- endcapture -%}
-        {%- assign deliveries_present = deliveries_present | strip -%}
 
         <div class="tp-hub__pills">
           <button type="button" class="tp-hub__pill tp-hub__pill--active" data-tp-filter="all">Todos</button>
@@ -115,6 +133,7 @@
           {%- endfor -%}
         </div>
       </div>
+      {%- endif -%}
       <div class="tp-hub__count" data-tp-count>{{ collection.products_count }} produtos</div>
     </div>
 
@@ -424,6 +443,11 @@
     gap: 40px;
     margin-bottom: 26px;
     flex-wrap: wrap;
+  }
+
+  /* Sem a régua, o contador fica onde o grupo começava, não jogado à direita. */
+  .tp-hub__filters--sem-regua {
+    justify-content: flex-start;
   }
 
   .tp-hub__filter-group {
