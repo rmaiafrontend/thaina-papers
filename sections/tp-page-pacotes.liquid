@@ -6,6 +6,12 @@
 -%}
 
 <div class="tp-pacotes">
+  {%- comment -%}
+    Em página própria o cabeçalho é o hero. Embutida noutra tela — o hub de
+    Casamentos, por exemplo — ela entra só como tabela, sem repetir o título
+    que já está acima.
+  {%- endcomment -%}
+  {%- if section.settings.show_head -%}
   <div class="tp-pacotes__head">
     <div class="tp-pacotes__breadcrumb">
       <a href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home }}</a>
@@ -25,6 +31,13 @@
       <div class="tp-pacotes__lead">{{ section.settings.intro }}</div>
     {%- endif -%}
   </div>
+  {%- else -%}
+    {%- if section.settings.heading != blank -%}
+      <div class="tp-pacotes__compare tp-pacotes__embed-head">
+        <h2 class="tp-pacotes__embed-title">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
 
   <div class="tp-pacotes__compare">
     {%- if plans.size > 0 -%}
@@ -434,12 +447,39 @@
       line-height: 1.55;
     }
   }
+
+  .tp-pacotes__embed-head {
+    padding-top: 8px;
+    padding-bottom: 0;
+  }
+
+  .tp-pacotes__embed-title {
+    font-family: var(--tp-serif);
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0 0 22px;
+    color: var(--tp-ink);
+  }
+
+  @media (max-width: 749px) {
+    .tp-pacotes__embed-title {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "TP — Pacotes",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_head",
+      "label": "Mostrar cabeçalho (breadcrumb e título grande)",
+      "default": true,
+      "info": "Desmarque ao usar a tabela dentro de outra página, que já tem título próprio."
+    },
     {
       "type": "text",
       "id": "announcement_override",
@@ -584,16 +624,36 @@
     {
       "name": "TP — Pacotes",
       "blocks": [
-        { "type": "plan" },
-        { "type": "plan" },
-        { "type": "plan" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" }
+        {
+          "type": "plan"
+        },
+        {
+          "type": "plan"
+        },
+        {
+          "type": "plan"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
       ]
     }
   ]
