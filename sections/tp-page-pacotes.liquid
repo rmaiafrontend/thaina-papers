@@ -32,9 +32,14 @@
     {%- endif -%}
   </div>
   {%- else -%}
-    {%- if section.settings.heading != blank -%}
+    {%- if section.settings.heading != blank or section.settings.intro != blank -%}
       <div class="tp-pacotes__compare tp-pacotes__embed-head">
-        <h2 class="tp-pacotes__embed-title">{{ section.settings.heading }}</h2>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="tp-pacotes__embed-title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="tp-pacotes__embed-lead">{{ section.settings.intro }}</div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   {%- endif -%}
@@ -468,14 +473,38 @@
     font-family: var(--tp-serif);
     font-size: 30px;
     font-weight: 400;
-    margin: 0 0 22px;
+    line-height: 1.2;
+    margin: 0 0 10px;
     color: var(--tp-ink);
+  }
+
+  /* O mesmo ritmo do cabeçalho da página própria: título, linha de apoio,
+     e um respiro maior antes da tabela começar. */
+  .tp-pacotes__embed-lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--tp-body);
+    max-width: 62ch;
+    margin-bottom: 28px;
+  }
+
+  .tp-pacotes__embed-lead p {
+    margin: 0;
+  }
+
+  .tp-pacotes__embed-head:not(:has(.tp-pacotes__embed-lead)) .tp-pacotes__embed-title {
+    margin-bottom: 22px;
   }
 
   @media (max-width: 749px) {
     .tp-pacotes__embed-title {
       font-size: 24px;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
+    }
+
+    .tp-pacotes__embed-lead {
+      font-size: 15px;
+      margin-bottom: 20px;
     }
   }
 {% endstylesheet %}

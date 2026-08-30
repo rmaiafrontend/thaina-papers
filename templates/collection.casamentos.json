@@ -224,7 +224,8 @@
       "settings": {
         "heading": "Compare os pacotes",
         "table_note": "<p>Quantidades adicionais e itens avulsos entram como complemento, com preço de tabela. Frete combinado no atendimento.</p>",
-        "show_head": false
+        "show_head": false,
+        "intro": "<p>Todos incluem criação, prévia para aprovação e até 3 solicitações de correção. A diferença está no alcance da papelaria — de um convite ao dia inteiro.</p>"
       }
     }
   },
