@@ -17,14 +17,21 @@
           "settings": {
             "label": "Catálogo",
             "link": "/collections/all",
-            "is_current": false
+            "is_current": false,
+            "key": "catalogo",
+            "title": "Catálogo",
+            "empty_text": "<p>Todos os produtos disponíveis hoje, com prazo, formato e acabamento descritos na página de cada um. As regras abaixo valem para tudo o que sai daqui.</p>",
+            "link_label": "Ver o catálogo →"
           }
         },
         "idx_fisicos": {
           "type": "policy_link",
           "settings": {
             "label": "Produtos físicos",
-            "is_current": true
+            "is_current": true,
+            "key": "fisicos",
+            "title": "Política de produtos físicos",
+            "note": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata. <a href=\"#tp-pol-digitais\">Ver política de produtos digitais →</a></p>"
           }
         },
         "idx_digitais": {
@@ -32,7 +39,11 @@
           "settings": {
             "label": "Produtos digitais",
             "link": "/policies/refund-policy",
-            "is_current": false
+            "is_current": false,
+            "key": "digitais",
+            "title": "Política de produtos digitais",
+            "empty_text": "<p>O texto próprio desta política ainda está sendo redigido. Até lá valem as regras gerais de reembolso da loja — lembrando que arquivos digitais são entregues na hora e, por isso, não têm devolução depois do download.</p>",
+            "link_label": "Ler a política de reembolso →"
           }
         },
         "idx_cancelamento": {
@@ -40,7 +51,11 @@
           "settings": {
             "label": "Cancelamento",
             "link": "/policies/refund-policy",
-            "is_current": false
+            "is_current": false,
+            "key": "cancelamento",
+            "title": "Cancelamento",
+            "empty_text": "<p>O texto próprio desta política ainda está sendo redigido. Cancelamentos antes do início da produção são combinados caso a caso pelo WhatsApp; depois da aprovação da arte valem as regras gerais de reembolso da loja.</p>",
+            "link_label": "Ler a política de reembolso →"
           }
         },
         "idx_trocas": {
@@ -48,14 +63,21 @@
           "settings": {
             "label": "Trocas",
             "link": "/policies/refund-policy",
-            "is_current": false
+            "is_current": false,
+            "key": "trocas",
+            "title": "Trocas",
+            "empty_text": "<p>O texto próprio desta política ainda está sendo redigido. Como cada peça é feita sob medida, trocas por arrependimento não se aplicam — problemas de impressão ou de transporte são resolvidos por reimpressão.</p>",
+            "link_label": "Ler a política de reembolso →"
           }
         },
         "idx_licenca": {
           "type": "policy_link",
           "settings": {
             "label": "Licença dos templates",
-            "is_current": false
+            "is_current": false,
+            "key": "licenca",
+            "title": "Licença dos templates",
+            "empty_text": "<p>O texto próprio desta política ainda está sendo redigido. Em resumo: os templates são de uso pessoal, para a sua própria celebração, e não podem ser revendidos nem redistribuídos. Dúvidas sobre um uso específico, é só chamar no WhatsApp.</p>"
           }
         },
         "idx_privacidade": {
@@ -63,7 +85,11 @@
           "settings": {
             "label": "Privacidade",
             "link": "/policies/privacy-policy",
-            "is_current": false
+            "is_current": false,
+            "key": "privacidade",
+            "title": "Privacidade",
+            "empty_text": "<p>A política de privacidade da loja está publicada por inteiro no documento oficial.</p>",
+            "link_label": "Ler a política de privacidade →"
           }
         },
         "idx_termos": {
@@ -71,14 +97,19 @@
           "settings": {
             "label": "Termos de uso",
             "link": "/policies/terms-of-service",
-            "is_current": false
+            "is_current": false,
+            "key": "termos",
+            "title": "Termos de uso",
+            "empty_text": "<p>Os termos de uso da loja estão publicados por inteiro no documento oficial.</p>",
+            "link_label": "Ler os termos de uso →"
           }
         },
         "clause_1": {
           "type": "clause",
           "settings": {
             "title": "1. Aprovação antes da produção",
-            "body": "<p>Nenhuma peça entra em produção antes da aprovação expressa da arte final e da confirmação do pagamento.</p><p>Confira nomes, datas, horários e endereços com atenção antes de aprovar a arte final. Depois da aprovação, correções geram novo pedido.</p>"
+            "body": "<p>Nenhuma peça entra em produção antes da aprovação expressa da arte final e da confirmação do pagamento.</p><p>Confira nomes, datas, horários e endereços com atenção antes de aprovar a arte final. Depois da aprovação, correções geram novo pedido.</p>",
+            "policy": "fisicos"
           }
         },
         "clause_2": {
@@ -86,42 +117,48 @@
           "settings": {
             "title": "2. Prazos",
             "body": "<p>O prazo começa após confirmação do pagamento e envio de todas as informações necessárias, e é contado em dias úteis por etapa:</p>",
-            "rows": "Primeira prévia | 5 a 10 dias úteis\nRetorno de alterações | até 2 dias úteis\nProdução | informada na página do produto\nTransporte | conforme destino e transportadora"
+            "rows": "Primeira prévia | 5 a 10 dias úteis\nRetorno de alterações | até 2 dias úteis\nProdução | informada na página do produto\nTransporte | conforme destino e transportadora",
+            "policy": "fisicos"
           }
         },
         "clause_3": {
           "type": "clause",
           "settings": {
             "title": "3. Alterações",
-            "body": "<p>Cada pedido inclui até 3 solicitações de correção dos dados inseridos — textos, nomes, datas e informações. Mudanças de layout, formato ou projeto gráfico não entram nesse limite e são orçadas à parte.</p>"
+            "body": "<p>Cada pedido inclui até 3 solicitações de correção dos dados inseridos — textos, nomes, datas e informações. Mudanças de layout, formato ou projeto gráfico não entram nesse limite e são orçadas à parte.</p>",
+            "policy": "fisicos"
           }
         },
         "clause_4": {
           "type": "clause",
           "settings": {
             "title": "4. Quantidades",
-            "body": "<p>As quantidades são fixas e informadas no nome do produto. Não há campo livre de quantidade: para outro volume, escolha a faixa correspondente ou fale com a Thainá.</p>"
+            "body": "<p>As quantidades são fixas e informadas no nome do produto. Não há campo livre de quantidade: para outro volume, escolha a faixa correspondente ou fale com a Thainá.</p>",
+            "policy": "fisicos"
           }
         },
         "clause_5": {
           "type": "clause",
           "settings": {
             "title": "5. Cor e acabamento",
-            "body": "<p>Telas e impressos podem apresentar pequena variação de cor. Papel, corte e acabamento seguem o descrito na página do produto; pequenas variações de corte são inerentes à produção artesanal em pequeno lote.</p>"
+            "body": "<p>Telas e impressos podem apresentar pequena variação de cor. Papel, corte e acabamento seguem o descrito na página do produto; pequenas variações de corte são inerentes à produção artesanal em pequeno lote.</p>",
+            "policy": "fisicos"
           }
         },
         "clause_6": {
           "type": "clause",
           "settings": {
             "title": "6. Frete e entrega",
-            "body": "<p>O frete não está incluído no preço e é combinado no atendimento pelo WhatsApp, junto com a forma de pagamento. O código de rastreio é enviado assim que a encomenda é postada.</p>"
+            "body": "<p>O frete não está incluído no preço e é combinado no atendimento pelo WhatsApp, junto com a forma de pagamento. O código de rastreio é enviado assim que a encomenda é postada.</p>",
+            "policy": "fisicos"
           }
         },
         "clause_7": {
           "type": "clause",
           "settings": {
             "title": "7. Pagamento",
-            "body": "<p>PIX ou cartão em até 12x, combinado no atendimento. Pedidos sob medida podem exigir entrada — o percentual é informado na proposta antes do aceite.</p>"
+            "body": "<p>PIX ou cartão em até 12x, combinado no atendimento. Pedidos sob medida podem exigir entrada — o percentual é informado na proposta antes do aceite.</p>",
+            "policy": "fisicos"
           }
         }
       },
@@ -146,10 +183,7 @@
       "settings": {
         "announcement_override": "Regras válidas para pedidos feitos a partir de 1º de setembro de 2026",
         "index_label": "Políticas",
-        "breadcrumb_tail": "Políticas / Produtos físicos",
-        "heading": "Política de produtos físicos",
         "updated_at": "Atualizada em 26 de agosto de 2026",
-        "footer_note": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata. <a href=\"/pages/politicas\">Ver política de produtos digitais →</a></p>",
         "help_title": "Ficou alguma dúvida?",
         "help_text": "<p>A Thainá responde pelo WhatsApp em até 2 dias úteis.</p>",
         "help_link_label": "Falar no WhatsApp →"

@@ -11,8 +11,8 @@
   assign policy_links = section.blocks | where: 'type', 'policy_link'
   assign clauses = section.blocks | where: 'type', 'clause'
 
-  # Um único item do índice fica marcado como atual: prioriza a marcação
-  # manual do lojista; se ninguém marcar, cai para a rota da página atual.
+  # Uma política começa aberta: prioriza a marcação do lojista e, se ninguém
+  # marcar, abre a primeira do índice.
   assign current_index = -1
   for block in policy_links
     if current_index == -1 and block.settings.is_current
@@ -20,30 +20,40 @@
     endif
   endfor
   if current_index == -1
-    for block in policy_links
-      assign link_path = block.settings.link | split: '?' | first
-      if current_index == -1 and link_path != blank and link_path == request.path
-        assign current_index = forloop.index0
-      endif
-    endfor
+    assign current_index = 0
   endif
 -%}
 
-<div class="tp-politicas">
+{%- comment -%}
+  As chaves viram o id de cada painel e o hash da URL. Vivem numa string
+  separada por vírgula porque o Liquid não monta array dentro de um for.
+{%- endcomment -%}
+{%- capture keys_csv -%}
+  {%- for block in policy_links -%}
+    {%- if block.settings.key != blank -%}{{ block.settings.key | handle }}{%- else -%}politica-{{ forloop.index }}{%- endif -%}
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign keys = keys_csv | strip | split: ',' -%}
+{%- assign default_key = keys[current_index] -%}
+
+<div class="tp-politicas" data-tp-politicas>
   <div class="tp-politicas__inner">
     <aside class="tp-politicas__aside">
       {%- if policy_links.size > 0 -%}
         <div class="tp-politicas__aside-label">{{ section.settings.index_label }}</div>
         <nav class="tp-politicas__index">
           {%- for block in policy_links -%}
+            {%- assign k = keys[forloop.index0] -%}
             {%- assign is_current = false -%}
             {%- if forloop.index0 == current_index -%}
               {%- assign is_current = true -%}
             {%- endif -%}
             <a
-              {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
+              href="#tp-pol-{{ k }}"
               class="tp-politicas__index-link{% if is_current %} tp-politicas__index-link--current{% endif %}"
-              {% if is_current %}aria-current="page"{% endif %}
+              data-tp-politica-tab="{{ k }}"
+              {% if is_current %}aria-current="true"{% endif %}
               {{ block.shopify_attributes }}
             >
               {{- block.settings.label -}}
@@ -67,51 +77,94 @@
       {%- endif -%}
     </aside>
 
-    <div class="tp-politicas__content">
-      <div class="tp-politicas__breadcrumb">
-        <a href="{{ routes.root_url }}">Início</a>
-        <span aria-hidden="true"> / </span>
-        <span>{{ section.settings.breadcrumb_tail }}</span>
-      </div>
+    <div class="tp-politicas__content" data-tp-politicas-content>
+      {%- for block in policy_links -%}
+        {%- assign k = keys[forloop.index0] -%}
+        {%- assign is_current = false -%}
+        {%- if forloop.index0 == current_index -%}
+          {%- assign is_current = true -%}
+        {%- endif -%}
 
-      <h1 class="tp-politicas__title">{{ section.settings.heading }}</h1>
-      {%- if section.settings.updated_at != blank -%}
-        <div class="tp-politicas__updated">{{ section.settings.updated_at }}</div>
-      {%- endif -%}
+        {%- comment -%} Quantas cláusulas pertencem a esta política. {%- endcomment -%}
+        {%- assign group_size = 0 -%}
+        {%- for c in clauses -%}
+          {%- assign cp = c.settings.policy | handle | default: default_key -%}
+          {%- if cp == k -%}
+            {%- assign group_size = group_size | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
 
-      {%- for block in clauses -%}
-        <div class="tp-politicas__clause{% if forloop.last %} tp-politicas__clause--last{% endif %}" {{ block.shopify_attributes }}>
-          <div class="tp-politicas__clause-title">{{ block.settings.title }}</div>
+        <article
+          id="tp-pol-{{ k }}"
+          class="tp-politicas__panel{% if is_current %} is-active{% endif %}"
+          data-tp-politica-panel="{{ k }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="tp-politicas__breadcrumb">
+            <a href="{{ routes.root_url }}">Início</a>
+            <span aria-hidden="true"> / </span>
+            <span>{{ section.settings.index_label }} / {{ block.settings.label }}</span>
+          </div>
 
-          {%- if block.settings.body != blank -%}
-            <div class="tp-politicas__clause-body">{{ block.settings.body }}</div>
+          <h1 class="tp-politicas__title">{{ block.settings.title | default: block.settings.label }}</h1>
+          {%- assign updated = block.settings.updated_at -%}
+          {%- if updated == blank and group_size > 0 -%}
+            {%- assign updated = section.settings.updated_at -%}
+          {%- endif -%}
+          {%- if updated != blank -%}
+            <div class="tp-politicas__updated">{{ updated }}</div>
           {%- endif -%}
 
-          {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
-          {%- assign has_rows = false -%}
-          {%- for raw_row in rows -%}
-            {%- if raw_row != blank -%}
-              {%- assign has_rows = true -%}
-            {%- endif -%}
-          {%- endfor -%}
-          {%- if has_rows -%}
-            <div class="tp-politicas__rows">
-              {%- for raw_row in rows -%}
-                {%- assign row = raw_row | strip -%}
-                {%- if row != blank -%}
-                  {%- assign label = row | split: '|' | first | strip -%}
-                  {%- assign value = row | split: '|' | last | strip -%}
-                  <div class="tp-politicas__row"><span>{{ label }}</span><span>{{ value }}</span></div>
+          {%- if group_size > 0 -%}
+            <div class="tp-politicas__clauses">
+              {%- for c in clauses -%}
+                {%- assign cp = c.settings.policy | handle | default: default_key -%}
+                {%- if cp == k -%}
+                  <div class="tp-politicas__clause" {{ c.shopify_attributes }}>
+                    <div class="tp-politicas__clause-title">{{ c.settings.title }}</div>
+
+                    {%- if c.settings.body != blank -%}
+                      <div class="tp-politicas__clause-body">{{ c.settings.body }}</div>
+                    {%- endif -%}
+
+                    {%- assign rows = c.settings.rows | newline_to_br | split: '<br />' -%}
+                    {%- assign has_rows = false -%}
+                    {%- for raw_row in rows -%}
+                      {%- if raw_row != blank -%}
+                        {%- assign has_rows = true -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if has_rows -%}
+                      <div class="tp-politicas__rows">
+                        {%- for raw_row in rows -%}
+                          {%- assign row = raw_row | strip -%}
+                          {%- if row != blank -%}
+                            {%- assign label = row | split: '|' | first | strip -%}
+                            {%- assign value = row | split: '|' | last | strip -%}
+                            <div class="tp-politicas__row"><span>{{ label }}</span><span>{{ value }}</span></div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
                 {%- endif -%}
               {%- endfor -%}
             </div>
+          {%- elsif block.settings.empty_text != blank -%}
+            <div class="tp-politicas__vazio">{{ block.settings.empty_text }}</div>
           {%- endif -%}
-        </div>
-      {%- endfor -%}
 
-      {%- if section.settings.footer_note != blank -%}
-        <div class="tp-politicas__note">{{ section.settings.footer_note }}</div>
-      {%- endif -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="tp-btn tp-btn--outline tp-politicas__panel-link">
+              {{- block.settings.link_label | default: 'Ler o documento completo →' -}}
+            </a>
+          {%- endif -%}
+
+          {%- if block.settings.note != blank -%}
+            <div class="tp-politicas__note">{{ block.settings.note }}</div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
     </div>
   </div>
 </div>
@@ -127,6 +180,8 @@
     })();
   </script>
 {%- endif -%}
+
+<script src="{{ 'tp-politicas.js' | asset_url }}" defer></script>
 
 {% stylesheet %}
   .tp-politicas {
@@ -258,7 +313,7 @@
     padding-block: 24px;
   }
 
-  .tp-politicas__clause--last {
+  .tp-politicas__clauses .tp-politicas__clause:last-child {
     border-bottom: 1px solid var(--tp-line);
   }
 
@@ -380,6 +435,48 @@
       text-align: left;
     }
   }
+  /* Uma política por vez. Sem JS todas ficam empilhadas — nada some do ar e
+     o rastreador continua vendo o texto inteiro; assim que o script assume,
+     ele marca .tp-js e passa a mostrar só a selecionada. */
+  .tp-politicas.tp-js .tp-politicas__panel {
+    display: none;
+  }
+
+  .tp-politicas.tp-js .tp-politicas__panel.is-active {
+    display: block;
+  }
+
+  .tp-politicas__panel + .tp-politicas__panel {
+    margin-top: 48px;
+  }
+
+  .tp-politicas.tp-js .tp-politicas__panel + .tp-politicas__panel {
+    margin-top: 0;
+  }
+
+  .tp-politicas__vazio {
+    border-top: 1px solid var(--tp-line);
+    border-bottom: 1px solid var(--tp-line);
+    padding-block: 24px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--tp-body);
+  }
+
+  .tp-politicas .tp-politicas__panel-link {
+    display: inline-flex;
+    margin-top: 24px;
+    height: 46px;
+    font-size: 14px;
+    border-color: var(--tp-line-strong);
+    color: var(--tp-ink);
+  }
+
+  .tp-politicas .tp-politicas__panel-link:hover {
+    border-color: var(--tp-wine);
+    color: var(--tp-wine);
+  }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -400,31 +497,14 @@
     },
     {
       "type": "header",
-      "content": "Conteúdo"
-    },
-    {
-      "type": "text",
-      "id": "breadcrumb_tail",
-      "label": "Breadcrumb (depois de \"Início /\")",
-      "default": "Políticas / Produtos físicos"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Título",
-      "default": "Política de produtos físicos"
+      "content": "Conteúdo",
+      "info": "Cada item do índice é uma política, e o clique troca só o painel da direita — não muda de página. As cláusulas são ligadas a uma política pela chave."
     },
     {
       "type": "text",
       "id": "updated_at",
-      "label": "Data de atualização",
+      "label": "Data de atualização (padrão de todas)",
       "default": "Atualizada em 26 de agosto de 2026"
-    },
-    {
-      "type": "richtext",
-      "id": "footer_note",
-      "label": "Nota final (caixa destacada)",
-      "default": "<p>Produtos digitais têm política própria, com regras de licença e de entrega imediata. <a href=\"#\">Ver política de produtos digitais →</a></p>"
     },
     {
       "type": "header",
@@ -462,18 +542,52 @@
         {
           "type": "text",
           "id": "label",
-          "label": "Texto",
+          "label": "Texto do índice",
           "default": "Catálogo"
+        },
+        {
+          "type": "text",
+          "id": "key",
+          "label": "Chave",
+          "info": "Só letras minúsculas e hífen (ex.: produtos-fisicos). Liga as cláusulas a esta política e vira o endereço #tp-pol-chave."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título do painel",
+          "info": "Se ficar vazio, repete o texto do índice."
+        },
+        {
+          "type": "text",
+          "id": "updated_at",
+          "label": "Data de atualização",
+          "info": "Vazio herda a data padrão da seção — mas só nas políticas que já têm cláusulas escritas."
+        },
+        {
+          "type": "richtext",
+          "id": "empty_text",
+          "label": "Texto quando ainda não há cláusulas"
+        },
+        {
+          "type": "richtext",
+          "id": "note",
+          "label": "Nota final (caixa destacada)"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Documento completo (botão no fim do painel)"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Texto do botão",
+          "default": "Ler o documento completo →"
         },
         {
           "type": "checkbox",
           "id": "is_current",
-          "label": "Esta é a página atual",
+          "label": "Começa aberta",
           "default": false
         }
       ]
@@ -497,6 +611,12 @@
           "type": "textarea",
           "id": "rows",
           "label": "Lista rótulo/valor (uma por linha: Rótulo | Valor)"
+        },
+        {
+          "type": "text",
+          "id": "policy",
+          "label": "Chave da política",
+          "info": "A mesma chave do item do índice. Vazio cai na política que começa aberta."
         }
       ]
     }
