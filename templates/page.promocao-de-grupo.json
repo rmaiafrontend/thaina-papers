@@ -112,6 +112,7 @@
         "announcement_override": "Formou junto? Fechou junto! · Até 20% para grupos de formandas",
         "breadcrumb_home": "Início",
         "breadcrumb_parent": "Formaturas",
+        "breadcrumb_parent_link": "/collections/formaturas",
         "breadcrumb_current": "Promoção de grupo",
         "heading": "Formou junto? Fechou junto!",
         "intro": "<p>Quanto mais formandas fecham juntas, menor o valor do pacote FORM para cada uma. O desconto é aplicado no atendimento, sobre o pacote escolhido.</p>",

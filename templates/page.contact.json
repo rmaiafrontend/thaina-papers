@@ -39,13 +39,15 @@
         "social_instagram": {
           "type": "social",
           "settings": {
-            "label": "Instagram"
+            "label": "Instagram",
+            "link": "https://instagram.com/thainapapers"
           }
         },
         "social_pinterest": {
           "type": "social",
           "settings": {
-            "label": "Pinterest"
+            "label": "Pinterest",
+            "link": "https://pinterest.com/thainapapers"
           }
         },
         "card_medidas": {
@@ -60,7 +62,8 @@
           "type": "link_card",
           "settings": {
             "title": "Prazos e alterações",
-            "description": "Como funcionam correções e aprovação"
+            "description": "Como funcionam correções e aprovação",
+            "link": "/#perguntas-frequentes"
           }
         },
         "card_politicas": {

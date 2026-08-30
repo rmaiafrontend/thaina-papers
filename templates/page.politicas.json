@@ -16,6 +16,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Catálogo",
+            "link": "/collections/all",
             "is_current": false
           }
         },
@@ -30,6 +31,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Produtos digitais",
+            "link": "/policies/refund-policy",
             "is_current": false
           }
         },
@@ -37,6 +39,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Cancelamento",
+            "link": "/policies/refund-policy",
             "is_current": false
           }
         },
@@ -44,6 +47,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Trocas",
+            "link": "/policies/refund-policy",
             "is_current": false
           }
         },
@@ -58,6 +62,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Privacidade",
+            "link": "/policies/privacy-policy",
             "is_current": false
           }
         },
@@ -65,6 +70,7 @@
           "type": "policy_link",
           "settings": {
             "label": "Termos de uso",
+            "link": "/policies/terms-of-service",
             "is_current": false
           }
         },

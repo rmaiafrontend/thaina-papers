@@ -1,4 +1,13 @@
 {%- liquid
+  # O link de ajuda é contato: sem destino próprio cai no WhatsApp global.
+  assign _whats = settings.tp_whatsapp_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign _whats_url = ''
+  if _whats != blank
+    assign _whats_url = 'https://wa.me/' | append: _whats
+  endif
+-%}
+
+{%- liquid
   assign policy_links = section.blocks | where: 'type', 'policy_link'
   assign clauses = section.blocks | where: 'type', 'clause'
 
@@ -50,7 +59,7 @@
             <div class="tp-politicas__help-text">{{ section.settings.help_text }}</div>
           {%- endif -%}
           {%- if section.settings.help_link_label != blank -%}
-            <a {% if section.settings.help_link != blank %}href="{{ section.settings.help_link }}"{% endif %} class="tp-politicas__help-link">
+            <a {% assign _ajuda = section.settings.help_link | default: _whats_url %}{% if _ajuda != blank %}href="{{ _ajuda }}"{% endif %} class="tp-politicas__help-link">
               {{- section.settings.help_link_label -}}
             </a>
           {%- endif -%}
