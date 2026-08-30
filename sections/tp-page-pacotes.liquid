@@ -450,9 +450,18 @@
     }
   }
 
+  /* Embutida noutra tela ela encosta na seção anterior — no hub de
+     Casamentos, na faixa escura do CTA. O respiro que na página própria vinha
+     do hero precisa vir daqui. */
   .tp-pacotes__embed-head {
-    padding-top: 8px;
+    padding-top: 56px;
     padding-bottom: 0;
+  }
+
+  @media (max-width: 749px) {
+    .tp-pacotes__embed-head {
+      padding-top: 32px;
+    }
   }
 
   .tp-pacotes__embed-title {
