@@ -338,3 +338,90 @@ body .tp-section > * {
   cursor: default;
   pointer-events: none;
 }
+
+/* ---------- Páginas de política da Shopify ----------
+   Elas não passam por nenhuma seção nossa: a Shopify renderiza
+   .shopify-policy__* com o CSS do tema, que herda as fontes configuradas
+   no Dwell — o corpo vinha em Cedarville Cursive, uma manuscrita, sobre o
+   bege dele. Como estão linkadas no rodapé de toda página, entram no
+   sistema aqui. */
+body:has(.shopify-policy__container) {
+  background: var(--tp-cream);
+}
+
+/* A folha da própria Shopify define 65ch e carrega depois da nossa, então a
+   regra precisa de um nível a mais para valer. A medida fica em ch: texto
+   legal se lê por número de caracteres, não por pixels. */
+body .shopify-policy__container {
+  max-width: 68ch;
+  margin-inline: auto;
+  padding: 56px 20px 80px;
+  box-sizing: border-box;
+  color: var(--tp-ink);
+}
+
+.shopify-policy__title {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.shopify-policy__title h1 {
+  font-family: var(--tp-display);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--tp-ink);
+}
+
+.shopify-policy__body,
+.shopify-policy__body .rte {
+  font-family: var(--tp-text);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--tp-body);
+  text-align: left;
+}
+
+.shopify-policy__body p {
+  margin: 0 0 18px;
+}
+
+.shopify-policy__body h2,
+.shopify-policy__body h3 {
+  font-family: var(--tp-display);
+  font-weight: 400;
+  color: var(--tp-ink);
+  line-height: 1.25;
+  margin: 34px 0 12px;
+}
+
+.shopify-policy__body h2 { font-size: 24px; }
+.shopify-policy__body h3 { font-size: 19px; }
+
+.shopify-policy__body a {
+  color: var(--tp-wine);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.shopify-policy__body ul,
+.shopify-policy__body ol {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+
+.shopify-policy__body li {
+  margin-bottom: 7px;
+}
+
+@media (max-width: 749px) {
+  .shopify-policy__container {
+    padding-block: 32px 48px;
+  }
+
+  .shopify-policy__title h1 {
+    font-size: 30px;
+  }
+}
