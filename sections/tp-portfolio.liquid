@@ -24,9 +24,23 @@
         {{- section.settings.link_label -}}
       </a>
     {%- endif -%}
+
+    {%- comment -%}
+      As setas ficam no cabeçalho, não sobre as fotos: sobrepostas elas
+      tapariam justamente o trabalho que a seção existe para mostrar. Só
+      aparecem no desktop — no celular o dedo já arrasta.
+    {%- endcomment -%}
+    <div class="tp-portfolio__setas" data-tp-setas hidden>
+      <button type="button" class="tp-portfolio__seta" data-tp-seta="-1" aria-label="Ver trabalhos anteriores">
+        <span aria-hidden="true">&#8592;</span>
+      </button>
+      <button type="button" class="tp-portfolio__seta" data-tp-seta="1" aria-label="Ver mais trabalhos">
+        <span aria-hidden="true">&#8594;</span>
+      </button>
+    </div>
   </div>
 
-  <div class="tp-portfolio__grid">
+  <div class="tp-portfolio__grid" data-tp-faixa>
     {%- for block in blocks -%}
       {%- assign position = forloop.index -%}
       <div class="tp-portfolio__cell tp-portfolio__cell--{{ position }}" {{ block.shopify_attributes }}>
@@ -46,6 +60,8 @@
       </div>
     {%- endfor -%}
   </div>
+
+  <script src="{{ 'tp-portfolio.js' | asset_url }}" defer></script>
 </section>
 
 {% stylesheet %}
@@ -72,10 +88,15 @@
     align-items: start;
     max-width: none;
     margin-inline: 0;
+    /* A primeira foto começa onde o título começa. O gutter sozinho não
+       resolve: acima de 1432px o container para de crescer e fica centrado,
+       então a distância até a borda passa a ser maior que o gutter. O max()
+       pega a maior das duas e alinha em qualquer largura. */
+    padding-inline: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--tp-gutter);
+    scroll-padding-inline: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
     scrollbar-width: none;
   }
 
@@ -95,6 +116,45 @@
     aspect-ratio: 2 / 3;
   }
 
+  /* O cabeçalho distribui os filhos com space-between; com as setas ele
+     passou a ter três e o link do Instagram foi parar no meio. A margem
+     automática empurra link e setas para a direita, juntos. */
+  .tp-portfolio .tp-section-head .tp-link-caps {
+    margin-inline-start: auto;
+  }
+
+  .tp-portfolio__setas {
+    display: flex;
+    gap: 8px;
+    flex: none;
+    align-self: center;
+  }
+
+  .tp-portfolio .tp-portfolio__seta {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--tp-line-strong);
+    background: transparent;
+    color: var(--tp-ink);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .tp-portfolio .tp-portfolio__seta:hover:not(:disabled) {
+    border-color: var(--tp-wine);
+    color: var(--tp-wine);
+  }
+
+  .tp-portfolio .tp-portfolio__seta:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
   .tp-portfolio__caption {
     font-size: 12px;
     line-height: 1.45;
@@ -112,6 +172,10 @@
     .tp-portfolio .tp-portfolio__grid {
       grid-auto-columns: 82%;
       gap: 12px;
+    }
+
+    .tp-portfolio__setas {
+      display: none;
     }
   }
 
