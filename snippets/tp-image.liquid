@@ -33,12 +33,35 @@
       | image_tag: loading: img_loading, sizes: img_sizes, widths: img_widths, alt: alt
     }}
   {%- elsif asset != blank -%}
+    {%- liquid
+      # A imagem do tema também merece srcset: sem ele o celular baixava o
+      # arquivo inteiro para um espaço de um terço da tela. Montado com append
+      # em vez de capture, senão a quebra de linha do arquivo entra na string.
+      assign asset_srcset = ''
+      assign larguras = img_widths | split: ','
+      for l in larguras
+        assign larg = l | strip
+        assign medida = larg | append: 'x'
+        assign url = asset | asset_img_url: medida
+        assign par = url | append: ' ' | append: larg | append: 'w'
+        if asset_srcset == blank
+          assign asset_srcset = par
+        else
+          assign asset_srcset = asset_srcset | append: ', ' | append: par
+        endif
+      endfor
+    -%}
+    {%- comment -%}
+      Sem width/height fixos: o valor de antes era 1400x1400, quadrado, e
+      nenhuma foto do site é quadrada — a caixa reservada saía na proporção
+      errada. Quem define o formato é o .tp-media de cada seção.
+    {%- endcomment -%}
     <img
       src="{{ asset | asset_url }}"
+      srcset="{{ asset_srcset }}"
+      sizes="{{ img_sizes }}"
       alt="{{ alt | escape }}"
       loading="{{ img_loading }}"
-      width="1400"
-      height="1400"
     >
   {%- else -%}
     <div class="tp-media__placeholder">{{ alt }}</div>
