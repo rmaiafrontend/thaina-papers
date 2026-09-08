@@ -82,9 +82,44 @@
 </section>
 
 {% stylesheet %}
-  .tp-passarela {
+  /* O azul chapado é de valor médio: o texto escuro em cima dele fica sem
+     punch. Em vez de escurecer a borda para criar contraste — o que derrubaria
+     a assinatura para 4.01 e reprovaria no AA —, o centro CLAREIA. Assim
+     nenhum ponto fica pior que o azul de antes e onde o texto está fica bem
+     melhor: título de 6.95 para 11.22, assinatura de 4.60 para 7.42.
+
+     Dois brilhos deslocados, um quente e um rosado, tiram o ar de fundo
+     chapado. Ficam nos cantos, longe do texto, então não interferem na conta
+     de contraste.
+
+     Escopado com duas classes para vencer o background de .tp-section--blue
+     independentemente da ordem em que as folhas carregam. */
+  .tp-section.tp-passarela {
+    position: relative;
     padding-block: 64px 0;
     overflow: hidden;
+    background:
+      radial-gradient(122% 78% at 50% 32%, #dfe8f2 0%, rgba(223, 232, 242, 0) 60%),
+      radial-gradient(64% 58% at 86% 6%, rgba(255, 237, 173, 0.32) 0%, rgba(255, 237, 173, 0) 58%),
+      radial-gradient(58% 54% at 10% 88%, rgba(214, 168, 184, 0.26) 0%, rgba(214, 168, 184, 0) 58%),
+      var(--tp-blue);
+  }
+
+  /* Grão por cima de tudo. Segura o degradê, que sem textura fica com
+     listras em tela grande, e é a única textura que cabe numa papelaria. */
+  .tp-passarela::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.055;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  .tp-passarela > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* ---------- texto centralizado ---------- */
