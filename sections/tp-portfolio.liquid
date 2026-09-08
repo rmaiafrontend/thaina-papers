@@ -65,8 +65,17 @@
 </section>
 
 {% stylesheet %}
+  /* Os dois valores mudaram quando a seção subiu para antes do "Como
+     funciona". Antes ela vinha depois dele e o zero no topo era certo: a
+     seção anterior é que dava o espaço.
+
+     Agora ela nasce logo abaixo da faixa azul dos produtos, e a página tem
+     dois ritmos: onde o fundo muda de cor o vão é de 152 a 170px, entre duas
+     seções creme é de 72 a 92px. Com 0 no topo o título encostava no azul;
+     com 84 embaixo sobrava o dobro do normal até o "Como funciona", que é
+     creme como esta. 72 e 8 devolvem os dois ao ritmo. */
   .tp-portfolio {
-    padding-block: 0 84px;
+    padding-block: 72px 8px;
   }
 
   /* Carrossel em qualquer tela, sangrando de borda a borda.
