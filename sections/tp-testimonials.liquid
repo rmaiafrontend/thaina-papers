@@ -25,7 +25,7 @@
             asset: block.settings.image_asset,
             alt: block.settings.author,
             class: 'tp-quotes__print',
-            ratio: '4/3',
+            ratio: '2/1',
             width: 900,
             sizes: '(max-width: 899px) 84vw, 24vw',
             widths: '400,700,900'
@@ -129,8 +129,10 @@
 
   /* O print é a prova; o texto abaixo é o que se lê. Um não substitui o
      outro — a imagem dá crédito, o texto dá legibilidade e acessibilidade. */
+  /* 2:1 porque é a forma da bolha de conversa — larga e baixa. Numa moldura
+     mais alta sobrava fundo em volta e o print parecia colado, não enquadrado. */
   .tp-quotes__print {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 2 / 1;
     margin-bottom: 18px;
   }
 
@@ -149,7 +151,7 @@
 
   .tp-quotes__text {
     font-family: var(--tp-serif);
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.5;
     font-weight: 500;
     margin: 0 0 14px;
@@ -172,7 +174,7 @@
     }
 
     .tp-quotes__text {
-      font-size: 18px;
+      font-size: 15px;
     }
 
     /* No celular o dedo arrasta; seta só ocuparia espaço. */
