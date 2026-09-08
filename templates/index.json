@@ -11,6 +11,9 @@
   "sections": {
     "tp_hero": {
       "type": "tp-hero",
+      "custom_css": [
+        ".{background-color: #0000;}"
+      ],
       "settings": {
         "script_text": "feito à mão",
         "heading": "Não é só papel",
@@ -21,10 +24,10 @@
         "button_1_link": "shopify://collections/all",
         "button_2_label": "Sob medida",
         "button_2_link": "/pages/tailor-made",
-        "image_1_alt": "Suíte de convites sobre linho",
-        "image_2_alt": "Menu ao lado do prato",
         "image_1_asset": "tp-tablescape-georgia.jpg",
-        "image_2_asset": "tp-invite-vellum-wax-seal.jpg"
+        "image_1_alt": "Suíte de convites sobre linho",
+        "image_2_asset": "tp-invite-vellum-wax-seal.jpg",
+        "image_2_alt": "Menu ao lado do prato"
       }
     },
     "tp_occasions": {
@@ -33,31 +36,31 @@
         "casamentos": {
           "type": "occasion",
           "settings": {
+            "image_asset": "tp-tablescape-balmoral.jpg",
             "title": "Casamentos",
             "description": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
             "link_label": "Ver casamentos",
-            "link": "/collections/casamentos",
-            "image_asset": "tp-tablescape-balmoral.jpg"
+            "link": "/collections/casamentos"
           }
         },
         "formaturas": {
           "type": "occasion",
           "settings": {
+            "image_asset": "tp-savethedate-champagne.jpg",
             "title": "Formaturas",
             "description": "Pacotes FORM, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
             "link_label": "Ver formaturas",
-            "link": "/collections/formaturas",
-            "image_asset": "tp-savethedate-champagne.jpg"
+            "link": "/collections/formaturas"
           }
         },
         "consultorios": {
           "type": "occasion",
           "settings": {
+            "image_asset": "tp-tablenumber-narrative.jpg",
             "title": "Consultórios",
             "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
             "link_label": "Ver consultórios",
-            "link": "/collections/consultorios",
-            "image_asset": "tp-tablenumber-narrative.jpg"
+            "link": "/collections/consultorios"
           }
         }
       },
@@ -74,49 +77,49 @@
         "convites": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-invite-guestlist-blue.jpg",
             "title": "Convites",
-            "link": "/collections/convites",
-            "image_asset": "tp-invite-guestlist-blue.jpg"
+            "link": "/collections/convites"
           }
         },
         "savethedate": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-savethedate-lace.jpg",
             "title": "Save the date",
-            "link": "/search?q=save+the+date",
-            "image_asset": "tp-savethedate-lace.jpg"
+            "link": "/search?q=save+the+date"
           }
         },
         "menus": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-menu-scallop-orange.jpg",
             "title": "Menus",
-            "link": "/search?q=menu",
-            "image_asset": "tp-menu-scallop-orange.jpg"
+            "link": "/search?q=menu"
           }
         },
         "adesivos": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-favor-tag-amphora.jpg",
             "title": "Adesivos",
-            "link": "/search?q=adesivo",
-            "image_asset": "tp-favor-tag-amphora.jpg"
+            "link": "/search?q=adesivo"
           }
         },
         "sinalizacao": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-tablenumber-heritage.jpg",
             "title": "Sinalização",
-            "link": "/search?q=sinaliza",
-            "image_asset": "tp-tablenumber-heritage.jpg"
+            "link": "/search?q=sinaliza"
           }
         },
         "templates": {
           "type": "category",
           "settings": {
+            "image_asset": "tp-savethedate-swan.jpg",
             "title": "Templates Canva",
-            "link": "/collections/templates-canva",
-            "image_asset": "tp-savethedate-swan.jpg"
+            "link": "/collections/templates-canva"
           }
         }
       },
@@ -178,6 +181,82 @@
         "link": "shopify://collections/all"
       }
     },
+    "tp_portfolio": {
+      "type": "tp-portfolio",
+      "blocks": {
+        "w1": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa.jpg",
+            "caption": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado"
+          }
+        },
+        "w2": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-convite.jpg",
+            "caption": "Convite de casamento de Ana Carla e Thiago, em caixa com laço"
+          }
+        },
+        "w3": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-monograma.jpg",
+            "caption": "Monograma recortado em dourado sobre o bolo, em verde e folhagem"
+          }
+        },
+        "w4": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-bolo.jpg",
+            "caption": "Bolo de formatura em rosa, com monograma no centro"
+          }
+        },
+        "w5": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-batizado.jpg",
+            "caption": "Prato de porcelana pintado à mão para o batizado de Bernardo"
+          }
+        },
+        "w6": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa-posta.jpg",
+            "caption": "Guardanapo com monograma bordado sobre sousplat rendado"
+          }
+        },
+        "w7": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-ecobag.jpg",
+            "caption": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior"
+          }
+        },
+        "w8": {
+          "type": "work",
+          "settings": {
+            "image_asset": "tp-trabalho-adesivos.jpg",
+            "caption": "Cartela de adesivos temáticos impressa para a festa"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5",
+        "w6",
+        "w7",
+        "w8"
+      ],
+      "settings": {
+        "heading": "Trabalhos reais",
+        "link_label": "Instagram",
+        "link": "https://instagram.com/thainapapers"
+      }
+    },
     "tp_how": {
       "type": "tp-how-it-works",
       "blocks": {
@@ -213,115 +292,39 @@
         "footnote": "O prazo começa após confirmação do pagamento e envio de todas as informações necessárias."
       }
     },
-    "tp_portfolio": {
-      "type": "tp-portfolio",
-      "blocks": {
-        "w1": {
-          "type": "work",
-          "settings": {
-            "caption": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado",
-            "image_asset": "tp-trabalho-mesa.jpg"
-          }
-        },
-        "w2": {
-          "type": "work",
-          "settings": {
-            "caption": "Convite de casamento de Ana Carla e Thiago, em caixa com laço",
-            "image_asset": "tp-trabalho-convite.jpg"
-          }
-        },
-        "w3": {
-          "type": "work",
-          "settings": {
-            "caption": "Monograma recortado em dourado sobre o bolo, em verde e folhagem",
-            "image_asset": "tp-trabalho-monograma.jpg"
-          }
-        },
-        "w4": {
-          "type": "work",
-          "settings": {
-            "caption": "Bolo de formatura em rosa, com monograma no centro",
-            "image_asset": "tp-trabalho-bolo.jpg"
-          }
-        },
-        "w5": {
-          "type": "work",
-          "settings": {
-            "caption": "Prato de porcelana pintado à mão para o batizado de Bernardo",
-            "image_asset": "tp-trabalho-batizado.jpg"
-          }
-        },
-        "w6": {
-          "type": "work",
-          "settings": {
-            "caption": "Guardanapo com monograma bordado sobre sousplat rendado",
-            "image_asset": "tp-trabalho-mesa-posta.jpg"
-          }
-        },
-        "w7": {
-          "type": "work",
-          "settings": {
-            "caption": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior",
-            "image_asset": "tp-trabalho-ecobag.jpg"
-          }
-        },
-        "w8": {
-          "type": "work",
-          "settings": {
-            "caption": "Cartela de adesivos temáticos impressa para a festa",
-            "image_asset": "tp-trabalho-adesivos.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "w1",
-        "w2",
-        "w3",
-        "w4",
-        "w5",
-        "w6",
-        "w7",
-        "w8"
-      ],
-      "settings": {
-        "heading": "Trabalhos reais",
-        "link_label": "Instagram",
-        "link": "https://instagram.com/thainapapers"
-      }
-    },
     "tp_quotes": {
       "type": "tp-testimonials",
       "blocks": {
         "q1": {
           "type": "quote",
           "settings": {
+            "image_asset": "tp-depo-ana.jpg",
             "quote": "Tá muito perfeito. Não consigo nem parar de olhar de tão lindo que ficou.",
-            "author": "Ana Beatriz e Jordan Brunno · Casamento",
-            "image_asset": "tp-depo-ana.jpg"
+            "author": "Ana Beatriz e Jordan Brunno · Casamento"
           }
         },
         "q2": {
           "type": "quote",
           "settings": {
+            "image_asset": "tp-depo-livia.jpg",
             "quote": "Só pra avisar que tudo foi um sucesso. As tatuagens, meu Deus — o povo dizimou muito rápido. Se eu soubesse que eles iam amar tanto, tinha pedido mais.",
-            "author": "Lívia Menezes",
-            "image_asset": "tp-depo-livia.jpg"
+            "author": "Lívia Menezes"
           }
         },
         "q3": {
           "type": "quote",
           "settings": {
+            "image_asset": "tp-depo-leticia.jpg",
             "quote": "As tatuagens foram um sucesso, todos amaram muito. Ficou até hoje de manhã intacta.",
-            "author": "Letícia Guedes",
-            "image_asset": "tp-depo-leticia.jpg"
+            "author": "Letícia Guedes"
           }
         },
         "q4": {
           "type": "quote",
           "settings": {
+            "image_asset": "tp-depo-lays.jpg",
             "quote": "Agradeço demais a sua atenção e principalmente a paciência. Desejo todo sucesso possível para você.",
-            "author": "Lays Karolinny",
-            "image_asset": "tp-depo-lays.jpg"
+            "author": "Lays Karolinny"
           }
         }
       },
@@ -332,8 +335,8 @@
         "q4"
       ],
       "settings": {
-        "eyebrow": "Quem já celebrou com a gente",
-        "heading": "Depoimentos"
+        "heading": "Depoimentos",
+        "eyebrow": "Quem já celebrou com a gente"
       }
     },
     "tp_faq": {
