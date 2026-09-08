@@ -296,28 +296,32 @@
           "type": "quote",
           "settings": {
             "quote": "Tá muito perfeito. Não consigo nem parar de olhar de tão lindo que ficou.",
-            "author": "Ana Beatriz e Jordan Brunno · Casamento"
+            "author": "Ana Beatriz e Jordan Brunno · Casamento",
+            "image_asset": "tp-depo-ana.jpg"
           }
         },
         "q2": {
           "type": "quote",
           "settings": {
             "quote": "Só pra avisar que tudo foi um sucesso. As tatuagens, meu Deus — o povo dizimou muito rápido. Se eu soubesse que eles iam amar tanto, tinha pedido mais.",
-            "author": "Lívia Menezes"
+            "author": "Lívia Menezes",
+            "image_asset": "tp-depo-livia.jpg"
           }
         },
         "q3": {
           "type": "quote",
           "settings": {
             "quote": "As tatuagens foram um sucesso, todos amaram muito. Ficou até hoje de manhã intacta.",
-            "author": "Letícia Guedes"
+            "author": "Letícia Guedes",
+            "image_asset": "tp-depo-leticia.jpg"
           }
         },
         "q4": {
           "type": "quote",
           "settings": {
             "quote": "Agradeço demais a sua atenção e principalmente a paciência. Desejo todo sucesso possível para você.",
-            "author": "Lays Karolinny"
+            "author": "Lays Karolinny",
+            "image_asset": "tp-depo-lays.jpg"
           }
         }
       },

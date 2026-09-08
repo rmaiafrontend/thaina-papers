@@ -1,5 +1,8 @@
 /**
- * Setas do carrossel de trabalhos.
+ * Setas de carrossel.
+ *
+ * Serve qualquer seção que tenha uma faixa [data-tp-faixa] e um par de setas
+ * [data-tp-setas] — hoje os trabalhos reais e os depoimentos.
  *
  * A faixa rola sozinha com o dedo e com a roda do mouse; as setas existem
  * para quem está no desktop com mouse comum, onde arrastar não é natural.
@@ -7,17 +10,17 @@
  * o que rolar — botão que não leva a lugar nenhum é pior que botão nenhum.
  */
 (function () {
-  function iniciar(secao) {
-    if (!secao || secao.dataset.tpBound) return;
-    var faixa = secao.querySelector('[data-tp-faixa]');
+  function iniciar(faixa) {
+    if (!faixa || faixa.dataset.tpBound) return;
+    var secao = faixa.closest('section') || document;
     var caixa = secao.querySelector('[data-tp-setas]');
-    if (!faixa || !caixa) return;
-    secao.dataset.tpBound = '1';
+    if (!caixa) return;
+    faixa.dataset.tpBound = '1';
 
     var botoes = caixa.querySelectorAll('[data-tp-seta]');
 
     function passo() {
-      var celula = faixa.querySelector('.tp-portfolio__cell');
+      var celula = faixa.firstElementChild;
       if (!celula) return faixa.clientWidth;
       var vao = parseFloat(getComputedStyle(faixa).columnGap) || 0;
       return celula.getBoundingClientRect().width + vao;
@@ -57,7 +60,7 @@
   }
 
   function ligar(escopo) {
-    var secoes = (escopo || document).querySelectorAll('.tp-portfolio');
+    var secoes = (escopo || document).querySelectorAll('[data-tp-faixa]');
     for (var i = 0; i < secoes.length; i++) iniciar(secoes[i]);
   }
 

@@ -3,16 +3,45 @@
     <div class="tp-eyebrow tp-quotes__eyebrow">{{ section.settings.eyebrow }}</div>
   {%- endif -%}
 
-  <div class="tp-quotes__grid">
+  {%- comment -%}
+    As setas repetem o padrão da faixa de trabalhos: no cabeçalho, nunca por
+    cima do conteúdo, e escondidas até existir o que rolar.
+  {%- endcomment -%}
+  <div class="tp-quotes__setas" data-tp-setas hidden>
+    <button type="button" class="tp-quotes__seta" data-tp-seta="-1" aria-label="Ver depoimentos anteriores">
+      <span aria-hidden="true">&#8592;</span>
+    </button>
+    <button type="button" class="tp-quotes__seta" data-tp-seta="1" aria-label="Ver mais depoimentos">
+      <span aria-hidden="true">&#8594;</span>
+    </button>
+  </div>
+
+  <div class="tp-quotes__faixa" data-tp-faixa>
     {%- for block in section.blocks -%}
-      <blockquote class="tp-quotes__item" {{ block.shopify_attributes }}>
-        <p class="tp-quotes__text">{{ block.settings.quote }}</p>
-        {%- if block.settings.author != blank -%}
-          <cite class="tp-quotes__author">{{ block.settings.author }}</cite>
+      <figure class="tp-quotes__item" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank or block.settings.image_asset != blank -%}
+          {%- render 'tp-image',
+            image: block.settings.image,
+            asset: block.settings.image_asset,
+            alt: block.settings.author,
+            class: 'tp-quotes__print',
+            ratio: '4/3',
+            width: 900,
+            sizes: '(max-width: 899px) 84vw, 24vw',
+            widths: '400,700,900'
+          -%}
         {%- endif -%}
-      </blockquote>
+        <figcaption class="tp-quotes__corpo">
+          <blockquote class="tp-quotes__text">{{ block.settings.quote }}</blockquote>
+          {%- if block.settings.author != blank -%}
+            <cite class="tp-quotes__author">{{ block.settings.author }}</cite>
+          {%- endif -%}
+        </figcaption>
+      </figure>
     {%- endfor -%}
   </div>
+
+  <script src="{{ 'tp-carrossel.js' | asset_url }}" defer></script>
 </section>
 
 {% stylesheet %}
@@ -24,16 +53,98 @@
     margin-bottom: 28px;
   }
 
-  .tp-quotes__grid {
+  /* O chapéu é um bloco solto, sem cabeçalho em linha como as outras seções:
+     as setas se posicionam em relação a ele. */
+  .tp-quotes {
+    position: relative;
+  }
+
+  .tp-quotes__setas {
+    position: absolute;
+    top: 76px;
+    right: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
+    display: flex;
+    gap: 8px;
+  }
+
+  .tp-quotes .tp-quotes__seta {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--tp-line-strong);
+    background: transparent;
+    color: var(--tp-ink);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .tp-quotes .tp-quotes__seta:hover:not(:disabled) {
+    border-color: var(--tp-wine);
+    color: var(--tp-wine);
+  }
+
+  .tp-quotes .tp-quotes__seta:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  /* Mesma receita da faixa de trabalhos: sangra de borda a borda soltando o
+     teto que body .tp-section > * impõe, e o recuo é o maior entre o gutter e
+     a metade que sobra do container — assim o primeiro card nasce embaixo do
+     chapéu da seção em qualquer largura. Sem 100vw e sem margem negativa. */
+  .tp-quotes .tp-quotes__faixa {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(260px, 24vw, 380px);
+    gap: 20px;
+    /* stretch, não start: com todos os cards da mesma altura, o nome de cada
+       pessoa pode ser ancorado na base e a linha dos nomes fica reta, mesmo
+       com frases de tamanhos diferentes. */
+    align-items: stretch;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
+    scrollbar-width: none;
+  }
+
+  .tp-quotes__faixa::-webkit-scrollbar {
+    display: none;
   }
 
   .tp-quotes__item {
-    border-left: 1px solid rgba(61, 39, 34, 0.2);
-    padding-left: 22px;
     margin: 0;
+    scroll-snap-align: start;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* O print é a prova; o texto abaixo é o que se lê. Um não substitui o
+     outro — a imagem dá crédito, o texto dá legibilidade e acessibilidade. */
+  .tp-quotes__print {
+    aspect-ratio: 4 / 3;
+    margin-bottom: 18px;
+  }
+
+  .tp-quotes__corpo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* Empurra o nome para o fim do card: é o que alinha a assinatura de todos
+     na mesma linha, independentemente do tamanho do depoimento. */
+  .tp-quotes__author {
+    margin-top: auto;
+    padding-top: 14px;
   }
 
   .tp-quotes__text {
@@ -55,13 +166,18 @@
       padding-block: 34px 36px;
     }
 
-    .tp-quotes__grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
+    .tp-quotes .tp-quotes__faixa {
+      grid-auto-columns: 82%;
+      gap: 12px;
     }
 
     .tp-quotes__text {
       font-size: 18px;
+    }
+
+    /* No celular o dedo arrasta; seta só ocuparia espaço. */
+    .tp-quotes__setas {
+      display: none;
     }
   }
 {% endstylesheet %}
@@ -70,7 +186,7 @@
 {
   "name": "TP — Depoimentos",
   "tag": "section",
-  "max_blocks": 6,
+  "max_blocks": 12,
   "settings": [
     {
       "type": "text",
@@ -84,6 +200,17 @@
       "type": "quote",
       "name": "Depoimento",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Print do depoimento"
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (alternativa ao upload)",
+          "info": "Nome do arquivo em assets/, ex.: tp-depo-ana.jpg"
+        },
         {
           "type": "textarea",
           "id": "quote",
@@ -103,9 +230,15 @@
     {
       "name": "TP — Depoimentos",
       "blocks": [
-        { "type": "quote" },
-        { "type": "quote" },
-        { "type": "quote" }
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
       ]
     }
   ]
