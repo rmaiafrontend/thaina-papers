@@ -133,7 +133,8 @@
      mais alta sobrava fundo em volta e o print parecia colado, não enquadrado. */
   .tp-quotes__print {
     aspect-ratio: 2 / 1;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
+    border-radius: 10px;
   }
 
   .tp-quotes__corpo {
@@ -142,19 +143,19 @@
     flex: 1;
   }
 
-  /* Empurra o nome para o fim do card: é o que alinha a assinatura de todos
-     na mesma linha, independentemente do tamanho do depoimento. */
+  /* O nome vem logo abaixo da frase. Antes ele era empurrado para a base do
+     card com margin-top: auto, o que alinhava as assinaturas mas abria um vão
+     grande nos depoimentos curtos — e o vão pesava mais que o alinhamento. */
   .tp-quotes__author {
-    margin-top: auto;
-    padding-top: 14px;
+    margin-top: 0;
   }
 
   .tp-quotes__text {
     font-family: var(--tp-serif);
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.55;
     font-weight: 500;
-    margin: 0 0 14px;
+    margin: 0 0 8px;
   }
 
   .tp-quotes__author {
@@ -174,7 +175,7 @@
     }
 
     .tp-quotes__text {
-      font-size: 15px;
+      font-size: 14px;
     }
 
     /* No celular o dedo arrasta; seta só ocuparia espaço. */
