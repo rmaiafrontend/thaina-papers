@@ -1,0 +1,368 @@
+{%- comment -%}
+  Quarta versão do hero: texto centralizado e uma passarela de fotos abaixo.
+
+  Uma fileira só, ocupando a largura inteira da tela, com as fotos grandes.
+  As pontas somem por MÁSCARA, não por um degradê da cor do fundo por cima:
+  máscara apaga o pixel de verdade, então continua funcionando se a faixa
+  mudar de cor um dia — o degradê sobreposto precisaria ser reescrito junto.
+
+  A lista sai duas vezes para o laço fechar sem salto: quando a primeira
+  cópia termina de sair, a segunda está onde a primeira começou.
+{%- endcomment -%}
+
+{%- liquid
+  assign fotos = section.blocks | where: 'type', 'foto'
+-%}
+
+<section class="tp-section tp-section--blue tp-passarela">
+  <div class="tp-passarela__topo">
+    {%- if section.settings.script_text != blank -%}
+      <div class="tp-passarela__script">{{ section.settings.script_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="tp-passarela__titulo">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.lead != blank -%}
+      <p class="tp-passarela__lead">{{ section.settings.lead }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.tagline != blank -%}
+      <div class="tp-passarela__regua">
+        <span class="tp-passarela__regua-linha" aria-hidden="true"></span>
+        <span class="tp-passarela__tagline">{{ section.settings.tagline }}</span>
+        <span class="tp-passarela__regua-linha" aria-hidden="true"></span>
+      </div>
+    {%- endif -%}
+
+    <div class="tp-passarela__acoes">
+      {%- if section.settings.button_1_label != blank -%}
+        <a
+          {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %}
+          class="tp-btn tp-btn--solid"
+        >
+          {{- section.settings.button_1_label -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a
+          {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %}
+          class="tp-btn tp-btn--outline tp-passarela__btn-vazado"
+        >
+          {{- section.settings.button_2_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if fotos.size > 0 -%}
+    <div class="tp-passarela__faixa">
+      <div class="tp-passarela__trilho">
+        {%- for passada in (1..2) -%}
+          {%- for block in fotos -%}
+            <div class="tp-passarela__item" {% if passada == 2 %}aria-hidden="true"{% endif %}>
+              {%- render 'tp-image',
+                image: block.settings.image,
+                asset: block.settings.image_asset,
+                alt: block.settings.alt,
+                class: 'tp-passarela__foto',
+                ratio: '2/3',
+                width: 700,
+                sizes: '(max-width: 899px) 190px, 300px',
+                widths: '300,500,700',
+                loading: 'eager'
+              -%}
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .tp-passarela {
+    padding-block: 64px 0;
+    overflow: hidden;
+  }
+
+  /* ---------- texto centralizado ---------- */
+
+  .tp-passarela__topo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  .tp-passarela__script {
+    font-family: var(--tp-script);
+    font-size: 34px;
+    line-height: 1;
+    color: var(--tp-wine);
+    margin-bottom: 8px;
+  }
+
+  .tp-passarela__titulo {
+    font-family: var(--tp-serif);
+    font-weight: 400;
+    font-size: clamp(48px, 6vw, 86px);
+    line-height: 1;
+    color: var(--tp-ink);
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+
+  .tp-passarela__lead {
+    font-family: var(--tp-serif);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+    margin: 0 0 22px;
+    max-width: 46ch;
+  }
+
+  .tp-passarela__regua {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .tp-passarela__regua-linha {
+    width: 40px;
+    height: 1px;
+    background: var(--tp-ink);
+    opacity: 0.4;
+    flex: none;
+  }
+
+  .tp-passarela__tagline {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tp-body);
+  }
+
+  .tp-passarela__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tp-passarela .tp-passarela__btn-vazado {
+    border-color: var(--tp-ink);
+    color: var(--tp-ink);
+  }
+
+  .tp-passarela .tp-passarela__btn-vazado:hover {
+    background: var(--tp-ink);
+    color: var(--tp-blue);
+  }
+
+  /* ---------- passarela ---------- */
+
+  /* Solta o teto que body .tp-section > * impõe para a faixa ocupar a tela
+     inteira. Sem 100vw e sem margem negativa: as duas somam a barra de
+     rolagem e fazem a página andar de lado. */
+  .tp-passarela .tp-passarela__faixa {
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: hidden;
+
+    /* As pontas somem por máscara, não por um degradê da cor do fundo por
+       cima. A máscara apaga o pixel, então segue funcionando se a faixa
+       mudar de cor — um degradê pintado teria de ser reescrito junto. */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+  }
+
+  .tp-passarela__trilho {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+    animation: tp-passarela-anda 54s linear infinite;
+  }
+
+  @keyframes tp-passarela-anda {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Para quando o mouse chega perto, para dar tempo de olhar uma peça. */
+  .tp-passarela__faixa:hover .tp-passarela__trilho {
+    animation-play-state: paused;
+  }
+
+  .tp-passarela__item {
+    width: 300px;
+    flex: none;
+  }
+
+  .tp-passarela__foto {
+    aspect-ratio: 2 / 3;
+  }
+
+  /* Quem pede menos animação recebe a faixa parada, não mais lenta: o pedido
+     é por ausência de movimento. */
+  @media (prefers-reduced-motion: reduce) {
+    .tp-passarela__trilho {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .tp-passarela__item {
+      width: 240px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .tp-passarela {
+      padding-block: 34px 0;
+    }
+
+    .tp-passarela__topo {
+      margin-bottom: 32px;
+    }
+
+    .tp-passarela__script {
+      font-size: 28px;
+    }
+
+    .tp-passarela__item {
+      width: 190px;
+    }
+
+    .tp-passarela__trilho {
+      gap: 12px;
+    }
+
+    /* Máscara mais curta: em tela estreita, 12% de cada lado apagaria quase
+       uma foto inteira de cada ponta. */
+    .tp-passarela .tp-passarela__faixa {
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      );
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Hero passarela",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_text",
+      "label": "Manuscrito",
+      "default": "feito à mão"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Não é só papel"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Frase de abertura",
+      "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Assinatura",
+      "default": "Menos excesso. Mais essência."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Botão principal",
+      "default": "Ver todos os produtos"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Destino do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Botão secundário",
+      "default": "Sob medida"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Destino do botão secundário"
+    },
+    {
+      "type": "header",
+      "content": "Fotos da passarela",
+      "info": "Quanto mais fotos, mais tempo até o laço se repetir. Abaixo de seis a repetição fica visível."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "foto",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (alternativa)",
+          "info": "Nome do arquivo em assets/, ex.: tp-trabalho-mesa.jpg"
+        },
+        { "type": "text", "id": "alt", "label": "Descrição da foto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Hero passarela",
+      "blocks": [
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" }
+      ]
+    }
+  ]
+}
+{% endschema %}
