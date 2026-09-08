@@ -37,7 +37,7 @@
           class: 'tp-portfolio__media',
           ratio: '2/3',
           width: 1200,
-          sizes: '(max-width: 899px) 84vw, 25vw',
+          sizes: '(max-width: 899px) 84vw, 24vw',
           widths: '300,500,700,1000,1200'
         -%}
         {%- if block.settings.caption != blank -%}
@@ -53,27 +53,44 @@
     padding-block: 0 84px;
   }
 
-  /* Fileira de retratos, não mosaico deitado. O material da Thainá é foto de
-     celular em pé — bolo inteiro, mesa posta, convite na mão. No mosaico
-     antigo, de células deitadas, toda foto virava uma tira cortada no meio. */
-  /* Quatro colunas, não cinco. O container do site tem 1240px e, num laptop
-     comum, ele já é a própria largura da tela — então tirar o teto não faz a
-     foto crescer um pixel. Quem manda é o número de colunas: de cinco para
-     quatro, o card vai de 235 para 298 de largura. Uma foto a menos, as
-     outras quatro 27% maiores. */
-  .tp-portfolio__grid {
+  /* Carrossel em qualquer tela, sangrando de borda a borda.
+
+     A faixa é filha direta de .tp-section, e quem limita a largura é a regra
+     `body .tp-section > *` do design system. Basta soltar o teto aqui para
+     ela ocupar a tela inteira — sem 100vw e sem margem negativa, que somam a
+     barra de rolagem e fazem a PÁGINA andar de lado. O `padding-inline` fica,
+     e vira a folga das duas pontas da faixa.
+
+     Escopado com duas classes para vencer `body .tp-section > *` (0,1,1)
+     independentemente de qual folha de estilo carregue primeiro. */
+  .tp-portfolio .tp-portfolio__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* Linha maior que coluna: entre uma fileira e outra passa a legenda da
-       de cima, e 16px deixavam o texto colado na foto seguinte. */
-    gap: 40px 16px;
+    grid-auto-flow: column;
+    /* Cresce com a tela até um teto, para não virar cartaz em monitor grande. */
+    grid-auto-columns: clamp(260px, 22vw, 400px);
+    gap: 16px;
     align-items: start;
+    max-width: none;
+    margin-inline: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--tp-gutter);
+    scrollbar-width: none;
+  }
+
+  .tp-portfolio__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tp-portfolio__cell {
+    scroll-snap-align: start;
+    min-width: 0;
   }
 
   /* 2:3 em vez de 3:4: as fotos da Thainá são todas de celular em pé, e o
      quadro mais alto devolve o que o corte anterior tirava — o bolo inteiro,
-     o convite com os nomes do casal. Mais alto também é mais presente na
-     página, sem precisar tirar foto da fileira. */
+     o convite com os nomes do casal. */
   .tp-portfolio__media {
     aspect-ratio: 2 / 3;
   }
@@ -90,35 +107,14 @@
       padding-block: 0 34px;
     }
 
-    /* No celular vira carrossel horizontal. Cinco retratos empilhados em duas
-       colunas viravam uma parede de rolagem; deitados numa faixa, o dedo
-       percorre os trabalhos como quem passa fotos.
-
-       Quem rola é a própria grade, não a página — a faixa sangra até a borda
-       da tela e reaproveita o gutter que .tp-section > * já aplica como folga
-       das pontas, então não precisa de margem negativa. */
-    .tp-portfolio__grid {
-      grid-template-columns: none;
-      grid-auto-flow: column;
+    /* No celular o card ocupa quase a tela e o seguinte espia na borda —
+       é o que mostra, sem seta nenhuma, que a faixa anda. */
+    .tp-portfolio .tp-portfolio__grid {
       grid-auto-columns: 82%;
       gap: 12px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: var(--tp-gutter);
-      scrollbar-width: none;
     }
-
-    .tp-portfolio__grid::-webkit-scrollbar {
-      display: none;
-    }
-
-    .tp-portfolio__cell {
-      scroll-snap-align: start;
-      min-width: 0;
-    }
-
   }
+
 {% endstylesheet %}
 
 {% schema %}
