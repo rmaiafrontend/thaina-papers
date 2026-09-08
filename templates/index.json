@@ -243,13 +243,45 @@
             "caption": "Bolo de formatura em rosa, com monograma no centro",
             "image_asset": "tp-trabalho-bolo.jpg"
           }
+        },
+        "w5": {
+          "type": "work",
+          "settings": {
+            "caption": "Prato de porcelana pintado à mão para o batizado de Bernardo",
+            "image_asset": "tp-trabalho-batizado.jpg"
+          }
+        },
+        "w6": {
+          "type": "work",
+          "settings": {
+            "caption": "Guardanapo com monograma bordado sobre sousplat rendado",
+            "image_asset": "tp-trabalho-mesa-posta.jpg"
+          }
+        },
+        "w7": {
+          "type": "work",
+          "settings": {
+            "caption": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior",
+            "image_asset": "tp-trabalho-ecobag.jpg"
+          }
+        },
+        "w8": {
+          "type": "work",
+          "settings": {
+            "caption": "Cartela de adesivos temáticos impressa para a festa",
+            "image_asset": "tp-trabalho-adesivos.jpg"
+          }
         }
       },
       "block_order": [
         "w1",
         "w2",
         "w3",
-        "w4"
+        "w4",
+        "w5",
+        "w6",
+        "w7",
+        "w8"
       ],
       "settings": {
         "heading": "Trabalhos reais",

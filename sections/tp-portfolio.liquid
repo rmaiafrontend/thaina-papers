@@ -64,7 +64,9 @@
   .tp-portfolio__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    /* Linha maior que coluna: entre uma fileira e outra passa a legenda da
+       de cima, e 16px deixavam o texto colado na foto seguinte. */
+    gap: 40px 16px;
     align-items: start;
   }
 
@@ -123,7 +125,7 @@
 {
   "name": "TP — Trabalhos reais",
   "tag": "section",
-  "max_blocks": 5,
+  "max_blocks": 12,
   "settings": [
     {
       "type": "text",
