@@ -1,0 +1,381 @@
+{%- comment -%}
+  Terceira versão do hero: texto fixo e uma esteira de fotos deslizando.
+
+  Duas fileiras em sentidos opostos, não uma só: o contraponto entre elas é o
+  que faz a coisa parecer viva em vez de um slide automático. A faixa sangra
+  até a borda da tela para as fotos entrarem e saírem de fora do quadro — se
+  parasse no container, o movimento pareceria um carrossel com defeito.
+
+  A lista é renderizada DUAS vezes em cada fileira. É o que permite animar de
+  0 a -50% e voltar ao começo sem salto: quando a primeira cópia termina de
+  sair, a segunda está exatamente onde a primeira começou.
+{%- endcomment -%}
+
+{%- liquid
+  assign fotos = section.blocks | where: 'type', 'foto'
+-%}
+
+<section class="tp-section tp-section--blue tp-esteira">
+  <div class="tp-esteira__inner">
+    <div class="tp-esteira__texto">
+      {%- if section.settings.script_text != blank -%}
+        <div class="tp-esteira__script">{{ section.settings.script_text }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="tp-esteira__titulo">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.lead != blank -%}
+        <p class="tp-esteira__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.tagline != blank -%}
+        <div class="tp-esteira__regua">
+          <span class="tp-esteira__regua-linha" aria-hidden="true"></span>
+          <span class="tp-esteira__tagline">{{ section.settings.tagline }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="tp-esteira__acoes">
+        {%- if section.settings.button_1_label != blank -%}
+          <a
+            {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %}
+            class="tp-btn tp-btn--solid"
+          >
+            {{- section.settings.button_1_label -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a
+            {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %}
+            class="tp-btn tp-btn--outline tp-esteira__btn-vazado"
+          >
+            {{- section.settings.button_2_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if fotos.size > 0 -%}
+      <div class="tp-esteira__faixas">
+        {%- comment -%}
+          Duas passadas por fileira. A segunda leva aria-hidden: é a mesma
+          imagem repetida para o laço fechar, e anunciá-la de novo só faria
+          o leitor de tela ler tudo em dobro.
+        {%- endcomment -%}
+        <div class="tp-esteira__fileira tp-esteira__fileira--esq">
+          <div class="tp-esteira__trilho">
+            {%- for passada in (1..2) -%}
+              {%- for block in fotos -%}
+                <div class="tp-esteira__item" {% if passada == 2 %}aria-hidden="true"{% endif %}>
+                  {%- render 'tp-image',
+                    image: block.settings.image,
+                    asset: block.settings.image_asset,
+                    alt: block.settings.alt,
+                    class: 'tp-esteira__foto',
+                    ratio: '2/3',
+                    width: 500,
+                    sizes: '180px',
+                    widths: '300,500',
+                    loading: 'eager'
+                  -%}
+                </div>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="tp-esteira__fileira tp-esteira__fileira--dir">
+          <div class="tp-esteira__trilho tp-esteira__trilho--volta">
+            {%- for passada in (1..2) -%}
+              {%- for block in fotos reversed -%}
+                <div class="tp-esteira__item" aria-hidden="true">
+                  {%- render 'tp-image',
+                    image: block.settings.image,
+                    asset: block.settings.image_asset,
+                    alt: block.settings.alt,
+                    class: 'tp-esteira__foto',
+                    ratio: '2/3',
+                    width: 500,
+                    sizes: '180px',
+                    widths: '300,500'
+                  -%}
+                </div>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tp-esteira {
+    padding-block: 0;
+    overflow: hidden;
+  }
+
+  /* O container solta o teto do design system para a esteira chegar à borda
+     da tela. O recuo fica só do lado do texto, calculado como nos carrosséis:
+     o maior entre o gutter e a metade que sobra do container. Sem 100vw e sem
+     margem negativa, que somam a barra de rolagem e fazem a página andar de
+     lado. */
+  .tp-esteira .tp-esteira__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 47fr) minmax(0, 53fr);
+    gap: 40px;
+    align-items: center;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2)) 0;
+    padding-block: 56px;
+  }
+
+  /* ---------- texto ---------- */
+
+  .tp-esteira__script {
+    font-family: var(--tp-script);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--tp-wine);
+    margin-bottom: 8px;
+  }
+
+  .tp-esteira__titulo {
+    font-family: var(--tp-serif);
+    font-weight: 400;
+    font-size: clamp(46px, 5.4vw, 76px);
+    line-height: 1;
+    color: var(--tp-ink);
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+
+  .tp-esteira__lead {
+    font-family: var(--tp-serif);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+    margin: 0 0 22px;
+    max-width: 32ch;
+  }
+
+  .tp-esteira__regua {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .tp-esteira__regua-linha {
+    width: 44px;
+    height: 1px;
+    background: var(--tp-ink);
+    opacity: 0.45;
+    flex: none;
+  }
+
+  .tp-esteira__tagline {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tp-body);
+  }
+
+  .tp-esteira__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tp-esteira .tp-esteira__btn-vazado {
+    border-color: var(--tp-ink);
+    color: var(--tp-ink);
+  }
+
+  .tp-esteira .tp-esteira__btn-vazado:hover {
+    background: var(--tp-ink);
+    color: var(--tp-blue);
+  }
+
+  /* ---------- esteira ---------- */
+
+  .tp-esteira__faixas {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .tp-esteira__fileira {
+    overflow: hidden;
+  }
+
+  .tp-esteira__trilho {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: tp-esteira-anda 46s linear infinite;
+  }
+
+  .tp-esteira__trilho--volta {
+    animation-name: tp-esteira-volta;
+    animation-duration: 58s;
+  }
+
+  /* A segunda fileira é 12s mais lenta de propósito: com a mesma duração as
+     duas ficariam em espelho perfeito e o olho leria como um bloco só. */
+  @keyframes tp-esteira-anda {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes tp-esteira-volta {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  /* Para quando o mouse chega perto, para dar tempo de olhar uma foto. */
+  .tp-esteira__faixas:hover .tp-esteira__trilho {
+    animation-play-state: paused;
+  }
+
+  .tp-esteira__item {
+    width: 180px;
+    flex: none;
+  }
+
+  .tp-esteira__foto {
+    aspect-ratio: 2 / 3;
+  }
+
+  /* Quem pede menos animação no sistema recebe a faixa parada, não uma versão
+     mais lenta: o pedido é por ausência de movimento. */
+  @media (prefers-reduced-motion: reduce) {
+    .tp-esteira__trilho {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 899px) {
+    /* No celular a esteira desce para baixo do texto e ocupa a largura toda —
+       lado a lado, sobraria uma tira de 40% de tela para as fotos. */
+    .tp-esteira .tp-esteira__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 30px;
+      padding-inline: var(--tp-gutter) 0;
+      padding-block: 34px;
+    }
+
+    .tp-esteira__texto {
+      padding-inline-end: var(--tp-gutter);
+    }
+
+    .tp-esteira__script {
+      font-size: 27px;
+    }
+
+    .tp-esteira__item {
+      width: 132px;
+    }
+
+    /* Uma fileira só: duas empilhadas comeriam meia tela de altura antes de a
+       pessoa chegar no primeiro produto. */
+    .tp-esteira__fileira--dir {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Hero esteira",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_text",
+      "label": "Manuscrito",
+      "default": "feito à mão"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Não é só papel"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Frase de abertura",
+      "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Assinatura",
+      "default": "Menos excesso. Mais essência."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Botão principal",
+      "default": "Ver todos os produtos"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Destino do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Botão secundário",
+      "default": "Sob medida"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Destino do botão secundário"
+    },
+    {
+      "type": "header",
+      "content": "Fotos da esteira",
+      "info": "Quanto mais fotos, mais tempo até o laço se repetir. Abaixo de seis a repetição fica visível."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "foto",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Arquivo no tema (alternativa)",
+          "info": "Nome do arquivo em assets/, ex.: tp-trabalho-mesa.jpg"
+        },
+        { "type": "text", "id": "alt", "label": "Descrição da foto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Hero esteira",
+      "blocks": [
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" },
+        { "type": "foto" }
+      ]
+    }
+  ]
+}
+{% endschema %}
