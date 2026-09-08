@@ -13,6 +13,8 @@
   @param {string} [widths] - larguras para o srcset
   @param {number} [width] - largura base para image_url
   @param {string} [loading] - lazy (padrão) ou eager
+  @param {string} [ratio] - proporção do arquivo em assets/, ex.: '3/4'. Só afeta
+    o width/height que o navegador usa para reservar a caixa antes de carregar.
 
   @example
   {% render 'tp-image', image: section.settings.image_1, asset: section.settings.image_1_asset, alt: 'Convite', class: 'tp-hero__frame', width: 1200 %}
@@ -51,17 +53,30 @@
         endif
       endfor
     -%}
-    {%- comment -%}
-      Sem width/height fixos: o valor de antes era 1400x1400, quadrado, e
-      nenhuma foto do site é quadrada — a caixa reservada saía na proporção
-      errada. Quem define o formato é o .tp-media de cada seção.
-    {%- endcomment -%}
+    {%- liquid
+      # width/height existem para o navegador reservar a caixa certa antes de
+      # carregar. O valor de antes era 1400x1400 — quadrado, e nenhuma foto do
+      # site é quadrada, então a reserva saía na proporção errada. Agora quem
+      # chama declara a proporção do arquivo; sem ela, cai no quadrado de novo.
+      assign nat_w = 1000
+      assign nat_h = 1000
+      if ratio != blank
+        assign lados = ratio | split: '/'
+        assign lado_w = lados[0] | plus: 0
+        assign lado_h = lados[1] | plus: 0
+        if lado_w > 0 and lado_h > 0
+          assign nat_h = nat_w | times: lado_h | divided_by: lado_w
+        endif
+      endif
+    -%}
     <img
       src="{{ asset | asset_url }}"
       srcset="{{ asset_srcset }}"
       sizes="{{ img_sizes }}"
       alt="{{ alt | escape }}"
       loading="{{ img_loading }}"
+      width="{{ nat_w }}"
+      height="{{ nat_h }}"
     >
   {%- else -%}
     <div class="tp-media__placeholder">{{ alt }}</div>
