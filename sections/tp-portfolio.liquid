@@ -35,10 +35,10 @@
           asset: block.settings.image_asset,
           alt: block.settings.caption,
           class: 'tp-portfolio__media',
-          ratio: '3/4',
-          width: 1000,
-          sizes: '(max-width: 899px) 70vw, 20vw',
-          widths: '300,500,1000'
+          ratio: '2/3',
+          width: 1200,
+          sizes: '(max-width: 899px) 84vw, 25vw',
+          widths: '300,500,700,1000,1200'
         -%}
         {%- if block.settings.caption != blank -%}
           <div class="tp-portfolio__caption">{{ block.settings.caption }}</div>
@@ -56,22 +56,24 @@
   /* Fileira de retratos, não mosaico deitado. O material da Thainá é foto de
      celular em pé — bolo inteiro, mesa posta, convite na mão. No mosaico
      antigo, de células deitadas, toda foto virava uma tira cortada no meio. */
+  /* Quatro colunas, não cinco. O container do site tem 1240px e, num laptop
+     comum, ele já é a própria largura da tela — então tirar o teto não faz a
+     foto crescer um pixel. Quem manda é o número de colunas: de cinco para
+     quatro, o card vai de 235 para 298 de largura. Uma foto a menos, as
+     outras quatro 27% maiores. */
   .tp-portfolio__grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     align-items: start;
   }
 
+  /* 2:3 em vez de 3:4: as fotos da Thainá são todas de celular em pé, e o
+     quadro mais alto devolve o que o corte anterior tirava — o bolo inteiro,
+     o convite com os nomes do casal. Mais alto também é mais presente na
+     página, sem precisar tirar foto da fileira. */
   .tp-portfolio__media {
-    aspect-ratio: 3 / 4;
-  }
-
-  /* Altura alternada: quebra a régua reta e deixa a fileira respirar sem
-     precisar de foto maior nem de corte diferente. */
-  .tp-portfolio__cell--2,
-  .tp-portfolio__cell--4 {
-    margin-top: 34px;
+    aspect-ratio: 2 / 3;
   }
 
   .tp-portfolio__caption {
@@ -96,7 +98,7 @@
     .tp-portfolio__grid {
       grid-template-columns: none;
       grid-auto-flow: column;
-      grid-auto-columns: 68%;
+      grid-auto-columns: 82%;
       gap: 12px;
       overflow-x: auto;
       overscroll-behavior-x: contain;
@@ -114,11 +116,6 @@
       min-width: 0;
     }
 
-    /* O degrau é do desktop: numa faixa deitada ele só desalinharia as fotos. */
-    .tp-portfolio__cell--2,
-    .tp-portfolio__cell--4 {
-      margin-top: 0;
-    }
   }
 {% endstylesheet %}
 

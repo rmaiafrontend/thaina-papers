@@ -243,21 +243,13 @@
             "caption": "Bolo de formatura em rosa, com monograma no centro",
             "image_asset": "tp-trabalho-bolo.jpg"
           }
-        },
-        "w5": {
-          "type": "work",
-          "settings": {
-            "caption": "Copos e taças personalizados no bar da festa",
-            "image_asset": "tp-trabalho-copos.jpg"
-          }
         }
       },
       "block_order": [
         "w1",
         "w2",
         "w3",
-        "w4",
-        "w5"
+        "w4"
       ],
       "settings": {
         "heading": "Trabalhos reais",
