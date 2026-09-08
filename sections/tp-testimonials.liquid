@@ -1,19 +1,26 @@
 <section class="tp-section tp-section--wine tp-quotes">
-  {%- if section.settings.eyebrow != blank -%}
-    <div class="tp-eyebrow tp-quotes__eyebrow">{{ section.settings.eyebrow }}</div>
-  {%- endif -%}
-
   {%- comment -%}
-    As setas repetem o padrão da faixa de trabalhos: no cabeçalho, nunca por
-    cima do conteúdo, e escondidas até existir o que rolar.
+    Mesmo cabeçalho da faixa de trabalhos: título à esquerda, setas à direita,
+    nunca por cima do conteúdo e escondidas até existir o que rolar.
   {%- endcomment -%}
-  <div class="tp-quotes__setas" data-tp-setas hidden>
+  <div class="tp-section-head tp-quotes__head">
+    <div class="tp-quotes__titulos">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tp-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="tp-quotes__sub">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tp-quotes__setas" data-tp-setas hidden>
     <button type="button" class="tp-quotes__seta" data-tp-seta="-1" aria-label="Ver depoimentos anteriores">
       <span aria-hidden="true">&#8592;</span>
     </button>
-    <button type="button" class="tp-quotes__seta" data-tp-seta="1" aria-label="Ver mais depoimentos">
-      <span aria-hidden="true">&#8594;</span>
-    </button>
+      <button type="button" class="tp-quotes__seta" data-tp-seta="1" aria-label="Ver mais depoimentos">
+        <span aria-hidden="true">&#8594;</span>
+      </button>
+    </div>
   </div>
 
   <div class="tp-quotes__faixa" data-tp-faixa>
@@ -49,25 +56,30 @@
     padding-block: 76px 80px;
   }
 
-  /* O chapéu tem uma linha, mas as setas ao lado dele têm 40px de altura e
-     desciam quase até encostar nos cards — sobravam 5px. A margem é medida
-     pelas setas, não pelo texto. */
-  .tp-quotes__eyebrow {
-    margin-bottom: 60px;
+  /* O cabeçalho passou a ter duas linhas de texto, então as setas deixaram de
+     ser posicionadas por cima e voltaram para o fluxo, como na faixa de
+     trabalhos. O alinhamento no topo mantém a seta na altura do título, não
+     no meio do bloco de dois textos. */
+  .tp-quotes__head {
+    align-items: flex-start;
+    margin-bottom: 36px;
   }
 
-  /* O chapéu é um bloco solto, sem cabeçalho em linha como as outras seções:
-     as setas se posicionam em relação a ele. */
-  .tp-quotes {
-    position: relative;
+  .tp-quotes__titulos {
+    display: grid;
+    gap: 6px;
+  }
+
+  .tp-quotes__sub {
+    margin: 0;
+    font-size: 14px;
+    color: var(--tp-muted);
   }
 
   .tp-quotes__setas {
-    position: absolute;
-    top: 76px;
-    right: max(var(--tp-gutter), calc((100% - var(--tp-content-width)) / 2));
     display: flex;
     gap: 8px;
+    flex: none;
   }
 
   .tp-quotes .tp-quotes__seta {
@@ -196,8 +208,14 @@
   "settings": [
     {
       "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Depoimentos"
+    },
+    {
+      "type": "text",
       "id": "eyebrow",
-      "label": "Rótulo",
+      "label": "Subtítulo",
       "default": "Quem já celebrou com a gente"
     }
   ],
