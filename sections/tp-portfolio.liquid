@@ -35,10 +35,13 @@
           asset: block.settings.image_asset,
           alt: block.settings.caption,
           class: 'tp-portfolio__media',
-          width: 1200,
-          sizes: '(max-width: 899px) 50vw, 33vw',
-          widths: '400,700,1200'
+          width: 1000,
+          sizes: '(max-width: 899px) 50vw, 20vw',
+          widths: '300,500,1000'
         -%}
+        {%- if block.settings.caption != blank -%}
+          <div class="tp-portfolio__caption">{{ block.settings.caption }}</div>
+        {%- endif -%}
       </div>
     {%- endfor -%}
   </div>
@@ -49,40 +52,32 @@
     padding-block: 0 84px;
   }
 
+  /* Fileira de retratos, não mosaico deitado. O material da Thainá é foto de
+     celular em pé — bolo inteiro, mesa posta, convite na mão. No mosaico
+     antigo, de células deitadas, toda foto virava uma tira cortada no meio. */
   .tp-portfolio__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: repeat(2, 182px);
+    grid-template-columns: repeat(5, 1fr);
     gap: 16px;
+    align-items: start;
   }
 
   .tp-portfolio__media {
-    height: 100%;
+    aspect-ratio: 3 / 4;
   }
 
-  .tp-portfolio__cell--1 {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-  }
-
-  .tp-portfolio__cell--2 {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .tp-portfolio__cell--3 {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
+  /* Altura alternada: quebra a régua reta e deixa a fileira respirar sem
+     precisar de foto maior nem de corte diferente. */
+  .tp-portfolio__cell--2,
   .tp-portfolio__cell--4 {
-    grid-column: 3;
-    grid-row: 1;
+    margin-top: 34px;
   }
 
-  .tp-portfolio__cell--5 {
-    grid-column: 3;
-    grid-row: 2;
+  .tp-portfolio__caption {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--tp-muted);
+    margin-top: 10px;
   }
 
   @media (max-width: 899px) {
@@ -92,19 +87,13 @@
 
     .tp-portfolio__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: none;
       gap: 10px;
     }
 
-    .tp-portfolio__cell {
-      grid-column: auto !important;
-      grid-row: auto !important;
-      height: 160px;
-    }
-
-    .tp-portfolio__cell--1 {
-      grid-column: 1 / span 2 !important;
-      height: 220px;
+    /* No celular o degrau viraria buraco no meio da grade de duas colunas. */
+    .tp-portfolio__cell--2,
+    .tp-portfolio__cell--4 {
+      margin-top: 0;
     }
   }
 {% endstylesheet %}

@@ -219,36 +219,36 @@
         "w1": {
           "type": "work",
           "settings": {
-            "caption": "Mesa posta completa",
-            "image_asset": "tp-menu-tulip-placecard.jpg"
+            "caption": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado",
+            "image_asset": "tp-trabalho-mesa.jpg"
           }
         },
         "w2": {
           "type": "work",
           "settings": {
-            "caption": "Save the date",
-            "image_asset": "tp-menu-ciaonina-folding.jpg"
+            "caption": "Convite de casamento de Ana Carla e Thiago, em caixa com laço",
+            "image_asset": "tp-trabalho-convite.jpg"
           }
         },
         "w3": {
           "type": "work",
           "settings": {
-            "caption": "Menu oval",
-            "image_asset": "tp-savethedate-negroni.jpg"
+            "caption": "Monograma recortado em dourado sobre o bolo, em verde e folhagem",
+            "image_asset": "tp-trabalho-monograma.jpg"
           }
         },
         "w4": {
           "type": "work",
           "settings": {
-            "caption": "Convite negroni",
-            "image_asset": "tp-menu-dine-oval.jpg"
+            "caption": "Bolo de formatura em rosa, com monograma no centro",
+            "image_asset": "tp-trabalho-bolo.jpg"
           }
         },
         "w5": {
           "type": "work",
           "settings": {
-            "caption": "Número de mesa",
-            "image_asset": "tp-tablescape-georgia.jpg"
+            "caption": "Copos e taças personalizados no bar da festa",
+            "image_asset": "tp-trabalho-copos.jpg"
           }
         }
       },
@@ -271,29 +271,37 @@
         "q1": {
           "type": "quote",
           "settings": {
-            "quote": "Cada peça chegou exatamente como estava na prévia — e o convite virou lembrança na casa dos convidados.",
-            "author": "Marina e Rafael · Casamento, Campina Grande"
+            "quote": "Tá muito perfeito. Não consigo nem parar de olhar de tão lindo que ficou.",
+            "author": "Ana Beatriz e Jordan Brunno · Casamento"
           }
         },
         "q2": {
           "type": "quote",
           "settings": {
-            "quote": "Fechamos em quatro formandas e ficou muito mais em conta. Os adesivos sumiram na primeira hora da festa.",
-            "author": "Turma de Odontologia · Formatura"
+            "quote": "Só pra avisar que tudo foi um sucesso. As tatuagens, meu Deus — o povo dizimou muito rápido. Se eu soubesse que eles iam amar tanto, tinha pedido mais.",
+            "author": "Lívia Menezes"
           }
         },
         "q3": {
           "type": "quote",
           "settings": {
-            "quote": "As cartelas organizaram a rotina dos meus pacientes sem eu precisar explicar duas vezes.",
-            "author": "Dra. Helena Braga · Consultório"
+            "quote": "As tatuagens foram um sucesso, todos amaram muito. Ficou até hoje de manhã intacta.",
+            "author": "Letícia Guedes"
+          }
+        },
+        "q4": {
+          "type": "quote",
+          "settings": {
+            "quote": "Agradeço demais a sua atenção e principalmente a paciência. Desejo todo sucesso possível para você.",
+            "author": "Lays Karolinny"
           }
         }
       },
       "block_order": [
         "q1",
         "q2",
-        "q3"
+        "q3",
+        "q4"
       ],
       "settings": {
         "eyebrow": "Quem já celebrou com a gente"
