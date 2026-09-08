@@ -1,39 +1,50 @@
 {%- comment -%}
-  Segunda versão do hero: faixa azul cheia, composição mais densa.
+  Segunda versão do hero: mosaico de revista sobre faixa azul.
 
-  A primeira versão é uma coluna de texto ao lado de uma foto grande, sobre
-  creme. Esta troca o fundo por azul de borda a borda, empilha três fotos em
-  alturas diferentes e fecha com uma tira de argumentos — mais camadas, sem
-  abrir mão do canto seco e do alinhamento do resto do tema.
+  A diferença para a abertura atual não é a cor, é a estrutura. Lá o texto é
+  uma coluna ao lado de uma foto. Aqui o texto é uma CÉLULA da grade, cercada
+  pelas fotos em cima, embaixo e dos lados — a página lê como capa de revista
+  em vez de duas colunas.
+
+  As células têm larguras diferentes de propósito. Uma grade regular de seis
+  fotos viraria tabela; a assimetria é o que dá ritmo sem inclinar nada, que
+  brigaria com o desenho reto do tema.
 {%- endcomment -%}
 
 {%- liquid
   assign provas = section.blocks | where: 'type', 'prova'
 -%}
 
-<section class="tp-section tp-section--blue tp-heroalt">
-  <div class="tp-heroalt__inner">
-    <div class="tp-heroalt__texto">
+<section class="tp-section tp-section--blue tp-mosaico">
+  <div class="tp-mosaico__grade">
+    <figure class="tp-mosaico__cel tp-mosaico__cel--a">
+      {%- render 'tp-image',
+        image: section.settings.image_1,
+        asset: section.settings.image_1_asset,
+        alt: section.settings.image_1_alt,
+        class: 'tp-mosaico__foto',
+        ratio: '2/3',
+        width: 700,
+        sizes: '(max-width: 899px) 50vw, 24vw',
+        widths: '300,500,700',
+        loading: 'eager'
+      -%}
+    </figure>
+
+    <div class="tp-mosaico__cel tp-mosaico__cel--texto">
       {%- if section.settings.script_text != blank -%}
-        <div class="tp-heroalt__script">{{ section.settings.script_text }}</div>
+        <div class="tp-mosaico__script">{{ section.settings.script_text }}</div>
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
-        <h1 class="tp-heroalt__titulo">{{ section.settings.heading }}</h1>
+        <h1 class="tp-mosaico__titulo">{{ section.settings.heading }}</h1>
       {%- endif -%}
 
       {%- if section.settings.lead != blank -%}
-        <p class="tp-heroalt__lead">{{ section.settings.lead }}</p>
+        <p class="tp-mosaico__lead">{{ section.settings.lead }}</p>
       {%- endif -%}
 
-      {%- if section.settings.tagline != blank -%}
-        <div class="tp-heroalt__regua">
-          <span class="tp-heroalt__regua-linha" aria-hidden="true"></span>
-          <span class="tp-heroalt__tagline">{{ section.settings.tagline }}</span>
-        </div>
-      {%- endif -%}
-
-      <div class="tp-heroalt__acoes">
+      <div class="tp-mosaico__acoes">
         {%- if section.settings.button_1_label != blank -%}
           <a
             {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %}
@@ -45,7 +56,7 @@
         {%- if section.settings.button_2_label != blank -%}
           <a
             {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %}
-            class="tp-btn tp-btn--outline tp-heroalt__btn-vazado"
+            class="tp-btn tp-btn--outline tp-mosaico__btn-vazado"
           >
             {{- section.settings.button_2_label -}}
           </a>
@@ -53,61 +64,67 @@
       </div>
     </div>
 
-    {%- comment -%}
-      Três alturas diferentes: é o que dá movimento sem inclinar nada, que
-      brigaria com o desenho reto do resto do site.
-    {%- endcomment -%}
-    <div class="tp-heroalt__fotos">
-      <figure class="tp-heroalt__foto tp-heroalt__foto--1">
-        {%- render 'tp-image',
-          image: section.settings.image_1,
-          asset: section.settings.image_1_asset,
-          alt: section.settings.image_1_alt,
-          class: 'tp-heroalt__quadro',
-          ratio: '2/3',
-          width: 900,
-          sizes: '(max-width: 899px) 46vw, 22vw',
-          widths: '300,500,700,900',
-          loading: 'eager'
-        -%}
-      </figure>
+    <figure class="tp-mosaico__cel tp-mosaico__cel--b">
+      {%- render 'tp-image',
+        image: section.settings.image_2,
+        asset: section.settings.image_2_asset,
+        alt: section.settings.image_2_alt,
+        class: 'tp-mosaico__foto',
+        ratio: '2/3',
+        width: 700,
+        sizes: '(max-width: 899px) 50vw, 24vw',
+        widths: '300,500,700',
+        loading: 'eager'
+      -%}
+    </figure>
 
-      <figure class="tp-heroalt__foto tp-heroalt__foto--2">
-        {%- render 'tp-image',
-          image: section.settings.image_2,
-          asset: section.settings.image_2_asset,
-          alt: section.settings.image_2_alt,
-          class: 'tp-heroalt__quadro',
-          ratio: '2/3',
-          width: 900,
-          sizes: '(max-width: 899px) 46vw, 22vw',
-          widths: '300,500,700,900',
-          loading: 'eager'
-        -%}
-      </figure>
+    <figure class="tp-mosaico__cel tp-mosaico__cel--c">
+      {%- render 'tp-image',
+        image: section.settings.image_3,
+        asset: section.settings.image_3_asset,
+        alt: section.settings.image_3_alt,
+        class: 'tp-mosaico__foto',
+        ratio: '3/2',
+        width: 900,
+        sizes: '(max-width: 899px) 50vw, 34vw',
+        widths: '400,700,900'
+      -%}
+    </figure>
 
-      <figure class="tp-heroalt__foto tp-heroalt__foto--3">
-        {%- render 'tp-image',
-          image: section.settings.image_3,
-          asset: section.settings.image_3_asset,
-          alt: section.settings.image_3_alt,
-          class: 'tp-heroalt__quadro',
-          ratio: '2/3',
-          width: 700,
-          sizes: '(max-width: 899px) 46vw, 18vw',
-          widths: '300,500,700'
-        -%}
-      </figure>
-    </div>
+    <figure class="tp-mosaico__cel tp-mosaico__cel--d">
+      {%- render 'tp-image',
+        image: section.settings.image_4,
+        asset: section.settings.image_4_asset,
+        alt: section.settings.image_4_alt,
+        class: 'tp-mosaico__foto',
+        ratio: '1/1',
+        width: 600,
+        sizes: '(max-width: 899px) 50vw, 20vw',
+        widths: '300,500,600'
+      -%}
+    </figure>
+
+    <figure class="tp-mosaico__cel tp-mosaico__cel--e">
+      {%- render 'tp-image',
+        image: section.settings.image_5,
+        asset: section.settings.image_5_asset,
+        alt: section.settings.image_5_alt,
+        class: 'tp-mosaico__foto',
+        ratio: '3/2',
+        width: 900,
+        sizes: '(max-width: 899px) 50vw, 30vw',
+        widths: '400,700,900'
+      -%}
+    </figure>
   </div>
 
   {%- if provas.size > 0 -%}
-    <div class="tp-heroalt__provas">
+    <div class="tp-mosaico__provas">
       {%- for block in provas -%}
-        <div class="tp-heroalt__prova" {{ block.shopify_attributes }}>
-          <span class="tp-heroalt__prova-titulo">{{ block.settings.title }}</span>
+        <div class="tp-mosaico__prova" {{ block.shopify_attributes }}>
+          <span class="tp-mosaico__prova-titulo">{{ block.settings.title }}</span>
           {%- if block.settings.text != blank -%}
-            <span class="tp-heroalt__prova-texto">{{ block.settings.text }}</span>
+            <span class="tp-mosaico__prova-texto">{{ block.settings.text }}</span>
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -116,190 +133,185 @@
 </section>
 
 {% stylesheet %}
-  .tp-heroalt {
-    padding-block: 64px 0;
+  .tp-mosaico {
+    padding-block: 40px 0;
   }
 
-  .tp-heroalt__inner {
+  /* Doze colunas para poder quebrar em 3/6/3 e 5/3/4 — números que não se
+     repetem entre as duas fileiras, que é de onde vem a assimetria. */
+  .tp-mosaico__grade {
     display: grid;
-    grid-template-columns: minmax(0, 4.4fr) minmax(0, 7.6fr);
-    gap: 48px;
-    align-items: center;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: min-content;
+    gap: 14px;
   }
 
-  /* ---------- texto ---------- */
+  .tp-mosaico__cel {
+    margin: 0;
+    min-width: 0;
+  }
 
-  .tp-heroalt__script {
+  .tp-mosaico__cel--a { grid-column: 1 / span 3; grid-row: 1; }
+  .tp-mosaico__cel--texto { grid-column: 4 / span 6; grid-row: 1; }
+  .tp-mosaico__cel--b { grid-column: 10 / span 3; grid-row: 1; }
+  .tp-mosaico__cel--c { grid-column: 1 / span 5; grid-row: 2; }
+  .tp-mosaico__cel--d { grid-column: 6 / span 3; grid-row: 2; }
+  .tp-mosaico__cel--e { grid-column: 9 / span 4; grid-row: 2; }
+
+  /* ---------- célula de texto ---------- */
+
+  .tp-mosaico__cel--texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 24px;
+  }
+
+  .tp-mosaico__script {
     font-family: var(--tp-script);
-    font-size: 32px;
+    font-size: 30px;
     line-height: 1;
     color: var(--tp-wine);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
-  .tp-heroalt__titulo {
+  .tp-mosaico__titulo {
     font-family: var(--tp-serif);
     font-weight: 400;
-    font-size: clamp(44px, 5vw, 68px);
-    line-height: 1.04;
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 1.02;
     color: var(--tp-ink);
-    margin: 0 0 20px;
+    margin: 0 0 16px;
     text-wrap: balance;
   }
 
-  .tp-heroalt__lead {
+  .tp-mosaico__lead {
     font-family: var(--tp-serif);
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1.5;
     color: var(--tp-ink);
     margin: 0 0 22px;
-    max-width: 30ch;
+    max-width: 34ch;
   }
 
-  .tp-heroalt__regua {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 26px;
-  }
-
-  .tp-heroalt__regua-linha {
-    width: 44px;
-    height: 1px;
-    background: var(--tp-ink);
-    flex: none;
-    opacity: 0.45;
-  }
-
-  .tp-heroalt__tagline {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--tp-body);
-  }
-
-  .tp-heroalt__acoes {
+  .tp-mosaico__acoes {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
   }
 
-  .tp-heroalt .tp-heroalt__btn-vazado {
+  .tp-mosaico .tp-mosaico__btn-vazado {
     border-color: var(--tp-ink);
     color: var(--tp-ink);
   }
 
-  .tp-heroalt .tp-heroalt__btn-vazado:hover {
+  .tp-mosaico .tp-mosaico__btn-vazado:hover {
     background: var(--tp-ink);
     color: var(--tp-blue);
   }
 
   /* ---------- fotos ---------- */
 
-  /* Larguras desiguais de propósito: três retratos do mesmo tamanho viram
-     uma cerca. Com uma foto dominante e duas de apoio, a composição ganha
-     ordem de leitura — e a maior é a que mostra a papelaria na mesa. */
-  .tp-heroalt__fotos {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 0.8fr);
-    gap: 14px;
-    align-items: start;
-  }
-
-  .tp-heroalt__foto {
-    margin: 0;
-  }
-
-  /* O degrau é o que substitui a inclinação: dá movimento à composição sem
-     torcer nada, que destoaria do desenho reto do resto do tema. */
-  .tp-heroalt__foto--1 { margin-top: 40px; }
-  .tp-heroalt__foto--3 { margin-top: 76px; }
-
-  .tp-heroalt__quadro {
-    aspect-ratio: 2 / 3;
-  }
+  /* Cada célula pede um formato: as da fileira de cima são retratos altos,
+     as de baixo são deitadas e uma quadrada. É a variação de forma, mais que
+     a de tamanho, que faz o conjunto parecer mosaico e não galeria. */
+  .tp-mosaico__cel--a .tp-mosaico__foto,
+  .tp-mosaico__cel--b .tp-mosaico__foto { aspect-ratio: 2 / 3; }
+  .tp-mosaico__cel--c .tp-mosaico__foto,
+  .tp-mosaico__cel--e .tp-mosaico__foto { aspect-ratio: 3 / 2; }
+  .tp-mosaico__cel--d .tp-mosaico__foto { aspect-ratio: 1 / 1; }
 
   /* ---------- tira de argumentos ---------- */
 
-  .tp-heroalt__provas {
+  .tp-mosaico__provas {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin-top: 56px;
+    margin-top: 44px;
     border-top: 1px solid rgba(61, 39, 34, 0.22);
   }
 
-  .tp-heroalt__prova {
+  .tp-mosaico__prova {
     display: grid;
     gap: 4px;
-    padding: 22px 28px 26px 0;
+    padding: 20px 28px 24px 0;
   }
 
-  .tp-heroalt__prova + .tp-heroalt__prova {
+  .tp-mosaico__prova + .tp-mosaico__prova {
     padding-left: 28px;
     border-left: 1px solid rgba(61, 39, 34, 0.22);
   }
 
-  .tp-heroalt__prova-titulo {
+  .tp-mosaico__prova-titulo {
     font-family: var(--tp-serif);
     font-size: 17px;
     font-weight: 500;
     color: var(--tp-ink);
   }
 
-  .tp-heroalt__prova-texto {
+  .tp-mosaico__prova-texto {
     font-size: 13.5px;
     line-height: 1.5;
     color: var(--tp-body);
   }
 
   @media (max-width: 1100px) {
-    .tp-heroalt__inner {
-      gap: 36px;
-    }
-
-    .tp-heroalt__foto--1 { margin-top: 30px; }
-    .tp-heroalt__foto--3 { margin-top: 15px; }
+    .tp-mosaico__grade { gap: 10px; }
+    .tp-mosaico__cel--texto { padding: 12px 8px; }
   }
 
   @media (max-width: 899px) {
-    .tp-heroalt {
-      padding-block: 34px 0;
+    .tp-mosaico {
+      padding-block: 26px 0;
     }
 
-    .tp-heroalt__inner {
+    /* No celular o mosaico vira duas colunas: o texto ocupa a largura toda em
+       cima e as fotos se acomodam abaixo, aos pares. Manter seis células numa
+       tela estreita deixaria cada foto do tamanho de um selo. */
+    .tp-mosaico__grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    /* order: -1 põe o texto na frente de tudo. Sem isso ele fica na posição
+       do código, no meio da grade, e cada foto vizinha sobra sozinha na sua
+       linha — a coluna ao lado fica em branco. */
+    .tp-mosaico__cel--texto {
+      order: -1;
+      grid-column: 1 / -1;
+      grid-row: auto;
+      padding: 8px 0 18px;
+    }
+
+    .tp-mosaico__cel--a,
+    .tp-mosaico__cel--b,
+    .tp-mosaico__cel--c,
+    .tp-mosaico__cel--d,
+    .tp-mosaico__cel--e {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    /* A larga atravessa as duas colunas para o conjunto não virar uma grade
+       de quatro iguais. */
+    .tp-mosaico__cel--c {
+      grid-column: 1 / -1;
+    }
+
+    .tp-mosaico__script { font-size: 26px; }
+
+    .tp-mosaico__provas {
       grid-template-columns: minmax(0, 1fr);
-      gap: 32px;
+      margin-top: 28px;
     }
 
-    .tp-heroalt__script {
-      font-size: 27px;
+    .tp-mosaico__prova {
+      padding: 14px 0 16px;
     }
 
-    /* Três retratos lado a lado no celular ficariam finos demais para ver o
-       que há neles; a terceira sai e as duas melhores crescem. */
-    .tp-heroalt__fotos {
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 10px;
-    }
-
-    .tp-heroalt__foto--3 {
-      display: none;
-    }
-
-    .tp-heroalt__foto--1 { margin-top: 26px; }
-
-    .tp-heroalt__provas {
-      grid-template-columns: minmax(0, 1fr);
-      margin-top: 34px;
-    }
-
-    .tp-heroalt__prova {
-      padding: 16px 0 18px;
-      border-top: none;
-    }
-
-    .tp-heroalt__prova + .tp-heroalt__prova {
+    .tp-mosaico__prova + .tp-mosaico__prova {
       padding-left: 0;
       border-left: none;
       border-top: 1px solid rgba(61, 39, 34, 0.18);
@@ -309,7 +321,7 @@
 
 {% schema %}
 {
-  "name": "TP — Hero v2 (azul)",
+  "name": "TP — Hero mosaico",
   "tag": "section",
   "max_blocks": 3,
   "settings": [
@@ -330,12 +342,6 @@
       "id": "lead",
       "label": "Frase de abertura",
       "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você."
-    },
-    {
-      "type": "text",
-      "id": "tagline",
-      "label": "Assinatura",
-      "default": "Menos excesso. Mais essência."
     },
     {
       "type": "text",
@@ -361,89 +367,43 @@
     },
     {
       "type": "header",
-      "content": "Fotos",
-      "info": "Três retratos, em alturas diferentes. No celular a terceira sai."
+      "content": "Fotos do mosaico",
+      "info": "Cinco células. As duas de cima são retratos altos; embaixo, duas deitadas e uma quadrada."
     },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "Foto 1"
-    },
-    {
-      "type": "text",
-      "id": "image_1_asset",
-      "label": "Arquivo no tema (alternativa)",
-      "default": "tp-trabalho-mesa.jpg"
-    },
-    {
-      "type": "text",
-      "id": "image_1_alt",
-      "label": "Descrição da foto 1",
-      "default": "Mesa posta de formatura, com menu e marcador de lugar"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "Foto 2"
-    },
-    {
-      "type": "text",
-      "id": "image_2_asset",
-      "label": "Arquivo no tema (alternativa)",
-      "default": "tp-trabalho-convite.jpg"
-    },
-    {
-      "type": "text",
-      "id": "image_2_alt",
-      "label": "Descrição da foto 2",
-      "default": "Convite de casamento em caixa com laço"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "Foto 3"
-    },
-    {
-      "type": "text",
-      "id": "image_3_asset",
-      "label": "Arquivo no tema (alternativa)",
-      "default": "tp-trabalho-monograma.jpg"
-    },
-    {
-      "type": "text",
-      "id": "image_3_alt",
-      "label": "Descrição da foto 3",
-      "default": "Monograma recortado em dourado sobre o bolo"
-    }
+    { "type": "image_picker", "id": "image_1", "label": "1 · cima, esquerda" },
+    { "type": "text", "id": "image_1_asset", "label": "Arquivo no tema", "default": "tp-trabalho-monograma.jpg" },
+    { "type": "text", "id": "image_1_alt", "label": "Descrição", "default": "Monograma recortado em dourado sobre o bolo" },
+
+    { "type": "image_picker", "id": "image_2", "label": "2 · cima, direita" },
+    { "type": "text", "id": "image_2_asset", "label": "Arquivo no tema", "default": "tp-trabalho-convite.jpg" },
+    { "type": "text", "id": "image_2_alt", "label": "Descrição", "default": "Convite de casamento em caixa com laço" },
+
+    { "type": "image_picker", "id": "image_3", "label": "3 · baixo, larga" },
+    { "type": "text", "id": "image_3_asset", "label": "Arquivo no tema", "default": "tp-trabalho-mesa.jpg" },
+    { "type": "text", "id": "image_3_alt", "label": "Descrição", "default": "Mesa posta de formatura, com menu e marcador de lugar" },
+
+    { "type": "image_picker", "id": "image_4", "label": "4 · baixo, quadrada" },
+    { "type": "text", "id": "image_4_asset", "label": "Arquivo no tema", "default": "tp-trabalho-batizado.jpg" },
+    { "type": "text", "id": "image_4_alt", "label": "Descrição", "default": "Prato de porcelana pintado à mão para batizado" },
+
+    { "type": "image_picker", "id": "image_5", "label": "5 · baixo, direita" },
+    { "type": "text", "id": "image_5_asset", "label": "Arquivo no tema", "default": "tp-trabalho-mesa-posta.jpg" },
+    { "type": "text", "id": "image_5_alt", "label": "Descrição", "default": "Guardanapo com monograma bordado sobre sousplat" }
   ],
   "blocks": [
     {
       "type": "prova",
       "name": "Argumento",
       "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Título",
-          "default": "Pequenos lotes"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Texto",
-          "default": "Nada é impresso antes de existir uma celebração."
-        }
+        { "type": "text", "id": "title", "label": "Título", "default": "Pequenos lotes" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Nada é impresso antes de existir uma celebração." }
       ]
     }
   ],
   "presets": [
     {
-      "name": "TP — Hero v2 (azul)",
-      "blocks": [
-        { "type": "prova" },
-        { "type": "prova" },
-        { "type": "prova" }
-      ]
+      "name": "TP — Hero mosaico",
+      "blocks": [{ "type": "prova" }, { "type": "prova" }, { "type": "prova" }]
     }
   ]
 }
