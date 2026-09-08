@@ -36,7 +36,7 @@
           alt: block.settings.caption,
           class: 'tp-portfolio__media',
           width: 1000,
-          sizes: '(max-width: 899px) 50vw, 20vw',
+          sizes: '(max-width: 899px) 70vw, 20vw',
           widths: '300,500,1000'
         -%}
         {%- if block.settings.caption != blank -%}
@@ -85,12 +85,35 @@
       padding-block: 0 34px;
     }
 
+    /* No celular vira carrossel horizontal. Cinco retratos empilhados em duas
+       colunas viravam uma parede de rolagem; deitados numa faixa, o dedo
+       percorre os trabalhos como quem passa fotos.
+
+       Quem rola é a própria grade, não a página — a faixa sangra até a borda
+       da tela e reaproveita o gutter que .tp-section > * já aplica como folga
+       das pontas, então não precisa de margem negativa. */
     .tp-portfolio__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 68%;
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--tp-gutter);
+      scrollbar-width: none;
     }
 
-    /* No celular o degrau viraria buraco no meio da grade de duas colunas. */
+    .tp-portfolio__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tp-portfolio__cell {
+      scroll-snap-align: start;
+      min-width: 0;
+    }
+
+    /* O degrau é do desktop: numa faixa deitada ele só desalinharia as fotos. */
     .tp-portfolio__cell--2,
     .tp-portfolio__cell--4 {
       margin-top: 0;
