@@ -189,6 +189,26 @@ body .tp-section > * {
   color: var(--tp-cream);
 }
 
+/* Faixa vinho. Em vez de reescrever cada regra da seção, invertem-se os
+   tokens: o que era tinta escura passa a ser creme, e as linhas passam a ser
+   claras. Assim a seção segue usando var(--tp-ink) e var(--tp-muted) sem
+   saber que está sobre fundo escuro — mesma ideia do ajuste da faixa azul.
+
+   O chapéu usa var(--tp-wine), que sobre o vinho sumiria; vira rosa claro,
+   o mesmo tratamento que o CTA escuro já dá ao dele. */
+.tp-section--wine {
+  background: var(--tp-cherry);
+  color: var(--tp-cream);
+
+  --tp-ink: var(--tp-cream);
+  --tp-body: rgba(250, 248, 243, 0.86);
+  --tp-muted: rgba(250, 248, 243, 0.72);
+  --tp-wine: var(--tp-rose-light);
+  --tp-line: rgba(250, 248, 243, 0.24);
+  --tp-line-soft: rgba(250, 248, 243, 0.16);
+  --tp-line-strong: rgba(250, 248, 243, 0.42);
+}
+
 .tp-section * {
   box-sizing: border-box;
 }
