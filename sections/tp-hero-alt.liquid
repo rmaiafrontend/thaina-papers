@@ -1,0 +1,450 @@
+{%- comment -%}
+  Segunda versão do hero: faixa azul cheia, composição mais densa.
+
+  A primeira versão é uma coluna de texto ao lado de uma foto grande, sobre
+  creme. Esta troca o fundo por azul de borda a borda, empilha três fotos em
+  alturas diferentes e fecha com uma tira de argumentos — mais camadas, sem
+  abrir mão do canto seco e do alinhamento do resto do tema.
+{%- endcomment -%}
+
+{%- liquid
+  assign provas = section.blocks | where: 'type', 'prova'
+-%}
+
+<section class="tp-section tp-section--blue tp-heroalt">
+  <div class="tp-heroalt__inner">
+    <div class="tp-heroalt__texto">
+      {%- if section.settings.script_text != blank -%}
+        <div class="tp-heroalt__script">{{ section.settings.script_text }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="tp-heroalt__titulo">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.lead != blank -%}
+        <p class="tp-heroalt__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.tagline != blank -%}
+        <div class="tp-heroalt__regua">
+          <span class="tp-heroalt__regua-linha" aria-hidden="true"></span>
+          <span class="tp-heroalt__tagline">{{ section.settings.tagline }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="tp-heroalt__acoes">
+        {%- if section.settings.button_1_label != blank -%}
+          <a
+            {% if section.settings.button_1_link != blank %}href="{{ section.settings.button_1_link }}"{% endif %}
+            class="tp-btn tp-btn--solid"
+          >
+            {{- section.settings.button_1_label -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a
+            {% if section.settings.button_2_link != blank %}href="{{ section.settings.button_2_link }}"{% endif %}
+            class="tp-btn tp-btn--outline tp-heroalt__btn-vazado"
+          >
+            {{- section.settings.button_2_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%}
+      Três alturas diferentes: é o que dá movimento sem inclinar nada, que
+      brigaria com o desenho reto do resto do site.
+    {%- endcomment -%}
+    <div class="tp-heroalt__fotos">
+      <figure class="tp-heroalt__foto tp-heroalt__foto--1">
+        {%- render 'tp-image',
+          image: section.settings.image_1,
+          asset: section.settings.image_1_asset,
+          alt: section.settings.image_1_alt,
+          class: 'tp-heroalt__quadro',
+          ratio: '2/3',
+          width: 900,
+          sizes: '(max-width: 899px) 46vw, 22vw',
+          widths: '300,500,700,900',
+          loading: 'eager'
+        -%}
+      </figure>
+
+      <figure class="tp-heroalt__foto tp-heroalt__foto--2">
+        {%- render 'tp-image',
+          image: section.settings.image_2,
+          asset: section.settings.image_2_asset,
+          alt: section.settings.image_2_alt,
+          class: 'tp-heroalt__quadro',
+          ratio: '2/3',
+          width: 900,
+          sizes: '(max-width: 899px) 46vw, 22vw',
+          widths: '300,500,700,900',
+          loading: 'eager'
+        -%}
+      </figure>
+
+      <figure class="tp-heroalt__foto tp-heroalt__foto--3">
+        {%- render 'tp-image',
+          image: section.settings.image_3,
+          asset: section.settings.image_3_asset,
+          alt: section.settings.image_3_alt,
+          class: 'tp-heroalt__quadro',
+          ratio: '2/3',
+          width: 700,
+          sizes: '(max-width: 899px) 46vw, 18vw',
+          widths: '300,500,700'
+        -%}
+      </figure>
+    </div>
+  </div>
+
+  {%- if provas.size > 0 -%}
+    <div class="tp-heroalt__provas">
+      {%- for block in provas -%}
+        <div class="tp-heroalt__prova" {{ block.shopify_attributes }}>
+          <span class="tp-heroalt__prova-titulo">{{ block.settings.title }}</span>
+          {%- if block.settings.text != blank -%}
+            <span class="tp-heroalt__prova-texto">{{ block.settings.text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .tp-heroalt {
+    padding-block: 64px 0;
+  }
+
+  .tp-heroalt__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 4.4fr) minmax(0, 7.6fr);
+    gap: 48px;
+    align-items: center;
+  }
+
+  /* ---------- texto ---------- */
+
+  .tp-heroalt__script {
+    font-family: var(--tp-script);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--tp-wine);
+    margin-bottom: 10px;
+  }
+
+  .tp-heroalt__titulo {
+    font-family: var(--tp-serif);
+    font-weight: 400;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.04;
+    color: var(--tp-ink);
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+
+  .tp-heroalt__lead {
+    font-family: var(--tp-serif);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--tp-ink);
+    margin: 0 0 22px;
+    max-width: 30ch;
+  }
+
+  .tp-heroalt__regua {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .tp-heroalt__regua-linha {
+    width: 44px;
+    height: 1px;
+    background: var(--tp-ink);
+    flex: none;
+    opacity: 0.45;
+  }
+
+  .tp-heroalt__tagline {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tp-body);
+  }
+
+  .tp-heroalt__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tp-heroalt .tp-heroalt__btn-vazado {
+    border-color: var(--tp-ink);
+    color: var(--tp-ink);
+  }
+
+  .tp-heroalt .tp-heroalt__btn-vazado:hover {
+    background: var(--tp-ink);
+    color: var(--tp-blue);
+  }
+
+  /* ---------- fotos ---------- */
+
+  /* Larguras desiguais de propósito: três retratos do mesmo tamanho viram
+     uma cerca. Com uma foto dominante e duas de apoio, a composição ganha
+     ordem de leitura — e a maior é a que mostra a papelaria na mesa. */
+  .tp-heroalt__fotos {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  .tp-heroalt__foto {
+    margin: 0;
+  }
+
+  /* O degrau é o que substitui a inclinação: dá movimento à composição sem
+     torcer nada, que destoaria do desenho reto do resto do tema. */
+  .tp-heroalt__foto--1 { margin-top: 40px; }
+  .tp-heroalt__foto--3 { margin-top: 76px; }
+
+  .tp-heroalt__quadro {
+    aspect-ratio: 2 / 3;
+  }
+
+  /* ---------- tira de argumentos ---------- */
+
+  .tp-heroalt__provas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 56px;
+    border-top: 1px solid rgba(61, 39, 34, 0.22);
+  }
+
+  .tp-heroalt__prova {
+    display: grid;
+    gap: 4px;
+    padding: 22px 28px 26px 0;
+  }
+
+  .tp-heroalt__prova + .tp-heroalt__prova {
+    padding-left: 28px;
+    border-left: 1px solid rgba(61, 39, 34, 0.22);
+  }
+
+  .tp-heroalt__prova-titulo {
+    font-family: var(--tp-serif);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--tp-ink);
+  }
+
+  .tp-heroalt__prova-texto {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--tp-body);
+  }
+
+  @media (max-width: 1100px) {
+    .tp-heroalt__inner {
+      gap: 36px;
+    }
+
+    .tp-heroalt__foto--1 { margin-top: 30px; }
+    .tp-heroalt__foto--3 { margin-top: 15px; }
+  }
+
+  @media (max-width: 899px) {
+    .tp-heroalt {
+      padding-block: 34px 0;
+    }
+
+    .tp-heroalt__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .tp-heroalt__script {
+      font-size: 27px;
+    }
+
+    /* Três retratos lado a lado no celular ficariam finos demais para ver o
+       que há neles; a terceira sai e as duas melhores crescem. */
+    .tp-heroalt__fotos {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .tp-heroalt__foto--3 {
+      display: none;
+    }
+
+    .tp-heroalt__foto--1 { margin-top: 26px; }
+
+    .tp-heroalt__provas {
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 34px;
+    }
+
+    .tp-heroalt__prova {
+      padding: 16px 0 18px;
+      border-top: none;
+    }
+
+    .tp-heroalt__prova + .tp-heroalt__prova {
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid rgba(61, 39, 34, 0.18);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "TP — Hero v2 (azul)",
+  "tag": "section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_text",
+      "label": "Manuscrito",
+      "default": "feito à mão"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Não é só papel"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Frase de abertura",
+      "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Assinatura",
+      "default": "Menos excesso. Mais essência."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Botão principal",
+      "default": "Ver todos os produtos"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Destino do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Botão secundário",
+      "default": "Sob medida"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Destino do botão secundário"
+    },
+    {
+      "type": "header",
+      "content": "Fotos",
+      "info": "Três retratos, em alturas diferentes. No celular a terceira sai."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Foto 1"
+    },
+    {
+      "type": "text",
+      "id": "image_1_asset",
+      "label": "Arquivo no tema (alternativa)",
+      "default": "tp-trabalho-mesa.jpg"
+    },
+    {
+      "type": "text",
+      "id": "image_1_alt",
+      "label": "Descrição da foto 1",
+      "default": "Mesa posta de formatura, com menu e marcador de lugar"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Foto 2"
+    },
+    {
+      "type": "text",
+      "id": "image_2_asset",
+      "label": "Arquivo no tema (alternativa)",
+      "default": "tp-trabalho-convite.jpg"
+    },
+    {
+      "type": "text",
+      "id": "image_2_alt",
+      "label": "Descrição da foto 2",
+      "default": "Convite de casamento em caixa com laço"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Foto 3"
+    },
+    {
+      "type": "text",
+      "id": "image_3_asset",
+      "label": "Arquivo no tema (alternativa)",
+      "default": "tp-trabalho-monograma.jpg"
+    },
+    {
+      "type": "text",
+      "id": "image_3_alt",
+      "label": "Descrição da foto 3",
+      "default": "Monograma recortado em dourado sobre o bolo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "prova",
+      "name": "Argumento",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Pequenos lotes"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Nada é impresso antes de existir uma celebração."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TP — Hero v2 (azul)",
+      "blocks": [
+        { "type": "prova" },
+        { "type": "prova" },
+        { "type": "prova" }
+      ]
+    }
+  ]
+}
+{% endschema %}
