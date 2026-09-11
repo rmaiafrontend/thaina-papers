@@ -112,15 +112,32 @@
 
   /* Respiro interno embaixo também: sem ele as fotos eram cortadas na borda
      do cartão, e um cartão que corta o próprio conteúdo não lê como cartão. */
+  /* O fundo é montado em camadas, de cima para baixo na lista = de frente
+     para trás na tela:
+
+     1. luz principal atrás do texto — o ponto mais claro é onde o título
+        está, e é isso que segura o contraste (título ~12:1);
+     2. brilho quente no canto superior direito e rosado no esquerdo, maiores
+        e mais suaves que antes, para virarem atmosfera e não dois pontos;
+     3. sombra azul no pé, onde ficam as fotos: escurece só ali, longe de
+        qualquer texto, e faz as fotos saltarem do fundo;
+     4. base em diagonal, do azul mais claro ao mais fechado — sem ela o
+        conjunto parecia luz pintada sobre uma cor chapada.
+
+     O realce de 1px no topo dá a leitura de luz vindo de cima, coerente com
+     a luz central. Sem sombra externa: o resto do site é plano. */
   .tp-passarela .tp-passarela__cartao {
     position: relative;
     padding-block: 64px 56px;
     overflow: hidden;
+    border-radius: 24px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
     background:
-      radial-gradient(122% 78% at 50% 32%, #dfe8f2 0%, rgba(223, 232, 242, 0) 60%),
-      radial-gradient(64% 58% at 86% 6%, rgba(255, 237, 173, 0.32) 0%, rgba(255, 237, 173, 0) 58%),
-      radial-gradient(58% 54% at 10% 88%, rgba(214, 168, 184, 0.26) 0%, rgba(214, 168, 184, 0) 58%),
-      var(--tp-blue);
+      radial-gradient(84% 56% at 50% 20%, #eef3f8 0%, rgba(238, 243, 248, 0.62) 28%, rgba(238, 243, 248, 0) 64%),
+      radial-gradient(58% 46% at 92% 10%, rgba(255, 237, 173, 0.42) 0%, rgba(255, 237, 173, 0) 60%),
+      radial-gradient(52% 44% at 4% 36%, rgba(214, 168, 184, 0.36) 0%, rgba(214, 168, 184, 0) 60%),
+      radial-gradient(72% 52% at 78% 102%, rgba(112, 144, 186, 0.50) 0%, rgba(112, 144, 186, 0) 62%),
+      linear-gradient(162deg, #b6cbe0 0%, var(--tp-blue) 52%, #90abc8 100%);
   }
 
   /* Grão por cima de tudo. Segura o degradê, que sem textura fica com
@@ -290,6 +307,7 @@
 
     .tp-passarela .tp-passarela__cartao {
       padding-block: 36px 32px;
+      border-radius: 16px;
     }
 
     .tp-passarela__topo {
