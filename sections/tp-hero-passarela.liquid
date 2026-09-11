@@ -23,6 +23,25 @@
   {%- endcomment -%}
   <div class="tp-passarela__moldura">
   <div class="tp-passarela__cartao tp-section--blue">
+  {%- if fotos.size > 0 -%}
+    <div class="tp-passarela__faixa">
+      {%- for block in fotos -%}
+        <div class="tp-passarela__item">
+          {%- render 'tp-image',
+            image: block.settings.image,
+            asset: block.settings.image_asset,
+            alt: block.settings.alt,
+            class: 'tp-passarela__foto',
+            ratio: '2/3',
+            width: 700,
+            sizes: '(max-width: 899px) 34vw, 17vw',
+            widths: '300,500,700',
+            loading: 'eager'
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
   <div class="tp-passarela__topo">
     {%- if section.settings.script_text != blank -%}
       <div class="tp-passarela__script">{{ section.settings.script_text }}</div>
@@ -64,25 +83,6 @@
     </div>
   </div>
 
-  {%- if fotos.size > 0 -%}
-    <div class="tp-passarela__faixa">
-      {%- for block in fotos -%}
-        <div class="tp-passarela__item">
-          {%- render 'tp-image',
-            image: block.settings.image,
-            asset: block.settings.image_asset,
-            alt: block.settings.alt,
-            class: 'tp-passarela__foto',
-            ratio: '2/3',
-            width: 700,
-            sizes: '(max-width: 899px) 34vw, 17vw',
-            widths: '300,500,700',
-            loading: 'eager'
-          -%}
-        </div>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
   </div>
   </div>
 </section>
@@ -124,7 +124,7 @@
      a luz central. Sem sombra externa: o resto do site é plano. */
   .tp-passarela .tp-passarela__cartao {
     position: relative;
-    padding-block: 64px 0;
+    padding-block: 0 64px;
     overflow: hidden;
     border-radius: 24px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
@@ -232,44 +232,42 @@
 
   /* ---------- tira de painéis ---------- */
 
-  /* Painéis colados, sem vão: é a colagem que faz ler como vitrine e não
-     como galeria. Seis no desktop; com oito cada um ficaria com 150px, e
-     abaixo disso o retrato vira tira. */
+  /* Quatro painéis colados, sem vão, no topo do cartão. Menos painéis e
+     mais largos: cada um ganha 310px e o retrato aparece inteiro, em vez das
+     tiras de 206px de antes. */
   .tp-passarela .tp-passarela__faixa {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0;
 
-    /* Sobe para debaixo do bloco de texto: o texto fica sobre a parte apagada
-       da tira, e é isso que dá a sensação de a foto nascer do fundo. */
-    margin-top: -96px;
+    /* O texto sobe para dentro do pé apagado da tira: a foto se dissolve e o
+       título nasce exatamente onde ela some. */
+    margin-bottom: -150px;
 
     /* Máscara vertical: apaga o topo (onde o texto está) e afina o pé (onde o
        cartão termina). Máscara, e não degradê pintado, porque o fundo do
        cartão é um gradiente de cinco camadas — não há cor sólida que um
        degradê por cima pudesse imitar sem deixar emenda. */
-    /* O apagado vai até 58%: é o que garante que assinatura e botões, que
-       ficam sobre a tira, estejam sobre foto quase invisível e não sobre foto
-       inteira. Abaixo de 42% o botão vazado sumia. */
+    /* Cheia no topo e apagada no pé, onde o texto entra. A curva é longa de
+       propósito: o título começa sobre foto quase invisível, e sobe até o
+       topo do cartão em foto inteira. */
     -webkit-mask-image: linear-gradient(
       to bottom,
-      transparent 0,
-      rgba(0, 0, 0, 0.18) 22%,
-      #000 58%,
-      #000 86%,
-      rgba(0, 0, 0, 0.3) 100%
+      #000 0,
+      #000 38%,
+      rgba(0, 0, 0, 0.55) 62%,
+      transparent 100%
     );
     mask-image: linear-gradient(
       to bottom,
-      transparent 0,
-      rgba(0, 0, 0, 0.18) 22%,
-      #000 58%,
-      #000 86%,
-      rgba(0, 0, 0, 0.3) 100%
+      #000 0,
+      #000 38%,
+      rgba(0, 0, 0, 0.55) 62%,
+      transparent 100%
     );
   }
 
-  .tp-passarela__item:nth-child(n + 7) {
+  .tp-passarela__item:nth-child(n + 5) {
     display: none;
   }
 
@@ -285,12 +283,7 @@
 
   @media (max-width: 1100px) {
     .tp-passarela .tp-passarela__faixa {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      margin-top: -72px;
-    }
-
-    .tp-passarela__item:nth-child(n + 6) {
-      display: none;
+      margin-bottom: -110px;
     }
   }
 
@@ -300,7 +293,7 @@
     }
 
     .tp-passarela .tp-passarela__cartao {
-      padding-block: 36px 0;
+      padding-block: 0 40px;
       border-radius: 16px;
     }
 
@@ -313,13 +306,14 @@
       font-size: 28px;
     }
 
-    /* Três painéis no celular: com mais, cada um vira uma tira de dedo. */
+    /* Dois painéis no celular: quatro num cartão de 335px dariam 84px cada,
+       e retrato de 84px não mostra o que há nele. */
     .tp-passarela .tp-passarela__faixa {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: -48px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: -80px;
     }
 
-    .tp-passarela__item:nth-child(n + 4) {
+    .tp-passarela__item:nth-child(n + 3) {
       display: none;
     }
   }
