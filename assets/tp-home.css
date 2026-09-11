@@ -95,11 +95,24 @@
 
   --tp-gutter: 96px;
   --tp-content-width: 1240px;
+
+  /* Um raio só para tudo que é moldura de imagem ou cartão: o dos cards de
+     produto. Miniaturas pequenas (sacola, carrinho) usam a versão menor,
+     porque 18px num quadrado de 84px vira quase um círculo. */
+  --tp-radius: 18px;
+  --tp-radius-sm: 12px;
 }
 
 @media (max-width: 1100px) {
   :root {
     --tp-gutter: 48px;
+  }
+}
+
+@media (max-width: 899px) {
+  :root {
+    --tp-radius: 12px;
+    --tp-radius-sm: 8px;
   }
 }
 
@@ -307,6 +320,7 @@ body .tp-section > * {
   width: 100%;
   background: var(--tp-stone);
   overflow: hidden;
+  border-radius: var(--tp-radius);
 }
 
 .tp-media img,
