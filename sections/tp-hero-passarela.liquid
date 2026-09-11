@@ -251,19 +251,24 @@
     /* Cheia no topo e apagada no pé, onde o texto entra. A curva é longa de
        propósito: o título começa sobre foto quase invisível, e sobe até o
        topo do cartão em foto inteira. */
+    /* O degradê ocupa mais da metade da tira: a foto fica inteira só no
+       terço de cima e já está transparente aos 66%. O título entra aos 68%,
+       ou seja, sobre fundo limpo — antes ele entrava com a foto ainda em
+       25% de opacidade por trás, e o contraste dependia de qual painel
+       estivesse embaixo. */
     -webkit-mask-image: linear-gradient(
       to bottom,
       #000 0,
-      #000 38%,
-      rgba(0, 0, 0, 0.55) 62%,
-      transparent 100%
+      #000 18%,
+      rgba(0, 0, 0, 0.45) 42%,
+      transparent 66%
     );
     mask-image: linear-gradient(
       to bottom,
       #000 0,
-      #000 38%,
-      rgba(0, 0, 0, 0.55) 62%,
-      transparent 100%
+      #000 18%,
+      rgba(0, 0, 0, 0.45) 42%,
+      transparent 66%
     );
   }
 
