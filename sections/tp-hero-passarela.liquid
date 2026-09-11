@@ -22,7 +22,14 @@
     página aparecer em volta, como margem de uma folha.
   {%- endcomment -%}
   <div class="tp-passarela__moldura">
-  <div class="tp-passarela__cartao tp-section--blue">
+  {%- liquid
+    if section.settings.fundo == 'vinho'
+      assign cartao_classes = 'tp-section--wine tp-passarela__cartao--vinho'
+    else
+      assign cartao_classes = 'tp-section--blue'
+    endif
+  -%}
+  <div class="tp-passarela__cartao {{ cartao_classes }}">
   {%- if fotos.size > 0 -%}
     <div class="tp-passarela__faixa">
       {%- for block in fotos -%}
@@ -151,6 +158,42 @@
   .tp-passarela__cartao > * {
     position: relative;
     z-index: 1;
+  }
+
+  /* ---------- variante vinho ---------- */
+
+  /* Mesmas camadas do azul, redosadas para fundo escuro: a luz central é
+     branco a 16%, não uma cor clara — em vinho, qualquer coisa mais forte
+     vira mancha rosada e come o contraste do creme (título ~8:1 no ponto
+     mais claro). A sombra do pé fica mais fechada, porque no escuro é ela
+     que separa as fotos do fundo. O realce de topo cai para 18%: em cima
+     de vinho, 42% seria uma linha branca. As cores de texto vêm dos tokens
+     invertidos de .tp-section--wine, os mesmos dos depoimentos. */
+  .tp-passarela .tp-passarela__cartao--vinho {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    background:
+      radial-gradient(84% 56% at 50% 20%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.07) 28%, rgba(255, 255, 255, 0) 64%),
+      radial-gradient(58% 46% at 92% 10%, rgba(255, 237, 173, 0.2) 0%, rgba(255, 237, 173, 0) 60%),
+      radial-gradient(52% 44% at 4% 36%, rgba(214, 168, 184, 0.26) 0%, rgba(214, 168, 184, 0) 60%),
+      radial-gradient(72% 52% at 78% 102%, rgba(40, 4, 8, 0.55) 0%, rgba(40, 4, 8, 0) 62%),
+      linear-gradient(162deg, #8c1a24 0%, var(--tp-cherry) 52%, #4f0b11 100%);
+  }
+
+  /* O botão sólido do tema é vinho sobre creme; dentro do cartão vinho
+     ele sumiria, então inverte: creme com texto vinho. O vazado já vem
+     creme pelos tokens, só o hover precisa trocar o azul por vinho. */
+  .tp-passarela .tp-passarela__cartao--vinho .tp-btn--solid {
+    background: var(--tp-cream);
+    color: var(--tp-cherry);
+  }
+
+  .tp-passarela .tp-passarela__cartao--vinho .tp-btn--solid:hover {
+    background: var(--tp-butter);
+    color: var(--tp-cherry);
+  }
+
+  .tp-passarela .tp-passarela__cartao--vinho .tp-passarela__btn-vazado:hover {
+    color: var(--tp-cherry);
   }
 
   /* ---------- texto centralizado ---------- */
@@ -421,6 +464,16 @@
       "type": "url",
       "id": "button_2_link",
       "label": "Destino do botão secundário"
+    },
+    {
+      "type": "select",
+      "id": "fundo",
+      "label": "Cor do fundo",
+      "options": [
+        { "value": "azul", "label": "Azul" },
+        { "value": "vinho", "label": "Vinho" }
+      ],
+      "default": "azul"
     },
     {
       "type": "checkbox",
