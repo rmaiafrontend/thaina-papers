@@ -14,7 +14,7 @@
   assign fotos = section.blocks | where: 'type', 'foto'
 -%}
 
-<section class="tp-section tp-passarela">
+<section class="tp-section tp-passarela{% if section.settings.sangrar %} tp-passarela--sangrada{% endif %}">
   {%- comment -%}
     A moldura é filha direta da seção, então recebe sozinha o container do
     design system: largura máxima, centralização e o gutter como respiro. O
@@ -34,7 +34,7 @@
             class: 'tp-passarela__foto',
             ratio: '2/3',
             width: 700,
-            sizes: '(max-width: 899px) 34vw, 17vw',
+            sizes: '(max-width: 899px) 50vw, 25vw',
             widths: '300,500,700',
             loading: 'eager'
           -%}
@@ -290,6 +290,34 @@
     z-index: 2;
   }
 
+  /* ---------- modo sangrado ---------- */
+
+  /* Com "Ocupar toda a largura" ligado o cartão vira faixa: a moldura solta
+     o container (mesma receita dos carrosséis — nada de 100vw, que soma a
+     barra de rolagem), o respiro creme em volta some e o raio também, porque
+     canto arredondado encostado na borda da tela parece erro de corte. As
+     fotos deixam de seguir 2:3 e ganham altura fixa por faixa: em 1920px de
+     largura, 2:3 daria painéis de 720px e o hero viraria uma tela inteira
+     de foto antes do título. */
+  .tp-passarela.tp-passarela--sangrada {
+    padding-block: 0;
+  }
+
+  .tp-passarela--sangrada .tp-passarela__moldura {
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .tp-passarela.tp-passarela--sangrada .tp-passarela__cartao {
+    border-radius: 0;
+  }
+
+  .tp-passarela--sangrada .tp-passarela__foto {
+    aspect-ratio: auto;
+    height: clamp(400px, 36vw, 560px);
+  }
+
   @media (max-width: 1100px) {
     .tp-passarela .tp-passarela__faixa {
       margin-bottom: -110px;
@@ -304,6 +332,10 @@
     .tp-passarela .tp-passarela__cartao {
       padding-block: 0 40px;
       border-radius: 16px;
+    }
+
+    .tp-passarela--sangrada .tp-passarela__foto {
+      height: clamp(240px, 72vw, 340px);
     }
 
     .tp-passarela__topo {
@@ -379,6 +411,13 @@
       "type": "url",
       "id": "button_2_link",
       "label": "Destino do botão secundário"
+    },
+    {
+      "type": "checkbox",
+      "id": "sangrar",
+      "label": "Ocupar toda a largura",
+      "info": "Sem a margem creme em volta: o cartão vira uma faixa de borda a borda.",
+      "default": false
     },
     {
       "type": "header",
