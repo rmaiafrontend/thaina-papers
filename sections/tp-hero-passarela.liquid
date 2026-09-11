@@ -299,8 +299,12 @@
      fotos deixam de seguir 2:3 e ganham altura fixa por faixa: em 1920px de
      largura, 2:3 daria painéis de 720px e o hero viraria uma tela inteira
      de foto antes do título. */
+  /* Em cima o respiro é zero (a faixa cola no cabeçalho de propósito), mas
+     embaixo fica 64px: a seção seguinte, "ocasiões", só tem 8px de topo
+     porque foi ajustada para viver sob o cartão contido, que trazia o
+     próprio respiro. 64 + 8 = 72, o mesmo que ela tem no pé. */
   .tp-passarela.tp-passarela--sangrada {
-    padding-block: 0;
+    padding-block: 0 64px;
   }
 
   .tp-passarela--sangrada .tp-passarela__moldura {
@@ -332,6 +336,10 @@
     .tp-passarela .tp-passarela__cartao {
       padding-block: 0 40px;
       border-radius: 16px;
+    }
+
+    .tp-passarela.tp-passarela--sangrada {
+      padding-block: 0 40px;
     }
 
     .tp-passarela--sangrada .tp-passarela__foto {
