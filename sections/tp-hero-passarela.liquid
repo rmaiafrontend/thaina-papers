@@ -30,7 +30,27 @@
     endif
   -%}
   <div class="tp-passarela__cartao {{ cartao_classes }}">
-  {%- if fotos.size > 0 -%}
+  {%- comment -%}
+    Uma foto larga, quando escolhida, entra no lugar dos painéis: é a mesma
+    tira, mesma máscara, mesmo recuo sob o texto — só muda o que a
+    preenche. Os blocos de painel continuam salvos e voltam se a foto for
+    removida.
+  {%- endcomment -%}
+  {%- if section.settings.fundo_imagem != blank or section.settings.fundo_imagem_asset != blank -%}
+    <div class="tp-passarela__faixa tp-passarela__faixa--unica">
+      {%- render 'tp-image',
+        image: section.settings.fundo_imagem,
+        asset: section.settings.fundo_imagem_asset,
+        alt: section.settings.fundo_imagem_alt,
+        class: 'tp-passarela__foto tp-passarela__foto--unica',
+        ratio: '1916/821',
+        width: 1916,
+        sizes: '100vw',
+        widths: '800,1200,1600,1916',
+        loading: 'eager'
+      -%}
+    </div>
+  {%- elsif fotos.size > 0 -%}
     <div class="tp-passarela__faixa">
       {%- for block in fotos -%}
         <div class="tp-passarela__item">
@@ -368,6 +388,28 @@
     height: clamp(400px, 36vw, 560px);
   }
 
+  /* ---------- foto única ---------- */
+
+  /* A foto larga não segue a proporção do arquivo (2,3:1 daria 610px em
+     1440 e o hero viraria uma tela de foto antes do título): ganha a
+     mesma altura por faixa do modo sangrado e o object-fit corta o que
+     sobra em cima e embaixo. No celular a altura fixa corta as laterais e
+     sobra o miolo — caixa e prato —, que é o que importa. */
+  .tp-passarela .tp-passarela__faixa--unica {
+    display: block;
+  }
+
+  .tp-passarela .tp-passarela__foto--unica {
+    aspect-ratio: auto;
+    height: clamp(420px, 38vw, 600px);
+  }
+
+  /* O corte vai todo para o pé, que já some sob a máscara; no topo fica o
+     monograma da caixa, que centralizado era cortado ao meio. */
+  .tp-passarela .tp-passarela__foto--unica img {
+    object-position: center top;
+  }
+
   @media (max-width: 1100px) {
     .tp-passarela .tp-passarela__faixa {
       margin-bottom: -110px;
@@ -388,6 +430,10 @@
     }
 
     .tp-passarela--sangrada .tp-passarela__foto {
+      height: clamp(240px, 72vw, 340px);
+    }
+
+    .tp-passarela .tp-passarela__foto--unica {
       height: clamp(240px, 72vw, 340px);
     }
 
@@ -482,6 +528,19 @@
       "info": "Sem a margem creme em volta: o cartão vira uma faixa de borda a borda.",
       "default": false
     },
+    {
+      "type": "header",
+      "content": "Foto única",
+      "info": "Se preenchida, entra no lugar dos painéis abaixo."
+    },
+    { "type": "image_picker", "id": "fundo_imagem", "label": "Foto larga" },
+    {
+      "type": "text",
+      "id": "fundo_imagem_asset",
+      "label": "Arquivo no tema (alternativa)",
+      "info": "Nome do arquivo em assets/, ex.: tp-hero-fundo.jpg"
+    },
+    { "type": "text", "id": "fundo_imagem_alt", "label": "Descrição da foto" },
     {
       "type": "header",
       "content": "Fotos da passarela",
