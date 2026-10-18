@@ -967,22 +967,45 @@ body.lp {
   list-style: none;
 }
 
-/* Card de produto: foto de ponta a ponta no topo, nome em serifado com
-   respiro e uma linha de base com preço e um botão de WhatsApp compacto —
-   o pedido está a um toque, mas quem manda no card é a foto. */
+/* Card de produto em forma de ticket. A foto é o canhoto de cima; o corpo
+   é a parte destacável, com meias-luas recortadas nas laterais na linha do
+   picote, linha tracejada e borda de baixo serrilhada, como papel
+   destacado. Os recortes são máscaras de verdade (deixam ver o fundo), e
+   por isso a sombra é drop-shadow no card — ela segue o recorte em vez de
+   desenhar um retângulo por trás. */
 .lp-card {
+  --corte: 10px;
+  --giro: -0.6deg;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border-radius: var(--lp-canto-papel);
-  background-color: var(--lp-creme);
+  filter:
+    drop-shadow(0 1px 1px rgba(60, 40, 30, 0.14))
+    drop-shadow(0 10px 12px rgba(40, 50, 70, 0.16));
+  rotate: var(--giro);
+}
+
+.lp-card:nth-child(3n + 2) {
+  --giro: 0.5deg;
+}
+
+.lp-card:nth-child(3n) {
+  --giro: -0.25deg;
 }
 
 .lp-card__midia {
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
+  border-radius: 13px 11px 0 0 / 11px 14px 0 0;
   background: var(--lp-azul-claro);
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--corte)) no-repeat,
+    radial-gradient(circle at 0 100%, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) bottom left / 51% var(--corte) no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) bottom right / 51% var(--corte) no-repeat;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--corte)) no-repeat,
+    radial-gradient(circle at 0 100%, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) bottom left / 51% var(--corte) no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) bottom right / 51% var(--corte) no-repeat;
 }
 
 .lp-card__foto {
@@ -992,7 +1015,6 @@ body.lp {
   transition: transform 0.7s cubic-bezier(.2, .8, .2, 1);
 }
 
-/* Sem foto: a inicial do produto sobre vinho, para não ficar um buraco. */
 .lp-card__midia--tipo {
   display: grid;
   place-items: center;
@@ -1008,11 +1030,49 @@ body.lp {
 }
 
 .lp-card__corpo {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
   gap: 10px;
-  padding: 12px 12px 12px 14px;
+  padding: 18px 14px 20px 15px;
+  background-color: var(--lp-creme);
+  background-image:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 50%),
+    var(--lp-fibra),
+    var(--lp-grao-leve);
+  background-blend-mode: normal, multiply, multiply;
+  -webkit-mask:
+    radial-gradient(circle at 0 0, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) top left / 51% var(--corte) no-repeat,
+    radial-gradient(circle at 100% 0, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) top right / 51% var(--corte) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--corte) / 100% calc(100% - var(--corte) - 5px) no-repeat,
+    radial-gradient(circle at 50% 100%, #0000 3.2px, #000 3.7px) bottom / 9px 5px repeat-x;
+  mask:
+    radial-gradient(circle at 0 0, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) top left / 51% var(--corte) no-repeat,
+    radial-gradient(circle at 100% 0, #0000 var(--corte), #000 calc(var(--corte) + 0.5px)) top right / 51% var(--corte) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--corte) / 100% calc(100% - var(--corte) - 5px) no-repeat,
+    radial-gradient(circle at 50% 100%, #0000 3.2px, #000 3.7px) bottom / 9px 5px repeat-x;
+}
+
+/* Linha do picote, entre as duas meias-luas. */
+.lp-card__corpo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--corte) + 4px);
+  right: calc(var(--corte) + 4px);
+  border-top: 2px dashed rgba(107, 16, 23, 0.26);
+}
+
+.lp-card__serie {
+  position: absolute;
+  top: 9px;
+  right: 14px;
+  font-family: var(--lp-display);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(107, 16, 23, 0.6);
 }
 
 .lp-card__nome {
@@ -1030,8 +1090,6 @@ body.lp {
   justify-content: space-between;
   gap: 8px;
   margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(107, 16, 23, 0.22);
 }
 
 .lp-card__preco {
@@ -1392,7 +1450,6 @@ body.lp {
    textura só aparece de perto.
    ========================================================= */
 
-.lp-card,
 .lp-ocasiao,
 .lp-jeito,
 .lp-passo__corpo,
@@ -1537,7 +1594,7 @@ body.lp {
   grid-auto-columns: 60%;
 }
 
-.lp-destaques .lp-card {
+.lp-destaques .lp-card__corpo {
   background-color: #fffdf8;
 }
 
@@ -1919,12 +1976,7 @@ body.lp {
   padding-top: 16px;
 }
 
-.lp-destaques .lp-card:nth-child(odd) {
-  rotate: -0.8deg;
-}
-
 .lp-destaques .lp-card:nth-child(even) {
-  rotate: 0.7deg;
   margin-top: 10px;
 }
 

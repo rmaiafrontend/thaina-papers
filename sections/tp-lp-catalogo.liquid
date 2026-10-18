@@ -79,7 +79,7 @@
             {%- if n >= limite -%}{%- break -%}{%- endif -%}
             {%- assign n = n | plus: 1 -%}
             {%- assign idx = n | minus: 1 | modulo: 4 -%}
-            {%- render 'tp-lp-card', produto: produto, contexto: b.settings.rotulo, i: idx -%}
+            {%- render 'tp-lp-card', produto: produto, contexto: b.settings.rotulo, i: idx, numero: n -%}
           {%- endfor -%}
         </ul>
       {%- else -%}

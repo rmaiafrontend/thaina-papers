@@ -19,7 +19,7 @@
   <ul class="lp-trilho lp-destaques__lista">
     {%- for produto in colecao.products limit: section.settings.limite -%}
       {%- assign idx = forloop.index0 | modulo: 4 -%}
-      {%- render 'tp-lp-card', produto: produto, i: idx, sizes: '(max-width: 899px) 58vw, 280px' -%}
+      {%- render 'tp-lp-card', produto: produto, i: idx, numero: forloop.index, sizes: '(max-width: 899px) 58vw, 280px' -%}
     {%- endfor -%}
   </ul>
 </section>

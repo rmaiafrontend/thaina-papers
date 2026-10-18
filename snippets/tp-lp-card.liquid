@@ -5,6 +5,7 @@
   @param {object} produto - O produto.
   @param {string} [contexto] - Vai entre parênteses na mensagem (ex.: "Casamentos").
   @param {number} [i] - Índice para o atraso da animação de entrada.
+  @param {number} [numero] - Número de série do ticket (nº 01, nº 02…).
   @param {string} [sizes] - Atributo sizes da imagem.
 {%- enddoc -%}
 {%- liquid
@@ -28,6 +29,9 @@
     {%- endif -%}
   </div>
   <div class="lp-card__corpo">
+    {%- if numero -%}
+      <span class="lp-card__serie" aria-hidden="true">nº {% if numero < 10 %}0{% endif %}{{ numero }}</span>
+    {%- endif -%}
     <h4 class="lp-card__nome">{{ produto.title }}</h4>
     <div class="lp-card__base">
       <p class="lp-card__preco">
