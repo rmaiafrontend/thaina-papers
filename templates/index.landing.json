@@ -5,7 +5,65 @@
       "type": "tp-lp-capa",
       "settings": {
         "instagram": "https://instagram.com/thainapapers"
-      }
+      },
+      "blocks": {
+        "a0": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-convite.jpg",
+            "alt": "Convite de casamento em caixa de linho com laço azul",
+            "legenda": "Ana Carla & Thiago"
+          }
+        },
+        "a1": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa.jpg",
+            "alt": "Mesa posta de formatura com menu e marcador de lugar",
+            "legenda": "mesa de formatura"
+          }
+        },
+        "a2": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-bolo.jpg",
+            "alt": "Bolo de formatura em rosa com monograma no centro",
+            "legenda": "bolo com monograma"
+          }
+        },
+        "a3": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa-posta.jpg",
+            "alt": "Guardanapo com monograma sobre sousplat rendado",
+            "legenda": "mesa posta"
+          }
+        },
+        "a4": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-ecobag.jpg",
+            "alt": "Ecobag personalizada de formatura de medicina",
+            "legenda": "Dr. Fábio"
+          }
+        },
+        "a5": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-adesivos.jpg",
+            "alt": "Cartela de adesivos temáticos para festa",
+            "legenda": "#mcformou"
+          }
+        }
+      },
+      "block_order": [
+        "a0",
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ]
     },
     "faixa": {
       "type": "tp-lp-faixa",

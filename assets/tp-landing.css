@@ -81,6 +81,10 @@
 
   /* Borda de papel rasgado para máscaras (topo de seção). */
   --lp-rasgo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 20' preserveAspectRatio='none'%3E%3Cpath d='M0 20V9l12 3 9-6 14 5 10-7 13 6 8-4 15 5 11-6 9 4 16-5 7 6 13-4 12 5 10-7 15 6 9-3 14 4 8-6 16 5 12-4 9 6 14-5 11 4 13-6 10 5 15-4 8 5 13-6 12 4 9-3 14 6 10-5 0 12Z'/%3E%3C/svg%3E");
+  /* Mesmo rasgo espelhado: para a borda de BAIXO, onde o papel fica em cima
+     e o rasgo aponta para fora. Usar o de cima no pé deixava uma faixa solta
+     entre a foto e o recorte. */
+  --lp-rasgo-pe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 20' preserveAspectRatio='none'%3E%3Cpath transform='matrix(1 0 0 -1 0 20)' d='M0 20V9l12 3 9-6 14 5 10-7 13 6 8-4 15 5 11-6 9 4 16-5 7 6 13-4 12 5 10-7 15 6 9-3 14 4 8-6 16 5 12-4 9 6 14-5 11 4 13-6 10 5 15-4 8 5 13-6 12 4 9-3 14 6 10-5 0 12Z'/%3E%3C/svg%3E");
 }
 
 /* =========================================================
@@ -109,9 +113,12 @@ body.lp {
   overflow-x: clip;
 }
 
-.lp img {
+/* height:auto porque o tp-image põe width/height do arquivo na tag; sem
+   isso o atributo height vira altura fixa e ignora o aspect-ratio. */
+:where(.lp) img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 :where(.lp) a {
@@ -432,8 +439,8 @@ body.lp {
   inset: 4px 18px 0 30px;
   background: var(--lp-azul-claro);
   transform: rotate(4deg);
-  -webkit-mask: var(--lp-rasgo) top / 100% 12px no-repeat, linear-gradient(#000, #000) 0 11px / 100% calc(100% - 22px) no-repeat, var(--lp-rasgo) bottom / 100% 12px no-repeat;
-  mask: var(--lp-rasgo) top / 100% 12px no-repeat, linear-gradient(#000, #000) 0 11px / 100% calc(100% - 22px) no-repeat, var(--lp-rasgo) bottom / 100% 12px no-repeat;
+  -webkit-mask: var(--lp-rasgo) top / 100% 12px no-repeat, linear-gradient(#000, #000) 0 11px / 100% calc(100% - 22px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 12px no-repeat;
+  mask: var(--lp-rasgo) top / 100% 12px no-repeat, linear-gradient(#000, #000) 0 11px / 100% calc(100% - 22px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 12px no-repeat;
 }
 
 .lp-carimbo__rabisco {
@@ -541,10 +548,142 @@ body.lp {
 .lp-moldura__miolo::before { top: 14px; }
 .lp-moldura__miolo::after { bottom: 12px; }
 
+/* ---------- álbum dentro da moldura ---------- */
+
+/* As fotos ficam empilhadas no mesmo quadro e se revezam por opacidade;
+   a ativa ganha um zoom lento (Ken Burns). O rasgo do pé é do quadro, não
+   de cada foto, para não piscar na troca. */
+.lp-album {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-mask: var(--lp-rasgo-pe) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
+  mask: var(--lp-rasgo-pe) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
+}
+
+.lp-album__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+.lp-album__slide.is-ativo {
+  opacity: 1;
+}
+
+.lp-album__slide .lp-moldura__foto {
+  width: 100%;
+  height: 100%;
+  -webkit-mask: none;
+  mask: none;
+}
+
+.lp-album__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Marcadores: um traço por foto, o ativo enche como barra de progresso. */
+.lp-album__marcas {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  right: 12px;
+  top: 10px;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-album__marcas li {
+  flex: 1;
+  height: 2.5px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+}
+
+.lp-album__marcas li::after {
+  content: "";
+  display: block;
+  height: 100%;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.lp-album__marcas li.is-vista::after {
+  transform: none;
+}
+
+.lp-album__marcas li.is-ativo::after {
+  animation: lp-marca var(--lp-tempo, 3.8s) linear forwards;
+}
+
+@keyframes lp-marca {
+  to { transform: none; }
+}
+
+.lp-moldura__legenda {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.lp-moldura__legenda.is-trocando {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* ---------- polaroides soltas atrás da moldura ---------- */
+
+.lp-solta {
+  position: absolute;
+  z-index: -1;
+  width: 48%;
+  margin: 0;
+  padding: 6px 6px 22px;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(40, 40, 60, 0.22);
+}
+
+.lp-solta img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.lp-solta .lp-media,
+.lp-solta .tp-media {
+  aspect-ratio: 3 / 4;
+}
+
+.lp-solta--esq {
+  left: -22%;
+  top: 16%;
+  rotate: -11deg;
+}
+
+.lp-solta--dir {
+  right: -20%;
+  top: 46%;
+  rotate: 9deg;
+}
+
+.lp-solta .lp-recorte__fita {
+  top: -10px;
+  width: 54px;
+  height: 18px;
+  margin-left: -27px;
+}
+
 .lp-moldura__foto {
   aspect-ratio: 4 / 5;
-  -webkit-mask: var(--lp-rasgo) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
-  mask: var(--lp-rasgo) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
+  -webkit-mask: var(--lp-rasgo-pe) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
+  mask: var(--lp-rasgo-pe) bottom / 100% 14px no-repeat, linear-gradient(#000, #000) top / 100% calc(100% - 13px) no-repeat;
 }
 
 .lp-moldura__foto img {
@@ -976,8 +1115,8 @@ body.lp {
 
 .lp-trabalhos {
   padding: 84px 0 110px;
-  -webkit-mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo) bottom / 100% 18px no-repeat;
-  mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo) bottom / 100% 18px no-repeat;
+  -webkit-mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+  mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
 }
 
 .lp-trabalhos .lp-manuscrito {
@@ -1375,13 +1514,32 @@ body.lp {
     100% { opacity: 1; transform: scale(1) rotate(0); }
   }
 
+  .lp-js .lp-capa__moldura:not(.is-in) .lp-solta {
+    translate: 0 0;
+  }
+
+  .lp-js .lp-capa__moldura .lp-solta {
+    transition: transform 1.1s cubic-bezier(.2, .9, .25, 1.15) 0.9s, opacity 0.6s ease 0.9s;
+  }
+
+  .lp-js .lp-capa__moldura:not(.is-in) .lp-solta--esq {
+    opacity: 0;
+    transform: translateX(45%) rotate(8deg);
+  }
+
+  .lp-js .lp-capa__moldura:not(.is-in) .lp-solta--dir {
+    opacity: 0;
+    transform: translateX(-45%) rotate(-8deg);
+  }
+
+  .lp-album__slide.is-ativo img {
+    animation: lp-respira 7s ease-out forwards;
+  }
+
   .lp-etiqueta:hover .lp-etiqueta__foto {
     transform: scale(1.06);
   }
 
-  .lp-moldura__foto img {
-    animation: lp-respira 9s ease-in-out infinite alternate;
-  }
 
   @keyframes lp-respira {
     to { transform: scale(1.06); }

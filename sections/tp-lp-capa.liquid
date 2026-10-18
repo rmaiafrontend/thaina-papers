@@ -50,21 +50,81 @@
       </div>
     </div>
 
+    {%- liquid
+      assign slides = section.blocks | where: 'type', 'foto'
+    -%}
     <figure class="lp-moldura lp-capa__moldura" data-lp-reveal="tilt" data-lp-parallax="-0.06">
+      {%- comment -%}
+        Duas polaroides soltas escapando por trás da moldura — mais trabalhos
+        à vista sem disputar com a foto principal.
+      {%- endcomment -%}
+      {%- for n in (1..2) -%}
+        {%- liquid
+          if n == 1
+            assign s_img = section.settings.solta_1
+            assign s_asset = section.settings.solta_1_asset
+            assign s_lado = 'esq'
+          else
+            assign s_img = section.settings.solta_2
+            assign s_asset = section.settings.solta_2_asset
+            assign s_lado = 'dir'
+          endif
+        -%}
+        {%- if s_img != blank or s_asset != blank -%}
+          <div class="lp-solta lp-solta--{{ s_lado }}" aria-hidden="true">
+            <span class="lp-recorte__fita"></span>
+            {%- render 'tp-image', image: s_img, asset: s_asset, alt: '', class: 'lp-solta__foto', ratio: '3/4', width: 500, sizes: '40vw', widths: '300,500' -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
       <div class="lp-moldura__borda">
         <div class="lp-moldura__miolo">
-          {%- render 'tp-image',
-            image: section.settings.foto,
-            asset: section.settings.foto_asset,
-            alt: section.settings.foto_alt,
-            class: 'lp-moldura__foto',
-            ratio: '4/5',
-            width: 900,
-            sizes: '(max-width: 899px) 80vw, 420px',
-            widths: '400,600,900',
-            loading: 'eager'
-          -%}
-          <figcaption class="lp-moldura__legenda">{{ section.settings.foto_legenda }}</figcaption>
+          {%- if slides.size > 0 -%}
+            <div class="lp-album" data-lp-album role="group" aria-roledescription="carrossel" aria-label="Trabalhos da Thainá Papers">
+              {%- if slides.size > 1 -%}
+                <ul class="lp-album__marcas" aria-hidden="true">
+                  {%- for b in slides -%}<li{% if forloop.first %} class="is-ativo"{% endif %}></li>{%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- for b in slides -%}
+                <div class="lp-album__slide{% if forloop.first %} is-ativo{% endif %}" data-lp-slide data-legenda="{{ b.settings.legenda | escape }}" {{ b.shopify_attributes }}>
+                  {%- liquid
+                    if forloop.first
+                      assign carga = 'eager'
+                    else
+                      assign carga = 'lazy'
+                    endif
+                  -%}
+                  {%- render 'tp-image',
+                    image: b.settings.image,
+                    asset: b.settings.image_asset,
+                    alt: b.settings.alt,
+                    class: 'lp-moldura__foto',
+                    ratio: '4/5',
+                    width: 900,
+                    sizes: '(max-width: 899px) 80vw, 420px',
+                    widths: '400,600,900',
+                    loading: carga
+                  -%}
+                </div>
+              {%- endfor -%}
+            </div>
+            <figcaption class="lp-moldura__legenda" data-lp-legenda aria-live="polite">{{ slides.first.settings.legenda }}</figcaption>
+          {%- else -%}
+            {%- render 'tp-image',
+              image: section.settings.foto,
+              asset: section.settings.foto_asset,
+              alt: section.settings.foto_alt,
+              class: 'lp-moldura__foto',
+              ratio: '4/5',
+              width: 900,
+              sizes: '(max-width: 899px) 80vw, 420px',
+              widths: '400,600,900',
+              loading: 'eager'
+            -%}
+            <figcaption class="lp-moldura__legenda">{{ section.settings.foto_legenda }}</figcaption>
+          {%- endif -%}
         </div>
       </div>
       {%- render 'tp-lp-selo', class: 'lp-moldura__selo' -%}
@@ -86,12 +146,31 @@
     { "type": "text", "id": "script", "label": "Manuscrito", "default": "feito à mão," },
     { "type": "textarea", "id": "titulo", "label": "Título (uma linha por quebra)", "default": "Não é\nsó papel." },
     { "type": "textarea", "id": "lead", "label": "Frase de abertura", "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você." },
+    { "type": "header", "content": "Moldura", "info": "Com blocos de Foto do álbum, as fotos se revezam na moldura. Sem blocos, vale a foto abaixo." },
     { "type": "image_picker", "id": "foto", "label": "Foto da moldura" },
     { "type": "text", "id": "foto_asset", "label": "Arquivo no tema (alternativa)", "default": "tp-trabalho-convite.jpg" },
     { "type": "text", "id": "foto_alt", "label": "Descrição da foto", "default": "Convite de casamento em caixa de linho com laço azul" },
     { "type": "text", "id": "foto_legenda", "label": "Legenda manuscrita", "default": "Ana Carla & Thiago" },
-    { "type": "url", "id": "instagram", "label": "Instagram" }
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "header", "content": "Polaroides soltas", "info": "Escapam por trás da moldura, uma de cada lado." },
+    { "type": "image_picker", "id": "solta_1", "label": "Polaroide da esquerda" },
+    { "type": "text", "id": "solta_1_asset", "label": "Arquivo no tema (alternativa)", "default": "tp-trabalho-batizado.jpg" },
+    { "type": "image_picker", "id": "solta_2", "label": "Polaroide da direita" },
+    { "type": "text", "id": "solta_2_asset", "label": "Arquivo no tema (alternativa)", "default": "tp-trabalho-monograma.jpg" }
   ],
+  "blocks": [
+    {
+      "type": "foto",
+      "name": "Foto do álbum",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "image_asset", "label": "Arquivo no tema (alternativa)" },
+        { "type": "text", "id": "alt", "label": "Descrição da foto" },
+        { "type": "text", "id": "legenda", "label": "Legenda manuscrita" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
   "presets": [{ "name": "LP — Capa" }]
 }
 {% endschema %}

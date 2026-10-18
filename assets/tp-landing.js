@@ -69,6 +69,67 @@
     });
   }
 
+  /* ---------- álbum da moldura ---------- */
+  /* Troca a foto a cada TEMPO ms, só enquanto a moldura está na tela e a
+     aba visível. Toque avança na hora. Com movimento reduzido não gira
+     sozinho — só no toque. */
+  var TEMPO = 3800;
+
+  function albuns(raiz) {
+    raiz.querySelectorAll('[data-lp-album]').forEach(function (album) {
+      if (album._lpAlbum) return;
+      var slides = album.querySelectorAll('[data-lp-slide]');
+      if (slides.length < 2) return;
+      var marcas = album.querySelectorAll('.lp-album__marcas li');
+      var legenda = album.parentElement.querySelector('[data-lp-legenda]');
+      var atual = 0;
+      var timer = null;
+      var visivel = false;
+      album.style.setProperty('--lp-tempo', TEMPO + 'ms');
+
+      function mostrar(i) {
+        slides[atual].classList.remove('is-ativo');
+        atual = (i + slides.length) % slides.length;
+        slides[atual].classList.add('is-ativo');
+        /* a imagem lazy da próxima já começa a carregar */
+        var prox = slides[(atual + 1) % slides.length].querySelector('img');
+        if (prox) prox.loading = 'eager';
+        marcas.forEach(function (m, j) {
+          m.classList.remove('is-ativo');
+          m.classList.toggle('is-vista', j < atual);
+          if (j === atual) { void m.offsetWidth; m.classList.add('is-ativo'); }
+        });
+        if (legenda) {
+          legenda.classList.add('is-trocando');
+          setTimeout(function () {
+            legenda.textContent = slides[atual].getAttribute('data-legenda') || '';
+            legenda.classList.remove('is-trocando');
+          }, 350);
+        }
+      }
+
+      function agendarTroca() {
+        clearTimeout(timer);
+        if (reduz || !visivel || document.hidden) return;
+        timer = setTimeout(function () { mostrar(atual + 1); agendarTroca(); }, TEMPO);
+      }
+
+      album.addEventListener('click', function () { mostrar(atual + 1); agendarTroca(); });
+      document.addEventListener('visibilitychange', agendarTroca);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          visivel = e[0].isIntersecting;
+          agendarTroca();
+        }, { threshold: 0.3 }).observe(album);
+      } else {
+        visivel = true;
+        agendarTroca();
+      }
+      if (reduz) marcas.forEach(function (m) { m.style.display = 'none'; });
+      album._lpAlbum = true;
+    });
+  }
+
   /* ---------- paralaxe ---------- */
   var moveis = [];
   var pedido = false;
@@ -130,6 +191,7 @@
   function iniciar(raiz) {
     revelar(raiz);
     abas(raiz);
+    albuns(raiz);
     prepararParalaxe(raiz);
   }
 
