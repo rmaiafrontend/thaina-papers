@@ -63,7 +63,7 @@
   --lp-creme: #faf6ee;
   --lp-papel-claro: #f3ece0;
 
-  --lp-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --lp-display: 'Playfair Display', Didot, 'Bodoni 72', Georgia, serif;
   --lp-texto: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --lp-script: 'Allura', 'Brush Script MT', cursive;
 
@@ -190,23 +190,40 @@ body.lp {
 
 /* ---------- tipografia ---------- */
 
+/* Playfair no peso máximo, apertada mas com as palavras respirando: o
+   espaço entre palavras sobe para compensar o tracking negativo — antes
+   "Feito por aqui" lia como uma palavra só. Algarismos alinhados: os
+   padrão da Playfair são de texto, com 0 e 1 da altura do x. */
 .lp-display {
   font-family: var(--lp-display);
-  font-weight: 800;
-  font-variation-settings: "opsz" 144;
-  letter-spacing: -0.055em;
-  line-height: 0.84;
+  font-weight: 900;
+  letter-spacing: -0.028em;
+  word-spacing: 0.04em;
+  line-height: 0.9;
+  font-variant-numeric: lining-nums;
   color: var(--lp-vinho);
   margin: 0;
   text-wrap: balance;
 }
 
+/* O acento das referências é itálico serifado ("Nunca fumei.", "mulher"),
+   não manuscrito. A Allura fica para o que é escrita à mão de fato:
+   legendas das polaroides e a caligrafia de fundo (.lp-mao). */
 .lp-script {
-  font-family: var(--lp-script);
-  font-size: 38px;
-  line-height: 1;
+  font-family: var(--lp-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   color: var(--lp-vinho);
-  margin: 0;
+  margin: 0 0 6px;
+}
+
+.lp-mao {
+  font-family: var(--lp-script);
+  font-style: normal;
+  line-height: 1;
 }
 
 .lp-cabeca {
@@ -215,8 +232,9 @@ body.lp {
   margin-bottom: 30px;
 }
 
+/* 15vw: "Como pedir" e "O catálogo" (~5,3em) cabem numa linha em 390px. */
 .lp-cabeca__titulo {
-  font-size: clamp(58px, 17vw, 132px);
+  font-size: clamp(50px, 15vw, 132px);
 }
 
 .lp-cabeca__sub {
@@ -344,16 +362,17 @@ body.lp {
 }
 
 .lp-capa__script {
-  font-size: 46px;
+  font-size: 34px;
   margin-bottom: 4px;
   transform: rotate(-4deg);
   transform-origin: left bottom;
 }
 
-/* "só papel." mede 3,15em; o tamanho é o menor entre 22vw e o que cabe
-   nessa linha, para nunca quebrar nem vazar em telas de 320px. */
+/* "só papel." mede 3,93em na Playfair Black; o tamanho é o menor entre
+   22vw e o que cabe nessa linha, para nunca quebrar nem vazar em 320px. */
 .lp-capa__titulo {
-  font-size: min(22vw, calc((100vw - 60px) / 3.25));
+  font-weight: 700;
+  font-size: min(22vw, calc((100vw - 60px) / 4.02));
   line-height: 0.8;
   text-wrap: initial;
 }
@@ -393,14 +412,14 @@ body.lp {
 
 /* ---------- carimbo circular + rabisco ---------- */
 
-/* Fica ao lado de "Não é", a linha curta, e atrás do título (z-index -1)
-   quando encosta em "só papel." — o rabisco passa por trás das letras,
-   como na referência, sem tampar leitura. */
+/* Mora no canto que sobra ao lado de "feito à mão," e "Não é", as duas
+   linhas curtas — assim não encosta em "só papel.", que ocupa a largura
+   toda. z-index -1 por segurança, caso o texto do título mude. */
 .lp-carimbo {
   position: absolute;
   z-index: -1;
   right: -6px;
-  top: 34px;
+  top: -18px;
   width: 112px;
   height: 128px;
   pointer-events: none;
@@ -437,7 +456,7 @@ body.lp {
 
 .lp-carimbo__roda {
   position: absolute;
-  left: -46px;
+  left: -22px;
   top: 30px;
   width: 104px;
   height: 104px;
@@ -550,10 +569,9 @@ body.lp {
 
 .lp-selo__mono {
   font-family: var(--lp-display);
-  font-size: 23px;
-  font-weight: 700;
-  font-variation-settings: "opsz" 72;
-  letter-spacing: -0.06em;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   fill: #4a0c0f;
   stroke: #c4584e;
   stroke-width: 0.5;
@@ -604,13 +622,15 @@ body.lp {
 .lp-faixa__lista {
   display: flex;
   margin: 0;
-  padding: 10px 0 14px;
+  padding: 13px 0 15px;
   list-style: none;
 }
 
 .lp-faixa__lista li {
-  font-family: var(--lp-script);
-  font-size: 44px;
+  font-family: var(--lp-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 34px;
   line-height: 1;
   color: var(--lp-creme);
   white-space: nowrap;
@@ -683,14 +703,13 @@ body.lp {
   margin: 0;
   font-family: var(--lp-display);
   font-size: 34px;
-  font-weight: 700;
-  font-variation-settings: "opsz" 96;
-  letter-spacing: -0.04em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--lp-cereja);
 }
 
 .lp-painel__nota {
-  font-size: 30px;
+  font-size: 21px;
   margin: 2px 0 6px;
 }
 
@@ -802,7 +821,6 @@ body.lp {
   font-family: var(--lp-display);
   font-size: 128px;
   font-weight: 800;
-  font-variation-settings: "opsz" 144;
   line-height: 1;
   color: var(--lp-creme);
   transform: translateY(-6px);
@@ -830,8 +848,7 @@ body.lp {
   margin: 0;
   font-family: var(--lp-display);
   font-size: 17px;
-  font-weight: 600;
-  font-variation-settings: "opsz" 24;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--lp-tinta);
@@ -910,11 +927,11 @@ body.lp {
   top: -10px;
   left: -5vw;
   font-family: var(--lp-display);
-  font-size: clamp(220px, 64vw, 360px);
-  font-weight: 800;
-  font-variation-settings: "opsz" 144;
-  letter-spacing: -0.07em;
+  font-size: clamp(220px, 60vw, 340px);
+  font-weight: 900;
+  letter-spacing: -0.06em;
   line-height: 0.78;
+  font-variant-numeric: lining-nums;
   color: var(--lp-vinho);
   pointer-events: none;
 }
@@ -942,8 +959,7 @@ body.lp {
   margin: 0 0 6px;
   font-family: var(--lp-display);
   font-size: 26px;
-  font-weight: 700;
-  font-variation-settings: "opsz" 72;
+  font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 1;
   color: var(--lp-cereja);
@@ -1114,9 +1130,9 @@ body.lp {
 .lp-depo__frase {
   margin: 18px 0 12px;
   font-family: var(--lp-display);
+  font-style: italic;
   font-size: 19px;
-  font-weight: 600;
-  font-variation-settings: "opsz" 36;
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.2;
   color: var(--lp-cereja);
@@ -1160,7 +1176,7 @@ body.lp {
 
 .lp-final__script {
   color: var(--lp-azul-claro);
-  font-size: 44px;
+  font-size: 32px;
 }
 
 .lp-final__titulo {
@@ -1250,8 +1266,8 @@ body.lp {
 }
 
 @keyframes lp-pulso {
-  from { opacity: 0.7; transform: scale(1); }
-  to { opacity: 0; transform: scale(1.35); }
+  from { opacity: 0.6; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.18, 1.4); }
 }
 
 /* =========================================================
@@ -1414,7 +1430,7 @@ body.lp {
 
   .lp-carimbo {
     right: 4%;
-    top: 120px;
+    top: -10px;
     width: 150px;
     height: 180px;
   }

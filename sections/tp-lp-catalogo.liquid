@@ -67,7 +67,7 @@
                 {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 899px) 45vw, 260px', alt: produto.title, class: 'lp-etiqueta__foto' }}
               {%- else -%}
                 <span class="lp-etiqueta__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
-                <span class="lp-etiqueta__assina lp-script" aria-hidden="true">sob encomenda</span>
+                <span class="lp-etiqueta__assina lp-mao" aria-hidden="true">sob encomenda</span>
               {%- endif -%}
             </div>
             <div class="lp-etiqueta__corpo">
