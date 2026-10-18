@@ -4,7 +4,8 @@
     "capa": {
       "type": "tp-lp-capa",
       "settings": {
-        "instagram": "https://instagram.com/thainapapers"
+        "instagram": "https://instagram.com/thainapapers",
+        "titulo": "Não é só papel."
       },
       "blocks": {
         "a0": {
