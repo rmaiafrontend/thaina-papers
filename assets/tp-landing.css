@@ -949,18 +949,21 @@ body.lp {
   list-style: none;
 }
 
+/* Card de produto: foto de ponta a ponta no topo, nome em serifado com
+   respiro e uma linha de base com preço e um botão de WhatsApp compacto —
+   o pedido está a um toque, mas quem manda no card é a foto. */
 .lp-card {
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  overflow: hidden;
   border-radius: var(--lp-canto-papel);
   background-color: var(--lp-creme);
 }
 
 .lp-card__midia {
+  position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 9px;
   background: var(--lp-azul-claro);
 }
 
@@ -968,7 +971,7 @@ body.lp {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.7s cubic-bezier(.2, .8, .2, 1);
 }
 
 /* Sem foto: a inicial do produto sobre vinho, para não ficar um buraco. */
@@ -981,7 +984,7 @@ body.lp {
 .lp-card__inicial {
   font-family: var(--lp-display);
   font-size: 96px;
-  font-weight: 900;
+  font-weight: 400;
   line-height: 1;
   color: var(--lp-creme);
 }
@@ -990,47 +993,78 @@ body.lp {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 10px 4px 2px;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
 }
 
 .lp-card__nome {
   margin: 0;
   font-family: var(--lp-display);
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.05;
   color: var(--lp-tinta);
 }
 
-.lp-card__preco {
-  margin: 4px 0 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--lp-cereja);
+.lp-card__base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(107, 16, 23, 0.22);
 }
 
+.lp-card__preco {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--lp-cereja);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.lp-card__preco small {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lp-caramelo);
+}
+
+/* No celular é só o círculo com o ícone; o texto "Pedir" aparece quando há
+   largura (desktop). O rótulo acessível vem do aria-label. */
 .lp-card__pedir {
   display: inline-flex;
+  flex: none;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 42px;
-  margin-top: auto;
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
   background: var(--lp-cereja);
   color: var(--lp-creme) !important;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
+  box-shadow: 0 4px 10px rgba(107, 16, 23, 0.25);
+  transition: transform 0.25s cubic-bezier(.2, .8, .2, 1.4), background-color 0.2s;
+}
+
+.lp-card__pedir span {
+  display: none;
 }
 
 .lp-card__pedir .lp-icone-wa {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
 }
 
 .lp-card__pedir:active {
-  transform: scale(0.97);
+  transform: scale(0.92);
 }
 
 .lp-catalogo__rodape {
@@ -2417,7 +2451,25 @@ body.lp {
   }
 
   .lp-card__nome {
-    font-size: 18px;
+    font-size: 23px;
+  }
+
+  .lp-card__corpo {
+    padding: 16px 16px 16px 18px;
+  }
+
+  .lp-card__pedir {
+    width: auto;
+    padding: 0 16px 0 13px;
+  }
+
+  .lp-card__pedir span {
+    display: inline;
+  }
+
+  .lp-card:hover .lp-card__pedir {
+    transform: translateY(-2px);
+    background: var(--lp-vinho);
   }
 
   .lp-cabeca {

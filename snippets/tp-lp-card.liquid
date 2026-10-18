@@ -29,12 +29,14 @@
   </div>
   <div class="lp-card__corpo">
     <h4 class="lp-card__nome">{{ produto.title }}</h4>
-    <p class="lp-card__preco">
-      {%- if produto.price_varies -%}a partir de {% endif -%}
-      {{ produto.price_min | money }}
-    </p>
-    <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
-      {%- render 'tp-lp-icone-wa' -%} Pedir
-    </a>
+    <div class="lp-card__base">
+      <p class="lp-card__preco">
+        {%- if produto.price_varies -%}<small>a partir de</small>{% endif -%}
+        {{ produto.price_min | money }}
+      </p>
+      <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
+        {%- render 'tp-lp-icone-wa' -%}<span>Pedir</span>
+      </a>
+    </div>
   </div>
 </li>
