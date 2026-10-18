@@ -103,8 +103,17 @@ html.lp-com-sacola .lp-loja {
   box-shadow: 0 6px 16px rgba(40, 50, 70, 0.12);
 }
 
+/* O foco aparece na pílula inteira (borda vinho + halo), não no <input>
+   de dentro: o contorno genérico de foco da landing desenhava um
+   retângulo reto atravessando a pílula. */
 .lp-busca:focus-within {
   border-color: var(--lp-cereja);
+  box-shadow: 0 0 0 4px rgba(107, 16, 23, 0.14), 0 6px 16px rgba(40, 50, 70, 0.12);
+}
+
+.lp .lp-busca input:focus,
+.lp .lp-busca input:focus-visible {
+  outline: none;
 }
 
 .lp-busca svg {
@@ -748,10 +757,13 @@ html.lp-com-sacola .lp-loja {
   text-align: left;
 }
 
-.lp-produto__campo textarea:focus,
-.lp-produto__campo input:focus {
+.lp .lp-produto__campo textarea:focus,
+.lp .lp-produto__campo input:focus,
+.lp .lp-produto__campo textarea:focus-visible,
+.lp .lp-produto__campo input:focus-visible {
   border-color: var(--lp-cereja);
-  outline: 0;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(107, 16, 23, 0.12);
 }
 
 .lp-produto__erro {
