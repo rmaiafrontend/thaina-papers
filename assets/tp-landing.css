@@ -1480,14 +1480,19 @@ body.lp {
    Trilho deslizável (ocasiões, mais procurados)
    ========================================================= */
 
+/* overflow-y: hidden explícito: com só overflow-x: auto, o navegador
+   também liga a rolagem vertical, e a inclinação e a sombra dos cards
+   bastavam para aparecer uma rolagem dentro da lista. A folga vertical do
+   padding dá espaço para a sombra sem cortar. */
 .lp-trilho {
   display: grid;
   grid-auto-flow: column;
   gap: 14px;
   margin: 0;
-  padding: 4px var(--lp-gutter) 18px;
+  padding: 10px var(--lp-gutter) 26px;
   list-style: none;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--lp-gutter);
   scrollbar-width: none;

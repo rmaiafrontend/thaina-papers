@@ -376,10 +376,16 @@
   });
   qtd.addEventListener('input', atualizarPreco);
 
-  /* O card inteiro abre o modal; o botão "+" é o caminho pelo teclado. */
-  grade.addEventListener('click', function (e) {
-    var card = e.target.closest('[data-lp-produto]');
-    if (card) abrirProduto(card.getAttribute('data-lp-produto'));
+  /* Qualquer ticket da página em modo loja (o catálogo e os "Mais
+     procurados") abre o modal; o botão "+" é o caminho pelo teclado. Se o
+     produto não estiver nos dados do catálogo (ex.: escondido como
+     exemplo), cai na página do produto. */
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.lp-card--loja[data-lp-produto]');
+    if (!card) return;
+    var handle = card.getAttribute('data-lp-produto');
+    if (dados[handle]) abrirProduto(handle);
+    else location.href = rotas + 'products/' + handle;
   });
 
   form.addEventListener('submit', function (e) {
