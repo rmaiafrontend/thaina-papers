@@ -38,7 +38,8 @@ html.lp-com-sacola .lp-loja {
 }
 
 .lp-loja__voltar {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   gap: 8px;
   margin-bottom: 38px;
   font-size: 11px;
