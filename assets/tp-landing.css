@@ -1840,8 +1840,32 @@ body.lp {
   transform: rotate(90deg);
 }
 
-.lp-faq__item[open] .lp-faq__sinal::after {
+.lp-faq__item[open]:not(.is-fechando) .lp-faq__sinal::after {
   transform: rotate(0deg);
+}
+
+/* O sinal gira inteiro ao abrir (o + vira −) e o fundo esquenta um tom;
+   enquanto fecha, já volta ao +. */
+.lp-faq__sinal {
+  transition: transform 0.4s cubic-bezier(.3, 1.4, .5, 1), background-color 0.25s;
+}
+
+.lp-faq__item[open]:not(.is-fechando) .lp-faq__sinal {
+  transform: rotate(180deg);
+  background: var(--lp-vinho);
+}
+
+/* A resposta precisa cortar o conteúdo enquanto a altura anima. */
+.lp-faq__resposta {
+  overflow: hidden;
+}
+
+.lp-faq__pergunta span:first-child {
+  transition: color 0.2s;
+}
+
+.lp-faq__item[open]:not(.is-fechando) .lp-faq__pergunta span:first-child {
+  color: var(--lp-vinho);
 }
 
 .lp-faq__resposta {

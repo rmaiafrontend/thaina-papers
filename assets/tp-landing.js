@@ -223,7 +223,64 @@
     });
   }
 
+  /* ---------- perguntas: abrir e fechar com animação ---------- */
+  /* <details> abre e fecha num estalo. Aqui o clique no <summary> é
+     interceptado: ao abrir, marca [open] e anima a resposta de altura 0
+     até a dela (com um leve deslize); ao fechar, anima de volta e só
+     então tira o [open]. O padding de baixo anima junto — com
+     box-sizing: border-box a altura não desce abaixo dele. Sem JS ou com
+     menos movimento, fica o nativo. */
+  function sanfonas(raiz) {
+    if (reduz || !Element.prototype.animate) return;
+    raiz.querySelectorAll('.lp-faq__item').forEach(function (item) {
+      if (item._lpSanfona) return;
+      item._lpSanfona = true;
+      var resumo = item.querySelector('summary');
+      var corpo = item.querySelector('.lp-faq__resposta');
+      if (!resumo || !corpo) return;
+      var animacao = null;
+
+      resumo.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (animacao) animacao.cancel();
+        var abrindo = !item.open || item.classList.contains('is-fechando');
+        item.classList.remove('is-fechando');
+
+        if (abrindo) {
+          item.open = true;
+          var altura = corpo.scrollHeight;
+          animacao = corpo.animate(
+            [
+              { height: '0px', paddingBottom: '0px', opacity: 0, transform: 'translateY(-6px)' },
+              { height: altura + 'px', paddingBottom: getComputedStyle(corpo).paddingBottom, opacity: 1, transform: 'none' }
+            ],
+            { duration: 380, easing: 'cubic-bezier(.2, .8, .2, 1)' }
+          );
+        } else {
+          item.classList.add('is-fechando');
+          animacao = corpo.animate(
+            [
+              { height: corpo.offsetHeight + 'px', paddingBottom: getComputedStyle(corpo).paddingBottom, opacity: 1, transform: 'none' },
+              { height: '0px', paddingBottom: '0px', opacity: 0, transform: 'translateY(-4px)' }
+            ],
+            { duration: 280, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'forwards' }
+          );
+          /* fill: forwards segura a altura 0 até o [open] sair — sem ele,
+             a resposta voltava inteira por um quadro antes de sumir. */
+          var fechando = animacao;
+          animacao.onfinish = function () {
+            item.open = false;
+            item.classList.remove('is-fechando');
+            fechando.cancel();
+          };
+        }
+        animacao.oncancel = function () { animacao = null; };
+      });
+    });
+  }
+
   function iniciar(raiz) {
+    sanfonas(raiz);
     atalhos(raiz);
     revelar(raiz);
     abas(raiz);
