@@ -531,25 +531,63 @@
   /* ---------------------------------------------------------------
      Pedido pelo WhatsApp: resumo em texto com itens, detalhes e total.
      --------------------------------------------------------------- */
+  /* Formatação do próprio WhatsApp: *negrito*, _itálico_. Separadores e
+     emojis dividem a mensagem em blocos — quem pede, itens e fechamento —
+     para a Thainá bater o olho e já saber tudo. Nome, data e detalhes só
+     entram quando preenchidos. */
+  var NUMEROS = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+  var ICONE_TIPO = {
+    'fisico': '🖨️ Impresso',
+    'arquivo-digital': '💻 Arquivo digital',
+    'arte-digital': '📲 Arte digital',
+    'template-canva': '🎨 Template Canva'
+  };
+  var LINHA = '━━━━━━━━━━━━━━';
+
+  function montarMensagem(c) {
+    var m = [];
+    m.push('✨ *NOVO PEDIDO · THAINÁ PAPERS* ✨');
+    m.push(LINHA);
+    m.push('Olá, Thainá! Montei este pedido pelo site 💌');
+
+    var quem = nome.value.trim();
+    var quando = dataBR(dataEvento.value);
+    if (quem || quando) {
+      m.push('');
+      if (quem) m.push('👤 *Nome:* ' + quem);
+      if (quando) m.push('📅 *Data do evento:* ' + quando);
+    }
+
+    m.push('');
+    m.push('🛍️ *ITENS DO PEDIDO*');
+    c.items.forEach(function (it, i) {
+      var marcador = NUMEROS[i] || '*' + (i + 1) + '.*';
+      var variante = it.variant_title && it.variant_title !== 'Default Title' ? ' — ' + it.variant_title : '';
+      var tipo = ICONE_TIPO[(dados[it.handle] || {}).tipo];
+      m.push('');
+      m.push(marcador + ' *' + it.product_title + '*' + variante);
+      if (tipo) m.push('      ' + tipo);
+      m.push('      ▫️ ' + it.quantity + ' × ' + reais(it.final_price) + ' = *' + reais(it.final_line_price) + '*');
+      if (it.properties && it.properties.Detalhes) m.push('      📝 _' + it.properties.Detalhes + '_');
+    });
+
+    m.push('');
+    m.push(LINHA);
+    m.push('💰 *TOTAL ESTIMADO: ' + reais(c.total_price) + '*');
+    m.push('📦 ' + c.item_count + (c.item_count === 1 ? ' item' : ' itens'));
+    m.push(LINHA);
+    m.push('');
+    m.push('🚚 Pode me passar o *frete* e o *prazo de produção*?');
+    m.push('Fico no aguardo! 🤍');
+    return m.join('\n');
+  }
+
   sacola.querySelector('[data-lp-enviar]').addEventListener('click', function () {
     var c = carrinho;
     if (!c || !c.item_count) return;
-    var linhas = ['Olá, Thainá! Montei este pedido pelo site:', ''];
-    c.items.forEach(function (it, i) {
-      var v = it.variant_title && it.variant_title !== 'Default Title' ? ' (' + it.variant_title + ')' : '';
-      linhas.push((i + 1) + '. ' + it.product_title + v);
-      linhas.push('   ' + it.quantity + ' × ' + reais(it.final_price) + ' = ' + reais(it.final_line_price));
-      if (it.properties && it.properties.Detalhes) linhas.push('   Detalhes: ' + it.properties.Detalhes);
-    });
-    linhas.push('');
-    linhas.push('Total estimado: ' + reais(c.total_price));
-    if (nome.value.trim()) linhas.push('Nome: ' + nome.value.trim());
-    if (dataBR(dataEvento.value)) linhas.push('Data do evento: ' + dataBR(dataEvento.value));
-    linhas.push('');
-    linhas.push('Pode me passar frete e prazo?');
-
+    var linhas = montarMensagem(c);
     var numero = (raiz.getAttribute('data-whatsapp') || '').replace(/\D/g, '');
-    window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(linhas.join('\n')), '_blank', 'noopener');
+    window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(linhas), '_blank', 'noopener');
   });
 
   /* ---------------------------------------------------------------
