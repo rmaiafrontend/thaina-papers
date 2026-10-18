@@ -377,7 +377,7 @@ body.lp {
    no desktop. */
 .lp-capa__titulo {
   font-size: min(96px, calc((100vw - 60px) / 5.95));
-  line-height: 0.8;
+  line-height: 1;
   text-wrap: initial;
 }
 
@@ -1461,12 +1461,14 @@ body.lp {
     transform: translateY(26px);
   }
 
+  /* Folga em em, não em %: em caixa alta o til e os acentos sobem acima
+     da linha, e 10% de um título de uma linha só cortava "NÃO É SÓ". */
   .lp-js [data-lp-reveal="wipe"]:not(.is-in) {
-    clip-path: inset(0 100% 0 0);
+    clip-path: inset(-0.6em 100% -0.4em -0.2em);
   }
 
   .lp-js [data-lp-reveal="wipe"] {
-    clip-path: inset(-10% -10% -20% -10%);
+    clip-path: inset(-0.6em -0.2em -0.4em -0.2em);
   }
 
   .lp-js [data-lp-reveal="tilt"]:not(.is-in) {
