@@ -263,6 +263,64 @@ html.lp-com-sacola .lp-loja {
   font-family: var(--lp-texto);
 }
 
+/* ---------- carregar mais ---------- */
+
+.lp-loja__mais {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 30px auto 0;
+  padding-inline: var(--lp-gutter);
+  text-align: center;
+}
+
+.lp-loja__mais-info {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lp-caramelo);
+}
+
+.lp-loja__mais-barra {
+  width: min(220px, 60%);
+  height: 3px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: rgba(107, 16, 23, 0.15);
+}
+
+.lp-loja__mais-barra span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--lp-cereja);
+  transition: width 0.4s ease;
+}
+
+.lp-loja__mais-acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.lp-card.is-novo {
+  animation: lp-card-chega 0.5s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@keyframes lp-card-chega {
+  from { opacity: 0; transform: translateY(18px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-card.is-novo {
+    animation: none;
+  }
+}
+
 .lp-loja__vazio {
   display: flex;
   flex-direction: column;

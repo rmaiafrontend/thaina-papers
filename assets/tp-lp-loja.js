@@ -46,6 +46,12 @@
      Estado dos filtros, espelhado na URL para o link ser compartilhável.
      --------------------------------------------------------------- */
   var estado = { q: '', ocasiao: '', tipos: [], preco: '', ordem: '' };
+
+  /* Lote: quantos cards aparecem por vez. Volta ao primeiro lote sempre
+     que a busca ou um filtro muda. */
+  var LOTE = window.matchMedia('(min-width: 900px)').matches ? 12 : 8;
+  var limite = LOTE;
+  var assinatura = '';
   var params = new URLSearchParams(location.search);
   estado.q = params.get('q') || '';
   estado.ocasiao = params.get('ocasiao') || '';
@@ -60,6 +66,11 @@
   var limpar = raiz.querySelector('[data-lp-limpar]');
   var vazio = raiz.querySelector('[data-lp-vazio]');
   var seloFiltros = raiz.querySelector('[data-lp-filtros-conta]');
+  var mais = raiz.querySelector('[data-lp-mais]');
+  var maisInfo = raiz.querySelector('[data-lp-mais-info]');
+  var maisBarra = raiz.querySelector('[data-lp-mais-barra]');
+  var carregar = raiz.querySelector('[data-lp-carregar]');
+  var verTodos = raiz.querySelector('[data-lp-ver-todos]');
   var gavetaFiltros = document.querySelector('[data-lp-filtros]');
 
   /* Ocasião vinda da landing pelo nome ("consultorios") e não pelo handle
@@ -98,17 +109,34 @@
     });
   }
 
-  function aplicar() {
+  function aplicar(maisUmLote) {
+    var chave = JSON.stringify([estado.q, estado.ocasiao, estado.tipos, estado.preco, estado.ordem]);
+    if (chave !== assinatura) { limite = LOTE; assinatura = chave; }
+
     var visiveis = 0;
+    var mostrados = 0;
     ordenar(cards).forEach(function (c) {
       var ok = casa(c);
-      c.hidden = !ok;
-      if (ok) {
-        visiveis++;
+      var dentro = ok && visiveis < limite;
+      if (ok) visiveis++;
+      var eraOculto = c.hidden;
+      c.hidden = !dentro;
+      if (dentro) {
+        mostrados++;
         c.classList.add('is-in');
+        /* Os que chegam com "carregar mais" entram com uma animação curta. */
+        c.classList.toggle('is-novo', !!maisUmLote && eraOculto);
       }
       grade.appendChild(c);
     });
+
+    mais.hidden = visiveis <= mostrados;
+    maisInfo.textContent = 'Mostrando ' + mostrados + ' de ' + visiveis + ' modelos';
+    maisBarra.style.width = (visiveis ? (mostrados / visiveis) * 100 : 0) + '%';
+    var restantes = visiveis - mostrados;
+    var proximo = Math.min(LOTE, restantes);
+    carregar.textContent = 'Carregar mais ' + proximo + (proximo === 1 ? ' modelo' : ' modelos');
+    verTodos.hidden = restantes <= LOTE;
 
     conta.textContent = visiveis + (visiveis === 1 ? ' modelo' : ' modelos');
     vazio.hidden = visiveis > 0;
@@ -175,6 +203,16 @@
     estado.tipos = []; estado.preco = ''; estado.ordem = '';
     sincronizarGaveta(); aplicar();
     gavetaFiltros.querySelector('[data-lp-filtros-ver]').textContent = 'Ver ' + conta.textContent;
+  });
+
+  carregar.addEventListener('click', function () {
+    limite += LOTE;
+    aplicar(true);
+  });
+
+  verTodos.addEventListener('click', function () {
+    limite = Infinity;
+    aplicar(true);
   });
 
   limpar.addEventListener('click', function () {

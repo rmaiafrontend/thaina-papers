@@ -130,6 +130,20 @@
       </script>
     {%- endpaginate -%}
 
+    {%- comment -%}
+      Carregar em lotes: o JS mostra um lote por vez (8 no celular, 12 no
+      desktop) e este rodapé traz o próximo ou todos de uma vez. Sem JS,
+      a grade inteira já está à vista e isto fica escondido.
+    {%- endcomment -%}
+    <div class="lp-loja__mais" data-lp-mais hidden>
+      <p class="lp-loja__mais-info" data-lp-mais-info></p>
+      <span class="lp-loja__mais-barra" aria-hidden="true"><span data-lp-mais-barra></span></span>
+      <div class="lp-loja__mais-acoes">
+        <button type="button" class="lp-btn lp-btn--vinho" data-lp-carregar>Carregar mais</button>
+        <button type="button" class="lp-loja__limpar" data-lp-ver-todos>Ver todos</button>
+      </div>
+    </div>
+
     <div class="lp-loja__vazio" data-lp-vazio hidden>
       <p class="lp-script">ops,</p>
       <p>Nenhum modelo com esses filtros.</p>
