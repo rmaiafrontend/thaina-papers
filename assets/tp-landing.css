@@ -247,9 +247,27 @@ body.lp {
   margin-bottom: 30px;
 }
 
-/* 15vw: "Como pedir" e "O catálogo" (~5,3em) cabem numa linha em 390px. */
+/* 15vw: "Como pedir" e "O catálogo" (~5,3em) cabem numa linha em 390px.
+   O respiro de cima é em em porque é o til/acento das maiúsculas (Õ, Á,
+   É) que sobe — sem ele, encostava nas descendentes do itálico acima. */
 .lp-cabeca__titulo {
+  width: fit-content;
+  padding-top: 0.14em;
   font-size: clamp(50px, 15vw, 132px);
+}
+
+/* O itálico de cima entra inclinado e um pouco recuado, como o
+   "feito à mão," da capa: lê como anotação sobre o título, não como
+   uma segunda linha dele. */
+.lp-cabeca > .lp-script {
+  display: inline-block;
+  margin: 0 0 -2px 0.15em;
+  rotate: -3deg;
+  transform-origin: left bottom;
+}
+
+.lp-cabeca .lp-script + .lp-cabeca__titulo {
+  margin-top: 0;
 }
 
 .lp-cabeca__sub {
@@ -1806,9 +1824,20 @@ body.lp {
   stroke-dashoffset: 0;
 }
 
+/* Colado ao pé do título e com a largura dele, um pouco à direita,
+   como risco feito à caneta depois de escrever a palavra. */
 .lp-cabeca__risco {
-  width: min(190px, 52%);
-  margin-top: 8px;
+  width: min(260px, 66%);
+  margin: -4px 0 0 0.6em;
+}
+
+.lp-cabeca__risco .lp-traco {
+  width: 100%;
+  height: auto;
+}
+
+.lp-cabeca__risco .lp-traco path {
+  stroke-width: 3;
 }
 
 .lp-roda {
