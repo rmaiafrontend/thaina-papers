@@ -3,12 +3,14 @@
   e o leitor de tela já anuncia o estado.
 {%- endcomment -%}
 <section class="lp-faq lp-papel">
+  <div class="lp-manuscrito lp-manuscrito--baixo" aria-hidden="true">pergunte · a gente responde · pergunte · a gente responde</div>
   <div class="lp-cabeca">
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
     <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
   </div>
 
-  <div class="lp-faq__lista" data-lp-reveal="up">
+  <div class="lp-faq__lista lp-folha" data-lp-reveal="tilt">
+    <span class="lp-recorte__fita" aria-hidden="true"></span>
     {%- for b in section.blocks -%}
       <details class="lp-faq__item" {% if forloop.first %}open{% endif %} {{ b.shopify_attributes }}>
         <summary class="lp-faq__pergunta">
@@ -21,7 +23,8 @@
   </div>
 
   {%- capture msg -%}Olá, Thainá! Tenho uma dúvida antes de pedir.{%- endcapture -%}
-  <p class="lp-faq__mais" data-lp-reveal="up">
+  <p class="lp-faq__mais" data-lp-reveal="traco">
+    {%- render 'tp-lp-traco', tipo: 'seta', class: 'lp-faq__seta' -%}
     Ficou outra dúvida?
     <a href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener">Pergunte no WhatsApp →</a>
   </p>

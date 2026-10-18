@@ -1343,7 +1343,8 @@ body.lp {
 .lp-card,
 .lp-ocasiao,
 .lp-jeito,
-.lp-passo__corpo {
+.lp-passo__corpo,
+.lp-folha {
   background-image:
     linear-gradient(165deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 45%),
     var(--lp-fibra),
@@ -1752,6 +1753,239 @@ body.lp {
 }
 
 /* =========================================================
+   Traços à mão, selos e detalhes das seções novas
+   ========================================================= */
+
+.lp-traco {
+  display: block;
+  overflow: visible;
+}
+
+.lp-traco path {
+  fill: none;
+  stroke: var(--lp-vinho);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.lp-cabeca__risco {
+  width: min(190px, 52%);
+  margin-top: 8px;
+}
+
+.lp-roda {
+  overflow: visible;
+}
+
+.lp-roda text {
+  font-family: var(--lp-texto);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--lp-vinho);
+}
+
+.lp-roda circle {
+  fill: var(--lp-vinho);
+}
+
+/* ---------- ocasiões: cards com fita, girados ---------- */
+
+.lp-ocasioes__lista {
+  padding-top: 22px;
+}
+
+.lp-ocasiao {
+  --giro: -1.4deg;
+  position: relative;
+  transform: rotate(var(--giro));
+}
+
+.lp-ocasiao:nth-child(even) {
+  --giro: 1.2deg;
+  margin-top: 14px;
+}
+
+.lp-ocasiao > .lp-recorte__fita {
+  top: -12px;
+}
+
+/* ---------- mais procurados: selo girando + "deslize" ---------- */
+
+.lp-destaques__roda {
+  position: absolute;
+  top: -6px;
+  right: var(--lp-gutter);
+  width: 92px;
+  height: 92px;
+  animation: lp-gira 20s linear infinite;
+}
+
+.lp-deslize {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: -14px var(--lp-gutter) 0;
+  color: var(--lp-vinho);
+}
+
+.lp-deslize .lp-mao {
+  font-size: 27px;
+}
+
+.lp-deslize svg {
+  width: 44px;
+  height: 16px;
+  overflow: visible;
+}
+
+.lp-deslize path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lp-destaques__lista {
+  padding-top: 16px;
+}
+
+.lp-destaques .lp-card:nth-child(odd) {
+  rotate: -0.8deg;
+}
+
+.lp-destaques .lp-card:nth-child(even) {
+  rotate: 0.7deg;
+  margin-top: 10px;
+}
+
+/* ---------- dois jeitos: selo, fita e o "ou" ---------- */
+
+.lp-jeitos__lista {
+  gap: 6px;
+}
+
+.lp-jeito {
+  --giro: -0.7deg;
+  position: relative;
+  transform: rotate(var(--giro));
+}
+
+.lp-jeito:not(.lp-jeito--vinho) {
+  --giro: 0.6deg;
+}
+
+.lp-jeito__selo {
+  position: absolute;
+  z-index: 2;
+  top: -26px;
+  right: 16px;
+  width: 66px;
+  height: 66px;
+  filter: drop-shadow(0 5px 5px rgba(30, 5, 5, 0.4));
+}
+
+/* Fora do eixo central, onde mora o "ou". */
+.lp-jeito__fita.lp-recorte__fita {
+  top: -12px;
+  left: 24%;
+}
+
+.lp-jeitos__ou {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 24px;
+  font-family: var(--lp-display);
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--lp-vinho);
+}
+
+.lp-jeitos__ou::before,
+.lp-jeitos__ou::after {
+  content: "";
+  flex: 1;
+  border-top: 1.5px dashed rgba(107, 16, 23, 0.4);
+}
+
+/* ---------- sobre: carta com selo e assinatura ---------- */
+
+.lp-sobre__selo {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+  filter: drop-shadow(0 5px 5px rgba(50, 10, 10, 0.3));
+}
+
+.lp-sobre__nome {
+  width: fit-content;
+  margin: 2px auto 8px;
+  font-size: 64px;
+  color: var(--lp-vinho);
+  rotate: -4deg;
+}
+
+.lp-sobre__onda {
+  width: 72%;
+  height: 22px;
+  margin: 18px auto 0;
+}
+
+.lp-sobre__onda .lp-traco {
+  width: 100%;
+  height: 100%;
+}
+
+.lp-sobre .lp-sobre__principios {
+  margin-top: 18px;
+  padding-top: 8px;
+  border-top: 0;
+}
+
+.lp-sobre__estrela {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--lp-vinho);
+}
+
+/* ---------- perguntas: folha de papel com fita ---------- */
+
+.lp-faq .lp-folha {
+  position: relative;
+  margin-inline: 14px;
+  padding: 10px 18px 4px;
+  border-top: 0;
+  border-radius: var(--lp-canto-papel);
+  background-color: var(--lp-creme);
+  transform: rotate(-0.5deg);
+}
+
+.lp-folha > .lp-recorte__fita {
+  top: -12px;
+}
+
+.lp-faq .lp-faq__item:last-of-type {
+  border-bottom: 0;
+}
+
+.lp-faq__seta {
+  width: 52px;
+  height: 40px;
+  margin: 0 auto 4px;
+  rotate: 8deg;
+}
+
+/* =========================================================
    Fechamento
    ========================================================= */
 
@@ -1966,6 +2200,47 @@ body.lp {
     transform: scaleY(0);
   }
 
+  /* Traços à mão: se desenham quando o bloco entra na tela. */
+  .lp-js [data-lp-reveal="traco"] .lp-traco path,
+  .lp-js [data-lp-reveal] .lp-sobre__onda .lp-traco path {
+    transition: stroke-dashoffset 1.4s cubic-bezier(.6, .1, .2, 1) 0.25s;
+  }
+
+  .lp-js [data-lp-reveal="traco"]:not(.is-in) .lp-traco path {
+    stroke-dashoffset: 1;
+  }
+
+  /* Assinatura: aparece da esquerda para a direita, como escrita. */
+  .lp-js [data-lp-reveal="escrita"] {
+    transition: clip-path 1.6s cubic-bezier(.5, 0, .3, 1) 0.2s;
+    clip-path: inset(-0.4em -0.3em -0.5em -0.3em);
+  }
+
+  .lp-js [data-lp-reveal="escrita"]:not(.is-in) {
+    clip-path: inset(-0.4em 100% -0.5em -0.3em);
+  }
+
+  /* Selos de cera das seções novas carimbam como o da capa. */
+  .lp-js .lp-jeito .lp-jeito__selo,
+  .lp-js .lp-sobre__selo {
+    opacity: 0;
+  }
+
+  .lp-js .lp-jeito.is-in .lp-jeito__selo,
+  .lp-js [data-lp-reveal="carta"].is-in .lp-sobre__selo {
+    animation: lp-carimba 0.7s cubic-bezier(.3, 1.6, .5, 1) 0.5s forwards;
+  }
+
+  /* "deslize": a seta dá um empurrãozinho de tempos em tempos. */
+  .lp-deslize svg {
+    animation: lp-empurra 2.2s ease-in-out infinite;
+  }
+
+  @keyframes lp-empurra {
+    0%, 60%, 100% { transform: translateX(0); }
+    75% { transform: translateX(7px); }
+  }
+
   /* Recorte da colagem: cai girando e assenta. */
   .lp-js [data-lp-reveal="drop"]:not(.is-in) {
     opacity: 0;
@@ -2031,6 +2306,7 @@ body.lp {
   }
 
   .lp-carimbo__roda,
+  .lp-destaques__roda,
   .lp-faixa__trilho,
   .lp-flutuante::before {
     animation: none;
@@ -2053,8 +2329,27 @@ body.lp {
   }
 
   .lp-jeitos__lista {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 980px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+
+  .lp-jeitos__ou {
+    flex-direction: column;
+    padding: 0 6px;
+  }
+
+  .lp-jeitos__ou::before,
+  .lp-jeitos__ou::after {
+    width: 0;
+    height: 60px;
+    border-top: 0;
+    border-left: 1.5px dashed rgba(107, 16, 23, 0.4);
+  }
+
+  .lp-faq .lp-folha {
+    max-width: 760px;
     margin-inline: auto;
   }
 

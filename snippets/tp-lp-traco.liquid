@@ -1,0 +1,16 @@
+{%- doc -%}
+  Traços feitos à mão em SVG, que se desenham quando o elemento (ou um pai
+  com data-lp-reveal) entra na tela.
+
+  @param {string} tipo - "onda" (linha ondulada larga), "sublinha" (risco
+    duplo sob um título) ou "seta" (seta curva apontando para baixo/direita).
+  @param {string} [class] - Classes extras.
+{%- enddoc -%}
+{%- case tipo -%}
+  {%- when 'onda' -%}
+    <svg class="lp-traco lp-traco--onda {{ class }}" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M2 22 C40 4 70 38 110 22 C150 6 180 36 220 20 C260 4 290 36 330 20 C360 8 382 26 398 16"/></svg>
+  {%- when 'sublinha' -%}
+    <svg class="lp-traco lp-traco--sublinha {{ class }}" viewBox="0 0 220 26" aria-hidden="true" focusable="false"><path pathLength="1" d="M4 15 C50 7 110 6 214 9 M18 21 C70 15 130 15 196 17"/></svg>
+  {%- when 'seta' -%}
+    <svg class="lp-traco lp-traco--seta {{ class }}" viewBox="0 0 90 70" aria-hidden="true" focusable="false"><path pathLength="1" d="M6 8 C30 4 62 14 66 40 C68 52 62 58 58 62 M46 52 L58 63 L70 50"/></svg>
+{%- endcase -%}

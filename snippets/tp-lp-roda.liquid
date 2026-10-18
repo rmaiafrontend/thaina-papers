@@ -1,0 +1,11 @@
+{%- doc -%}
+  Selo circular com texto girando (o mesmo da capa), decorativo.
+
+  @param {string} texto - Texto em volta do círculo; termine com " · ".
+  @param {string} [class] - Classes extras.
+{%- enddoc -%}
+<svg class="lp-roda {{ class }}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+  <defs><path id="lp-roda-{{ texto | handleize }}" d="M50 50 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs>
+  <text><textPath href="#lp-roda-{{ texto | handleize }}" textLength="236">{{ texto }}</textPath></text>
+  <circle cx="50" cy="50" r="5" />
+</svg>

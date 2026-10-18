@@ -11,7 +11,15 @@
 
   <div class="lp-jeitos__lista">
     {%- for b in section.blocks -%}
-      <article class="lp-jeito{% if b.settings.escuro %} lp-jeito--vinho{% endif %}" style="--i: {{ forloop.index0 }}" data-lp-reveal="up" {{ b.shopify_attributes }}>
+      {%- unless forloop.first -%}
+        <div class="lp-jeitos__ou" aria-hidden="true"><span>ou</span></div>
+      {%- endunless -%}
+      <article class="lp-jeito{% if b.settings.escuro %} lp-jeito--vinho{% endif %}" style="--i: {{ forloop.index0 }}" data-lp-reveal="tilt" {{ b.shopify_attributes }}>
+        {%- if b.settings.escuro -%}
+          {%- render 'tp-lp-selo', class: 'lp-jeito__selo' -%}
+        {%- else -%}
+          <span class="lp-recorte__fita lp-jeito__fita" aria-hidden="true"></span>
+        {%- endif -%}
         <p class="lp-jeito__sobre">{{ b.settings.sobre }}</p>
         <h3 class="lp-jeito__titulo">{{ b.settings.titulo }}</h3>
         <p class="lp-jeito__texto">{{ b.settings.texto }}</p>

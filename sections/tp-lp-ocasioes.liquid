@@ -4,14 +4,18 @@
   até ele; sem JS, é só uma âncora para o catálogo.
 {%- endcomment -%}
 <section class="lp-ocasioes lp-papel">
+  <div class="lp-manuscrito" aria-hidden="true">casamentos · formaturas · consultórios · batizados · casamentos · formaturas</div>
+
   <div class="lp-cabeca">
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
     <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+    <div class="lp-cabeca__risco" data-lp-reveal="traco">{%- render 'tp-lp-traco', tipo: 'sublinha' -%}</div>
   </div>
 
-  <ul class="lp-trilho lp-ocasioes__lista" data-lp-reveal="up">
+  <ul class="lp-trilho lp-ocasioes__lista">
     {%- for b in section.blocks -%}
-      <li class="lp-ocasiao" {{ b.shopify_attributes }}>
+      <li class="lp-ocasiao" style="--i: {{ forloop.index0 }}" data-lp-reveal="drop" {{ b.shopify_attributes }}>
+        <span class="lp-recorte__fita" aria-hidden="true"></span>
         <div class="lp-ocasiao__foto">
           {%- render 'tp-image',
             image: b.settings.image,

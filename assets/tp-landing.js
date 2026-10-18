@@ -16,13 +16,14 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
     : null;
 
-  /* O "wipe" esconde o próprio elemento com clip-path, e um alvo recortado
-     a zero nunca cruza o limiar do observador — então quem é observado é o
-     pai, e o título é revelado junto com ele. */
+  /* "wipe" e "escrita" escondem o próprio elemento com clip-path, e um
+     alvo recortado a zero nunca cruza o limiar do observador — então quem
+     é observado é o pai, e o elemento é revelado junto com ele. */
   function revelar(raiz) {
     raiz.querySelectorAll('[data-lp-reveal], .lp-final').forEach(function (el) {
       if (!observador) { el.classList.add('is-in'); return; }
-      var alvo = el.getAttribute('data-lp-reveal') === 'wipe' ? el.parentElement : el;
+      var tipo = el.getAttribute('data-lp-reveal');
+      var alvo = tipo === 'wipe' || tipo === 'escrita' ? el.parentElement : el;
       alvo._lpRevela = (alvo._lpRevela || []).concat(el);
       observador.observe(alvo);
     });

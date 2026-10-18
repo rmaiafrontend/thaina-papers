@@ -5,7 +5,9 @@
   princípios do estúdio e a assinatura.
 {%- endcomment -%}
 <section class="lp-sobre lp-papel lp-papel--claro">
-  <div class="lp-sobre__miolo">
+  <div class="lp-manuscrito" aria-hidden="true">com carinho · papel, tinta e paciência · com carinho · papel, tinta e paciência</div>
+  <div class="lp-sobre__miolo" data-lp-reveal="carta">
+    {%- render 'tp-lp-selo', class: 'lp-sobre__selo' -%}
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
     <h2 class="lp-display lp-sobre__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
 
@@ -15,10 +17,17 @@
 
     <div class="lp-sobre__texto" data-lp-reveal="up">{{ section.settings.texto }}</div>
 
+    {%- if section.settings.assinatura_nome != blank -%}
+      <p class="lp-sobre__nome lp-mao" data-lp-reveal="escrita">{{ section.settings.assinatura_nome }}</p>
+    {%- endif -%}
+
+    <div class="lp-sobre__onda" data-lp-reveal="traco">{%- render 'tp-lp-traco', tipo: 'onda' -%}</div>
+
     {%- if section.blocks.size > 0 -%}
       <ul class="lp-sobre__principios">
         {%- for b in section.blocks -%}
           <li style="--i: {{ forloop.index0 }}" data-lp-reveal="up" {{ b.shopify_attributes }}>
+            <span class="lp-sobre__estrela" aria-hidden="true">✦</span>
             <strong>{{ b.settings.titulo }}</strong>
             <span>{{ b.settings.texto }}</span>
           </li>
@@ -46,6 +55,7 @@
     { "type": "textarea", "id": "titulo", "label": "Título", "default": "Comecei desenhando o convite do meu próprio casamento." },
     { "type": "text", "id": "destaque", "label": "Frase em destaque (caixa alta)" },
     { "type": "richtext", "id": "texto", "label": "Texto" },
+    { "type": "text", "id": "assinatura_nome", "label": "Assinatura manuscrita", "default": "Thainá" },
     { "type": "text", "id": "assinatura_1", "label": "Assinatura — começo", "default": "Menos excesso." },
     { "type": "text", "id": "assinatura_italico", "label": "Assinatura — itálico", "default": "mais" },
     { "type": "text", "id": "assinatura_2", "label": "Assinatura — fim", "default": "essência." }

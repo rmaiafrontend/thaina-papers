@@ -8,7 +8,13 @@
   <div class="lp-cabeca">
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
     <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+    {%- render 'tp-lp-roda', texto: 'OS QUERIDINHOS · THAINÁ PAPERS · ', class: 'lp-destaques__roda' -%}
   </div>
+
+  <p class="lp-deslize" aria-hidden="true">
+    <span class="lp-mao">deslize</span>
+    <svg viewBox="0 0 60 20"><path d="M2 12 C16 6 34 6 54 11 M46 4 L55 11 L46 17"/></svg>
+  </p>
 
   <ul class="lp-trilho lp-destaques__lista">
     {%- for produto in colecao.products limit: section.settings.limite -%}
