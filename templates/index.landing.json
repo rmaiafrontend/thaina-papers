@@ -130,21 +130,24 @@
           "type": "passo",
           "settings": {
             "titulo": "Escolha",
-            "texto": "Navegue pelo catálogo e toque em Pedir no modelo que mais combina com a sua celebração."
+            "texto": "Veja os modelos no catálogo e toque em Pedir no que mais combina com a sua celebração.",
+            "chips": "casamento, formatura, consultório, digital"
           }
         },
         "p1": {
           "type": "passo",
           "settings": {
             "titulo": "Chame no WhatsApp",
-            "texto": "A conversa já abre com o modelo escrito. Conte a data, os nomes, as cores e a quantidade."
+            "texto": "A conversa já abre com o modelo escrito. Conte o que precisa e a Thainá responde por lá.",
+            "chips": "data, nomes, cores, quantidade"
           }
         },
         "p2": {
           "type": "passo",
           "settings": {
             "titulo": "Aprove e receba",
-            "texto": "Você confere a arte antes de tudo — até 3 rodadas de ajuste. Impressos seguem para todo o Brasil; digitais chegam em até 1 dia útil."
+            "texto": "Você confere a arte antes de produzir. Depois é só esperar chegar.",
+            "chips": "até 3 ajustes na arte, envio para todo o Brasil, digitais em até 1 dia útil"
           }
         }
       },

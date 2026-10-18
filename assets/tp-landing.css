@@ -1015,68 +1015,109 @@ body.lp {
    ========================================================= */
 
 .lp-passos {
-  padding: 80px 0 40px;
+  padding: 84px 0 76px;
 }
 
+/* Linha do tempo: coluna estreita do numeral + coluna do texto. O fio é
+   um trecho tracejado por passo, do pé do numeral até o próximo — assim
+   não precisa de nada tapando o fio atrás dos números. */
 .lp-passos__lista {
-  margin: 0;
-  padding: 0;
+  --col: 78px;
+  --gap: 34px;
+  display: grid;
+  gap: var(--gap);
+  margin: 8px 0 0;
+  padding: 0 var(--lp-gutter);
   list-style: none;
 }
 
 .lp-passo {
   position: relative;
-  min-height: 260px;
-  margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: var(--col) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
 }
 
-/* O numeral vaza pela borda da tela, como o 63,2% da referência. */
-.lp-passo__num {
+.lp-passo:not(:last-child)::before {
+  content: "";
   position: absolute;
-  top: -10px;
-  left: -5vw;
+  top: 92px;
+  bottom: calc(var(--gap) * -1 + 8px);
+  left: calc(var(--col) / 2 - 1px);
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--lp-vinho) 0 8px, transparent 8px 15px);
+  transform-origin: top;
+}
+
+.lp-passo__num {
+  display: grid;
+  place-items: center;
+  height: 84px;
   font-family: var(--lp-display);
-  font-size: clamp(220px, 60vw, 340px);
+  font-size: 76px;
   font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.78;
-  font-variant-numeric: lining-nums;
+  letter-spacing: -0.05em;
+  line-height: 1;
   color: var(--lp-vinho);
-  pointer-events: none;
+  font-variant-numeric: lining-nums;
 }
 
-.lp-passo--dir .lp-passo__num {
-  left: auto;
-  right: -8vw;
-}
-
-.lp-passo__texto {
-  position: relative;
-  margin: 150px var(--lp-gutter) 0 22%;
-  padding: 18px 20px 20px;
-  background: rgba(199, 220, 235, 0.88);
-  border-radius: 4px;
-  box-shadow: 0 10px 24px rgba(40, 60, 90, 0.12);
-}
-
-.lp-passo--dir .lp-passo__texto {
-  margin-left: var(--lp-gutter);
-  margin-right: 22%;
+.lp-passo__corpo {
+  padding: 18px 18px 20px;
+  border-radius: 14px;
+  background: rgba(199, 220, 235, 0.9);
+  box-shadow: 0 10px 24px rgba(40, 60, 90, 0.1);
 }
 
 .lp-passo__titulo {
   margin: 0 0 6px;
   font-family: var(--lp-display);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
   color: var(--lp-cereja);
 }
 
-.lp-passo__texto p {
+.lp-passo__texto {
   margin: 0;
-  font-size: 15.5px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.lp-passo__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-passo__chips li {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--lp-creme);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--lp-cereja);
+}
+
+.lp-passos__fim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding-inline: var(--lp-gutter);
+  text-align: center;
+}
+
+.lp-passos__nota {
+  margin: 0;
+  font-size: 13px;
+  color: var(--lp-caramelo);
 }
 
 /* =========================================================
@@ -1438,6 +1479,36 @@ body.lp {
     transform: translateY(60px) rotate(-8deg) scale(0.92);
   }
 
+  /* Como pedir: cada passo entra, o numeral salta e o trecho de fio até o
+     próximo se desenha — um depois do outro. */
+  .lp-js [data-lp-reveal="fio"] .lp-passo {
+    transition: opacity 0.7s ease, transform 0.8s cubic-bezier(.2, .8, .2, 1);
+    transition-delay: calc(0.15s + var(--i, 0) * 0.45s);
+  }
+
+  .lp-js [data-lp-reveal="fio"]:not(.is-in) .lp-passo {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  .lp-js [data-lp-reveal="fio"] .lp-passo__num {
+    transition: transform 0.6s cubic-bezier(.3, 1.6, .5, 1);
+    transition-delay: calc(0.25s + var(--i, 0) * 0.45s);
+  }
+
+  .lp-js [data-lp-reveal="fio"]:not(.is-in) .lp-passo__num {
+    transform: scale(0.4);
+  }
+
+  .lp-js [data-lp-reveal="fio"] .lp-passo::before {
+    transition: transform 0.6s cubic-bezier(.6, .1, .2, 1);
+    transition-delay: calc(0.6s + var(--i, 0) * 0.45s);
+  }
+
+  .lp-js [data-lp-reveal="fio"]:not(.is-in) .lp-passo::before {
+    transform: scaleY(0);
+  }
+
   /* Recorte da colagem: cai girando e assenta. */
   .lp-js [data-lp-reveal="drop"]:not(.is-in) {
     opacity: 0;
@@ -1579,23 +1650,37 @@ body.lp {
     margin-inline: auto;
   }
 
+  /* Desktop: três colunas, o fio vira horizontal na altura dos numerais. */
   .lp-passos__lista {
-    display: grid;
+    --gap: 28px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 30px;
-    padding-inline: var(--lp-gutter);
+    max-width: var(--lp-max);
+    margin-inline: auto;
+    padding-inline: 48px;
   }
 
-  .lp-passo__num,
-  .lp-passo--dir .lp-passo__num {
-    left: -10px;
-    right: auto;
-    font-size: 240px;
+  .lp-passo {
+    grid-template-columns: 1fr;
+    justify-items: start;
   }
 
-  .lp-passo__texto,
-  .lp-passo--dir .lp-passo__texto {
-    margin: 150px 0 0 40px;
+  .lp-passo:not(:last-child)::before {
+    top: 42px;
+    bottom: auto;
+    left: 104px;
+    right: calc(var(--gap) * -1 + 8px);
+    width: auto;
+    height: 2px;
+    background: repeating-linear-gradient(to right, var(--lp-vinho) 0 8px, transparent 8px 15px);
+    transform-origin: left;
+  }
+
+  .lp-js [data-lp-reveal="fio"]:not(.is-in) .lp-passo::before {
+    transform: scaleX(0);
+  }
+
+  .lp-passo__corpo {
+    width: 100%;
   }
 
   .lp-colagem {

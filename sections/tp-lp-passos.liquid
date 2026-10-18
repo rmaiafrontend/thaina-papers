@@ -1,25 +1,46 @@
 {%- comment -%}
-  Como pedir: três passos com numerais gigantes que vazam da tela, como o
-  "63,2%" da referência. O numeral é decorativo (aria-hidden); a ordem real
-  vem da lista ordenada.
+  Como pedir: três passos numa linha do tempo costurada. Um fio vinho
+  tracejado liga os numerais (vertical no celular, horizontal no desktop)
+  e se desenha quando a lista entra na tela. Cada passo tem chips com os
+  detalhes concretos — o que mandar, quantos ajustes, prazo — para a pessoa
+  não precisar perguntar o básico no WhatsApp.
 {%- endcomment -%}
+{%- capture wa_msg -%}Olá, Thainá! Quero fazer um pedido.{%- endcapture -%}
 <section class="lp-passos lp-papel">
   <div class="lp-cabeca">
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
     <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
   </div>
 
-  <ol class="lp-passos__lista">
+  <ol class="lp-passos__lista" data-lp-reveal="fio">
     {%- for b in section.blocks -%}
-      <li class="lp-passo{% cycle '', ' lp-passo--dir', '' %}" {{ b.shopify_attributes }}>
-        <span class="lp-passo__num" aria-hidden="true" data-lp-parallax="0.12">{{ forloop.index | prepend: '0' }}</span>
-        <div class="lp-passo__texto" data-lp-reveal="up">
+      <li class="lp-passo" style="--i: {{ forloop.index0 }}" {{ b.shopify_attributes }}>
+        <span class="lp-passo__num" aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
+        <div class="lp-passo__corpo">
           <h3 class="lp-passo__titulo">{{ b.settings.titulo }}</h3>
-          <p>{{ b.settings.texto }}</p>
+          <p class="lp-passo__texto">{{ b.settings.texto }}</p>
+          {%- assign chips = b.settings.chips | split: ',' -%}
+          {%- if chips.size > 0 -%}
+            <ul class="lp-passo__chips">
+              {%- for c in chips -%}
+                {%- assign c = c | strip -%}
+                {%- if c != blank -%}<li>{{ c }}</li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
         </div>
       </li>
     {%- endfor -%}
   </ol>
+
+  <div class="lp-passos__fim" data-lp-reveal="up">
+    <a class="lp-btn lp-btn--vinho" href="{% render 'tp-lp-wa', message: wa_msg %}" target="_blank" rel="noopener">
+      {%- render 'tp-lp-icone-wa' -%} {{ section.settings.botao }}
+    </a>
+    {%- if section.settings.nota != blank -%}
+      <p class="lp-passos__nota">{{ section.settings.nota }}</p>
+    {%- endif -%}
+  </div>
 </section>
 
 {% schema %}
@@ -29,7 +50,9 @@
   "max_blocks": 4,
   "settings": [
     { "type": "text", "id": "script", "label": "Manuscrito", "default": "sem complicação" },
-    { "type": "text", "id": "titulo", "label": "Título", "default": "Como pedir" }
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Como pedir" },
+    { "type": "text", "id": "botao", "label": "Botão", "default": "Começar pelo WhatsApp" },
+    { "type": "text", "id": "nota", "label": "Nota abaixo do botão", "default": "Atendimento direto com a Thainá, de segunda a sexta." }
   ],
   "blocks": [
     {
@@ -37,7 +60,8 @@
       "name": "Passo",
       "settings": [
         { "type": "text", "id": "titulo", "label": "Título", "default": "Escolha" },
-        { "type": "textarea", "id": "texto", "label": "Texto", "default": "Escolha o modelo no catálogo." }
+        { "type": "textarea", "id": "texto", "label": "Texto", "default": "Escolha o modelo no catálogo." },
+        { "type": "text", "id": "chips", "label": "Detalhes (separados por vírgula)" }
       ]
     }
   ],
