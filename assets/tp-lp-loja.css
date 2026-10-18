@@ -489,10 +489,13 @@ html.lp-com-sacola .lp-loja {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Altura explícita em vez de aspect-ratio + max-height: com os dois, ao
+   bater no limite de altura o navegador encolhia também a largura e a foto
+   virava um quadrado menor que o modal, com sobra à direita. */
 .lp-produto__fotos {
   display: flex;
-  aspect-ratio: 1 / 1;
-  max-height: 56svh;
+  width: 100%;
+  height: min(100vw, 56svh);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
