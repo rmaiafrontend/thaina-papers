@@ -170,9 +170,19 @@
       if (botao) botao.classList.add('is-on');
       return;
     }
+    /* Sai também no fichário do catálogo: lá cada modelo tem o próprio
+       botão de pedir, e o flutuante só tampava os cards. */
+    var fichario = document.querySelector('.lp-fichario');
     var capaVisivel = true;
     var finalVisivel = false;
-    function aplicar() { botao.classList.toggle('is-on', !capaVisivel && !finalVisivel); }
+    var fichVisivel = false;
+    function aplicar() { botao.classList.toggle('is-on', !capaVisivel && !finalVisivel && !fichVisivel); }
+    if (fichario) {
+      new IntersectionObserver(function (e) {
+        fichVisivel = e[0].isIntersecting;
+        aplicar();
+      }, { rootMargin: '-25% 0px -25% 0px' }).observe(fichario);
+    }
     new IntersectionObserver(function (e) {
       e.forEach(function (x) {
         if (x.target === capa) capaVisivel = x.isIntersecting;
