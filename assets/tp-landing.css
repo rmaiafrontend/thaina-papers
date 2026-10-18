@@ -1325,6 +1325,393 @@ body.lp {
 }
 
 /* =========================================================
+   Trilho deslizável (ocasiões, mais procurados)
+   ========================================================= */
+
+.lp-trilho {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 14px;
+  margin: 0;
+  padding: 4px var(--lp-gutter) 18px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--lp-gutter);
+  scrollbar-width: none;
+}
+
+.lp-trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.lp-trilho > * {
+  scroll-snap-align: start;
+}
+
+/* =========================================================
+   Ocasiões
+   ========================================================= */
+
+.lp-ocasioes {
+  padding: 96px 0 56px;
+}
+
+.lp-ocasioes__lista {
+  grid-auto-columns: 80%;
+}
+
+.lp-ocasiao {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 18px;
+  border-radius: 16px;
+  background: var(--lp-creme);
+  box-shadow: 0 10px 24px rgba(40, 50, 70, 0.14);
+}
+
+.lp-ocasiao__foto {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.lp-ocasiao__img {
+  width: 100%;
+  height: 100%;
+}
+
+.lp-ocasiao__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lp-ocasiao__num {
+  position: absolute;
+  left: 10px;
+  bottom: 4px;
+  font-family: var(--lp-display);
+  font-size: 64px;
+  line-height: 1;
+  color: var(--lp-creme);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.lp-ocasiao__corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 14px 6px 0;
+}
+
+.lp-ocasiao__titulo {
+  margin: 0 0 6px;
+  font-family: var(--lp-display);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--lp-vinho);
+}
+
+.lp-ocasiao__texto {
+  margin: 0 0 14px;
+  font-size: 14.5px;
+}
+
+.lp-ocasiao__link {
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lp-cereja) !important;
+  text-underline-offset: 4px;
+}
+
+/* =========================================================
+   Mais procurados
+   ========================================================= */
+
+.lp-destaques {
+  padding: 84px 0 70px;
+  -webkit-mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+  mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+}
+
+.lp-destaques__lista {
+  grid-auto-columns: 60%;
+}
+
+.lp-destaques .lp-card {
+  background: #fff;
+}
+
+/* =========================================================
+   Dois jeitos
+   ========================================================= */
+
+.lp-jeitos {
+  padding: 84px 0 76px;
+  -webkit-mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+  mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+}
+
+.lp-jeitos__lista {
+  display: grid;
+  gap: 16px;
+  padding-inline: var(--lp-gutter);
+}
+
+.lp-jeito {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 22px 24px;
+  border: 1.5px solid rgba(107, 16, 23, 0.25);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.lp-jeito--vinho {
+  border-color: transparent;
+  background-color: var(--lp-cereja);
+  background-image: var(--lp-grao);
+  background-blend-mode: multiply;
+  color: var(--lp-creme);
+}
+
+.lp-jeito__sobre {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.lp-jeito__titulo {
+  margin: 0 0 10px;
+  font-family: var(--lp-display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--lp-vinho);
+}
+
+.lp-jeito--vinho .lp-jeito__titulo {
+  color: var(--lp-creme);
+}
+
+.lp-jeito__texto {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+.lp-jeito__itens {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 22px;
+  padding: 16px 0 0;
+  border-top: 1px dashed currentColor;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.lp-jeito__itens li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.lp-jeito__itens li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 12px;
+  color: var(--lp-vinho);
+}
+
+.lp-jeito--vinho .lp-jeito__itens li::before {
+  color: var(--lp-azul-claro);
+}
+
+.lp-jeito__btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* =========================================================
+   Sobre (formato do bloco de referência: tudo centralizado)
+   ========================================================= */
+
+.lp-sobre {
+  padding: 92px var(--lp-gutter) 88px;
+  margin-top: -18px;
+  text-align: center;
+  -webkit-mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+  mask: var(--lp-rasgo) top / 100% 18px no-repeat, linear-gradient(#000, #000) 0 17px / 100% calc(100% - 34px) no-repeat, var(--lp-rasgo-pe) bottom / 100% 18px no-repeat;
+}
+
+.lp-sobre__miolo {
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.lp-sobre__titulo {
+  margin: 0 auto 26px;
+  font-size: clamp(36px, 10.5vw, 64px);
+  line-height: 1;
+}
+
+.lp-sobre__destaque {
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--lp-tinta);
+}
+
+.lp-sobre__texto {
+  font-size: 16.5px;
+  line-height: 1.55;
+}
+
+.lp-sobre__texto p {
+  margin: 0 0 16px;
+}
+
+.lp-sobre__texto strong {
+  font-weight: 700;
+}
+
+.lp-sobre__principios {
+  display: grid;
+  gap: 18px;
+  margin: 30px 0 0;
+  padding: 28px 0 0;
+  border-top: 1px dashed rgba(107, 16, 23, 0.35);
+  list-style: none;
+}
+
+.lp-sobre__principios strong {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--lp-display);
+  font-size: 28px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--lp-vinho);
+}
+
+.lp-sobre__principios span {
+  font-size: 15px;
+}
+
+.lp-sobre__assinatura {
+  margin: 40px 0 0;
+  font-family: var(--lp-display);
+  font-size: clamp(34px, 10vw, 60px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--lp-vinho);
+}
+
+.lp-sobre__assinatura em {
+  font-style: italic;
+  text-transform: none;
+}
+
+/* =========================================================
+   Perguntas
+   ========================================================= */
+
+.lp-faq {
+  padding: 88px 0 76px;
+}
+
+.lp-faq__lista {
+  margin: 0 var(--lp-gutter);
+  border-top: 1px solid rgba(107, 16, 23, 0.3);
+}
+
+.lp-faq__item {
+  border-bottom: 1px solid rgba(107, 16, 23, 0.3);
+}
+
+.lp-faq__pergunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lp-tinta);
+  cursor: pointer;
+  list-style: none;
+}
+
+.lp-faq__pergunta::-webkit-details-marker {
+  display: none;
+}
+
+/* Sinal de + que vira − ao abrir. */
+.lp-faq__sinal {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--lp-cereja);
+}
+
+.lp-faq__sinal::before,
+.lp-faq__sinal::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  background: var(--lp-creme);
+  transition: transform 0.3s ease;
+}
+
+.lp-faq__sinal::after {
+  transform: rotate(90deg);
+}
+
+.lp-faq__item[open] .lp-faq__sinal::after {
+  transform: rotate(0deg);
+}
+
+.lp-faq__resposta {
+  padding: 0 44px 20px 0;
+  font-size: 15px;
+}
+
+.lp-faq__resposta p {
+  margin: 0;
+}
+
+.lp-faq__mais {
+  margin: 26px 0 0;
+  padding-inline: var(--lp-gutter);
+  text-align: center;
+  font-size: 15px;
+}
+
+.lp-faq__mais a {
+  font-weight: 700;
+  color: var(--lp-cereja);
+  text-underline-offset: 4px;
+}
+
+/* =========================================================
    Fechamento
    ========================================================= */
 
@@ -1359,8 +1746,8 @@ body.lp {
 
 .lp-final__titulo {
   margin: 6px auto 20px;
-  max-width: 10ch;
-  font-size: clamp(70px, 21vw, 150px);
+  max-width: 8em;
+  font-size: clamp(54px, 15vw, 130px);
   color: var(--lp-creme);
 }
 
@@ -1615,6 +2002,31 @@ body.lp {
    ========================================================= */
 
 @media (min-width: 900px) {
+  .lp-ocasioes__lista,
+  .lp-destaques__lista {
+    grid-auto-columns: 340px;
+    justify-content: center;
+  }
+
+  .lp-destaques__lista {
+    grid-auto-columns: 260px;
+  }
+
+  .lp-jeitos__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 980px;
+    margin-inline: auto;
+  }
+
+  .lp-faq__lista {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .lp-sobre__principios {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   :root {
     --lp-gutter: max(48px, calc((100% - var(--lp-max)) / 2));
   }

@@ -1,0 +1,59 @@
+{%- comment -%}
+  Dois jeitos de pedir: sob medida (cartão vinho) e template Canva (cartão
+  creme). Cada um com a lista do que inclui e um WhatsApp com a mensagem
+  certa para aquele caminho.
+{%- endcomment -%}
+<section class="lp-jeitos lp-papel lp-papel--claro">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <div class="lp-jeitos__lista">
+    {%- for b in section.blocks -%}
+      <article class="lp-jeito{% if b.settings.escuro %} lp-jeito--vinho{% endif %}" style="--i: {{ forloop.index0 }}" data-lp-reveal="up" {{ b.shopify_attributes }}>
+        <p class="lp-jeito__sobre">{{ b.settings.sobre }}</p>
+        <h3 class="lp-jeito__titulo">{{ b.settings.titulo }}</h3>
+        <p class="lp-jeito__texto">{{ b.settings.texto }}</p>
+        {%- assign itens = b.settings.itens | newline_to_br | split: '<br />' -%}
+        <ul class="lp-jeito__itens">
+          {%- for item in itens -%}
+            {%- assign item = item | strip -%}
+            {%- if item != blank -%}<li>{{ item }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <a class="lp-btn {% if b.settings.escuro %}lp-btn--creme{% else %}lp-btn--vinho{% endif %} lp-jeito__btn" href="{% render 'tp-lp-wa', message: b.settings.mensagem %}" target="_blank" rel="noopener">
+          {%- render 'tp-lp-icone-wa' -%} {{ b.settings.botao }}
+        </a>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Dois jeitos",
+  "tag": "div",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "escolha o seu" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Dois jeitos de pedir" }
+  ],
+  "blocks": [
+    {
+      "type": "jeito",
+      "name": "Jeito",
+      "settings": [
+        { "type": "text", "id": "sobre", "label": "Sobrelinha", "default": "01" },
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Tailor-made" },
+        { "type": "textarea", "id": "texto", "label": "Texto" },
+        { "type": "textarea", "id": "itens", "label": "O que inclui (um por linha)" },
+        { "type": "text", "id": "botao", "label": "Botão", "default": "Falar no WhatsApp" },
+        { "type": "text", "id": "mensagem", "label": "Mensagem do WhatsApp" },
+        { "type": "checkbox", "id": "escuro", "label": "Cartão vinho", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Dois jeitos", "blocks": [{ "type": "jeito" }, { "type": "jeito" }] }]
+}
+{% endschema %}

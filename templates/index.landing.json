@@ -287,15 +287,176 @@
       "settings": {
         "instagram": "https://instagram.com/thainapapers"
       }
+    },
+    "ocasioes": {
+      "type": "tp-lp-ocasioes",
+      "settings": {},
+      "blocks": {
+        "c": {
+          "type": "ocasiao",
+          "settings": {
+            "image_asset": "tp-ocasiao-casamentos.jpg",
+            "titulo": "Casamentos",
+            "texto": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Casamentos"
+          }
+        },
+        "f": {
+          "type": "ocasiao",
+          "settings": {
+            "image_asset": "tp-ocasiao-formaturas.jpg",
+            "titulo": "Formaturas",
+            "texto": "Pacotes, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Formaturas"
+          }
+        },
+        "k": {
+          "type": "ocasiao",
+          "settings": {
+            "image_asset": "tp-ocasiao-consultorios.jpg",
+            "titulo": "Consultórios",
+            "texto": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Consultórios"
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "f",
+        "k"
+      ]
+    },
+    "destaques": {
+      "type": "tp-lp-destaques",
+      "settings": {
+        "colecao": "mais-procurados"
+      }
+    },
+    "jeitos": {
+      "type": "tp-lp-jeitos",
+      "settings": {},
+      "blocks": {
+        "t": {
+          "type": "jeito",
+          "settings": {
+            "sobre": "Jeito 01",
+            "titulo": "Tailor-made",
+            "texto": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
+            "itens": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
+            "botao": "Quero criar meu projeto",
+            "mensagem": "Olá, Thainá! Quero criar um projeto sob medida (tailor-made).",
+            "escuro": true
+          }
+        },
+        "c": {
+          "type": "jeito",
+          "settings": {
+            "sobre": "Jeito 02",
+            "titulo": "Template Canva",
+            "texto": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
+            "itens": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
+            "botao": "Quero um template",
+            "mensagem": "Olá, Thainá! Quero saber dos templates para Canva.",
+            "escuro": false
+          }
+        }
+      },
+      "block_order": [
+        "t",
+        "c"
+      ]
+    },
+    "sobre": {
+      "type": "tp-lp-sobre",
+      "settings": {
+        "destaque": "Cada peça é feita para uma data marcada no calendário de alguém.",
+        "texto": "<p>Era 2019, o orçamento era curto e eu queria algo que parecesse com a gente. Fiz o convite, os menus e as tags numa mesa de jantar — e três amigas pediram igual.</p><p>Desde então são <strong>pequenos lotes, impressos com atenção a papel, corte e acabamento</strong>. Hoje o estúdio também tem templates no Canva — o mesmo cuidado de projeto, para quem prefere resolver no próprio tempo.</p>"
+      },
+      "blocks": {
+        "a": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Pequenos lotes",
+            "texto": "Quantidades fixas e produção sob demanda. Nada é impresso antes de existir uma celebração."
+          }
+        },
+        "b": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Preço na página",
+            "texto": "Valor fechado, quantidade visível e prazo separado por etapa."
+          }
+        },
+        "c": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Conversa antes do traço",
+            "texto": "Todo projeto sob medida começa com um briefing e segue com aprovação em cada etapa."
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "faq": {
+      "type": "tp-lp-faq",
+      "settings": {},
+      "blocks": {
+        "a": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Qual a diferença entre produto digital e físico?",
+            "resposta": "<p>O digital é entregue por arquivo ou link — nenhum item físico será enviado. O físico é impresso, embalado e transportado, com prazo de produção informado.</p>"
+          }
+        },
+        "b": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Posso alterar a arte depois de pronta?",
+            "resposta": "<p>Sim: até 3 solicitações de correção dos dados inseridos, com retorno em até 2 dias úteis.</p>"
+          }
+        },
+        "c": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Como funciona o pagamento?",
+            "resposta": "<p>PIX ou cartão em até 12x, combinado no WhatsApp junto com o frete. A produção começa após a aprovação da arte e a confirmação do pagamento.</p>"
+          }
+        },
+        "d": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Vocês enviam para todo o Brasil?",
+            "resposta": "<p>Sim. Os impressos seguem para todo o Brasil depois da produção; os digitais chegam em até 1 dia útil após a aprovação.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
     }
   },
   "order": [
     "capa",
     "faixa",
+    "ocasioes",
+    "destaques",
     "catalogo",
+    "jeitos",
     "passos",
     "trabalhos",
     "depoimentos",
+    "sobre",
+    "faq",
     "final"
   ]
 }

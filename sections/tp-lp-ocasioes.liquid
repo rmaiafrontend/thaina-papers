@@ -1,0 +1,65 @@
+{%- comment -%}
+  Ocasiões: os três públicos da Thainá em cards deslizáveis. O botão de
+  cada card abre a aba correspondente do catálogo (pelo nome da aba) e rola
+  até ele; sem JS, é só uma âncora para o catálogo.
+{%- endcomment -%}
+<section class="lp-ocasioes lp-papel">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <ul class="lp-trilho lp-ocasioes__lista" data-lp-reveal="up">
+    {%- for b in section.blocks -%}
+      <li class="lp-ocasiao" {{ b.shopify_attributes }}>
+        <div class="lp-ocasiao__foto">
+          {%- render 'tp-image',
+            image: b.settings.image,
+            asset: b.settings.image_asset,
+            alt: b.settings.titulo,
+            class: 'lp-ocasiao__img',
+            ratio: '1/1',
+            width: 700,
+            sizes: '(max-width: 899px) 78vw, 360px',
+            widths: '400,700'
+          -%}
+          <span class="lp-ocasiao__num" aria-hidden="true">{{ forloop.index | prepend: '0' }}</span>
+        </div>
+        <div class="lp-ocasiao__corpo">
+          <h3 class="lp-ocasiao__titulo">{{ b.settings.titulo }}</h3>
+          <p class="lp-ocasiao__texto">{{ b.settings.texto }}</p>
+          <a class="lp-ocasiao__link" href="#lp-catalogo" data-lp-ir-aba="{{ b.settings.aba | escape }}">
+            {{- b.settings.link_rotulo }} <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Ocasiões",
+  "tag": "div",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "para cada momento" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Ocasiões" }
+  ],
+  "blocks": [
+    {
+      "type": "ocasiao",
+      "name": "Ocasião",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "image_asset", "label": "Arquivo no tema (alternativa)" },
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Casamentos" },
+        { "type": "textarea", "id": "texto", "label": "Texto" },
+        { "type": "text", "id": "link_rotulo", "label": "Texto do link", "default": "Ver modelos" },
+        { "type": "text", "id": "aba", "label": "Aba do catálogo que abre", "info": "O nome exato da aba, ex.: Casamentos" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Ocasiões", "blocks": [{ "type": "ocasiao" }] }]
+}
+{% endschema %}

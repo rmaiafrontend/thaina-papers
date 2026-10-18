@@ -78,26 +78,8 @@
             {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
             {%- if n >= limite -%}{%- break -%}{%- endif -%}
             {%- assign n = n | plus: 1 -%}
-            {%- capture msg -%}Olá, Thainá! Vi no site e quero saber mais sobre: {{ produto.title }} ({{ b.settings.rotulo }}).{%- endcapture -%}
-            <li class="lp-card" style="--i: {{ n | minus: 1 | modulo: 4 }}" data-lp-reveal="up">
-              <div class="lp-card__midia{% if produto.featured_image == blank %} lp-card__midia--tipo{% endif %}">
-                {%- if produto.featured_image != blank -%}
-                  {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 899px) 45vw, 270px', alt: produto.title, class: 'lp-card__foto' }}
-                {%- else -%}
-                  <span class="lp-card__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
-                {%- endif -%}
-              </div>
-              <div class="lp-card__corpo">
-                <h4 class="lp-card__nome">{{ produto.title }}</h4>
-                <p class="lp-card__preco">
-                  {%- if produto.price_varies -%}a partir de {% endif -%}
-                  {{ produto.price_min | money }}
-                </p>
-                <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
-                  {%- render 'tp-lp-icone-wa' -%} Pedir
-                </a>
-              </div>
-            </li>
+            {%- assign idx = n | minus: 1 | modulo: 4 -%}
+            {%- render 'tp-lp-card', produto: produto, contexto: b.settings.rotulo, i: idx -%}
           {%- endfor -%}
         </ul>
       {%- else -%}

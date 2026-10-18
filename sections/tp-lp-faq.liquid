@@ -1,0 +1,51 @@
+{%- comment -%}
+  Perguntas frequentes em sanfona nativa (<details>): abre e fecha sem JS,
+  e o leitor de tela já anuncia o estado.
+{%- endcomment -%}
+<section class="lp-faq lp-papel">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <div class="lp-faq__lista" data-lp-reveal="up">
+    {%- for b in section.blocks -%}
+      <details class="lp-faq__item" {% if forloop.first %}open{% endif %} {{ b.shopify_attributes }}>
+        <summary class="lp-faq__pergunta">
+          <span>{{ b.settings.pergunta }}</span>
+          <span class="lp-faq__sinal" aria-hidden="true"></span>
+        </summary>
+        <div class="lp-faq__resposta">{{ b.settings.resposta }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+
+  {%- capture msg -%}Olá, Thainá! Tenho uma dúvida antes de pedir.{%- endcapture -%}
+  <p class="lp-faq__mais" data-lp-reveal="up">
+    Ficou outra dúvida?
+    <a href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener">Pergunte no WhatsApp →</a>
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Perguntas",
+  "tag": "div",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "antes de pedir" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Perguntas frequentes" }
+  ],
+  "blocks": [
+    {
+      "type": "pergunta",
+      "name": "Pergunta",
+      "settings": [
+        { "type": "text", "id": "pergunta", "label": "Pergunta", "default": "Pergunta" },
+        { "type": "richtext", "id": "resposta", "label": "Resposta" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Perguntas", "blocks": [{ "type": "pergunta" }] }]
+}
+{% endschema %}

@@ -206,7 +206,25 @@
     }
   }
 
+  /* ---------- atalhos para uma aba do catálogo ---------- */
+  /* Links com data-lp-ir-aba="Casamentos" clicam na pílula de mesmo nome
+     antes de a âncora rolar até o catálogo. */
+  function atalhos(raiz) {
+    raiz.querySelectorAll('[data-lp-ir-aba]').forEach(function (link) {
+      if (link._lpAtalho) return;
+      link._lpAtalho = true;
+      link.addEventListener('click', function () {
+        var alvo = (link.getAttribute('data-lp-ir-aba') || '').trim().toLowerCase();
+        var botao = Array.prototype.find.call(document.querySelectorAll('[data-lp-aba]'), function (b) {
+          return b.textContent.trim().toLowerCase() === alvo;
+        });
+        if (botao) botao.click();
+      });
+    });
+  }
+
   function iniciar(raiz) {
+    atalhos(raiz);
     revelar(raiz);
     abas(raiz);
     albuns(raiz);

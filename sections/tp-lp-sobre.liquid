@@ -1,0 +1,65 @@
+{%- comment -%}
+  Sobre a Thainá no formato do bloco de referência da cliente: tudo
+  centralizado, título em caixa alta fina com acento em itálico, texto em
+  Poppins e frases de destaque em caixa alta negrito. Fecha com os três
+  princípios do estúdio e a assinatura.
+{%- endcomment -%}
+<section class="lp-sobre lp-papel lp-papel--claro">
+  <div class="lp-sobre__miolo">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-sobre__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+
+    {%- if section.settings.destaque != blank -%}
+      <p class="lp-sobre__destaque" data-lp-reveal="up">{{ section.settings.destaque }}</p>
+    {%- endif -%}
+
+    <div class="lp-sobre__texto" data-lp-reveal="up">{{ section.settings.texto }}</div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="lp-sobre__principios">
+        {%- for b in section.blocks -%}
+          <li style="--i: {{ forloop.index0 }}" data-lp-reveal="up" {{ b.shopify_attributes }}>
+            <strong>{{ b.settings.titulo }}</strong>
+            <span>{{ b.settings.texto }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.assinatura_1 != blank -%}
+      <p class="lp-sobre__assinatura" data-lp-reveal="wipe">
+        {{ section.settings.assinatura_1 }}<br>
+        <em>{{ section.settings.assinatura_italico }}</em>
+        {{ section.settings.assinatura_2 }}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Sobre",
+  "tag": "div",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "prazer, Thainá" },
+    { "type": "textarea", "id": "titulo", "label": "Título", "default": "Comecei desenhando o convite do meu próprio casamento." },
+    { "type": "text", "id": "destaque", "label": "Frase em destaque (caixa alta)" },
+    { "type": "richtext", "id": "texto", "label": "Texto" },
+    { "type": "text", "id": "assinatura_1", "label": "Assinatura — começo", "default": "Menos excesso." },
+    { "type": "text", "id": "assinatura_italico", "label": "Assinatura — itálico", "default": "mais" },
+    { "type": "text", "id": "assinatura_2", "label": "Assinatura — fim", "default": "essência." }
+  ],
+  "blocks": [
+    {
+      "type": "principio",
+      "name": "Princípio",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Pequenos lotes" },
+        { "type": "textarea", "id": "texto", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Sobre" }]
+}
+{% endschema %}

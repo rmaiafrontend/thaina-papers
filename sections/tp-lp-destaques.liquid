@@ -1,0 +1,34 @@
+{%- comment -%}
+  Mais procurados: carrossel deslizável com os produtos de uma coleção,
+  no mesmo card do catálogo.
+{%- endcomment -%}
+{%- assign colecao = section.settings.colecao -%}
+{%- if colecao != blank and colecao.products_count > 0 -%}
+<section class="lp-destaques lp-papel lp-papel--claro">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <ul class="lp-trilho lp-destaques__lista">
+    {%- for produto in colecao.products limit: section.settings.limite -%}
+      {%- assign idx = forloop.index0 | modulo: 4 -%}
+      {%- render 'tp-lp-card', produto: produto, i: idx, sizes: '(max-width: 899px) 58vw, 280px' -%}
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LP — Mais procurados",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "os queridinhos" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Mais procurados" },
+    { "type": "collection", "id": "colecao", "label": "Coleção" },
+    { "type": "range", "id": "limite", "label": "Máximo de produtos", "min": 2, "max": 12, "step": 1, "default": 8 }
+  ],
+  "presets": [{ "name": "LP — Mais procurados" }]
+}
+{% endschema %}
