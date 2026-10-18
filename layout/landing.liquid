@@ -21,13 +21,14 @@
     {%- endif -%}
 
     {%- comment -%}
-      Playfair Display vem do Google Fonts: é a única fonte da landing que o
-      tema não hospeda, e precisa do itálico de verdade, que a Fraunces do
-      tema não tem.
+      Playfair Display (títulos) e Poppins (texto) vêm do Google Fonts — o
+      tema não hospeda nenhuma das duas. Poppins é a mesma do texto do
+      lvbusinesslab.com.br, referência da cliente; o título de lá é a The
+      Picnic Club, paga, que entra aqui quando houver licença.
     {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;500;600;700&display=swap">
     {{ 'tp-allura-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
     <script>document.documentElement.classList.add('lp-js');</script>
     {{ 'tp-landing.css' | asset_url | stylesheet_tag }}
