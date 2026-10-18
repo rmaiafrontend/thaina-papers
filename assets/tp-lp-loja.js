@@ -395,9 +395,20 @@
     var det = detalhes.value.trim();
     if (det) item.properties = { 'Detalhes': det };
 
+    /* Três estados no próprio botão: girando enquanto a Shopify
+       responde, "✓ Adicionado" por um instante quando confirma, e só
+       então o modal fecha. Travado o tempo todo para não somar duas
+       vezes com toques repetidos. */
     btnAdd.disabled = true;
     btnAdd.classList.add('is-carregando');
+    btnAdd.setAttribute('aria-busy', 'true');
     erro.hidden = true;
+
+    function soltar() {
+      btnAdd.disabled = false;
+      btnAdd.classList.remove('is-carregando', 'is-ok');
+      btnAdd.removeAttribute('aria-busy');
+    }
 
     fetch(rotas + 'cart/add.js', {
       method: 'POST',
@@ -406,17 +417,19 @@
     })
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j; return j; }); })
       .then(function () {
-        fechar(modal);
-        avisar('Adicionado à sacola');
-        return carregarSacola(true);
+        btnAdd.classList.remove('is-carregando');
+        btnAdd.classList.add('is-ok');
+        carregarSacola(true);
+        setTimeout(function () {
+          fechar(modal);
+          avisar('Adicionado à sacola');
+          setTimeout(soltar, 260);
+        }, 650);
       })
       .catch(function (j) {
         erro.textContent = (j && (j.description || j.message)) || 'Não deu para adicionar agora. Tente de novo.';
         erro.hidden = false;
-      })
-      .then(function () {
-        btnAdd.disabled = false;
-        btnAdd.classList.remove('is-carregando');
+        soltar();
       });
   });
 

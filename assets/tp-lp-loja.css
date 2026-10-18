@@ -793,13 +793,57 @@ html.lp-com-sacola .lp-loja {
   white-space: nowrap;
 }
 
-.lp-produto__add:disabled {
+/* Os três estados do botão ocupam o mesmo lugar (grid de uma célula),
+   então a largura não pula quando o texto troca pela rodinha. */
+.lp-produto__add {
+  display: grid;
+  place-items: center;
+}
+
+.lp-produto__add > span {
+  grid-area: 1 / 1;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+.lp-produto__add-carregando,
+.lp-produto__add-ok {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.lp-produto__add:disabled:not(.is-carregando):not(.is-ok) {
   opacity: 0.55;
 }
 
-.lp-produto__add.is-carregando {
-  opacity: 0.7;
+.lp-produto__add.is-carregando,
+.lp-produto__add.is-ok {
   cursor: progress;
+}
+
+.lp-produto__add.is-carregando .lp-produto__add-texto,
+.lp-produto__add.is-ok .lp-produto__add-texto {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.lp-produto__add.is-carregando .lp-produto__add-carregando,
+.lp-produto__add.is-ok .lp-produto__add-ok {
+  opacity: 1;
+  transform: none;
+}
+
+.lp-girando {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(250, 246, 238, 0.35);
+  border-top-color: var(--lp-creme);
+  border-radius: 50%;
+  animation: lp-gira-rapido 0.7s linear infinite;
+}
+
+@keyframes lp-gira-rapido {
+  to { transform: rotate(360deg); }
 }
 
 /* Quantidade: − número + numa pílula. */
