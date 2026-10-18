@@ -728,6 +728,26 @@ html.lp-com-sacola .lp-loja {
   resize: vertical;
 }
 
+/* Campo de data: altura igual aos outros e o ícone do calendário na cor
+   da marca (o seletor em si é o nativo do celular). */
+.lp-produto__campo input[type="date"] {
+  min-height: 48px;
+  -webkit-appearance: none;
+  appearance: none;
+  color-scheme: light;
+}
+
+.lp-produto__campo input[type="date"]::-webkit-calendar-picker-indicator {
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  filter: invert(14%) sepia(60%) saturate(3000%) hue-rotate(345deg) brightness(80%);
+}
+
+.lp-produto__campo input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
 .lp-produto__campo textarea:focus,
 .lp-produto__campo input:focus {
   border-color: var(--lp-cereja);

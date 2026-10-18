@@ -423,11 +423,23 @@
   var nome = sacola.querySelector('[data-lp-nome]');
   var dataEvento = sacola.querySelector('[data-lp-data]');
 
+  /* Data pelo calendário nativo (input date): o valor é AAAA-MM-DD, e não
+     faz sentido marcar evento no passado. Só reaproveita do navegador o
+     que estiver nesse formato (versões antigas guardavam texto livre). */
+  var hoje = new Date();
+  dataEvento.min = hoje.getFullYear() + '-' + String(hoje.getMonth() + 1).padStart(2, '0') + '-' + String(hoje.getDate()).padStart(2, '0');
   try {
     nome.value = localStorage.getItem('lp-nome') || '';
-    dataEvento.value = localStorage.getItem('lp-data') || '';
+    var guardada = localStorage.getItem('lp-data') || '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(guardada)) dataEvento.value = guardada;
   } catch (e) {}
+
+  function dataBR(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : '';
+  }
   nome.addEventListener('input', function () { try { localStorage.setItem('lp-nome', nome.value); } catch (e) {} });
+  dataEvento.addEventListener('change', function () { try { localStorage.setItem('lp-data', dataEvento.value); } catch (e) {} });
   dataEvento.addEventListener('input', function () { try { localStorage.setItem('lp-data', dataEvento.value); } catch (e) {} });
 
   function carregarSacola(pulsar) {
@@ -532,7 +544,7 @@
     linhas.push('');
     linhas.push('Total estimado: ' + reais(c.total_price));
     if (nome.value.trim()) linhas.push('Nome: ' + nome.value.trim());
-    if (dataEvento.value.trim()) linhas.push('Data do evento: ' + dataEvento.value.trim());
+    if (dataBR(dataEvento.value)) linhas.push('Data do evento: ' + dataBR(dataEvento.value));
     linhas.push('');
     linhas.push('Pode me passar frete e prazo?');
 
