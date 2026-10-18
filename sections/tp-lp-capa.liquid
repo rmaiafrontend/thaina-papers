@@ -80,10 +80,11 @@
 
       {%- comment -%}
         A foto principal é uma polaroide como as soltas atrás dela: quadro
-        branco com pé mais largo, fita no topo e legenda escrita à mão.
+        branco com pé mais largo e legenda escrita à mão — pregada no topo
+        pelo selo de cera TP, enquanto as soltas usam fita.
       {%- endcomment -%}
       <div class="lp-polaroide">
-        <span class="lp-recorte__fita lp-polaroide__fita" aria-hidden="true"></span>
+        {%- render 'tp-lp-selo', class: 'lp-polaroide__selo' -%}
           {%- if slides.size > 0 -%}
             <div class="lp-album" data-lp-album role="group" aria-roledescription="carrossel" aria-label="Trabalhos da Thainá Papers">
               {%- if slides.size > 1 -%}

@@ -387,7 +387,7 @@ body.lp {
 
 .lp-capa__lead {
   max-width: 30ch;
-  margin: 34px 0 26px;
+  margin: 14px 0 26px;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -416,15 +416,16 @@ body.lp {
 
 /* ---------- carimbo circular + rabisco ---------- */
 
-/* Com o título numa linha, o canto livre é à direita dos botões, no pé
-   do bloco de texto — o selo mora ali. z-index -1 por segurança. */
+/* O canto livre em qualquer largura é à direita de "feito à mão,", entre
+   o cabeçalho e o título — ao lado dos botões não dá: em telas um pouco
+   mais largas eles ficam lado a lado e o rabisco caía sobre o WhatsApp. */
 .lp-carimbo {
   position: absolute;
   z-index: -1;
   right: 0;
-  bottom: -6px;
-  width: 104px;
-  height: 118px;
+  top: -46px;
+  width: 92px;
+  height: 100px;
   pointer-events: none;
 }
 
@@ -459,10 +460,10 @@ body.lp {
 
 .lp-carimbo__roda {
   position: absolute;
-  left: -22px;
-  top: 30px;
-  width: 104px;
-  height: 104px;
+  left: -26px;
+  top: 14px;
+  width: 88px;
+  height: 88px;
   animation: lp-gira 18s linear infinite;
 }
 
@@ -583,12 +584,13 @@ body.lp {
 }
 
 /* Marcadores: um traço por foto, o ativo enche como barra de progresso. */
+/* No pé da foto: o topo é do selo de cera que prega a polaroide. */
 .lp-album__marcas {
   position: absolute;
   z-index: 2;
   left: 12px;
   right: 12px;
-  top: 10px;
+  bottom: 10px;
   display: flex;
   gap: 4px;
   margin: 0;
@@ -645,12 +647,17 @@ body.lp {
   mask: none;
 }
 
-.lp-polaroide__fita.lp-recorte__fita {
-  top: -14px;
-  width: 92px;
-  height: 28px;
-  margin-left: -46px;
-  transform: rotate(-3deg);
+/* Selo de cera TP pregando a polaroide no topo, meio dentro meio fora
+   do quadro. */
+.lp-polaroide__selo {
+  position: absolute;
+  z-index: 3;
+  top: -34px;
+  left: 50%;
+  width: 74px;
+  height: 74px;
+  margin-left: -37px;
+  filter: drop-shadow(0 6px 6px rgba(50, 10, 10, 0.35));
 }
 
 .lp-polaroide__legenda {
@@ -751,7 +758,7 @@ body.lp {
 .lp-capa__moldura {
   position: relative;
   width: min(78%, 400px);
-  margin: 14px 0 0;
+  margin: 40px 0 0;
   justify-self: center;
   rotate: 2.5deg;
 }
@@ -1543,10 +1550,12 @@ body.lp {
   }
 
   /* Selo de cera: carimba quando a moldura aparece. */
+  .lp-js .lp-capa__moldura .lp-polaroide__selo,
   .lp-js .lp-depos .lp-moldura__selo {
     opacity: 0;
   }
 
+  .lp-js .lp-capa__moldura.is-in .lp-polaroide__selo,
   .lp-js .lp-depos__faixa.is-in .lp-moldura__selo {
     animation: lp-carimba 0.7s cubic-bezier(.3, 1.6, .5, 1) 0.55s forwards;
   }
@@ -1631,8 +1640,8 @@ body.lp {
 
   .lp-carimbo {
     right: 4%;
-    top: auto;
-    bottom: -10px;
+    top: -70px;
+    bottom: auto;
     width: 150px;
     height: 180px;
   }
