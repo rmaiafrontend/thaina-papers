@@ -625,11 +625,43 @@ body.lp {
   to { transform: none; }
 }
 
-.lp-moldura__legenda {
+
+
+/* ---------- polaroide principal da capa ---------- */
+
+/* Mesmo quadro das soltas, maior: borda branca, pé largo para a legenda
+   escrita à mão, sombra de papel e fita no topo. O rasgo do álbum sai —
+   foto de polaroide tem borda limpa. */
+.lp-polaroide {
+  position: relative;
+  padding: 12px 12px 0;
+  background: #fff;
+  box-shadow: 0 2px 3px rgba(40, 40, 60, 0.12), 0 22px 40px rgba(40, 40, 60, 0.24);
+}
+
+.lp-polaroide .lp-album,
+.lp-polaroide .lp-moldura__foto {
+  -webkit-mask: none;
+  mask: none;
+}
+
+.lp-polaroide__fita.lp-recorte__fita {
+  top: -14px;
+  width: 92px;
+  height: 28px;
+  margin-left: -46px;
+  transform: rotate(-3deg);
+}
+
+.lp-polaroide__legenda {
+  padding: 12px 6px 16px;
+  font-size: 32px;
+  text-align: center;
+  color: var(--lp-tinta);
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.lp-moldura__legenda.is-trocando {
+.lp-polaroide__legenda.is-trocando {
   opacity: 0;
   transform: translateY(6px);
 }
@@ -689,14 +721,6 @@ body.lp {
   filter: saturate(0.9) contrast(1.04);
 }
 
-.lp-moldura__legenda {
-  margin-top: 12px;
-  font-family: var(--lp-script);
-  font-size: 34px;
-  line-height: 1;
-  text-align: center;
-  color: var(--lp-vinho);
-}
 
 .lp-selo {
   display: block;
@@ -725,7 +749,9 @@ body.lp {
 }
 
 .lp-capa__moldura {
-  width: min(84%, 420px);
+  position: relative;
+  width: min(78%, 400px);
+  margin: 14px 0 0;
   justify-self: center;
   rotate: 2.5deg;
 }
@@ -1517,12 +1543,10 @@ body.lp {
   }
 
   /* Selo de cera: carimba quando a moldura aparece. */
-  .lp-js .lp-capa__moldura .lp-moldura__selo,
   .lp-js .lp-depos .lp-moldura__selo {
     opacity: 0;
   }
 
-  .lp-js .lp-capa__moldura.is-in .lp-moldura__selo,
   .lp-js .lp-depos__faixa.is-in .lp-moldura__selo {
     animation: lp-carimba 0.7s cubic-bezier(.3, 1.6, .5, 1) 0.55s forwards;
   }
