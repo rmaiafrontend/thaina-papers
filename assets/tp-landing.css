@@ -839,9 +839,6 @@ body.lp {
   overflow-x: auto;
   margin-bottom: 8px;
   padding: 12px var(--lp-gutter);
-  background: rgba(169, 198, 220, 0.92);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   scrollbar-width: none;
 }
 
@@ -855,7 +852,9 @@ body.lp {
   padding: 0 18px;
   border: 1.5px solid var(--lp-cereja);
   border-radius: 999px;
-  background: transparent;
+  /* Fundo próprio na pílula: a faixa de trás saiu, e ao grudar por cima
+     dos cards a pílula vazada ficaria ilegível sobre as fotos. */
+  background: var(--lp-azul);
   color: var(--lp-cereja);
   font-family: var(--lp-texto);
   font-size: 14px;
