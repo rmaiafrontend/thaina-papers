@@ -19,16 +19,17 @@
   </div>
 
   {%- comment -%}
-    Fichário: as abas são divisórias presas no topo de uma folha de pasta.
-    A aba ativa tem a cor da folha e se funde a ela; as outras ficam um tom
-    atrás, como papel mais fundo na pilha.
+    Catálogo de verdade da landing, então o formato é o convencional: filtros
+    em pílula que grudam no topo enquanto se rola a grade, e cards iguais
+    com foto, nome, preço e o botão que abre o WhatsApp.
   {%- endcomment -%}
-  <div class="lp-fichario" data-lp-reveal="up" style="--i: 2">
+  {%- comment -%} O miolo limita o "grudar" dos filtros ao trecho da grade. {%- endcomment -%}
+  <div class="lp-catalogo__miolo" data-lp-catalogo-miolo>
   {%- if ocasioes.size > 1 -%}
-    <div class="lp-abas" role="tablist" aria-label="Ocasiões" data-lp-abas>
+    <div class="lp-filtros" role="tablist" aria-label="Ocasiões" data-lp-abas>
       {%- for b in ocasioes -%}
         <button
-          class="lp-aba"
+          class="lp-filtro"
           type="button"
           role="tab"
           id="lp-aba-{{ b.id }}"
@@ -45,12 +46,6 @@
     {%- liquid
       assign colecao = b.settings.colecao
       assign limite = b.settings.limite | default: 12
-
-      comment
-        Primeira passada só conta, para saber o total já filtrado: o
-        primeiro vira destaque e, se o resto for ímpar, o último ocupa a
-        linha inteira em vez de deixar um buraco na grade.
-      endcomment
       assign total = 0
       for produto in colecao.products
         if section.settings.esconder_exemplos and produto.tags contains 'exemplo'
@@ -61,8 +56,6 @@
         endif
         assign total = total | plus: 1
       endfor
-      assign resto = total | minus: 1
-      assign resto_impar = resto | modulo: 2
     -%}
     <div
       class="lp-painel"
@@ -72,95 +65,47 @@
       data-lp-painel
       {{ b.shopify_attributes }}
     >
-      <div class="lp-painel__topo">
-        <div>
-          <h3 class="lp-painel__titulo">{{ b.settings.rotulo }}</h3>
-          {%- if b.settings.nota != blank -%}
-            <p class="lp-painel__nota lp-script">{{ b.settings.nota }}</p>
-          {%- endif -%}
-        </div>
-        {%- if total > 0 -%}
-          <span class="lp-painel__conta">{{ total }} {% if total == 1 %}modelo{% else %}modelos{% endif %}</span>
-        {%- endif -%}
-      </div>
+      <h3 class="lp-painel__titulo">{{ b.settings.rotulo }}</h3>
+      <p class="lp-painel__info">
+        {%- if b.settings.nota != blank -%}<span>{{ b.settings.nota }}</span>{%- endif -%}
+        {%- if total > 0 -%}<span>{{ total }} {% if total == 1 %}modelo{% else %}modelos{% endif %}</span>{%- endif -%}
+      </p>
 
-      {%- assign n = 0 -%}
-      {%- for produto in colecao.products -%}
-        {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
-        {%- if n >= limite -%}{%- break -%}{%- endif -%}
-        {%- assign n = n | plus: 1 -%}
-        {%- capture msg -%}Olá, Thainá! Vi no site e quero saber mais sobre: {{ produto.title }} ({{ b.settings.rotulo }}).{%- endcapture -%}
-        {%- capture num -%}nº {% if n < 10 %}0{% endif %}{{ n }}{%- endcapture -%}
-
-        {%- if n == 1 -%}
-          {%- comment -%} Destaque: ingresso horizontal com picote entre foto e texto. {%- endcomment -%}
-          <article class="lp-ingresso{% if produto.featured_image == blank %} lp-ingresso--tipo{% endif %}" data-lp-reveal="tilt">
-            <div class="lp-ingresso__midia">
-              {%- if produto.featured_image != blank -%}
-                {{ produto.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,700,900', sizes: '(max-width: 899px) 90vw, 520px', alt: produto.title, class: 'lp-ingresso__foto' }}
-              {%- else -%}
-                <span class="lp-etiqueta__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
-                <span class="lp-etiqueta__assina lp-mao" aria-hidden="true">sob encomenda</span>
-              {%- endif -%}
-              <span class="lp-ingresso__num">{{ num }}</span>
-            </div>
-            <div class="lp-ingresso__corpo">
-              <p class="lp-ingresso__selo">{{ b.settings.rotulo }} · em destaque</p>
-              <h4 class="lp-ingresso__nome">{{ produto.title }}</h4>
-              {%- assign resumo = produto.description | strip_html | strip | truncatewords: 16, '…' -%}
-              {%- if resumo != blank -%}
-                <p class="lp-ingresso__resumo">{{ resumo }}</p>
-              {%- endif -%}
-              <div class="lp-ingresso__pe">
-                <p class="lp-ingresso__preco">
-                  {%- if produto.price_varies -%}<small>a partir de</small> {% endif -%}
+      {%- if total > 0 -%}
+        <ul class="lp-grade">
+          {%- assign n = 0 -%}
+          {%- for produto in colecao.products -%}
+            {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
+            {%- if n >= limite -%}{%- break -%}{%- endif -%}
+            {%- assign n = n | plus: 1 -%}
+            {%- capture msg -%}Olá, Thainá! Vi no site e quero saber mais sobre: {{ produto.title }} ({{ b.settings.rotulo }}).{%- endcapture -%}
+            <li class="lp-card" style="--i: {{ n | minus: 1 | modulo: 4 }}" data-lp-reveal="up">
+              <div class="lp-card__midia{% if produto.featured_image == blank %} lp-card__midia--tipo{% endif %}">
+                {%- if produto.featured_image != blank -%}
+                  {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 899px) 45vw, 270px', alt: produto.title, class: 'lp-card__foto' }}
+                {%- else -%}
+                  <span class="lp-card__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
+                {%- endif -%}
+              </div>
+              <div class="lp-card__corpo">
+                <h4 class="lp-card__nome">{{ produto.title }}</h4>
+                <p class="lp-card__preco">
+                  {%- if produto.price_varies -%}a partir de {% endif -%}
                   {{ produto.price_min | money }}
                 </p>
-                <a class="lp-btn lp-btn--vinho lp-ingresso__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" data-lp-wa-origem>
-                  {%- render 'tp-lp-icone-wa' -%} Pedir no WhatsApp
+                <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
+                  {%- render 'tp-lp-icone-wa' -%} Pedir
                 </a>
               </div>
-            </div>
-          </article>
-          {%- if total > 1 -%}<ul class="lp-etiquetas">{%- endif -%}
-        {%- else -%}
-          {%- liquid
-            assign larga = false
-            if n == total and resto_impar == 1
-              assign larga = true
-            endif
-          -%}
-          <li class="lp-etiqueta{% if produto.featured_image == blank %} lp-etiqueta--tipo{% endif %}{% if larga %} lp-etiqueta--larga{% endif %}" style="--i: {{ n | modulo: 6 }}" data-lp-reveal="hang">
-            <span class="lp-etiqueta__furo" aria-hidden="true"></span>
-            <span class="lp-etiqueta__num" aria-hidden="true">{{ num }}</span>
-            <div class="lp-etiqueta__midia">
-              {%- if produto.featured_image != blank -%}
-                {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 899px) 45vw, 260px', alt: produto.title, class: 'lp-etiqueta__foto' }}
-              {%- else -%}
-                <span class="lp-etiqueta__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
-                <span class="lp-etiqueta__assina lp-mao" aria-hidden="true">sob encomenda</span>
-              {%- endif -%}
-            </div>
-            <div class="lp-etiqueta__corpo">
-              <h4 class="lp-etiqueta__nome">{{ produto.title }}</h4>
-              <p class="lp-etiqueta__preco">
-                {%- if produto.price_varies -%}a partir de {% endif -%}
-                {{ produto.price_min | money }}
-              </p>
-              <a class="lp-etiqueta__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" data-lp-wa-origem>
-                {%- render 'tp-lp-icone-wa' -%} Pedir
-              </a>
-            </div>
-          </li>
-          {%- if n == total -%}</ul>{%- endif -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- if total == 0 -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
         <p class="lp-painel__vazio">Os modelos desta ocasião estão sendo fotografados. Chame no WhatsApp que a Thainá te mostra.</p>
       {%- endif -%}
     </div>
   {%- endfor -%}
+
   </div>
 
   {%- capture msg_geral -%}Olá, Thainá! Não achei no catálogo o que procuro, posso te contar a ideia?{%- endcapture -%}

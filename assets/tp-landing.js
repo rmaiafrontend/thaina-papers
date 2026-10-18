@@ -46,13 +46,21 @@
           paineis[j].classList.toggle('is-ativo', on);
         });
         if (foco) botoes[i].focus();
-        botoes[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduz ? 'auto' : 'smooth' });
-        /* As etiquetas do painel novo balançam de novo ao aparecer. */
-        paineis[i].querySelectorAll('[data-lp-reveal]').forEach(function (el) {
-          el.classList.remove('is-in');
-          void el.offsetWidth;
-          el.classList.add('is-in');
+        /* Centraliza a pílula na faixa de filtros (rolagem só horizontal). */
+        var faixa = botoes[i].parentElement;
+        faixa.scrollTo({
+          left: botoes[i].offsetLeft - (faixa.clientWidth - botoes[i].offsetWidth) / 2,
+          behavior: reduz ? 'auto' : 'smooth'
         });
+        /* Se a pessoa já estava lá embaixo na grade, volta para o começo da
+           ocasião nova — logo abaixo dos filtros grudados. */
+        var topo = paineis[i].getBoundingClientRect().top;
+        var alturaFiltros = faixa.offsetHeight;
+        if (topo < alturaFiltros) {
+          window.scrollTo({ top: window.scrollY + topo - alturaFiltros - 8, behavior: reduz ? 'auto' : 'smooth' });
+        }
+        /* Cards do painel novo aparecem já revelados. */
+        paineis[i].querySelectorAll('[data-lp-reveal]').forEach(function (el) { el.classList.add('is-in'); });
       }
 
       botoes.forEach(function (b, i) {
@@ -170,9 +178,9 @@
       if (botao) botao.classList.add('is-on');
       return;
     }
-    /* Sai também no fichário do catálogo: lá cada modelo tem o próprio
-       botão de pedir, e o flutuante só tampava os cards. */
-    var fichario = document.querySelector('.lp-fichario');
+    /* Sai também na grade do catálogo: lá cada modelo tem o próprio botão
+       de pedir, e o flutuante só tampava os cards. */
+    var fichario = document.querySelector('[data-lp-catalogo-miolo]');
     var capaVisivel = true;
     var finalVisivel = false;
     var fichVisivel = false;

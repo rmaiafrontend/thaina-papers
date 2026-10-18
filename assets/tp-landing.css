@@ -797,115 +797,80 @@ body.lp {
   padding: 96px 0 72px;
 }
 
-/* ---------- fichário: abas-divisória + folha de pasta ---------- */
+/* ---------- filtros ---------- */
 
-.lp-fichario {
-  position: relative;
-  margin: 0 12px 40px;
-}
-
-.lp-abas {
+/* Grudam no topo enquanto a grade rola, para trocar de ocasião sem voltar.
+   Com JS só; sem JS as ocasiões vêm empilhadas com o próprio título. */
+.lp-filtros {
   display: none;
-  position: relative;
-  z-index: 2;
-  align-items: flex-end;
-  gap: 3px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  gap: 8px;
   overflow-x: auto;
-  padding: 12px 8px 0;
-  margin-bottom: -1px;
+  margin-bottom: 8px;
+  padding: 12px var(--lp-gutter);
+  background: rgba(169, 198, 220, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   scrollbar-width: none;
-  scroll-snap-type: x proximity;
 }
 
-.lp-abas::-webkit-scrollbar {
+.lp-filtros::-webkit-scrollbar {
   display: none;
 }
 
-/* Abas de trás um tom mais fundo, mais baixas e com sombra interna no pé,
-   como divisórias atrás da folha. A ativa sobe e ganha a cor da folha. */
-.lp-aba {
+.lp-filtro {
   flex: none;
-  scroll-snap-align: start;
-  min-height: 42px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: 14px 14px 0 0;
-  background-color: #93b3cb;
-  background-image: var(--lp-trama);
-  box-shadow: inset 0 -8px 10px -8px rgba(30, 40, 60, 0.35);
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1.5px solid var(--lp-cereja);
+  border-radius: 999px;
+  background: transparent;
   color: var(--lp-cereja);
-  font-family: var(--lp-display);
-  font-style: italic;
-  font-size: 17px;
-  font-weight: 500;
+  font-family: var(--lp-texto);
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transform: translateY(5px);
-  transition: transform 0.3s cubic-bezier(.2, .8, .2, 1.3), background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.lp-aba[aria-selected="true"] {
-  min-height: 48px;
-  background-color: var(--lp-azul-claro);
-  box-shadow: 0 -4px 12px rgba(30, 50, 80, 0.12);
-  font-weight: 700;
-  transform: none;
+.lp-filtro[aria-selected="true"] {
+  background: var(--lp-cereja);
+  color: var(--lp-creme);
 }
+
+/* ---------- painel ---------- */
 
 .lp-painel {
-  position: relative;
-  margin-bottom: 22px;
-  padding: 22px 14px 30px;
-  border-radius: 18px;
-  background-color: var(--lp-azul-claro);
-  background-image: var(--lp-trama), var(--lp-grao);
-  background-blend-mode: normal, multiply;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 22px 44px rgba(30, 50, 80, 0.2);
-}
-
-.lp-js .lp-painel {
-  border-radius: 6px 18px 18px 18px;
-}
-
-.lp-painel__topo {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 22px;
-  padding: 0 4px 14px;
-  border-bottom: 1.5px dashed rgba(107, 16, 23, 0.35);
+  padding-inline: var(--lp-gutter);
+  margin-bottom: 48px;
 }
 
 .lp-painel__titulo {
-  margin: 0;
+  margin: 0 0 4px;
   font-family: var(--lp-display);
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--lp-cereja);
 }
 
-.lp-painel__nota {
-  font-size: 19px;
-  margin: 0;
+.lp-painel__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--lp-caramelo);
 }
 
-.lp-painel__conta {
-  flex: none;
-  padding: 5px 10px;
-  border: 1px solid rgba(107, 16, 23, 0.45);
-  border-radius: 999px;
-  font-size: 10.5px;
+.lp-painel__info span:last-child {
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--lp-cereja);
-  white-space: nowrap;
 }
 
-/* Com JS as abas aparecem e só o painel ativo fica visível; o título do
-   painel vira redundante com a aba e sai. */
-.lp-js .lp-abas {
+.lp-js .lp-filtros {
   display: flex;
 }
 
@@ -915,7 +880,7 @@ body.lp {
 
 .lp-js .lp-painel.is-ativo {
   display: block;
-  animation: lp-painel-entra 0.5s cubic-bezier(.2, .8, .2, 1);
+  animation: lp-painel-entra 0.4s ease;
 }
 
 .lp-js .lp-painel__titulo {
@@ -927,323 +892,107 @@ body.lp {
 }
 
 @keyframes lp-painel-entra {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; }
 }
 
 .lp-painel__vazio {
   max-width: 34ch;
 }
 
-/* ---------- ingresso (destaque) ---------- */
+/* ---------- grade de cards ---------- */
 
-/* Primeiro modelo de cada ocasião: um ingresso com picote entre foto e
-   texto — a linha tracejada mais dois meio-círculos "mordidos" nas bordas,
-   pintados com a cor da folha. */
-.lp-ingresso {
-  position: relative;
-  display: grid;
-  margin: 0 2px 40px;
-  border-radius: 12px;
-  background-color: var(--lp-creme);
-  background-image: var(--lp-grao);
-  background-blend-mode: multiply;
-  box-shadow: 0 16px 30px rgba(40, 50, 70, 0.18);
-  rotate: -0.8deg;
-}
-
-.lp-ingresso__midia {
-  position: relative;
-  aspect-ratio: 16 / 11;
-  overflow: hidden;
-  border-radius: 12px 12px 0 0;
-  background: var(--lp-azul);
-}
-
-.lp-ingresso__foto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s cubic-bezier(.2, .8, .2, 1);
-}
-
-.lp-ingresso--tipo .lp-ingresso__midia {
-  display: grid;
-  place-items: center;
-  background-color: var(--lp-cereja);
-  background-image: var(--lp-grao);
-  background-blend-mode: multiply;
-}
-
-.lp-ingresso__num {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 4px 10px 5px;
-  border-radius: 999px;
-  background: var(--lp-creme);
-  font-family: var(--lp-display);
-  font-style: italic;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--lp-cereja);
-}
-
-.lp-ingresso__corpo {
-  position: relative;
-  padding: 22px 18px 20px;
-  border-top: 2px dashed rgba(107, 16, 23, 0.32);
-}
-
-.lp-ingresso__corpo::before,
-.lp-ingresso__corpo::after {
-  content: "";
-  position: absolute;
-  top: -12px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--lp-azul-claro);
-  box-shadow: inset 0 2px 3px rgba(30, 50, 80, 0.18);
-}
-
-.lp-ingresso__corpo::before { left: -11px; }
-.lp-ingresso__corpo::after { right: -11px; }
-
-.lp-ingresso__selo {
-  margin: 0 0 8px;
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--lp-cereja);
-}
-
-.lp-ingresso__nome {
-  margin: 0 0 10px;
-  font-family: var(--lp-display);
-  font-size: clamp(30px, 9vw, 42px);
-  font-weight: 900;
-  letter-spacing: -0.025em;
-  line-height: 0.95;
-  color: var(--lp-tinta);
-}
-
-.lp-ingresso__resumo {
-  margin: 0 0 18px;
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: rgba(61, 39, 34, 0.86);
-}
-
-.lp-ingresso__pe {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.lp-ingresso__preco {
-  margin: 0;
-  font-family: var(--lp-display);
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--lp-cereja);
-  font-variant-numeric: lining-nums;
-}
-
-.lp-ingresso__preco small {
-  display: block;
-  margin-bottom: 3px;
-  font-family: var(--lp-texto);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.lp-ingresso__pedir {
-  min-height: 46px;
-  padding: 0 18px;
-  font-size: 14px;
-}
-
-/* ---------- etiquetas ---------- */
-
-.lp-etiquetas {
+.lp-grade {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 34px 12px;
+  gap: 14px 12px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.lp-etiqueta {
-  --giro: -1.6deg;
-  position: relative;
+.lp-card {
   display: flex;
   flex-direction: column;
-  padding: 26px 10px 12px;
-  background-color: var(--lp-creme);
-  background-image: var(--lp-grao);
-  background-blend-mode: multiply;
-  border-radius: 6px;
-  transform: rotate(var(--giro));
-  transform-origin: 50% 0;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 22px rgba(40, 50, 70, 0.16);
-  /* Ombros cortados: a forma clássica de etiqueta pendurada. */
-  clip-path: polygon(22px 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%, 0 22px);
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--lp-creme);
+  box-shadow: 0 6px 16px rgba(40, 50, 70, 0.1);
 }
 
-.lp-etiqueta:nth-child(even) {
-  --giro: 1.4deg;
-  margin-top: 26px;
-}
-
-.lp-etiqueta__furo {
-  position: absolute;
-  top: 9px;
-  left: 50%;
-  width: 11px;
-  height: 11px;
-  margin-left: -5.5px;
-  border-radius: 50%;
-  background: var(--lp-azul);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(139, 36, 32, 0.25);
-}
-
-.lp-etiqueta__num {
-  position: absolute;
-  top: 6px;
-  left: 12px;
-  font-family: var(--lp-display);
-  font-style: italic;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(107, 16, 23, 0.7);
-}
-
-/* A que sobraria sozinha na última linha deita e ocupa as duas colunas. */
-.lp-etiqueta.lp-etiqueta--larga {
-  --giro: -0.8deg;
-  grid-column: 1 / -1;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 14px;
-  margin-top: 0;
-  padding: 26px 12px 12px;
-}
-
-.lp-etiqueta--larga .lp-etiqueta__midia {
-  flex: 0 0 44%;
-}
-
-.lp-etiqueta--larga .lp-etiqueta__corpo {
-  justify-content: center;
-  padding: 0;
-}
-
-.lp-etiqueta--larga .lp-etiqueta__nome {
-  font-size: 21px;
-}
-
-.lp-etiqueta__midia {
-  position: relative;
+.lp-card__midia {
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 3px;
+  border-radius: 9px;
   background: var(--lp-azul-claro);
 }
 
-.lp-etiqueta__foto {
+.lp-card__foto {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(.2, .8, .2, 1);
+  transition: transform 0.5s ease;
 }
 
-.lp-etiqueta--tipo .lp-etiqueta__midia {
+/* Sem foto: a inicial do produto sobre vinho, para não ficar um buraco. */
+.lp-card__midia--tipo {
   display: grid;
   place-items: center;
-  background-color: var(--lp-cereja);
-  background-image: var(--lp-grao);
-  background-blend-mode: multiply;
+  background: var(--lp-cereja);
 }
 
-.lp-etiqueta:nth-child(4n + 2).lp-etiqueta--tipo .lp-etiqueta__midia,
-.lp-etiqueta:nth-child(4n + 3).lp-etiqueta--tipo .lp-etiqueta__midia {
-  background-color: var(--lp-vinho);
-}
-
-.lp-etiqueta__inicial {
+.lp-card__inicial {
   font-family: var(--lp-display);
-  font-size: 128px;
-  font-weight: 800;
+  font-size: 96px;
+  font-weight: 900;
   line-height: 1;
   color: var(--lp-creme);
-  transform: translateY(-6px);
 }
 
-.lp-etiqueta__assina {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 26px;
-  color: var(--lp-azul-claro);
-  transform: rotate(-5deg);
-}
-
-.lp-etiqueta__corpo {
+.lp-card__corpo {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 12px 2px 0;
+  padding: 10px 4px 2px;
 }
 
-.lp-etiqueta__nome {
+.lp-card__nome {
   margin: 0;
   font-family: var(--lp-display);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--lp-tinta);
 }
 
-.lp-etiqueta__preco {
-  margin: 4px 0 12px;
-  font-size: 13px;
+.lp-card__preco {
+  margin: 4px 0 10px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--lp-caramelo);
+  color: var(--lp-cereja);
 }
 
-.lp-etiqueta__pedir {
+.lp-card__pedir {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 42px;
   margin-top: auto;
   border-radius: 999px;
   background: var(--lp-cereja);
   color: var(--lp-creme) !important;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.25s cubic-bezier(.2, .8, .2, 1.4);
 }
 
-.lp-etiqueta__pedir .lp-icone-wa {
-  width: 16px;
-  height: 16px;
+.lp-card__pedir .lp-icone-wa {
+  width: 17px;
+  height: 17px;
 }
 
-.lp-etiqueta__pedir:active {
-  transform: scale(0.94);
+.lp-card__pedir:active {
+  transform: scale(0.97);
 }
 
 .lp-catalogo__rodape {
@@ -1689,25 +1438,6 @@ body.lp {
     transform: translateY(60px) rotate(-8deg) scale(0.92);
   }
 
-  /* Etiqueta pendurada: entra balançando pelo cordão até assentar. */
-  .lp-js [data-lp-reveal="hang"]:not(.is-in) {
-    opacity: 0;
-    transform: translateY(-24px) rotate(calc(var(--giro) * -5));
-  }
-
-  .lp-js [data-lp-reveal="hang"].is-in {
-    animation: lp-balanca 1.3s cubic-bezier(.3, .7, .3, 1) both;
-    animation-delay: calc(var(--i, 0) * 80ms);
-  }
-
-  @keyframes lp-balanca {
-    0% { opacity: 0; transform: translateY(-24px) rotate(calc(var(--giro) * -5)); }
-    35% { opacity: 1; transform: translateY(0) rotate(calc(var(--giro) * 3)); }
-    60% { transform: rotate(calc(var(--giro) * -1.4)); }
-    80% { transform: rotate(calc(var(--giro) * 1.4)); }
-    100% { transform: rotate(var(--giro)); }
-  }
-
   /* Recorte da colagem: cai girando e assenta. */
   .lp-js [data-lp-reveal="drop"]:not(.is-in) {
     opacity: 0;
@@ -1757,12 +1487,8 @@ body.lp {
     animation: lp-respira 7s ease-out forwards;
   }
 
-  .lp-ingresso:hover .lp-ingresso__foto {
+  .lp-card:hover .lp-card__foto {
     transform: scale(1.04);
-  }
-
-  .lp-etiqueta:hover .lp-etiqueta__foto {
-    transform: scale(1.06);
   }
 
 
@@ -1832,70 +1558,17 @@ body.lp {
     font-size: 120px;
   }
 
-  .lp-fichario {
-    max-width: var(--lp-max);
-    margin-inline: auto;
-    padding-inline: 48px;
-  }
-
-  .lp-painel {
-    padding: 34px 34px 44px;
-  }
-
-  /* No desktop o ingresso deita: foto à esquerda, picote vertical. */
-  .lp-ingresso {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    margin-bottom: 54px;
-    rotate: -0.5deg;
-  }
-
-  .lp-ingresso__midia {
-    aspect-ratio: auto;
-    min-height: 380px;
-    border-radius: 12px 0 0 12px;
-  }
-
-  .lp-ingresso__corpo {
-    display: flex;
-    flex-direction: column;
+  .lp-filtros {
     justify-content: center;
-    padding: 40px 44px;
-    border-top: 0;
-    border-left: 2px dashed rgba(107, 16, 23, 0.32);
   }
 
-  .lp-ingresso__corpo::before {
-    top: -11px;
-    left: -12px;
-  }
-
-  .lp-ingresso__corpo::after {
-    top: auto;
-    bottom: -11px;
-    left: -12px;
-    right: auto;
-  }
-
-  .lp-etiquetas {
+  .lp-grade {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 46px 26px;
+    gap: 22px;
   }
 
-  .lp-etiqueta.lp-etiqueta--larga {
-    grid-column: span 2;
-  }
-
-  .lp-etiqueta:nth-child(even) {
-    margin-top: 0;
-  }
-
-  .lp-etiqueta:nth-child(4n + 2),
-  .lp-etiqueta:nth-child(4n + 4) {
-    margin-top: 30px;
-  }
-
-  .lp-abas {
-    justify-content: center;
+  .lp-card__nome {
+    font-size: 18px;
   }
 
   .lp-cabeca {
