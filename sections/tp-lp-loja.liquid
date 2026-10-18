@@ -13,19 +13,40 @@
 {%- endcomment -%}
 {%- liquid
   assign ocasioes = section.blocks | where: 'type', 'ocasiao'
+
+  comment
+    Funciona em dois lugares: como página própria (modelo de coleção, onde
+    existe `collection`) e embutido na landing (modelo de home, onde não
+    existe). Embutido, lê a coleção escolhida na seção ou, sem escolha,
+    todos os produtos da loja.
+  endcomment
+  assign pagina = false
+  if request.page_type == 'collection'
+    assign pagina = true
+  endif
+  assign fonte = section.settings.colecao | default: collections.all
+  if pagina
+    assign fonte = collection
+  endif
 -%}
 {{ 'tp-lp-loja.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'tp-lp-loja.js' | asset_url }}" defer></script>
 
-<section class="lp-loja lp-papel" data-lp-loja data-whatsapp="{{ settings.tp_whatsapp_phone | default: '5583981101510' }}">
+<section class="lp-loja lp-papel{% if pagina %} lp-loja--pagina{% endif %}" id="lp-catalogo" data-lp-loja data-whatsapp="{{ settings.tp_whatsapp_phone | default: '5583981101510' }}">
   <div class="lp-manuscrito" aria-hidden="true">escolha · monte · envie · escolha · monte · envie · escolha · monte</div>
 
   <header class="lp-loja__topo">
-    <a class="lp-loja__voltar" href="{{ routes.root_url }}?view=landing">
-      <span aria-hidden="true">←</span> Thainá Papers
-    </a>
+    {%- if pagina -%}
+      <a class="lp-loja__voltar" href="{{ routes.root_url }}?view=landing">
+        <span aria-hidden="true">←</span> Thainá Papers
+      </a>
+    {%- endif -%}
     <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
-    <h1 class="lp-display lp-loja__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h1>
+    {%- if pagina -%}
+      <h1 class="lp-display lp-loja__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h1>
+    {%- else -%}
+      <h2 class="lp-display lp-loja__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+    {%- endif -%}
     <p class="lp-loja__sub" data-lp-reveal="up">{{ section.settings.sub }}</p>
   </header>
 
@@ -59,14 +80,14 @@
     </div>
 
     <p class="lp-loja__status" aria-live="polite">
-      <span data-lp-conta>{{ collection.products_count }} modelos</span>
+      <span data-lp-conta>{{ fonte.products_count }} modelos</span>
       <button type="button" class="lp-loja__limpar" data-lp-limpar hidden>Limpar filtros</button>
     </p>
 
-    {%- paginate collection.products by 250 -%}
+    {%- paginate fonte.products by 250 -%}
       <ul class="lp-grade lp-loja__grade" data-lp-grade>
         {%- assign n = 0 -%}
-        {%- for produto in collection.products -%}
+        {%- for produto in fonte.products -%}
           {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
           {%- assign n = n | plus: 1 -%}
           {%- capture tipo -%}{%- render 'tp-delivery-type', product: produto -%}{%- endcapture -%}
@@ -80,7 +101,7 @@
       <script type="application/json" data-lp-dados>
         {
         {%- assign primeiro = true -%}
-        {%- for produto in collection.products -%}
+        {%- for produto in fonte.products -%}
           {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
           {%- capture tipo -%}{%- render 'tp-delivery-type', product: produto -%}{%- endcapture -%}
           {%- unless primeiro -%},{%- endunless -%}
@@ -264,7 +285,13 @@
     { "type": "text", "id": "script", "label": "Manuscrito", "default": "escolha e monte seu pedido" },
     { "type": "text", "id": "titulo", "label": "Título", "default": "Catálogo" },
     { "type": "textarea", "id": "sub", "label": "Texto", "default": "Toque num modelo para ver os detalhes, adicione à sacola e envie o pedido pelo WhatsApp." },
-    { "type": "checkbox", "id": "esconder_exemplos", "label": "Esconder produtos com a tag exemplo", "default": true }
+    { "type": "checkbox", "id": "esconder_exemplos", "label": "Esconder produtos com a tag exemplo", "default": true },
+    {
+      "type": "collection",
+      "id": "colecao",
+      "label": "Coleção do catálogo",
+      "info": "Só vale quando o catálogo está na landing. Em branco, mostra todos os produtos da loja."
+    }
   ],
   "blocks": [
     {

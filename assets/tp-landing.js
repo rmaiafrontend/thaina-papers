@@ -181,7 +181,7 @@
     }
     /* Sai também na grade do catálogo: lá cada modelo tem o próprio botão
        de pedir, e o flutuante só tampava os cards. */
-    var fichario = document.querySelector('[data-lp-catalogo-miolo]');
+    var fichario = document.querySelector('[data-lp-loja] .lp-loja__miolo, [data-lp-catalogo-miolo]');
     var capaVisivel = true;
     var finalVisivel = false;
     var fichVisivel = false;
@@ -207,19 +207,18 @@
     }
   }
 
-  /* ---------- atalhos para uma aba do catálogo ---------- */
-  /* Links com data-lp-ir-aba="Casamentos" clicam na pílula de mesmo nome
-     antes de a âncora rolar até o catálogo. */
+  /* ---------- atalhos para uma ocasião do catálogo ---------- */
+  /* Links com data-lp-ir-ocasiao="consultorios": se o catálogo está nesta
+     página, filtram ali mesmo (evento lp:ocasiao, ouvido por
+     tp-lp-loja.js) e rolam até ele; se não está, seguem o href normal. */
   function atalhos(raiz) {
-    raiz.querySelectorAll('[data-lp-ir-aba]').forEach(function (link) {
+    raiz.querySelectorAll('[data-lp-ir-ocasiao]').forEach(function (link) {
       if (link._lpAtalho) return;
       link._lpAtalho = true;
-      link.addEventListener('click', function () {
-        var alvo = (link.getAttribute('data-lp-ir-aba') || '').trim().toLowerCase();
-        var botao = Array.prototype.find.call(document.querySelectorAll('[data-lp-aba]'), function (b) {
-          return b.textContent.trim().toLowerCase() === alvo;
-        });
-        if (botao) botao.click();
+      link.addEventListener('click', function (e) {
+        if (!document.querySelector('[data-lp-loja]')) return;
+        e.preventDefault();
+        document.dispatchEvent(new CustomEvent('lp:ocasiao', { detail: link.getAttribute('data-lp-ir-ocasiao') }));
       });
     });
   }

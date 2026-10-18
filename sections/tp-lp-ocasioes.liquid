@@ -1,6 +1,7 @@
 {%- comment -%}
   Ocasiões: os três públicos da Thainá em cards deslizáveis. O link de
-  cada card abre o catálogo completo já filtrado por aquela ocasião.
+  cada card filtra o catálogo da própria landing por aquela ocasião e rola
+  até ele (tp-landing.js → evento lp:ocasiao → tp-lp-loja.js).
 {%- endcomment -%}
 <section class="lp-ocasioes lp-papel">
   <div class="lp-manuscrito" aria-hidden="true">casamentos · formaturas · consultórios · batizados · casamentos · formaturas</div>
@@ -31,7 +32,7 @@
         <div class="lp-ocasiao__corpo">
           <h3 class="lp-ocasiao__titulo">{{ b.settings.titulo }}</h3>
           <p class="lp-ocasiao__texto">{{ b.settings.texto }}</p>
-          <a class="lp-ocasiao__link" href="{{ routes.collections_url }}/all?view=catalogo&ocasiao={{ b.settings.aba | handleize }}">
+          <a class="lp-ocasiao__link" href="#lp-catalogo" data-lp-ir-ocasiao="{{ b.settings.aba | handleize }}">
             {{- b.settings.link_rotulo }} <span aria-hidden="true">→</span>
           </a>
         </div>

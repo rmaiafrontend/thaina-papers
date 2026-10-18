@@ -64,10 +64,13 @@
 
   /* Ocasião vinda da landing pelo nome ("consultorios") e não pelo handle
      da coleção: aceita os dois. */
-  if (estado.ocasiao && !pilulas.some(function (b) { return b.getAttribute('data-lp-ocasiao') === estado.ocasiao; })) {
-    var porNome = pilulas.find(function (b) { return normal(b.textContent).replace(/\s+/g, '-') === normal(estado.ocasiao); });
-    estado.ocasiao = porNome ? porNome.getAttribute('data-lp-ocasiao') : '';
+  function resolverOcasiao(v) {
+    if (!v) return '';
+    if (pilulas.some(function (b) { return b.getAttribute('data-lp-ocasiao') === v; })) return v;
+    var porNome = pilulas.find(function (b) { return normal(b.textContent).replace(/\s+/g, '-') === normal(v); });
+    return porNome ? porNome.getAttribute('data-lp-ocasiao') : '';
   }
+  estado.ocasiao = resolverOcasiao(estado.ocasiao);
 
   function casa(c) {
     if (estado.ocasiao && c.getAttribute('data-colecoes').indexOf(',' + estado.ocasiao + ',') === -1) return false;
@@ -118,7 +121,14 @@
     buscaLimpar.hidden = !estado.q;
 
     pilulas.forEach(function (b) {
-      b.setAttribute('aria-pressed', b.getAttribute('data-lp-ocasiao') === estado.ocasiao ? 'true' : 'false');
+      var ativa = b.getAttribute('data-lp-ocasiao') === estado.ocasiao;
+      b.setAttribute('aria-pressed', ativa ? 'true' : 'false');
+      /* A faixa de pílulas rola (só na horizontal) até a ativa — vale também
+         quando o filtro vem de um atalho ou da URL. */
+      if (ativa && b.parentElement) {
+        var faixa = b.parentElement;
+        faixa.scrollTo({ left: b.offsetLeft - (faixa.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+      }
     });
 
     /* URL: só os filtros ativos; o produto aberto (p) é cuidado pelo modal. */
@@ -150,7 +160,6 @@
     b.addEventListener('click', function () {
       estado.ocasiao = b.getAttribute('data-lp-ocasiao');
       aplicar();
-      b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     });
   });
 
@@ -508,6 +517,14 @@
       setTimeout(function () { aviso.hidden = true; }, 300);
     }, 1800);
   }
+
+  /* Atalhos de outras seções da página (ex.: "Ver modelos" das ocasiões
+     na landing): filtram e rolam até o catálogo. */
+  document.addEventListener('lp:ocasiao', function (e) {
+    estado.ocasiao = resolverOcasiao(e.detail);
+    aplicar();
+    raiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
   /* ---------------------------------------------------------------
      Início

@@ -2214,6 +2214,12 @@ body.lp {
   transform: none;
 }
 
+/* Com a barra da sacola na tela, ela é o botão de pedido: o flutuante
+   sai para os dois não ficarem empilhados no rodapé. */
+html.lp-com-sacola .lp-flutuante {
+  transform: translateY(160%);
+}
+
 .lp-flutuante::before {
   content: "";
   position: absolute;
