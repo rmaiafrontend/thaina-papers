@@ -1,0 +1,56 @@
+{
+  "layout": "landing",
+  "sections": {
+    "loja": {
+      "type": "tp-lp-loja",
+      "settings": {},
+      "blocks": {
+        "c": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Casamentos",
+            "colecao": "casamentos"
+          }
+        },
+        "p": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Pacotes",
+            "colecao": "pacotes"
+          }
+        },
+        "f": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Formaturas",
+            "colecao": "formaturas"
+          }
+        },
+        "k": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Consultórios",
+            "colecao": "consultorios"
+          }
+        },
+        "d": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Digitais",
+            "colecao": "avulsos"
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "p",
+        "f",
+        "k",
+        "d"
+      ]
+    }
+  },
+  "order": [
+    "loja"
+  ]
+}

@@ -22,6 +22,10 @@
       {%- render 'tp-lp-card', produto: produto, i: idx, numero: forloop.index, sizes: '(max-width: 899px) 58vw, 280px' -%}
     {%- endfor -%}
   </ul>
+
+  <p class="lp-destaques__todos" data-lp-reveal="up">
+    <a class="lp-btn lp-btn--vinho" href="{{ routes.collections_url }}/all?view=catalogo">Ver catálogo completo <span aria-hidden="true">→</span></a>
+  </p>
 </section>
 {%- endif -%}
 

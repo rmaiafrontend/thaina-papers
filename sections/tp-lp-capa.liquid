@@ -43,7 +43,7 @@
       <p class="lp-capa__lead" data-lp-reveal="up" style="--i: 2">{{ section.settings.lead }}</p>
 
       <div class="lp-capa__acoes" data-lp-reveal="up" style="--i: 3">
-        <a class="lp-btn lp-btn--vinho" href="#lp-catalogo">Ver o catálogo <span aria-hidden="true">↓</span></a>
+        <a class="lp-btn lp-btn--vinho" href="{{ routes.collections_url }}/all?view=catalogo">Ver o catálogo <span aria-hidden="true">→</span></a>
         <a class="lp-btn lp-btn--linha" href="{% render 'tp-lp-wa', message: wa_msg %}" target="_blank" rel="noopener" data-lp-wa-origem>
           {%- render 'tp-lp-icone-wa' -%} WhatsApp
         </a>

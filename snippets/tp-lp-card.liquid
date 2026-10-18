@@ -7,6 +7,9 @@
   @param {number} [i] - Índice para o atraso da animação de entrada.
   @param {number} [numero] - Número de série do ticket (nº 01, nº 02…).
   @param {string} [sizes] - Atributo sizes da imagem.
+  @param {boolean} [loja] - Modo catálogo: o card abre o modal do produto
+    (data-lp-abrir) e o botão vira "+" em vez de ir ao WhatsApp.
+  @param {string} [atributos] - Atributos extras no <li> (dados de filtro).
 {%- enddoc -%}
 {%- liquid
   assign tam = sizes | default: '(max-width: 899px) 45vw, 270px'
@@ -20,7 +23,7 @@
     endcapture
   endif
 -%}
-<li class="lp-card" style="--i: {{ i | default: 0 }}" data-lp-reveal="up">
+<li class="lp-card{% if loja %} lp-card--loja{% endif %}" style="--i: {{ i | default: 0 }}" data-lp-reveal="up" {{ atributos }}>
   <div class="lp-card__midia{% if produto.featured_image == blank %} lp-card__midia--tipo{% endif %}">
     {%- if produto.featured_image != blank -%}
       {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: tam, alt: produto.title, class: 'lp-card__foto' }}
@@ -38,9 +41,19 @@
         {%- if produto.price_varies -%}<small>a partir de</small>{% endif -%}
         {{ produto.price_min | money }}
       </p>
-      <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
-        {%- render 'tp-lp-icone-wa' -%}<span>Pedir</span>
-      </a>
+      {%- if loja -%}
+        {%- comment -%}
+          Tocar em qualquer parte do card abre o modal (o clique é tratado
+          na grade, em tp-lp-loja.js); o "+" é o caminho pelo teclado.
+        {%- endcomment -%}
+        <button class="lp-card__pedir lp-card__abrir" type="button" data-lp-abrir="{{ produto.handle }}" aria-label="Ver detalhes de {{ produto.title | escape }}" aria-haspopup="dialog">
+          <svg class="lp-icone-mais" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg><span>Ver</span>
+        </button>
+      {%- else -%}
+        <a class="lp-card__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" aria-label="Pedir {{ produto.title | escape }} no WhatsApp">
+          {%- render 'tp-lp-icone-wa' -%}<span>Pedir</span>
+        </a>
+      {%- endif -%}
     </div>
   </div>
 </li>

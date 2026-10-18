@@ -1,0 +1,280 @@
+{%- comment -%}
+  Catálogo completo da landing (/collections/all?view=catalogo).
+
+  A grade sai pronta do servidor — funciona sem JS e é o que os buscadores
+  leem. O JS (tp-lp-loja.js) cuida de busca, filtros e ordenação no próprio
+  navegador, sem recarregar: com o catálogo deste tamanho, filtrar na mão é
+  instantâneo e não depende do app de filtros da Shopify.
+
+  Fluxo: card → modal com detalhes → "Adicionar à sacola" (carrinho real
+  da Shopify, via /cart/add.js) → sacola → "Enviar pedido pelo WhatsApp",
+  que monta o resumo em texto. O carrinho da Shopify é a fonte da verdade,
+  então a sacola sobrevive a recarregar a página.
+{%- endcomment -%}
+{%- liquid
+  assign ocasioes = section.blocks | where: 'type', 'ocasiao'
+-%}
+{{ 'tp-lp-loja.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tp-lp-loja.js' | asset_url }}" defer></script>
+
+<section class="lp-loja lp-papel" data-lp-loja data-whatsapp="{{ settings.tp_whatsapp_phone | default: '5583981101510' }}">
+  <div class="lp-manuscrito" aria-hidden="true">escolha · monte · envie · escolha · monte · envie · escolha · monte</div>
+
+  <header class="lp-loja__topo">
+    <a class="lp-loja__voltar" href="{{ routes.root_url }}?view=landing">
+      <span aria-hidden="true">←</span> Thainá Papers
+    </a>
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h1 class="lp-display lp-loja__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h1>
+    <p class="lp-loja__sub" data-lp-reveal="up">{{ section.settings.sub }}</p>
+  </header>
+
+  {%- comment -%} Controles: grudam no topo enquanto a grade rola. {%- endcomment -%}
+  <div class="lp-loja__miolo">
+    <div class="lp-loja__controles" data-lp-controles>
+      <div class="lp-loja__linha">
+        <label class="lp-busca">
+          <span class="lp-sr">Buscar no catálogo</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input type="search" placeholder="Buscar convite, menu, cartela…" autocomplete="off" enterkeyhint="search" data-lp-busca>
+          <button type="button" class="lp-busca__limpar" data-lp-busca-limpar hidden aria-label="Limpar busca">×</button>
+        </label>
+        <button type="button" class="lp-loja__btn-filtros" data-lp-abrir-filtros aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+          Filtros
+          <span class="lp-loja__selo-conta" data-lp-filtros-conta hidden>0</span>
+        </button>
+      </div>
+
+      {%- if ocasioes.size > 0 -%}
+        <div class="lp-loja__ocasioes" role="group" aria-label="Ocasião">
+          <button type="button" class="lp-filtro" aria-pressed="true" data-lp-ocasiao="">Todos</button>
+          {%- for b in ocasioes -%}
+            {%- if b.settings.colecao != blank -%}
+              <button type="button" class="lp-filtro" aria-pressed="false" data-lp-ocasiao="{{ b.settings.colecao.handle }}" {{ b.shopify_attributes }}>{{ b.settings.rotulo }}</button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <p class="lp-loja__status" aria-live="polite">
+      <span data-lp-conta>{{ collection.products_count }} modelos</span>
+      <button type="button" class="lp-loja__limpar" data-lp-limpar hidden>Limpar filtros</button>
+    </p>
+
+    {%- paginate collection.products by 250 -%}
+      <ul class="lp-grade lp-loja__grade" data-lp-grade>
+        {%- assign n = 0 -%}
+        {%- for produto in collection.products -%}
+          {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- capture tipo -%}{%- render 'tp-delivery-type', product: produto -%}{%- endcapture -%}
+          {%- capture attrs -%}data-lp-produto="{{ produto.handle }}" data-colecoes=",{{ produto.collections | map: 'handle' | join: ',' }}," data-tipo="{{ tipo | strip }}" data-preco="{{ produto.price_min }}" data-ordem="{{ n }}" data-titulo="{{ produto.title | escape }}"{%- endcapture -%}
+          {%- assign idx = n | minus: 1 | modulo: 4 -%}
+          {%- render 'tp-lp-card', produto: produto, i: idx, numero: n, loja: true, atributos: attrs -%}
+        {%- endfor -%}
+      </ul>
+
+      {%- comment -%} Dados para o modal: o que a grade não mostra (fotos, descrição, variações). {%- endcomment -%}
+      <script type="application/json" data-lp-dados>
+        {
+        {%- assign primeiro = true -%}
+        {%- for produto in collection.products -%}
+          {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
+          {%- capture tipo -%}{%- render 'tp-delivery-type', product: produto -%}{%- endcapture -%}
+          {%- unless primeiro -%},{%- endunless -%}
+          {%- assign primeiro = false -%}
+          {{ produto.handle | json }}: {
+            "titulo": {{ produto.title | json }},
+            "url": {{ produto.url | json }},
+            "tipo": {{ tipo | strip | json }},
+            "descricao": {{ produto.description | json }},
+            "tags": {{ produto.tags | join: ' ' | json }},
+            "colecoes": {{ produto.collections | map: 'title' | join: ' ' | json }},
+            "fotos": [
+              {%- for img in produto.images limit: 6 -%}
+                {{ img | image_url: width: 1000 | json }}{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            ],
+            "opcoes": {{ produto.options | json }},
+            "variantes": [
+              {%- for v in produto.variants -%}
+                { "id": {{ v.id }}, "titulo": {{ v.title | json }}, "preco": {{ v.price }}, "disponivel": {{ v.available }} }{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            ]
+          }
+        {%- endfor -%}
+        }
+      </script>
+    {%- endpaginate -%}
+
+    <div class="lp-loja__vazio" data-lp-vazio hidden>
+      <p class="lp-script">ops,</p>
+      <p>Nenhum modelo com esses filtros.</p>
+      {%- capture msg_vazio -%}Olá, Thainá! Não achei no catálogo o que procuro, posso te contar a ideia?{%- endcapture -%}
+      <a class="lp-btn lp-btn--vinho" href="{% render 'tp-lp-wa', message: msg_vazio %}" target="_blank" rel="noopener">
+        {%- render 'tp-lp-icone-wa' -%} Contar a ideia no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- Gaveta de filtros ---------- {%- endcomment -%}
+<dialog class="lp-gaveta" data-lp-filtros aria-labelledby="lp-filtros-titulo">
+  <div class="lp-gaveta__papel">
+    <div class="lp-gaveta__topo">
+      <h2 id="lp-filtros-titulo" class="lp-gaveta__titulo">Filtros</h2>
+      <button type="button" class="lp-fechar" data-lp-fechar aria-label="Fechar">×</button>
+    </div>
+
+    <fieldset class="lp-gaveta__grupo">
+      <legend>Tipo de entrega</legend>
+      <div class="lp-gaveta__chips">
+        <label class="lp-chip"><input type="checkbox" name="tipo" value="fisico"><span>Impresso</span></label>
+        <label class="lp-chip"><input type="checkbox" name="tipo" value="arquivo-digital"><span>Arquivo digital</span></label>
+        <label class="lp-chip"><input type="checkbox" name="tipo" value="arte-digital"><span>Arte digital</span></label>
+        <label class="lp-chip"><input type="checkbox" name="tipo" value="template-canva"><span>Template Canva</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="lp-gaveta__grupo">
+      <legend>Faixa de preço</legend>
+      <div class="lp-gaveta__chips">
+        <label class="lp-chip"><input type="radio" name="preco" value="" checked><span>Qualquer</span></label>
+        <label class="lp-chip"><input type="radio" name="preco" value="0-5000"><span>Até R$ 50</span></label>
+        <label class="lp-chip"><input type="radio" name="preco" value="5000-15000"><span>R$ 50 a 150</span></label>
+        <label class="lp-chip"><input type="radio" name="preco" value="15000-50000"><span>R$ 150 a 500</span></label>
+        <label class="lp-chip"><input type="radio" name="preco" value="50000-"><span>Acima de R$ 500</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="lp-gaveta__grupo">
+      <legend>Ordenar</legend>
+      <div class="lp-gaveta__chips">
+        <label class="lp-chip"><input type="radio" name="ordem" value="" checked><span>Destaques</span></label>
+        <label class="lp-chip"><input type="radio" name="ordem" value="menor"><span>Menor preço</span></label>
+        <label class="lp-chip"><input type="radio" name="ordem" value="maior"><span>Maior preço</span></label>
+        <label class="lp-chip"><input type="radio" name="ordem" value="az"><span>A–Z</span></label>
+      </div>
+    </fieldset>
+
+    <div class="lp-gaveta__pe">
+      <button type="button" class="lp-btn lp-btn--linha" data-lp-filtros-limpar>Limpar</button>
+      <button type="button" class="lp-btn lp-btn--vinho" data-lp-fechar data-lp-filtros-ver>Ver modelos</button>
+    </div>
+  </div>
+</dialog>
+
+{%- comment -%} ---------- Modal do produto (preenchido pelo JS) ---------- {%- endcomment -%}
+<dialog class="lp-gaveta lp-gaveta--produto" data-lp-modal aria-labelledby="lp-modal-titulo">
+  <form class="lp-gaveta__papel lp-produto" method="dialog" data-lp-form>
+    <button type="button" class="lp-fechar lp-produto__fechar" data-lp-fechar aria-label="Fechar">×</button>
+    <div class="lp-produto__fotos" data-lp-fotos></div>
+    <div class="lp-produto__marcas" data-lp-fotos-marcas aria-hidden="true"></div>
+    <div class="lp-produto__corpo">
+      <p class="lp-produto__tipo" data-lp-modal-tipo></p>
+      <h2 id="lp-modal-titulo" class="lp-produto__titulo" data-lp-modal-titulo></h2>
+      <p class="lp-produto__preco" data-lp-modal-preco></p>
+
+      <div class="lp-produto__variantes" data-lp-variantes hidden>
+        <p class="lp-produto__rotulo" data-lp-variantes-rotulo>Opção</p>
+        <div class="lp-gaveta__chips" data-lp-variantes-lista></div>
+      </div>
+
+      <div class="lp-produto__descricao" data-lp-modal-descricao></div>
+
+      <label class="lp-produto__campo">
+        <span class="lp-produto__rotulo">Detalhes do pedido <em>(opcional)</em></span>
+        <textarea rows="3" placeholder="Nomes, data, cores, quantidade de convidados…" data-lp-detalhes></textarea>
+      </label>
+
+      <p class="lp-produto__erro" data-lp-erro role="alert" hidden></p>
+    </div>
+
+    <div class="lp-produto__acao">
+      <div class="lp-qtd" role="group" aria-label="Quantidade">
+        <button type="button" data-lp-qtd="-1" aria-label="Diminuir">−</button>
+        <input type="number" min="1" value="1" inputmode="numeric" data-lp-qtd-valor aria-label="Quantidade">
+        <button type="button" data-lp-qtd="1" aria-label="Aumentar">+</button>
+      </div>
+      <button type="submit" class="lp-btn lp-btn--vinho lp-produto__add" data-lp-add>
+        Adicionar · <span data-lp-add-preco></span>
+      </button>
+    </div>
+  </form>
+</dialog>
+
+{%- comment -%} ---------- Sacola ---------- {%- endcomment -%}
+<dialog class="lp-gaveta lp-gaveta--sacola" data-lp-sacola aria-labelledby="lp-sacola-titulo">
+  <div class="lp-gaveta__papel">
+    <div class="lp-gaveta__topo">
+      <h2 id="lp-sacola-titulo" class="lp-gaveta__titulo">Sua sacola</h2>
+      <button type="button" class="lp-fechar" data-lp-fechar aria-label="Fechar">×</button>
+    </div>
+
+    <ul class="lp-sacola__itens" data-lp-sacola-itens></ul>
+    <p class="lp-sacola__vazia" data-lp-sacola-vazia>Sua sacola está vazia. Toque num modelo do catálogo para adicionar.</p>
+
+    <div class="lp-sacola__resumo" data-lp-sacola-resumo hidden>
+      <div class="lp-sacola__campos">
+        <label class="lp-produto__campo">
+          <span class="lp-produto__rotulo">Seu nome</span>
+          <input type="text" autocomplete="name" data-lp-nome>
+        </label>
+        <label class="lp-produto__campo">
+          <span class="lp-produto__rotulo">Data do evento <em>(opcional)</em></span>
+          <input type="text" placeholder="ex.: 14/03/2027" data-lp-data>
+        </label>
+      </div>
+      <p class="lp-sacola__total">
+        <span>Total estimado</span>
+        <strong data-lp-sacola-total></strong>
+      </p>
+      <p class="lp-sacola__nota">Frete, prazo e personalização são combinados na conversa com a Thainá.</p>
+      <button type="button" class="lp-btn lp-btn--vinho lp-btn--grande lp-sacola__enviar" data-lp-enviar>
+        {%- render 'tp-lp-icone-wa' -%} Enviar pelo WhatsApp
+      </button>
+      <button type="button" class="lp-sacola__esvaziar" data-lp-esvaziar>Esvaziar sacola</button>
+    </div>
+  </div>
+</dialog>
+
+{%- comment -%} Barra da sacola: aparece quando há itens. {%- endcomment -%}
+<button type="button" class="lp-barra-sacola" data-lp-abrir-sacola hidden>
+  <span class="lp-barra-sacola__icone" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+    <span class="lp-barra-sacola__conta" data-lp-barra-conta>0</span>
+  </span>
+  <span class="lp-barra-sacola__texto">
+    <span>Ver sacola</span>
+    <strong data-lp-barra-total></strong>
+  </span>
+  <span class="lp-barra-sacola__seta" aria-hidden="true">→</span>
+</button>
+
+<div class="lp-aviso" data-lp-aviso role="status" aria-live="polite" hidden></div>
+
+{% schema %}
+{
+  "name": "LP — Catálogo completo",
+  "tag": "div",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "escolha e monte seu pedido" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Catálogo" },
+    { "type": "textarea", "id": "sub", "label": "Texto", "default": "Toque num modelo para ver os detalhes, adicione à sacola e envie o pedido pelo WhatsApp." },
+    { "type": "checkbox", "id": "esconder_exemplos", "label": "Esconder produtos com a tag exemplo", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "ocasiao",
+      "name": "Filtro de ocasião",
+      "settings": [
+        { "type": "text", "id": "rotulo", "label": "Nome", "default": "Casamentos" },
+        { "type": "collection", "id": "colecao", "label": "Coleção" }
+      ]
+    }
+  ]
+}
+{% endschema %}

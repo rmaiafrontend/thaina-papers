@@ -1976,6 +1976,11 @@ body.lp {
   padding-top: 16px;
 }
 
+.lp-destaques__todos {
+  margin: 18px 0 0;
+  text-align: center;
+}
+
 .lp-destaques .lp-card:nth-child(even) {
   margin-top: 10px;
 }

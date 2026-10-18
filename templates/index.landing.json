@@ -70,59 +70,6 @@
       "type": "tp-lp-faixa",
       "settings": {}
     },
-    "catalogo": {
-      "type": "tp-lp-catalogo",
-      "settings": {},
-      "blocks": {
-        "o0": {
-          "type": "ocasiao",
-          "settings": {
-            "rotulo": "Casamentos",
-            "colecao": "casamentos",
-            "nota": "convites, manuais e papelaria do dia"
-          }
-        },
-        "o1": {
-          "type": "ocasiao",
-          "settings": {
-            "rotulo": "Pacotes",
-            "colecao": "pacotes",
-            "nota": "a identidade completa do casamento"
-          }
-        },
-        "o2": {
-          "type": "ocasiao",
-          "settings": {
-            "rotulo": "Formaturas",
-            "colecao": "formaturas",
-            "nota": "desconto para quem fecha em grupo"
-          }
-        },
-        "o3": {
-          "type": "ocasiao",
-          "settings": {
-            "rotulo": "Consultórios",
-            "colecao": "consultorios",
-            "nota": "cartelas de apoio ao paciente"
-          }
-        },
-        "o4": {
-          "type": "ocasiao",
-          "settings": {
-            "rotulo": "Digitais",
-            "colecao": "avulsos",
-            "nota": "arquivo liberado em até 1 dia útil"
-          }
-        }
-      },
-      "block_order": [
-        "o0",
-        "o1",
-        "o2",
-        "o3",
-        "o4"
-      ]
-    },
     "passos": {
       "type": "tp-lp-passos",
       "settings": {},
@@ -450,7 +397,6 @@
     "faixa",
     "ocasioes",
     "destaques",
-    "catalogo",
     "jeitos",
     "passos",
     "trabalhos",

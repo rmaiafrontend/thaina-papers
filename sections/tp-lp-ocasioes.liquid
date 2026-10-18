@@ -1,7 +1,6 @@
 {%- comment -%}
-  Ocasiões: os três públicos da Thainá em cards deslizáveis. O botão de
-  cada card abre a aba correspondente do catálogo (pelo nome da aba) e rola
-  até ele; sem JS, é só uma âncora para o catálogo.
+  Ocasiões: os três públicos da Thainá em cards deslizáveis. O link de
+  cada card abre o catálogo completo já filtrado por aquela ocasião.
 {%- endcomment -%}
 <section class="lp-ocasioes lp-papel">
   <div class="lp-manuscrito" aria-hidden="true">casamentos · formaturas · consultórios · batizados · casamentos · formaturas</div>
@@ -32,7 +31,7 @@
         <div class="lp-ocasiao__corpo">
           <h3 class="lp-ocasiao__titulo">{{ b.settings.titulo }}</h3>
           <p class="lp-ocasiao__texto">{{ b.settings.texto }}</p>
-          <a class="lp-ocasiao__link" href="#lp-catalogo" data-lp-ir-aba="{{ b.settings.aba | escape }}">
+          <a class="lp-ocasiao__link" href="{{ routes.collections_url }}/all?view=catalogo&ocasiao={{ b.settings.aba | handleize }}">
             {{- b.settings.link_rotulo }} <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -60,7 +59,7 @@
         { "type": "text", "id": "titulo", "label": "Título", "default": "Casamentos" },
         { "type": "textarea", "id": "texto", "label": "Texto" },
         { "type": "text", "id": "link_rotulo", "label": "Texto do link", "default": "Ver modelos" },
-        { "type": "text", "id": "aba", "label": "Aba do catálogo que abre", "info": "O nome exato da aba, ex.: Casamentos" }
+        { "type": "text", "id": "aba", "label": "Filtro do catálogo que abre", "info": "O nome do filtro de ocasião no catálogo, ex.: Casamentos" }
       ]
     }
   ],
