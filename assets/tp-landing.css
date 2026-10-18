@@ -58,12 +58,12 @@
   --lp-azul-fundo: #9dbdd4;
   --lp-vinho: #8b2420;
   --lp-cereja: #6b1017;
-  --lp-tinta: #3d2722;
+  --lp-tinta: #4f1a1f;
   --lp-caramelo: #6e4128;
   --lp-creme: #faf6ee;
   --lp-papel-claro: #f3ece0;
 
-  --lp-display: 'Playfair Display', Didot, 'Bodoni 72', Georgia, serif;
+  --lp-display: 'Instrument Serif', 'Bodoni 72', Didot, Georgia, serif;
   --lp-texto: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --lp-script: 'Allura', 'Brush Script MT', cursive;
 
@@ -104,6 +104,7 @@ html {
 
 body.lp {
   margin: 0;
+  font-synthesis: none;
   background: var(--lp-azul);
   color: var(--lp-tinta);
   font-family: var(--lp-texto);
@@ -197,34 +198,30 @@ body.lp {
 
 /* ---------- tipografia ---------- */
 
-/* Playfair no peso máximo, apertada mas com as palavras respirando: o
-   espaço entre palavras sobe para compensar o tracking negativo — antes
-   "Feito por aqui" lia como uma palavra só. Algarismos alinhados: os
-   padrão da Playfair são de texto, com 0 e 1 da altura do x. */
+/* Títulos como na referência (lvbusinesslab): serifado condensado e fino,
+   em caixa alta, com o acento em itálico minúsculo na linha de cima. */
 .lp-display {
   font-family: var(--lp-display);
-  font-weight: 900;
-  letter-spacing: -0.028em;
-  word-spacing: 0.04em;
-  line-height: 0.9;
-  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 0.92;
+  text-transform: uppercase;
   color: var(--lp-vinho);
   margin: 0;
   text-wrap: balance;
 }
 
-/* O acento das referências é itálico serifado ("Nunca fumei.", "mulher"),
-   não manuscrito. A Allura fica para o que é escrita à mão de fato:
-   legendas das polaroides e a caligrafia de fundo (.lp-mao). */
+/* O acento é o itálico da mesma serifada, em minúsculas — o "que pode
+   virar" da referência. A Allura fica para o que é escrita à mão de fato
+   (.lp-mao): legendas das polaroides e caligrafia de fundo. */
 .lp-script {
   font-family: var(--lp-display);
   font-style: italic;
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
   color: var(--lp-vinho);
-  margin: 0 0 6px;
+  margin: 0 0 2px;
 }
 
 .lp-mao {
@@ -369,17 +366,16 @@ body.lp {
 }
 
 .lp-capa__script {
-  font-size: 34px;
+  font-size: 46px;
   margin-bottom: 4px;
   transform: rotate(-4deg);
   transform-origin: left bottom;
 }
 
-/* "só papel." mede 3,93em na Playfair Black; o tamanho é o menor entre
-   22vw e o que cabe nessa linha, para nunca quebrar nem vazar em 320px. */
+/* "SÓ PAPEL." mede 3,49em na Instrument Serif; o tamanho é o menor entre
+   24vw e o que cabe nessa linha, para nunca quebrar nem vazar em 320px. */
 .lp-capa__titulo {
-  font-weight: 700;
-  font-size: min(22vw, calc((100vw - 60px) / 4.02));
+  font-size: min(24vw, calc((100vw - 60px) / 3.6));
   line-height: 0.8;
   text-wrap: initial;
 }
@@ -708,7 +704,7 @@ body.lp {
 
 .lp-selo__mono {
   font-family: var(--lp-display);
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 900;
   letter-spacing: -0.04em;
   fill: #4a0c0f;
@@ -768,8 +764,8 @@ body.lp {
 .lp-faixa__lista li {
   font-family: var(--lp-display);
   font-style: italic;
-  font-weight: 500;
-  font-size: 34px;
+  font-weight: 400;
+  font-size: 40px;
   line-height: 1;
   color: var(--lp-creme);
   white-space: nowrap;
@@ -958,9 +954,9 @@ body.lp {
 .lp-card__nome {
   margin: 0;
   font-family: var(--lp-display);
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.05;
   color: var(--lp-tinta);
 }
 
@@ -1055,9 +1051,9 @@ body.lp {
   place-items: center;
   height: 84px;
   font-family: var(--lp-display);
-  font-size: 76px;
-  font-weight: 900;
-  letter-spacing: -0.05em;
+  font-size: 92px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 1;
   color: var(--lp-vinho);
   font-variant-numeric: lining-nums;
@@ -1073,10 +1069,10 @@ body.lp {
 .lp-passo__titulo {
   margin: 0 0 6px;
   font-family: var(--lp-display);
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
   color: var(--lp-cereja);
 }
 
@@ -1281,9 +1277,8 @@ body.lp {
   margin: 18px 0 12px;
   font-family: var(--lp-display);
   font-style: italic;
-  font-size: 19px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-size: 23px;
+  font-weight: 400;
   line-height: 1.2;
   color: var(--lp-cereja);
 }
@@ -1326,12 +1321,12 @@ body.lp {
 
 .lp-final__script {
   color: var(--lp-azul-claro);
-  font-size: 32px;
+  font-size: 42px;
 }
 
 .lp-final__titulo {
   margin: 6px auto 20px;
-  max-width: 7ch;
+  max-width: 10ch;
   font-size: clamp(70px, 21vw, 150px);
   color: var(--lp-creme);
 }
