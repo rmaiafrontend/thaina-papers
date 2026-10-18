@@ -1,0 +1,29 @@
+{%- comment -%}
+  Faixa vinho inclinada com as ocasiões correndo em manuscrito. A lista vai
+  duas vezes no trilho para o laço fechar sem salto em -50%.
+{%- endcomment -%}
+{%- assign palavras = section.settings.palavras | split: ',' -%}
+<section class="lp-faixa" aria-label="Ocasiões que a Thainá Papers atende">
+  <div class="lp-faixa__fita">
+    <div class="lp-faixa__trilho">
+      {%- for passada in (1..2) -%}
+        <ul class="lp-faixa__lista" {% if passada == 2 %}aria-hidden="true"{% endif %}>
+          {%- for p in palavras -%}
+            <li>{{ p | strip }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Faixa",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "palavras", "label": "Palavras (separadas por vírgula)", "default": "casamentos, formaturas, batizados, consultórios, save the date, convites, manuais" }
+  ],
+  "presets": [{ "name": "LP — Faixa" }]
+}
+{% endschema %}

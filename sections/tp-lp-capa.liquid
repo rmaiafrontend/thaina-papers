@@ -1,0 +1,97 @@
+{%- comment -%}
+  Capa da landing. Composição tirada das referências da cliente: papel azul
+  com trama de tela, linha vinho ondulada que se desenha ao abrir, título
+  serifado gigante e apertado, selo circular girando com um rabisco por
+  trás, e a foto dentro de uma moldura recortada com selo de cera.
+{%- endcomment -%}
+{%- liquid
+  capture wa_msg
+    echo 'Olá, Thainá! Vim pelo site e queria fazer um pedido.'
+  endcapture
+-%}
+<section class="lp-capa lp-papel" data-lp-capa>
+  {%- comment -%} Linha ondulada: pathLength=1 deixa o desenho em CSS independente do tamanho. {%- endcomment -%}
+  <svg class="lp-capa__onda" viewBox="0 0 400 900" preserveAspectRatio="none" aria-hidden="true">
+    <path pathLength="1" d="M-20 30 C30 4 64 52 112 40 C164 26 172 2 222 14 C276 28 300 66 340 52 C384 36 392 88 386 140 C380 200 398 240 390 300 C382 360 366 400 384 470 C400 532 396 560 384 620 C372 690 398 730 392 800 C388 850 396 880 392 930"/>
+  </svg>
+
+  <div class="lp-manuscrito" aria-hidden="true">feito à mão com afeto · papel, tinta e paciência · para guardar · feito à mão com afeto · papel, tinta e paciência</div>
+
+  <header class="lp-capa__topo">
+    <span class="lp-capa__marca">Thainá Papers</span>
+    <a class="lp-capa__ig" href="{{ section.settings.instagram }}" target="_blank" rel="noopener">@thainapapers</a>
+  </header>
+
+  <div class="lp-capa__grade">
+    <div class="lp-capa__texto">
+      <p class="lp-script lp-capa__script" data-lp-reveal="up">{{ section.settings.script }}</p>
+      <h1 class="lp-display lp-capa__titulo" data-lp-reveal="wipe">
+        {%- assign linhas = section.settings.titulo | newline_to_br | split: '<br />' -%}
+        {%- for linha in linhas -%}
+          <span class="lp-capa__linha" style="--i: {{ forloop.index0 }}">{{ linha | strip }}</span>
+        {%- endfor -%}
+      </h1>
+
+      <div class="lp-carimbo" aria-hidden="true">
+        <svg class="lp-carimbo__rabisco" viewBox="0 0 120 160"><path d="M30 18 C80 4 98 26 40 40 C-6 52 112 56 46 74 C-4 88 110 92 44 110 C0 122 104 128 52 146" /></svg>
+        <svg class="lp-carimbo__roda" viewBox="0 0 100 100">
+          <defs><path id="lp-roda" d="M50 50 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs>
+          <text><textPath href="#lp-roda" textLength="236">FEITO À MÃO · THAINÁ PAPERS · </textPath></text>
+        </svg>
+      </div>
+
+      <p class="lp-capa__lead" data-lp-reveal="up" style="--i: 2">{{ section.settings.lead }}</p>
+
+      <div class="lp-capa__acoes" data-lp-reveal="up" style="--i: 3">
+        <a class="lp-btn lp-btn--vinho" href="#lp-catalogo">Ver o catálogo <span aria-hidden="true">↓</span></a>
+        <a class="lp-btn lp-btn--linha" href="{% render 'tp-lp-wa', message: wa_msg %}" target="_blank" rel="noopener" data-lp-wa-origem>
+          {%- render 'tp-lp-icone-wa' -%} WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <figure class="lp-moldura lp-capa__moldura" data-lp-reveal="tilt" data-lp-parallax="-0.06">
+      <div class="lp-moldura__borda">
+        <div class="lp-moldura__miolo">
+          {%- render 'tp-image',
+            image: section.settings.foto,
+            asset: section.settings.foto_asset,
+            alt: section.settings.foto_alt,
+            class: 'lp-moldura__foto',
+            ratio: '4/5',
+            width: 900,
+            sizes: '(max-width: 899px) 80vw, 420px',
+            widths: '400,600,900',
+            loading: 'eager'
+          -%}
+          <figcaption class="lp-moldura__legenda">{{ section.settings.foto_legenda }}</figcaption>
+        </div>
+      </div>
+      {%- render 'tp-lp-selo', class: 'lp-moldura__selo' -%}
+    </figure>
+  </div>
+
+  <ul class="lp-capa__fatos" data-lp-reveal="up" style="--i: 4">
+    <li>Envio para todo o Brasil</li>
+    <li>Até 12x no cartão</li>
+    <li>Digitais em até 1 dia útil</li>
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Capa",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "feito à mão," },
+    { "type": "textarea", "id": "titulo", "label": "Título (uma linha por quebra)", "default": "Não é\nsó papel." },
+    { "type": "textarea", "id": "lead", "label": "Frase de abertura", "default": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você." },
+    { "type": "image_picker", "id": "foto", "label": "Foto da moldura" },
+    { "type": "text", "id": "foto_asset", "label": "Arquivo no tema (alternativa)", "default": "tp-trabalho-convite.jpg" },
+    { "type": "text", "id": "foto_alt", "label": "Descrição da foto", "default": "Convite de casamento em caixa de linho com laço azul" },
+    { "type": "text", "id": "foto_legenda", "label": "Legenda manuscrita", "default": "Ana Carla & Thiago" },
+    { "type": "url", "id": "instagram", "label": "Instagram" }
+  ],
+  "presets": [{ "name": "LP — Capa" }]
+}
+{% endschema %}

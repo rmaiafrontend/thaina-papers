@@ -1,0 +1,46 @@
+{%- comment -%}
+  Fechamento em vinho: o convite final para o WhatsApp e um rodapé mínimo.
+  Também é aqui que o botão flutuante sai de cena (data-lp-final), para não
+  haver dois botões de WhatsApp na mesma tela.
+{%- endcomment -%}
+{%- capture wa_msg -%}Olá, Thainá! Quero criar a papelaria da minha celebração.{%- endcapture -%}
+<section class="lp-final" data-lp-final>
+  <svg class="lp-final__onda" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+    <path pathLength="1" d="M-10 70 C40 20 80 110 130 70 C180 30 210 100 260 66 C310 32 340 104 410 58"/>
+  </svg>
+  <p class="lp-script lp-final__script" data-lp-reveal="up">{{ section.settings.script }}</p>
+  <h2 class="lp-display lp-final__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  <p class="lp-final__texto" data-lp-reveal="up" style="--i: 1">{{ section.settings.texto }}</p>
+  <a class="lp-btn lp-btn--creme lp-btn--grande" href="{% render 'tp-lp-wa', message: wa_msg %}" target="_blank" rel="noopener" data-lp-reveal="up" style="--i: 2">
+    {%- render 'tp-lp-icone-wa' -%} Chamar no WhatsApp
+  </a>
+
+  <footer class="lp-rodape">
+    <span class="lp-rodape__marca">Thainá Papers</span>
+    <nav class="lp-rodape__links" aria-label="Links">
+      {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+      <a href="{{ routes.all_products_collection_url }}">Loja completa</a>
+      <a href="/pages/politicas">Políticas</a>
+    </nav>
+    <p class="lp-rodape__legal">{{ section.settings.legal }}</p>
+  </footer>
+</section>
+
+<a class="lp-flutuante" href="{% render 'tp-lp-wa', message: wa_msg %}" target="_blank" rel="noopener" data-lp-flutuante aria-label="Chamar no WhatsApp">
+  {%- render 'tp-lp-icone-wa' -%}<span>Pedir no WhatsApp</span>
+</a>
+
+{% schema %}
+{
+  "name": "LP — Fechamento",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "conta pra gente" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Vamos criar a sua?" },
+    { "type": "textarea", "id": "texto", "label": "Texto", "default": "Data, nomes, cores e a quantidade — com isso a Thainá já começa a desenhar." },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "text", "id": "legal", "label": "Linha legal", "default": "© 2026 Thainá Papers · CNPJ 68.026.601/0001-07 · João Pessoa, PB" }
+  ],
+  "presets": [{ "name": "LP — Fechamento" }]
+}
+{% endschema %}

@@ -1,0 +1,124 @@
+{%- comment -%}
+  Catálogo da landing. Cada bloco é uma ocasião ligada a uma coleção; os
+  produtos viram etiquetas penduradas, e o botão de cada uma abre o WhatsApp
+  com o nome do produto já escrito. Sem sacola: o pedido acontece na conversa.
+
+  Abas por ocasião com JS; sem JS, as ocasiões aparecem empilhadas.
+  Produtos com a tag de exemplo ficam de fora — são amostras de layout.
+  Produto sem foto ganha um cartão tipográfico com a inicial, em vez de um
+  retângulo vazio.
+{%- endcomment -%}
+{%- assign ocasioes = section.blocks | where: 'type', 'ocasiao' -%}
+<section class="lp-catalogo lp-papel" id="lp-catalogo" data-lp-catalogo>
+  <div class="lp-manuscrito lp-manuscrito--baixo" aria-hidden="true">escolha · chame · aprove · receba · escolha · chame · aprove · receba</div>
+
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+    <p class="lp-cabeca__sub" data-lp-reveal="up" style="--i: 1">{{ section.settings.sub }}</p>
+  </div>
+
+  {%- if ocasioes.size > 1 -%}
+    <div class="lp-abas" role="tablist" aria-label="Ocasiões" data-lp-abas>
+      {%- for b in ocasioes -%}
+        <button
+          class="lp-aba"
+          type="button"
+          role="tab"
+          id="lp-aba-{{ b.id }}"
+          aria-controls="lp-painel-{{ b.id }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          {% unless forloop.first %}tabindex="-1"{% endunless %}
+          data-lp-aba
+        >{{ b.settings.rotulo }}</button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- for b in ocasioes -%}
+    {%- liquid
+      assign colecao = b.settings.colecao
+      assign limite = b.settings.limite | default: 12
+    -%}
+    <div
+      class="lp-painel"
+      id="lp-painel-{{ b.id }}"
+      role="tabpanel"
+      aria-labelledby="lp-aba-{{ b.id }}"
+      data-lp-painel
+      {{ b.shopify_attributes }}
+    >
+      <h3 class="lp-painel__titulo">{{ b.settings.rotulo }}</h3>
+      {%- if b.settings.nota != blank -%}
+        <p class="lp-painel__nota lp-script">{{ b.settings.nota }}</p>
+      {%- endif -%}
+
+      <ul class="lp-etiquetas">
+        {%- assign n = 0 -%}
+        {%- for produto in colecao.products -%}
+          {%- if section.settings.esconder_exemplos and produto.tags contains 'exemplo' -%}{%- continue -%}{%- endif -%}
+          {%- if n >= limite -%}{%- break -%}{%- endif -%}
+          {%- assign n = n | plus: 1 -%}
+          {%- capture msg -%}Olá, Thainá! Vi no site e quero saber mais sobre: {{ produto.title }} ({{ b.settings.rotulo }}).{%- endcapture -%}
+          <li class="lp-etiqueta{% if produto.featured_image == blank %} lp-etiqueta--tipo{% endif %}" style="--i: {{ forloop.index0 | modulo: 6 }}" data-lp-reveal="hang">
+            <span class="lp-etiqueta__furo" aria-hidden="true"></span>
+            <div class="lp-etiqueta__midia">
+              {%- if produto.featured_image != blank -%}
+                {{ produto.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 899px) 45vw, 260px', alt: produto.title, class: 'lp-etiqueta__foto' }}
+              {%- else -%}
+                <span class="lp-etiqueta__inicial" aria-hidden="true">{{ produto.title | slice: 0 }}</span>
+                <span class="lp-etiqueta__assina lp-script" aria-hidden="true">sob encomenda</span>
+              {%- endif -%}
+            </div>
+            <div class="lp-etiqueta__corpo">
+              <h4 class="lp-etiqueta__nome">{{ produto.title }}</h4>
+              <p class="lp-etiqueta__preco">
+                {%- if produto.price_varies -%}a partir de {% endif -%}
+                {{ produto.price_min | money }}
+              </p>
+              <a class="lp-etiqueta__pedir" href="{% render 'tp-lp-wa', message: msg %}" target="_blank" rel="noopener" data-lp-wa-origem>
+                {%- render 'tp-lp-icone-wa' -%} Pedir
+              </a>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if n == 0 -%}
+        <p class="lp-painel__vazio">Os modelos desta ocasião estão sendo fotografados. Chame no WhatsApp que a Thainá te mostra.</p>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+
+  {%- capture msg_geral -%}Olá, Thainá! Não achei no catálogo o que procuro, posso te contar a ideia?{%- endcapture -%}
+  <p class="lp-catalogo__rodape" data-lp-reveal="up">
+    Não achou o que imaginou?
+    <a href="{% render 'tp-lp-wa', message: msg_geral %}" target="_blank" rel="noopener">Conta a ideia pra gente →</a>
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Catálogo",
+  "tag": "div",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "escolha e chame" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "O catálogo" },
+    { "type": "textarea", "id": "sub", "label": "Texto", "default": "Toque em Pedir e a conversa já abre no WhatsApp com o modelo escolhido." },
+    { "type": "checkbox", "id": "esconder_exemplos", "label": "Esconder produtos com a tag exemplo", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "ocasiao",
+      "name": "Ocasião",
+      "settings": [
+        { "type": "text", "id": "rotulo", "label": "Nome da aba", "default": "Casamentos" },
+        { "type": "collection", "id": "colecao", "label": "Coleção" },
+        { "type": "text", "id": "nota", "label": "Nota manuscrita" },
+        { "type": "range", "id": "limite", "label": "Máximo de produtos", "min": 2, "max": 24, "step": 1, "default": 12 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Catálogo", "blocks": [{ "type": "ocasiao" }] }]
+}
+{% endschema %}

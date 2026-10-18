@@ -1,0 +1,11 @@
+{%- doc -%}
+  Monta o link do WhatsApp com a mensagem já escrita.
+
+  @param {string} [message] - Texto que abre no campo de mensagem.
+  @param {string} [phone] - Número com DDI; padrão: ajuste tp_whatsapp_phone.
+{%- enddoc -%}
+{%- liquid
+  assign numero = phone | default: settings.tp_whatsapp_phone | default: '5583981101510' | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign texto = message | default: 'Olá, Thainá! Vim pelo site e queria fazer um pedido.' | url_encode
+  echo 'https://wa.me/' | append: numero | append: '?text=' | append: texto
+-%}

@@ -1,0 +1,62 @@
+{%- comment -%}
+  Depoimentos dentro da moldura recortada da segunda referência: borda vinho,
+  miolo azul, selo de cera no topo. Carrossel por scroll-snap — no celular,
+  um por vez com a ponta do próximo aparecendo.
+{%- endcomment -%}
+<section class="lp-depos lp-papel lp-papel--foto">
+  <div class="lp-cabeca lp-cabeca--creme">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <ul class="lp-depos__faixa" data-lp-reveal="up">
+    {%- for b in section.blocks -%}
+      <li class="lp-depo" {{ b.shopify_attributes }}>
+        <figure class="lp-moldura lp-moldura--depo">
+          <div class="lp-moldura__borda">
+            <div class="lp-moldura__miolo">
+              {%- render 'tp-image',
+                image: b.settings.image,
+                asset: b.settings.image_asset,
+                alt: 'Print da conversa com o depoimento',
+                class: 'lp-depo__print',
+                ratio: '2/1',
+                width: 700,
+                sizes: '(max-width: 899px) 70vw, 320px',
+                widths: '350,700'
+              -%}
+              <blockquote class="lp-depo__frase">“{{ b.settings.quote }}”</blockquote>
+              <figcaption class="lp-depo__autor">{{ b.settings.author }}</figcaption>
+            </div>
+          </div>
+          {%- render 'tp-lp-selo', class: 'lp-moldura__selo' -%}
+        </figure>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Depoimentos",
+  "tag": "div",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "quem já celebrou" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Depoimentos" }
+  ],
+  "blocks": [
+    {
+      "type": "depo",
+      "name": "Depoimento",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Print" },
+        { "type": "text", "id": "image_asset", "label": "Arquivo no tema (alternativa)" },
+        { "type": "textarea", "id": "quote", "label": "Frase" },
+        { "type": "text", "id": "author", "label": "Nome" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Depoimentos", "blocks": [{ "type": "depo" }] }]
+}
+{% endschema %}

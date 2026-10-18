@@ -1,0 +1,57 @@
+{%- comment -%}
+  Trabalhos reais em colagem: fotos como recortes de papel com fita adesiva,
+  cada uma num ângulo, em duas colunas desencontradas no celular. A coluna
+  da direita desce em paralaxe mais devagar que a da esquerda.
+{%- endcomment -%}
+<section class="lp-trabalhos lp-papel lp-papel--claro">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <div class="lp-colagem">
+    {%- for b in section.blocks -%}
+      <figure class="lp-recorte" style="--i: {{ forloop.index0 }}" data-lp-reveal="drop" {{ b.shopify_attributes }}>
+        <span class="lp-recorte__fita" aria-hidden="true"></span>
+        {%- render 'tp-image',
+          image: b.settings.image,
+          asset: b.settings.image_asset,
+          alt: b.settings.legenda,
+          class: 'lp-recorte__foto',
+          ratio: '2/3',
+          width: 700,
+          sizes: '(max-width: 899px) 46vw, 300px',
+          widths: '300,500,700'
+        -%}
+        {%- if b.settings.legenda_curta != blank -%}
+          <figcaption class="lp-recorte__legenda lp-script">{{ b.settings.legenda_curta }}</figcaption>
+        {%- endif -%}
+      </figure>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Trabalhos reais",
+  "tag": "div",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "já saiu daqui" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Feito por aqui" }
+  ],
+  "blocks": [
+    {
+      "type": "foto",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "image_asset", "label": "Arquivo no tema (alternativa)" },
+        { "type": "text", "id": "legenda", "label": "Descrição da foto" },
+        { "type": "text", "id": "legenda_curta", "label": "Legenda manuscrita" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Trabalhos reais", "blocks": [{ "type": "foto" }, { "type": "foto" }] }]
+}
+{% endschema %}

@@ -1,0 +1,46 @@
+{%- comment -%}
+  Como pedir: três passos com numerais gigantes que vazam da tela, como o
+  "63,2%" da referência. O numeral é decorativo (aria-hidden); a ordem real
+  vem da lista ordenada.
+{%- endcomment -%}
+<section class="lp-passos lp-papel">
+  <div class="lp-cabeca">
+    <p class="lp-script" data-lp-reveal="up">{{ section.settings.script }}</p>
+    <h2 class="lp-display lp-cabeca__titulo" data-lp-reveal="wipe">{{ section.settings.titulo }}</h2>
+  </div>
+
+  <ol class="lp-passos__lista">
+    {%- for b in section.blocks -%}
+      <li class="lp-passo{% cycle '', ' lp-passo--dir', '' %}" {{ b.shopify_attributes }}>
+        <span class="lp-passo__num" aria-hidden="true" data-lp-parallax="0.12">{{ forloop.index | prepend: '0' }}</span>
+        <div class="lp-passo__texto" data-lp-reveal="up">
+          <h3 class="lp-passo__titulo">{{ b.settings.titulo }}</h3>
+          <p>{{ b.settings.texto }}</p>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ol>
+</section>
+
+{% schema %}
+{
+  "name": "LP — Como pedir",
+  "tag": "div",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "script", "label": "Manuscrito", "default": "sem complicação" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Como pedir" }
+  ],
+  "blocks": [
+    {
+      "type": "passo",
+      "name": "Passo",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Escolha" },
+        { "type": "textarea", "id": "texto", "label": "Texto", "default": "Escolha o modelo no catálogo." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "LP — Como pedir", "blocks": [{ "type": "passo" }, { "type": "passo" }, { "type": "passo" }] }]
+}
+{% endschema %}

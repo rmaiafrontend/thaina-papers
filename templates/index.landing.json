@@ -1,0 +1,239 @@
+{
+  "layout": "landing",
+  "sections": {
+    "capa": {
+      "type": "tp-lp-capa",
+      "settings": {
+        "instagram": "https://instagram.com/thainapapers"
+      }
+    },
+    "faixa": {
+      "type": "tp-lp-faixa",
+      "settings": {}
+    },
+    "catalogo": {
+      "type": "tp-lp-catalogo",
+      "settings": {},
+      "blocks": {
+        "o0": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Casamentos",
+            "colecao": "casamentos",
+            "nota": "convites, manuais e papelaria do dia"
+          }
+        },
+        "o1": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Pacotes",
+            "colecao": "pacotes",
+            "nota": "a identidade completa do casamento"
+          }
+        },
+        "o2": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Formaturas",
+            "colecao": "formaturas",
+            "nota": "desconto para quem fecha em grupo"
+          }
+        },
+        "o3": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Consultórios",
+            "colecao": "consultorios",
+            "nota": "cartelas de apoio ao paciente"
+          }
+        },
+        "o4": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Digitais",
+            "colecao": "avulsos",
+            "nota": "arquivo liberado em até 1 dia útil"
+          }
+        }
+      },
+      "block_order": [
+        "o0",
+        "o1",
+        "o2",
+        "o3",
+        "o4"
+      ]
+    },
+    "passos": {
+      "type": "tp-lp-passos",
+      "settings": {},
+      "blocks": {
+        "p0": {
+          "type": "passo",
+          "settings": {
+            "titulo": "Escolha",
+            "texto": "Navegue pelo catálogo e toque em Pedir no modelo que mais combina com a sua celebração."
+          }
+        },
+        "p1": {
+          "type": "passo",
+          "settings": {
+            "titulo": "Chame no WhatsApp",
+            "texto": "A conversa já abre com o modelo escrito. Conte a data, os nomes, as cores e a quantidade."
+          }
+        },
+        "p2": {
+          "type": "passo",
+          "settings": {
+            "titulo": "Aprove e receba",
+            "texto": "Você confere a arte antes de tudo — até 3 rodadas de ajuste. Impressos seguem para todo o Brasil; digitais chegam em até 1 dia útil."
+          }
+        }
+      },
+      "block_order": [
+        "p0",
+        "p1",
+        "p2"
+      ]
+    },
+    "trabalhos": {
+      "type": "tp-lp-trabalhos",
+      "settings": {},
+      "blocks": {
+        "f0": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa.jpg",
+            "legenda": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado",
+            "legenda_curta": "formatura"
+          }
+        },
+        "f1": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-batizado.jpg",
+            "legenda": "Prato de porcelana pintado à mão para o batizado de Bernardo",
+            "legenda_curta": "batizado do Bernardo"
+          }
+        },
+        "f2": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-monograma.jpg",
+            "legenda": "Monograma recortado em dourado sobre o bolo, em verde e folhagem",
+            "legenda_curta": "monograma"
+          }
+        },
+        "f3": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-ecobag.jpg",
+            "legenda": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior",
+            "legenda_curta": "Dr. Fábio"
+          }
+        },
+        "f4": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa-posta.jpg",
+            "legenda": "Guardanapo com monograma bordado sobre sousplat rendado",
+            "legenda_curta": "mesa posta"
+          }
+        },
+        "f5": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-bolo.jpg",
+            "legenda": "Bolo de formatura em rosa, com monograma no centro",
+            "legenda_curta": "formatura"
+          }
+        },
+        "f6": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-adesivos.jpg",
+            "legenda": "Cartela de adesivos temáticos impressa para a festa",
+            "legenda_curta": "#mcformou"
+          }
+        },
+        "f7": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-copos.jpg",
+            "legenda": "Copos e garrafas personalizados para a festa",
+            "legenda_curta": "open bar"
+          }
+        }
+      },
+      "block_order": [
+        "f0",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7"
+      ]
+    },
+    "depoimentos": {
+      "type": "tp-lp-depoimentos",
+      "settings": {},
+      "blocks": {
+        "d0": {
+          "type": "depo",
+          "settings": {
+            "image_asset": "tp-depo-ana.jpg",
+            "quote": "Tá muito perfeito. Não consigo nem parar de olhar de tão lindo que ficou.",
+            "author": "Ana Beatriz e Jordan Brunno · Casamento"
+          }
+        },
+        "d1": {
+          "type": "depo",
+          "settings": {
+            "image_asset": "tp-depo-livia.jpg",
+            "quote": "Só pra avisar que tudo foi um sucesso. As tatuagens, meu Deus — o povo dizimou muito rápido. Se eu soubesse que eles iam amar tanto, tinha pedido mais.",
+            "author": "Lívia Menezes"
+          }
+        },
+        "d2": {
+          "type": "depo",
+          "settings": {
+            "image_asset": "tp-depo-leticia.jpg",
+            "quote": "As tatuagens foram um sucesso, todos amaram muito. Ficou até hoje de manhã intacta.",
+            "author": "Letícia Guedes"
+          }
+        },
+        "d3": {
+          "type": "depo",
+          "settings": {
+            "image_asset": "tp-depo-lays.jpg",
+            "quote": "Agradeço demais a sua atenção e principalmente a paciência. Desejo todo sucesso possível para você.",
+            "author": "Lays Karolinny"
+          }
+        }
+      },
+      "block_order": [
+        "d0",
+        "d1",
+        "d2",
+        "d3"
+      ]
+    },
+    "final": {
+      "type": "tp-lp-final",
+      "settings": {
+        "instagram": "https://instagram.com/thainapapers"
+      }
+    }
+  },
+  "order": [
+    "capa",
+    "faixa",
+    "catalogo",
+    "passos",
+    "trabalhos",
+    "depoimentos",
+    "final"
+  ]
+}
