@@ -1,326 +1,220 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
+  "layout": "landing",
   "sections": {
-    "tp_hero": {
-      "type": "tp-hero",
-      "custom_css": [
-        ".{background-color: #0000;}"
-      ],
+    "capa": {
+      "type": "tp-lp-capa",
       "settings": {
-        "script_text": "feito à mão",
-        "heading": "Não é só papel",
-        "lead": "É a primeira parte da história que chega às mãos de quem você escolheu para vivê-la com você.",
-        "tagline": "Menos excesso. Mais essência.",
-        "description": "Tailor-made stationery for celebrations. Impressos em pequenos lotes e templates editáveis no Canva.",
-        "button_1_label": "Ver todos os produtos",
-        "button_1_link": "shopify://collections/all",
-        "button_2_label": "Sob medida",
-        "button_2_link": "/pages/tailor-made",
-        "image_1_asset": "tp-tablescape-georgia.jpg",
-        "image_1_alt": "Suíte de convites sobre linho",
-        "image_2_asset": "tp-invite-vellum-wax-seal.jpg",
-        "image_2_alt": "Menu ao lado do prato"
-      }
-    },
-    "tp_occasions": {
-      "type": "tp-occasions",
-      "blocks": {
-        "casamentos": {
-          "type": "occasion",
-          "settings": {
-            "image_asset": "tp-ocasiao-casamentos.jpg",
-            "title": "Casamentos",
-            "description": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
-            "link_label": "Ver casamentos",
-            "link": "/collections/casamentos"
-          }
-        },
-        "formaturas": {
-          "type": "occasion",
-          "settings": {
-            "image_asset": "tp-ocasiao-formaturas.jpg",
-            "title": "Formaturas",
-            "description": "Pacotes FORM, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
-            "link_label": "Ver formaturas",
-            "link": "/collections/formaturas"
-          }
-        },
-        "consultorios": {
-          "type": "occasion",
-          "settings": {
-            "image_asset": "tp-ocasiao-consultorios.jpg",
-            "title": "Consultórios",
-            "description": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
-            "link_label": "Ver consultórios",
-            "link": "/collections/consultorios"
-          }
-        }
+        "instagram": "https://instagram.com/thainapapers",
+        "titulo": "Não é só papel."
       },
-      "block_order": [
-        "casamentos",
-        "formaturas",
-        "consultorios"
-      ],
-      "settings": {}
-    },
-    "tp_categories": {
-      "type": "tp-categories",
       "blocks": {
-        "convites": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-invite-guestlist-blue.jpg",
-            "title": "Convites",
-            "link": "/collections/convites"
-          }
-        },
-        "savethedate": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-savethedate-lace.jpg",
-            "title": "Save the date",
-            "link": "/search?q=save+the+date"
-          }
-        },
-        "menus": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-menu-scallop-orange.jpg",
-            "title": "Menus",
-            "link": "/search?q=menu"
-          }
-        },
-        "adesivos": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-favor-tag-amphora.jpg",
-            "title": "Adesivos",
-            "link": "/search?q=adesivo"
-          }
-        },
-        "sinalizacao": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-tablenumber-heritage.jpg",
-            "title": "Sinalização",
-            "link": "/search?q=sinaliza"
-          }
-        },
-        "templates": {
-          "type": "category",
-          "settings": {
-            "image_asset": "tp-savethedate-swan.jpg",
-            "title": "Templates Canva",
-            "link": "/collections/templates-canva"
-          }
-        }
-      },
-      "block_order": [
-        "convites",
-        "savethedate",
-        "menus",
-        "adesivos",
-        "sinalizacao",
-        "templates"
-      ],
-      "settings": {
-        "eyebrow": "Comece por aqui"
-      }
-    },
-    "tp_two_ways": {
-      "type": "tp-two-ways",
-      "blocks": {
-        "tailor": {
-          "type": "way",
-          "settings": {
-            "eyebrow": "Escolha seu jeito · 01",
-            "title": "Tailor-made",
-            "description": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
-            "features": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
-            "button_label": "Quero criar meu projeto",
-            "button_link": "/pages/tailor-made",
-            "button_style": "solid"
-          }
-        },
-        "canva": {
-          "type": "way",
-          "settings": {
-            "eyebrow": "Escolha seu jeito · 02",
-            "title": "Template Canva",
-            "description": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
-            "features": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
-            "button_label": "Ver templates",
-            "button_link": "/collections/templates-canva",
-            "button_style": "outline"
-          }
-        }
-      },
-      "block_order": [
-        "tailor",
-        "canva"
-      ],
-      "settings": {}
-    },
-    "tp_products": {
-      "type": "tp-featured-products",
-      "settings": {
-        "heading": "Mais procurados",
-        "collection": "mais-procurados",
-        "products_to_show": 4,
-        "price_prefix": "Total:",
-        "cta_label": "Comprar agora",
-        "link_label": "Ver todos os produtos",
-        "link": "shopify://collections/all"
-      }
-    },
-    "tp_portfolio": {
-      "type": "tp-portfolio",
-      "blocks": {
-        "w1": {
-          "type": "work",
-          "settings": {
-            "image_asset": "tp-trabalho-mesa.jpg",
-            "caption": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado"
-          }
-        },
-        "w2": {
-          "type": "work",
+        "a0": {
+          "type": "foto",
           "settings": {
             "image_asset": "tp-trabalho-convite.jpg",
-            "caption": "Convite de casamento de Ana Carla e Thiago, em caixa com laço"
+            "alt": "Convite de casamento em caixa de linho com laço azul",
+            "legenda": "Ana Carla & Thiago"
           }
         },
-        "w3": {
-          "type": "work",
+        "a1": {
+          "type": "foto",
           "settings": {
-            "image_asset": "tp-trabalho-monograma.jpg",
-            "caption": "Monograma recortado em dourado sobre o bolo, em verde e folhagem"
+            "image_asset": "tp-trabalho-mesa.jpg",
+            "alt": "Mesa posta de formatura com menu e marcador de lugar",
+            "legenda": "mesa de formatura"
           }
         },
-        "w4": {
-          "type": "work",
+        "a2": {
+          "type": "foto",
           "settings": {
             "image_asset": "tp-trabalho-bolo.jpg",
-            "caption": "Bolo de formatura em rosa, com monograma no centro"
+            "alt": "Bolo de formatura em rosa com monograma no centro",
+            "legenda": "bolo com monograma"
           }
         },
-        "w5": {
-          "type": "work",
-          "settings": {
-            "image_asset": "tp-trabalho-batizado.jpg",
-            "caption": "Prato de porcelana pintado à mão para o batizado de Bernardo"
-          }
-        },
-        "w6": {
-          "type": "work",
+        "a3": {
+          "type": "foto",
           "settings": {
             "image_asset": "tp-trabalho-mesa-posta.jpg",
-            "caption": "Guardanapo com monograma bordado sobre sousplat rendado"
+            "alt": "Guardanapo com monograma sobre sousplat rendado",
+            "legenda": "mesa posta"
           }
         },
-        "w7": {
-          "type": "work",
+        "a4": {
+          "type": "foto",
           "settings": {
             "image_asset": "tp-trabalho-ecobag.jpg",
-            "caption": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior"
+            "alt": "Ecobag personalizada de formatura de medicina",
+            "legenda": "Dr. Fábio"
           }
         },
-        "w8": {
-          "type": "work",
+        "a5": {
+          "type": "foto",
           "settings": {
             "image_asset": "tp-trabalho-adesivos.jpg",
-            "caption": "Cartela de adesivos temáticos impressa para a festa"
+            "alt": "Cartela de adesivos temáticos para festa",
+            "legenda": "#mcformou"
           }
         }
       },
       "block_order": [
-        "w1",
-        "w2",
-        "w3",
-        "w4",
-        "w5",
-        "w6",
-        "w7",
-        "w8"
-      ],
-      "settings": {
-        "heading": "Trabalhos reais",
-        "link_label": "Instagram",
-        "link": "https://instagram.com/thainapapers"
-      }
+        "a0",
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ]
     },
-    "tp_how": {
-      "type": "tp-how-it-works",
+    "faixa": {
+      "type": "tp-lp-faixa",
+      "settings": {}
+    },
+    "passos": {
+      "type": "tp-lp-passos",
+      "settings": {},
       "blocks": {
-        "step1": {
-          "type": "step",
+        "p0": {
+          "type": "passo",
           "settings": {
-            "title": "Escolha e envie os dados",
-            "description": "Adicione ao pedido e mande nomes, datas e fotos pelo WhatsApp. Quantidades são fixas e o preço é fechado."
+            "titulo": "Escolha",
+            "texto": "Veja os modelos no catálogo e toque em Pedir no que mais combina com a sua celebração.",
+            "chips": "casamento, formatura, consultório, digital"
           }
         },
-        "step2": {
-          "type": "step",
+        "p1": {
+          "type": "passo",
           "settings": {
-            "title": "Aprove a arte",
-            "description": "Confira nomes, datas, horários e endereços com atenção antes de aprovar a arte final. Até 3 solicitações de correção."
+            "titulo": "Chame no WhatsApp",
+            "texto": "A conversa já abre com o modelo escrito. Conte o que precisa e a Thainá responde por lá.",
+            "chips": "data, nomes, cores, quantidade"
           }
         },
-        "step3": {
-          "type": "step",
+        "p2": {
+          "type": "passo",
           "settings": {
-            "title": "Receba",
-            "description": "Arquivos digitais em até 1 dia útil após a aprovação. Impressos entram em produção e seguem para o transporte."
+            "titulo": "Aprove e receba",
+            "texto": "Você confere a arte antes de produzir. Depois é só esperar chegar.",
+            "chips": "até 3 ajustes na arte, envio para todo o Brasil, digitais em até 1 dia útil"
           }
         }
       },
       "block_order": [
-        "step1",
-        "step2",
-        "step3"
-      ],
-      "settings": {
-        "eyebrow": "Como funciona",
-        "footnote": "O prazo começa após confirmação do pagamento e envio de todas as informações necessárias."
-      }
+        "p0",
+        "p1",
+        "p2"
+      ]
     },
-    "tp_quotes": {
-      "type": "tp-testimonials",
+    "trabalhos": {
+      "type": "tp-lp-trabalhos",
+      "settings": {},
       "blocks": {
-        "q1": {
-          "type": "quote",
+        "f0": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa.jpg",
+            "legenda": "Mesa posta de formatura, com menu, marcador de lugar e balde personalizado",
+            "legenda_curta": "formatura"
+          }
+        },
+        "f1": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-batizado.jpg",
+            "legenda": "Prato de porcelana pintado à mão para o batizado de Bernardo",
+            "legenda_curta": "batizado do Bernardo"
+          }
+        },
+        "f2": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-monograma.jpg",
+            "legenda": "Monograma recortado em dourado sobre o bolo, em verde e folhagem",
+            "legenda_curta": "monograma"
+          }
+        },
+        "f3": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-ecobag.jpg",
+            "legenda": "Ecobag personalizada para a formatura de medicina do Dr. Fábio Junior",
+            "legenda_curta": "Dr. Fábio"
+          }
+        },
+        "f4": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-mesa-posta.jpg",
+            "legenda": "Guardanapo com monograma bordado sobre sousplat rendado",
+            "legenda_curta": "mesa posta"
+          }
+        },
+        "f5": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-bolo.jpg",
+            "legenda": "Bolo de formatura em rosa, com monograma no centro",
+            "legenda_curta": "formatura"
+          }
+        },
+        "f6": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-adesivos.jpg",
+            "legenda": "Cartela de adesivos temáticos impressa para a festa",
+            "legenda_curta": "#mcformou"
+          }
+        },
+        "f7": {
+          "type": "foto",
+          "settings": {
+            "image_asset": "tp-trabalho-copos.jpg",
+            "legenda": "Copos e garrafas personalizados para a festa",
+            "legenda_curta": "open bar"
+          }
+        }
+      },
+      "block_order": [
+        "f0",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7"
+      ]
+    },
+    "depoimentos": {
+      "type": "tp-lp-depoimentos",
+      "settings": {},
+      "blocks": {
+        "d0": {
+          "type": "depo",
           "settings": {
             "image_asset": "tp-depo-ana.jpg",
             "quote": "Tá muito perfeito. Não consigo nem parar de olhar de tão lindo que ficou.",
             "author": "Ana Beatriz e Jordan Brunno · Casamento"
           }
         },
-        "q2": {
-          "type": "quote",
+        "d1": {
+          "type": "depo",
           "settings": {
             "image_asset": "tp-depo-livia.jpg",
             "quote": "Só pra avisar que tudo foi um sucesso. As tatuagens, meu Deus — o povo dizimou muito rápido. Se eu soubesse que eles iam amar tanto, tinha pedido mais.",
             "author": "Lívia Menezes"
           }
         },
-        "q3": {
-          "type": "quote",
+        "d2": {
+          "type": "depo",
           "settings": {
             "image_asset": "tp-depo-leticia.jpg",
             "quote": "As tatuagens foram um sucesso, todos amaram muito. Ficou até hoje de manhã intacta.",
             "author": "Letícia Guedes"
           }
         },
-        "q4": {
-          "type": "quote",
+        "d3": {
+          "type": "depo",
           "settings": {
             "image_asset": "tp-depo-lays.jpg",
             "quote": "Agradeço demais a sua atenção e principalmente a paciência. Desejo todo sucesso possível para você.",
@@ -329,82 +223,235 @@
         }
       },
       "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4"
-      ],
+        "d0",
+        "d1",
+        "d2",
+        "d3"
+      ]
+    },
+    "final": {
+      "type": "tp-lp-final",
       "settings": {
-        "heading": "Depoimentos",
-        "eyebrow": "Quem já celebrou com a gente"
+        "instagram": "https://instagram.com/thainapapers"
       }
     },
-    "tp_faq": {
-      "type": "tp-faq",
+    "ocasioes": {
+      "type": "tp-lp-ocasioes",
+      "settings": {},
       "blocks": {
-        "f1": {
-          "type": "faq",
+        "c": {
+          "type": "ocasiao",
           "settings": {
-            "question": "Qual a diferença entre produto digital e físico?",
-            "answer": "<p>O digital é entregue por arquivo ou link — nenhum item físico será enviado. O físico é impresso, embalado e transportado, com prazo de produção informado na página.</p>"
+            "image_asset": "tp-ocasiao-casamentos.jpg",
+            "titulo": "Casamentos",
+            "texto": "Da identidade visual ao último detalhe da mesa — convites, manuais e papelaria do dia.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Casamentos"
           }
         },
-        "f2": {
-          "type": "faq",
+        "f": {
+          "type": "ocasiao",
           "settings": {
-            "question": "Posso alterar a arte depois de pronta?",
-            "answer": "<p>Sim: até 3 solicitações de correção dos dados inseridos, com retorno em até 2 dias úteis.</p>"
+            "image_asset": "tp-ocasiao-formaturas.jpg",
+            "titulo": "Formaturas",
+            "texto": "Pacotes, adesivos, tatuagens e menus — com desconto para quem fecha em grupo.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Formaturas"
           }
         },
-        "f3": {
-          "type": "faq",
+        "k": {
+          "type": "ocasiao",
           "settings": {
-            "question": "Como funciona o pagamento?",
-            "answer": "<p>PIX ou cartão em até 12x, combinado no WhatsApp junto com o frete. A produção começa após a aprovação da arte e a confirmação do pagamento.</p>"
-          }
-        },
-        "f4": {
-          "type": "faq",
-          "settings": {
-            "question": "O tamanho é o que eu imagino?",
-            "answer": "<p>Toda página traz a medida em centímetros comparada a uma folha A4, além do guia de medidas completo.</p>"
+            "image_asset": "tp-ocasiao-consultorios.jpg",
+            "titulo": "Consultórios",
+            "texto": "Cartelas e papelaria de apoio à organização e à comunicação com o paciente.",
+            "link_rotulo": "Ver modelos",
+            "aba": "Consultórios"
           }
         }
       },
       "block_order": [
-        "f1",
-        "f2",
-        "f3",
-        "f4"
-      ],
+        "c",
+        "f",
+        "k"
+      ]
+    },
+    "destaques": {
+      "type": "tp-lp-destaques",
       "settings": {
-        "heading": "Perguntas frequentes",
-        "description": "Ficou alguma dúvida? Fale com a Thainá pelo WhatsApp."
+        "colecao": "mais-procurados"
       }
     },
-    "tp_cta": {
-      "type": "tp-cta",
+    "jeitos": {
+      "type": "tp-lp-jeitos",
+      "settings": {},
+      "blocks": {
+        "t": {
+          "type": "jeito",
+          "settings": {
+            "sobre": "Jeito 01",
+            "titulo": "Tailor-made",
+            "texto": "Cada projeto começa com uma conversa e é desenvolvido especialmente para você. Exclusivo, acompanhado de perto, com prazo de criação e aprovação.",
+            "itens": "Arte exclusiva, feita do zero\nAtendimento direto com a Thainá\nAté 3 solicitações de correção",
+            "botao": "Quero criar meu projeto",
+            "mensagem": "Olá, Thainá! Quero criar um projeto sob medida (tailor-made).",
+            "escuro": true
+          }
+        },
+        "c": {
+          "type": "jeito",
+          "settings": {
+            "sobre": "Jeito 02",
+            "titulo": "Template Canva",
+            "texto": "Você edita, imprime e usa quando quiser. Link liberado na hora, com instruções de duplicação e licença de uso.",
+            "itens": "Entrega imediata por link do Canva\nEdite textos, cores, fotos e fontes\nProduto digital — nada é enviado pelo correio",
+            "botao": "Quero um template",
+            "mensagem": "Olá, Thainá! Quero saber dos templates para Canva.",
+            "escuro": false
+          }
+        }
+      },
+      "block_order": [
+        "t",
+        "c"
+      ]
+    },
+    "sobre": {
+      "type": "tp-lp-sobre",
       "settings": {
-        "script_text": "vamos começar",
-        "heading": "Conte o que você está celebrando — o resto a gente desenha junto.",
-        "description": "Atendimento direto com a Thainá, de segunda a sexta.",
-        "button_1_label": "Falar no WhatsApp",
-        "button_1_link": "",
-        "button_2_label": "Ver o catálogo",
-        "button_2_link": "shopify://collections/all"
-      }
+        "destaque": "Cada peça é feita para uma data marcada no calendário de alguém.",
+        "texto": "<p>Era 2019, o orçamento era curto e eu queria algo que parecesse com a gente. Fiz o convite, os menus e as tags numa mesa de jantar — e três amigas pediram igual.</p><p>Desde então são <strong>pequenos lotes, impressos com atenção a papel, corte e acabamento</strong>. Hoje o estúdio também tem templates no Canva — o mesmo cuidado de projeto, para quem prefere resolver no próprio tempo.</p>"
+      },
+      "blocks": {
+        "a": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Pequenos lotes",
+            "texto": "Quantidades fixas e produção sob demanda. Nada é impresso antes de existir uma celebração."
+          }
+        },
+        "b": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Preço na página",
+            "texto": "Valor fechado, quantidade visível e prazo separado por etapa."
+          }
+        },
+        "c": {
+          "type": "principio",
+          "settings": {
+            "titulo": "Conversa antes do traço",
+            "texto": "Todo projeto sob medida começa com um briefing e segue com aprovação em cada etapa."
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "faq": {
+      "type": "tp-lp-faq",
+      "settings": {},
+      "blocks": {
+        "a": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Qual a diferença entre produto digital e físico?",
+            "resposta": "<p>O digital é entregue por arquivo ou link — nenhum item físico será enviado. O físico é impresso, embalado e transportado, com prazo de produção informado.</p>"
+          }
+        },
+        "b": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Posso alterar a arte depois de pronta?",
+            "resposta": "<p>Sim: até 3 solicitações de correção dos dados inseridos, com retorno em até 2 dias úteis.</p>"
+          }
+        },
+        "c": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Como funciona o pagamento?",
+            "resposta": "<p>PIX ou cartão em até 12x, combinado no WhatsApp junto com o frete. A produção começa após a aprovação da arte e a confirmação do pagamento.</p>"
+          }
+        },
+        "d": {
+          "type": "pergunta",
+          "settings": {
+            "pergunta": "Vocês enviam para todo o Brasil?",
+            "resposta": "<p>Sim. Os impressos seguem para todo o Brasil depois da produção; os digitais chegam em até 1 dia útil após a aprovação.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
+    },
+    "catalogo": {
+      "type": "tp-lp-loja",
+      "settings": {},
+      "blocks": {
+        "c": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Casamentos",
+            "colecao": "casamentos"
+          }
+        },
+        "p": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Pacotes",
+            "colecao": "pacotes"
+          }
+        },
+        "f": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Formaturas",
+            "colecao": "formaturas"
+          }
+        },
+        "k": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Consultórios",
+            "colecao": "consultorios"
+          }
+        },
+        "d": {
+          "type": "ocasiao",
+          "settings": {
+            "rotulo": "Digitais",
+            "colecao": "avulsos"
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "p",
+        "f",
+        "k",
+        "d"
+      ]
     }
   },
   "order": [
-    "tp_hero",
-    "tp_occasions",
-    "tp_categories",
-    "tp_two_ways",
-    "tp_products",
-    "tp_portfolio",
-    "tp_how",
-    "tp_quotes",
-    "tp_faq",
-    "tp_cta"
+    "capa",
+    "faixa",
+    "ocasioes",
+    "destaques",
+    "catalogo",
+    "jeitos",
+    "passos",
+    "trabalhos",
+    "depoimentos",
+    "sobre",
+    "faq",
+    "final"
   ]
 }
